@@ -1,4 +1,18 @@
-﻿ [HttpGet("EventRequestsHcpRole/{eventIdorEventRequestId}")]
+﻿ done check
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ [HttpGet("EventRequestsHcpRole/{eventIdorEventRequestId}")]
         public async Task<IActionResult> GetEventRequestsHcpRoleById(string eventIdorEventRequestId)
         {
             try
@@ -180,3 +194,32 @@ private long GetColumnIdByName(Sheet sheet, string columnName)
                 return NotFound("NotFound");
             }
         }
+
+
+
+
+
+
+
+
+         //if (formDataList.formFile != null && formDataList.formFile.Length > 0)
+                //{
+                //    var fileName = formDataList.formFile.FileName;
+                //    var folderName = Path.Combine("Resources", "Images");
+                //    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                //    var fullPath = Path.Combine(pathToSave, fileName);
+                   
+                //    if (!Directory.Exists(pathToSave))
+                //    {
+                //        Directory.CreateDirectory(pathToSave);
+                //    }
+
+                //    using (var fileStream = new FileStream(fullPath, FileMode.Create))
+                //    {
+                //        formDataList.formFile.CopyTo(fileStream);
+                //    }
+
+                //    var addedRow = addedRows[0];
+                //    var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                //        parsedSheetId1, addedRow.Id.Value, fullPath, "application/msword");
+                //}
