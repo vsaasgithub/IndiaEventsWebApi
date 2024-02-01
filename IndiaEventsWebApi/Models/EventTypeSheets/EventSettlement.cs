@@ -45,6 +45,8 @@
         public string TotalHonorariumSpend { get; set; }
         public string TotalSpend { get; set; }
         public string TotalLocalConveyance { get; set; }
+        public string? IsDeviationUpload { get; set; }
+
 
         public List<string>? Files { get; set; }
         public List<string>? DeviationFiles { get; set; }
@@ -52,15 +54,7 @@
 
 
     }
-    //public class Panalists
-    //{
-    //    public string HcpRole { get; set; }
-    //    public string HcpName { get; set; }
-    //    public string HonarariumAmount { get; set; }
-    //    public string TravelAmount { get; set; }
-    //    public string AccomdationAmount { get; set; }
-
-    //}
+   
     public class Invitee
     {
 
@@ -79,19 +73,5 @@
         public string BtcorBte { get; set; }
 
     }
-    //public class Branddetail
-    //{
-    //    public string BrandName { get; set; }
-    //    public string PercentAllocation { get; set; }
-    //    public string ProjectId { get; set; }
-    //}
-    //public class HCPSlideKits
-    //{
-
-    //    public string MIS { get; set; }
-    //    public string SlideKitType { get; set; }
-    //    public string SlideKitDocument { get; set; }
-
-
-    //}
+   
 }
