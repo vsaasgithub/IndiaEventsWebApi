@@ -957,27 +957,22 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 string sheetId = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
                 string sheetId1 = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
                 string sheetId2 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
+                
+                string sheetId7 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
 
                 long.TryParse(sheetId, out long parsedSheetId);
                 long.TryParse(sheetId1, out long parsedSheetId1);
                 long.TryParse(sheetId2, out long parsedSheetId2);
+                long.TryParse(sheetId7, out long parsedSheetId7);
                 Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
                 Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
                 Sheet sheet2 = smartsheet.SheetResources.GetSheet(parsedSheetId2, null, null, null, null, null, null, null);
+                Sheet sheet7 = smartsheet.SheetResources.GetSheet(parsedSheetId7, null, null, null, null, null, null, null);
 
-                //StringBuilder addedBrandsData = new StringBuilder();
-                //StringBuilder addedInviteesData = new StringBuilder();
                 StringBuilder addedHcpData = new StringBuilder();
-                //StringBuilder addedSlideKitData = new StringBuilder();
-                //StringBuilder addedExpences = new StringBuilder();
-                //StringBuilder HCP = new StringBuilder();
-
-                //int addedSlideKitDataNo = 1;
+               
                 int addedHcpDataNo = 1;
-                //int addedInviteesDataNo = 1;
-                //int addedBrandsDataNo = 1;
-                //int addedExpencesNo = 1;
-                //int hcpNo = 1;
+               
                 
                 
                 CultureInfo hindi = new CultureInfo("hi-IN");
@@ -990,53 +985,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     addedHcpDataNo++;
                 }
                 string panalist = addedHcpData.ToString();
-
-
-                //foreach (var formdata in formData.BrandDetails)
-                //{                 
-                    
-                //    string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
-                //    addedBrandsData.AppendLine(rowData);
-                //    addedBrandsDataNo++;
-                //}
-                //string brand = addedBrandsData.ToString();
-
-                //foreach (var formdata in formData.Invitees)
-                //{             
-                //    string rowData = $"{addedInviteesDataNo}. Name: {formdata.InviteeName} | MIS Code: {formdata.MISCode} | LocalConveyance: {formdata.LocalConveyance} ";
-                    
-                //    addedInviteesData.AppendLine(rowData);
-                //    addedInviteesDataNo++;
-                   
-                //}
-                //string Invitees = addedInviteesData.ToString();
-
-
-                //foreach (var formdata in formData.panalist)
-                //{
-                   
-
-                //    var HM = int.Parse(formdata.HonarariumAmount);
-                //    var x = string.Format(hindi, "{0:#,#}", HM);
-                //    var t = int.Parse(formdata.TravelAmount) + int.Parse(formdata.AccomdationAmount);
-                //    var y = string.Format(hindi, "{0:#,#}", t);
-                   
-                //    string rowData = $"{hcpNo}. {formdata.HcpRole} |{formdata.HcpName} | Honr.Amt: {HM} |Trav.&Acc.Amt: {t} ";
-
-                //    HCP.AppendLine(rowData);
-                //    hcpNo++;
-                  
-                //}
-                //string HCPd = HCP.ToString();
-
-                //foreach (var formdata in formData.hCPSlideKits)
-                //{
-                    
-                //    string rowData = $"{addedSlideKitDataNo}. {formdata.MIS} | {formdata.SlideKitType}";
-                //    addedSlideKitData.AppendLine(rowData);
-                //    addedSlideKitDataNo++;
-                //}
-                //string slideKits = addedSlideKitData.ToString();
 
 
 
@@ -1229,6 +1177,135 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                             parsedSheetId1, addedRow.Id.Value, filePath, "application/msword");
                     x++;
+                }
+
+
+
+                if ( formData.RequestHonorariumList.IsDeviationUpload== "Yes")
+                {
+                   
+                    try
+                    {
+
+                        var newRow7 = new Row();
+                        newRow7.Cells = new List<Cell>();
+
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "EventId/EventRequestId"),
+                            Value = eventId
+                        });
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "Event Topic"),
+                            Value = formData.RequestHonorariumList.EventTopic
+                        });
+
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "EventType"),
+                            Value = formData.RequestHonorariumList.EventType
+                        });
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "EventDate"),
+                            Value = formData.RequestHonorariumList.EventDate
+                        });
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "StartTime"),
+                            Value = formData.RequestHonorariumList.StartTime
+                        });
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "EndTime"),
+                            Value = formData.RequestHonorariumList.EndTime
+                        });
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "VenueName"),
+                            Value = formData.RequestHonorariumList.VenueName
+                        });
+
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "City"),
+                            Value = formData.RequestHonorariumList.City
+                        });
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "State"),
+                            Value = formData.RequestHonorariumList.State
+                        });
+
+                       
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "EventWithin7days"),
+                            Value = formData.RequestHonorariumList.IsDeviationUpload
+                        });
+
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "Sales Head"),
+                            Value = formData.RequestHonorariumList.Compliance
+                        });
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "Finance Head"),
+                            Value = formData.RequestHonorariumList.Compliance
+                        });
+
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "InitiatorName"),
+                            Value = formData.RequestHonorariumList.InitiatorName
+                        });
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "Initiator Email"),
+                            Value = formData.RequestHonorariumList.InitiatorEmail
+                        });
+
+
+                        var addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(parsedSheetId7, new Row[] { newRow7 });
+
+
+
+
+                        var j = 1;
+                        foreach (var p in formData.RequestHonorariumList.DeviationFiles)
+                        {
+
+
+
+                            byte[] fileBytes = Convert.FromBase64String(p);
+                            var folderName = Path.Combine("Resources", "Images");
+                            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                            if (!Directory.Exists(pathToSave))
+                            {
+                                Directory.CreateDirectory(pathToSave);
+                            }
+
+                            string fileType = GetFileType(fileBytes);
+                            string fileName = eventId + "-" + j + " AttachedFile." + fileType;
+                            // string fileName = val+x + ": AttachedFile." + fileType;
+                            string filePath = Path.Combine(pathToSave, fileName);
+
+
+                            var addedRow = addeddeviationrow[0];
+
+                            System.IO.File.WriteAllBytes(filePath, fileBytes);
+                            string type = GetContentType(fileType);
+                            var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                    parsedSheetId7, addedRow.Id.Value, filePath, "application/msword");
+                            j++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest(ex.Message);
+                    }
                 }
 
 
