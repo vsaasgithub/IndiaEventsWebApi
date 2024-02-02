@@ -79,16 +79,28 @@ namespace IndiaEventsWebApi.Controllers
 
                        
                         var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(p, existingRow.Id.Value,null);
+                        var url = "";
+                        foreach(var attachment in attachments.Data)
+                        {
+                            if (attachment != null)
+                            {
+                                var AID =(long) attachment.Id;
+                                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(p, AID);
+                                url = file.Url;
 
-                       
+                            }
+                        }
+
                         return Ok(new
                         {
                             MISCode = misCodeCell?.Value,
                             FCPASignOffDate = fcpaSignOffDateCell?.Value,
                             FCPAExpiryDate = fcpaExpiryDateCell?.Value,
                             FCPAValid = fcpaValidCell?.Value,
-                            Attachments = attachments
-                        });
+                            Attachments = attachments,
+                            Url = url
+
+                        }); 
                     }
                 }
             }

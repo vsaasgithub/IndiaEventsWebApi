@@ -45,6 +45,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Aspose.Cells": {
+              "target": "Package",
+              "version": "[24.1.0, )"
+            },
             "Google.Apis.Auth": {
               "target": "Package",
               "version": "[1.64.0, )"

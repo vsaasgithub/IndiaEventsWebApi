@@ -76,3 +76,11 @@ D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net6.0\refint
 D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net6.0\IndiaEventsWebApi.pdb
 D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net6.0\IndiaEventsWebApi.genruntimeconfig.cache
 D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net6.0\ref\IndiaEventsWebApi.dll
+D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\Aspose.Cells.dll
+D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\SkiaSharp.dll
+D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\runtimes\osx\native\libSkiaSharp.dylib
+D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\runtimes\win-arm64\native\libSkiaSharp.dll
+D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\runtimes\win-x64\native\libSkiaSharp.dll
+D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\runtimes\win-x86\native\libSkiaSharp.dll
+D:\vsaasGit\ApiVsaas\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
