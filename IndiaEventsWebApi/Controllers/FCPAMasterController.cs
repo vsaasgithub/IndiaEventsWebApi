@@ -45,7 +45,7 @@ namespace IndiaEventsWebApi.Controllers
                 long.TryParse(i, out long p);
                 Sheet sheeti = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
 
-                Column misCodeColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "MISCode");
+                Column misCodeColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "MisCode");
                 Column fcpaSignOffDateColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "FCPA Sign Off Date");
                 Column fcpaExpiryDateColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "FCPA Expiry Date");
                 Column fcpaValidColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "FCPA Valid?");

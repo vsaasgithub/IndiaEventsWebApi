@@ -65,72 +65,75 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
 
 
         [HttpPost("PostHcpData1")]
-        public IActionResult PostHcpData1(HCPMaster1 formDataList)
+        public IActionResult PostHcpData1(IFormFile file)
         {
-            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-            string[] sheetIds = {
-                configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster4").Value
-            };
-            foreach (string i in sheetIds)
+            if (file == null || file.Length == 0)
             {
-                long.TryParse(i, out long p);
-                Sheet sheeti = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
-
-              
-                //Row existingRow = sheeti.Rows.FirstOrDefault(row => row.Cells.Any(cell => cell.Value.ToString() == formDataList.MISCode));
-                Row existingRow = sheeti.Rows.FirstOrDefault(row =>
-                    row.Cells != null &&
-                    row.Cells.Any(cell => cell.Value != null && cell.Value.ToString() == formDataList.MISCode));
-
-                if (existingRow != null)
-                {
-                    // Data with the same MISCode already exists, return a response
-                    return BadRequest("Data with the same MISCode already exists.");
-                }
+                return BadRequest("Please provide a valid Excel file.");
             }
-            string sheetId = configuration.GetSection("SmartsheetSettings:HcpMaster1").Value;
-            long.TryParse(sheetId, out long parsedSheetId);
-            Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
-            var newRow = new Row();
-            newRow.Cells = new List<Cell>();
-            newRow.Cells.Add(new Cell
+
+            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+
+            using (var memoryStream = new MemoryStream())
             {
-                ColumnId = GetColumnIdByName(sheet, "FirstName"),
-                Value = formDataList.FirstName
-            });
-            newRow.Cells.Add(new Cell
-            {
-                ColumnId = GetColumnIdByName(sheet, "LastName"),
-                Value = formDataList.LastName
-            });
-            newRow.Cells.Add(new Cell
-            {
-                ColumnId = GetColumnIdByName(sheet, "HCPName"),
-                Value = formDataList.HCPName
-            });
-            newRow.Cells.Add(new Cell
-            {
-                ColumnId = GetColumnIdByName(sheet, "GO/Non-GO"),
-                Value = formDataList.GOorNGO
-            });
-            newRow.Cells.Add(new Cell
-            {
-                ColumnId = GetColumnIdByName(sheet, "MISCode"),
-                Value = formDataList.MISCode
-            });
-
-            smartsheet.SheetResources.RowResources.AddRows(parsedSheetId, new Row[] { newRow });
+                file.CopyTo(memoryStream);
+                var workbook = new Aspose.Cells.Workbook(memoryStream);
 
 
+                var worksheet = workbook.Worksheets[0];
+
+                List<HCPMaster1> formDataList = new List<HCPMaster1>();
 
 
-            return Ok(new
-            { Message = " Success!" });
+                for (int row = 1; row <= worksheet.Cells.MaxDataRow; row++)
+                {
+                    var formData = new HCPMaster1
+                    {
+                        FirstName = worksheet.Cells[row, GetColumnIndexByName(worksheet, "FirstName")].StringValue,
+                        //LastName = worksheet.Cells[row, GetColumnIndexByName(worksheet, "LastName")].StringValue,
+                        //HCPName = worksheet.Cells[row, GetColumnIndexByName(worksheet, "HCPName")].StringValue,
+                        //GOorNGO = worksheet.Cells[row, GetColumnIndexByName(worksheet, "GO/Non-GO")].StringValue,
+                        MISCode = worksheet.Cells[row, GetColumnIndexByName(worksheet, "MISCode")].StringValue
+                    };
 
+                    formDataList.Add(formData);
+                }
+
+                foreach (string sheetId in GetSheetIds())
+                {
+                    long.TryParse(sheetId, out long parsedSheetId);
+                    Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
+
+                    foreach (var formData in formDataList)
+                    {
+                        Row existingRow = sheet.Rows.FirstOrDefault(row =>
+                            row.Cells != null &&
+                            row.Cells.Any(cell =>
+                                cell.Value != null &&
+                                cell.Value.ToString() == formData.MISCode)
+                        );
+
+                        if (existingRow == null)
+                        {
+                            var newRow = new Row();
+                            newRow.Cells = new List<Cell>();
+                            newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "FirstName"), Value = formData.FirstName });
+                            //newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "LastName"), Value = formData.LastName });
+                            //newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "HCPName"), Value = formData.HCPName });
+                            //newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "GO/Non-GO"), Value = formData.GOorNGO });
+                            newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "MISCode"), Value = formData.MISCode });
+
+                            smartsheet.SheetResources.RowResources.AddRows(parsedSheetId, new Row[] { newRow });
+
+                            //return BadRequest($"Data with MISCode '{formData.MISCode}' already exists in the sheet with ID '{sheetId}'.");
+                        }
+
+
+                    }
+                }
+
+                return Ok(new { Message = "Success!" });
+            }
         }
         private long GetColumnIdByName(Sheet sheet, string columnname)
         {
@@ -143,10 +146,36 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
             }
             return 0;
         }
+        private int GetColumnIndexByName(Aspose.Cells.Worksheet worksheet, string columnName)
+        {
+            var headerRow = worksheet.Cells.GetRow(0);
+
+            for (int col = 0; col <= worksheet.Cells.MaxDataColumn; col++)
+            {
+                if (headerRow.GetCellOrNull(col)?.StringValue == columnName)
+                {
+                    return col;
+                }
+            }
+
+            return -1;
+        }
+
+        private IEnumerable<string> GetSheetIds()
+        {
+            return new[]
+            {
+               // configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
+                configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
+                //configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
+                //configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
+                //configuration.GetSection("SmartsheetSettings:HcpMaster4").Value,
+                //configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value,
+                //configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value
+            };
+        }
     }
-    
+
 }
-
-
 
 

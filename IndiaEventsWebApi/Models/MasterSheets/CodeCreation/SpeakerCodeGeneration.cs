@@ -13,8 +13,8 @@
         public string State { get; set; }
         public string Country { get; set; }
         public string Contact_Number { get; set; }
-        public string GOorNGO { get; set; }
-        public string PAN_Card { get; set; }
+        public string Speaker_Category { get; set; }
+        public string Speaker_Type { get; set; }
         public string Speaker_Criteria { get; set; }
       
     }
