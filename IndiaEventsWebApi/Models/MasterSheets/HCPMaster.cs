@@ -25,7 +25,7 @@
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string HCPName { get; set; }
-        
+        public string Speciality { get; set; }
         public string GOorNGO { get; set; }
         public string MISCode { get; set; }
        
