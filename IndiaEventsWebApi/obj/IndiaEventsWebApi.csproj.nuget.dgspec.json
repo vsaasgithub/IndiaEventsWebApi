@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\vsaasGit\\ApiVsaas\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj": {}
+    "D:\\MIE_API\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj": {}
   },
   "projects": {
-    "D:\\vsaasGit\\ApiVsaas\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj": {
+    "D:\\MIE_API\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\vsaasGit\\ApiVsaas\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
+        "projectUniqueName": "D:\\MIE_API\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
         "projectName": "IndiaEventsWebApi",
-        "projectPath": "D:\\vsaasGit\\ApiVsaas\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
-        "packagesPath": "C:\\Users\\srikanth.n\\.nuget\\packages\\",
-        "outputPath": "D:\\vsaasGit\\ApiVsaas\\IndiaEventsWebApi\\IndiaEventsWebApi\\obj\\",
+        "projectPath": "D:\\MIE_API\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
+        "packagesPath": "C:\\Users\\srika\\.nuget\\packages\\",
+        "outputPath": "D:\\MIE_API\\IndiaEventsWebApi\\IndiaEventsWebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\srikanth.n\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\srika\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -27,6 +27,7 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -48,6 +49,14 @@
             "Aspose.Cells": {
               "target": "Package",
               "version": "[24.1.0, )"
+            },
+            "Aspose.PDF": {
+              "target": "Package",
+              "version": "[24.1.0, )"
+            },
+            "DinkToPdf": {
+              "target": "Package",
+              "version": "[1.0.8, )"
             },
             "Google.Apis.Auth": {
               "target": "Package",
@@ -87,6 +96,10 @@
               "target": "Package",
               "version": "[7.0.3, )"
             },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13.3, )"
+            },
             "smartsheet-csharp-sdk": {
               "target": "Package",
               "version": "[2.101.0, )"
@@ -111,7 +124,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     }
