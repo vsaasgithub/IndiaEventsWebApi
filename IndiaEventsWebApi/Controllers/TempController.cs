@@ -314,7 +314,7 @@ namespace IndiaEventsWebApi.Controllers
                 {
                     dtMai.Columns.Add(column.Title);
                 }
-
+                dtMai.Columns.Add("Sign");
                 int Sr_No = 1;
                 
 
@@ -349,6 +349,7 @@ namespace IndiaEventsWebApi.Controllers
                         Sr_No++;
                     }
                 }
+
                 foreach (Row row in sheet.Rows)
                 {
                     string eventId = row.Cells
