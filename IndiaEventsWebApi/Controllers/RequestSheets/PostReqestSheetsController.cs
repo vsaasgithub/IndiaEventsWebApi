@@ -87,29 +87,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
             foreach (var formdata in formDataList.EventRequestExpenseSheet)
             {
-                var newRow = new Row();
-                newRow.Cells = new List<Cell>();
-
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet6, "Expense"),
-                    Value = formdata.Expense
-                });
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet6, "AmountExcludingTax?"),
-                    Value = formdata.AmountExcludingTax
-                });
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet6, "Amount"),
-                    Value = formdata.Amount
-                });
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet6, "BTC/BTE"),
-                    Value = formdata.BtcorBte
-                });
                 string rowData = $"{addedExpencesNo}. {formdata.Expense} | AmountExcludingTax: {formdata.AmountExcludingTax}| Amount: {formdata.Amount} | {formdata.BtcorBte}";
                 addedExpences.AppendLine(rowData);
                 addedExpencesNo++;
@@ -121,19 +98,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
             foreach (var formdata in formDataList.EventRequestHCPSlideKits)
             {
-                var newRow = new Row();
-                newRow.Cells = new List<Cell>();
-
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet5, "MIS"),
-                    Value = formdata.MIS
-                });
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet5, "Slide Kit Type"),
-                    Value = formdata.SlideKitType
-                });
+              
                 string rowData = $"{addedSlideKitDataNo}. {formdata.MIS} | {formdata.SlideKitType}";
                 addedSlideKitData.AppendLine(rowData);
                 addedSlideKitDataNo++;
@@ -142,23 +107,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
             foreach (var formdata in formDataList.RequestBrandsList)
             {
-                var newRow = new Row();
-                newRow.Cells = new List<Cell>();
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet2, "% Allocation"),
-                    Value = formdata.PercentAllocation
-                });
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet2, "Brands"),
-                    Value = formdata.BrandName
-                });
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet2, "Project ID"),
-                    Value = formdata.ProjectId
-                });
+               
                 string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
                 addedBrandsData.AppendLine(rowData);
                 addedBrandsDataNo++;
@@ -167,23 +116,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
             foreach (var formdata in formDataList.EventRequestInvitees)
             {
-                var newRow = new Row();
-                newRow.Cells = new List<Cell>();
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet3, "InviteeName"),
-                    Value = formdata.InviteeName
-                });
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet3, "MISCode"),
-                    Value = formdata.MISCode
-                });
-                newRow.Cells.Add(new Cell
-                {
-                    ColumnId = GetColumnIdByName(sheet3, "LocalConveyance"),
-                    Value = formdata.LocalConveyance
-                });
+              
 
 
 
@@ -197,54 +130,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
 
             foreach (var formdata in formDataList.EventRequestHcpRole)
-            {
-                var newRow = new Row();
-                newRow.Cells = new List<Cell>();
-                newRow.Cells.Add(new Cell
-                {
-                    
-                    Value = formdata.HcpRole
-                });
-                newRow.Cells.Add(new Cell
-                {
-                    
-                    Value = formdata.HcpName
-                });
-                newRow.Cells.Add(new Cell
-                {
-                   
-                    Value = formdata.Speciality
-                });
-                newRow.Cells.Add(new Cell
-                {
-                    
-                    Value = formdata.Tier
-                });
-                newRow.Cells.Add(new Cell
-                {
-
-                    Value = formdata.HonarariumAmount
-                });
-                newRow.Cells.Add(new Cell
-                {
-
-                    Value = formdata.Travel
-                });
-                newRow.Cells.Add(new Cell
-                {
-
-                    Value = formdata.Accomdation
-                });
-                newRow.Cells.Add(new Cell
-                {
-
-                    Value = formdata.GOorNGO
-                });
-                newRow.Cells.Add(new Cell
-                {
-
-                    Value = formdata.LocalConveyance
-                });
+            {  
 
                 var HM = int.Parse(formdata.HonarariumAmount);
                 var x = string.Format(hindi, "{0:#,#}", HM);
@@ -713,7 +599,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     });
                     newRow1.Cells.Add(new Cell
                     {
-                        ColumnId = GetColumnIdByName(sheet4, "GO/NGO"),
+                        ColumnId = GetColumnIdByName(sheet4, "HCP Type"),
                         Value = formData.GOorNGO
                     });
                     newRow1.Cells.Add(new Cell
@@ -808,7 +694,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     newRow3.Cells = new List<Cell>();
                     newRow3.Cells.Add(new Cell
                     {
-                        ColumnId = GetColumnIdByName(sheet3, "InviteeName"),
+                        ColumnId = GetColumnIdByName(sheet3, "HCPName"),
                         Value = formdata.InviteeName
                     });
                     newRow3.Cells.Add(new Cell

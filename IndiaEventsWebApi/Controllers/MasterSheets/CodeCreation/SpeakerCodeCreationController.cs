@@ -68,7 +68,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
 
                 Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
                 string[] sheetIds = {
-                configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
+                //configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,

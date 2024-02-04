@@ -302,7 +302,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
-                List<string> requiredColumns = new List<string> { "HCPName","MISCode", "Speciality", "GO/NGO" };
+                List<string> requiredColumns = new List<string> { "HCPName","MISCode", "Speciality", "HCP Type" };
 
                 List<Column> selectedColumns = sheet_SpeakerCode.Columns
                     .Where(column => requiredColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase))
