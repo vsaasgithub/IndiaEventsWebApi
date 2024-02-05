@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
 {
@@ -54,7 +55,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
         }
 
         [HttpPost("AddTrainersData")]
-        public IActionResult AddSpeakersData(TrainerCodeGeneration formData)
+        public IActionResult AddTrainersData(TrainerCodeGeneration formData)
         {
             try
             {
@@ -71,10 +72,15 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                 configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster4").Value,
                 configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value,
-                configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value
+                configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value,
+                configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value
+
                 };
                 var mis = "";
                 var sheetval = "";
+                string trainerType = formData.TrainerType;
+                //string lastTrainerCode = GetLastTrainerCode(parsedSheetId, trainerType, smartsheet);
+                //string newTrainerCode = IncrementTrainerCode(lastTrainerCode);
                 foreach (string i in sheetIds)
                 {
                     long.TryParse(i, out long p);
@@ -380,6 +386,52 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                 return "unknown";
             }
         }
+        //private string GetLastTrainerCode(long sheetId, string trainerType, SmartsheetClient smartsheet)
+        //{
+            
+            
+        //    Sheet sheet = smartsheet.SheetResources.GetSheet(sheetId, null, null, null, null, null, null, null);
+
+        //    List<Column> columnsList = sheet.Columns.ToList();
+            
+        //    int trainerCodeColumnIndex = columnsList.FindIndex(column => column.Title == "Trainer Code");
+
+            
+        //    string lastTrainerCode = null;
+
+        //    foreach (Row row in sheet.Rows.OrderByDescending(r => r.CreatedAt))
+        //    {
+        //        Cell trainerTypeCell = row.Cells.FirstOrDefault(cell => cell.ColumnId == trainerCodeColumnIndex);
+
+        //        if (trainerTypeCell != null && row.Cells.Count > trainerCodeColumnIndex)
+        //        {
+        //            string currentTrainerType = trainerTypeCell.Value?.ToString();
+
+        //            if (currentTrainerType == trainerType)
+        //            {
+        //                lastTrainerCode = row.Cells[trainerCodeColumnIndex].Value?.ToString();
+        //                break;
+        //            }
+        //        }
+        //    }
+
+        //    return lastTrainerCode ?? "";
+        //}
+
+        //private string IncrementTrainerCode(string lastTrainerCode)
+        //{
+           
+        //    string trainerType = Regex.Match(lastTrainerCode, @"([a-zA-Z]+)").Value;
+        //    string numericPart = Regex.Match(lastTrainerCode, @"(\d+)").Value;
+
+            
+        //    int incrementedNumericPart = int.Parse(numericPart) + 1;
+
+           
+        //    string newTrainerCode = $"{trainerType}{incrementedNumericPart:D2}";
+
+        //    return newTrainerCode;
+        //}
 
     }
 }

@@ -10,6 +10,7 @@ using Smartsheet.Api.Models;
 using Smartsheet.Api.OAuth;
 using System.Text;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace IndiaEventsWebApi.Controllers.RequestSheets
 {
@@ -256,6 +257,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     ColumnId = GetColumnIdByName(sheet1, "EventWithin7days"),
                     Value = formDataList.class1.EventWithin7days
                 });
+
                 // //////////////////////////////////////////////////////////////
                 newRow.Cells.Add(new Cell
                 {
@@ -327,13 +329,13 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
 
                 var addedRows = smartsheet.SheetResources.RowResources.AddRows(parsedSheetId1, new Row[] { newRow });
-               
+
                 var eventIdColumnId = GetColumnIdByName(sheet1, "EventId/EventRequestId");
                 var eventIdCell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == eventIdColumnId);
                 var val = eventIdCell.DisplayValue;
-                                                     
-                      
-                     
+
+
+
                 var x = 1;
                 foreach (var p in formDataList.class1.Files)
                 {
@@ -350,10 +352,10 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
                     string fileType = GetFileType(fileBytes);
                     string fileName = val + "-" + x + " AttachedFile." + fileType;
-                   // string fileName = val+x + ": AttachedFile." + fileType;
+                    // string fileName = val+x + ": AttachedFile." + fileType;
                     string filePath = Path.Combine(pathToSave, fileName);
 
-                   
+
                     var addedRow = addedRows[0];
 
                     System.IO.File.WriteAllBytes(filePath, fileBytes);
@@ -366,7 +368,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
 
 
-                if (formDataList.class1.EventOpen30days == "Yes" || formDataList.class1.EventWithin7days == "Yes")
+                if (formDataList.class1.EventOpen30days == "Yes" || formDataList.class1.EventWithin7days == "Yes" || formDataList.class1.FB_Expense_Excluding_Tax == "Yes")
                 {
                     var eventId = val;
                     try
@@ -433,7 +435,12 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             ColumnId = GetColumnIdByName(sheet7, "EventWithin7days"),
                             Value = formDataList.class1.EventWithin7days
                         });
-                       
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"),
+                            Value = formDataList.class1.FB_Expense_Excluding_Tax
+                        });
+
                         newRow7.Cells.Add(new Cell
                         {
                             ColumnId = GetColumnIdByName(sheet7, "Sales Head"),
@@ -1621,7 +1628,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             parsedSheetId, addedRow.Id.Value, filePath, "application/msword");
                     x++;
                 }
-                if (formData.IsDeviationUpload == "Yes")
+                if (formData.EventOpen30Days == "Yes" || formData.EventLessThan5Days == "Yes")
                 {
 
                     try
@@ -1682,7 +1689,12 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         newRow7.Cells.Add(new Cell
                         {
                             ColumnId = GetColumnIdByName(sheet7, "POST- Beyond30Days Deviation Date Trigger"),
-                            Value = formData.IsDeviationUpload
+                            Value = formData.EventOpen30Days
+                        }); 
+                        newRow7.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet7, "POST-Lessthan5Invitees Deviation Trigger"),
+                            Value = formData.EventLessThan5Days
                         });
 
                         newRow7.Cells.Add(new Cell

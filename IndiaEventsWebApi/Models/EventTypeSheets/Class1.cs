@@ -19,6 +19,7 @@
         public string? IsAdvanceRequired { get; set; }
         public string? EventOpen30days { get; set; }
         public string? EventWithin7days { get; set; }
+        public string? FB_Expense_Excluding_Tax { get; set; }
         public string? RBMorBM { get; set; }
         public string? Sales_Head { get; set; }
         public string? Marketing_Head { get; set; }

@@ -74,7 +74,9 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                 configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster4").Value,
                 configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value,
-                configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value
+                configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value,
+                configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value
+
                 };
                 var mis = "";
                 var sheetval = "";
