@@ -241,6 +241,11 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     ColumnId = GetColumnIdByName(sheet1, "SlideKits"),
                     Value = slideKit
                 });
+                newRow.Cells.Add(new Cell
+                {
+                    ColumnId = GetColumnIdByName(sheet1, "Role"),
+                    Value = formDataList.class1.Role
+                });
 
                 newRow.Cells.Add(new Cell
                 {
@@ -276,7 +281,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 });
                 newRow.Cells.Add(new Cell
                 {
-                    ColumnId = GetColumnIdByName(sheet1, "Finance Accounts"),
+                    ColumnId = GetColumnIdByName(sheet1, "Finance Treasury"),
                     Value = formDataList.class1.Finance
                 });
                 newRow.Cells.Add(new Cell

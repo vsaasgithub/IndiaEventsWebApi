@@ -28,6 +28,7 @@
         public string? Initiator_Email { get; set; }
         public List<string>? Files { get; set; }
         public List<string>? DeviationFiles { get; set; }
+        public List<string>? Role { get; set; }
     }
     public class Class11
     {
