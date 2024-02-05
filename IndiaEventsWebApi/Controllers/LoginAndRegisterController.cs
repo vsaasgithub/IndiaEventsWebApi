@@ -122,6 +122,8 @@ namespace IndiaEventsWebApi.Controllers
                     var RBM_BMId = GetColumnIdByName(sheet, "RBM/BM");
                     var SalesHeadId = GetColumnIdByName(sheet, "Sales Head");
                     var MarketingHeadId = GetColumnIdByName(sheet, "Marketing Head");
+                    var ComplianceId = GetColumnIdByName(sheet, "Compliance Head");
+
                     var MedicalAffairsHeadId = GetColumnIdByName(sheet, "Medical Affairs Head");
                     var FinanceTreasuryId = GetColumnIdByName(sheet, "Finance Treasury");
                     var FinanceAccountsId = GetColumnIdByName(sheet, "Finance Accounts");
@@ -148,6 +150,7 @@ namespace IndiaEventsWebApi.Controllers
                         var RBM_BMCell = row.Cells.FirstOrDefault(c => c.ColumnId == RBM_BMId);
                         var SalesHeadCell = row.Cells.FirstOrDefault(c => c.ColumnId == SalesHeadId);
                         var MarketingHeadCell = row.Cells.FirstOrDefault(c => c.ColumnId == MarketingHeadId);
+                        var ComplianceCell = row.Cells.FirstOrDefault(c => c.ColumnId == ComplianceId);
                         var MedicalAffairsHeadCell = row.Cells.FirstOrDefault(c => c.ColumnId == MedicalAffairsHeadId);
                         var FinanceTreasuryCell = row.Cells.FirstOrDefault(c => c.ColumnId == FinanceTreasuryId);
                         var FinanceAccountsCell = row.Cells.FirstOrDefault(c => c.ColumnId == FinanceAccountsId);
@@ -170,12 +173,13 @@ namespace IndiaEventsWebApi.Controllers
                             var RBM_BM = RBM_BMCell.Value?.ToString();
                             var SalesHead = SalesHeadCell.Value?.ToString();
                             var MarketingHead = MarketingHeadCell.Value?.ToString();
+                            var Compliance = ComplianceCell.Value?.ToString();
                             var MedicalAffairsHead = MedicalAffairsHeadCell.Value?.ToString();
                             var FinanceTreasury = FinanceTreasuryCell.Value?.ToString();
                             var FinanceAccounts = FinanceAccountsCell.Value?.ToString();
                             var SalesCoordinator = SalesCoordinatorCell.Value?.ToString();
                            
-                            var token = CreateJwt(username,email, role, ReportingManager, FirstLevelManager, RBM_BM, SalesHead, MarketingHead, MedicalAffairsHead,FinanceTreasury, FinanceAccounts, SalesCoordinator);
+                            var token = CreateJwt(username,email, role, ReportingManager, FirstLevelManager, RBM_BM, SalesHead, MarketingHead, Compliance, MedicalAffairsHead,FinanceTreasury, FinanceAccounts, SalesCoordinator);
 
                             return Ok(new
                             { Token = token, Message = "Login Success!" });
@@ -222,7 +226,7 @@ namespace IndiaEventsWebApi.Controllers
 
                     var EmailColumnId = GetColumnIdByName(sheet, "EmailId");
                     var UsernameColumnId = GetColumnIdByName(sheet, "UserName");
-
+                    var ComplianceId = GetColumnIdByName(sheet, "Compliance Head");
                     var IsActiveColumnId = GetColumnIdByName(sheet, "IsActive");
                     var roleColumnId = GetColumnIdByName(sheet, "Designation");
                     var ReportingManagerColumnId = GetColumnIdByName(sheet, "Reporting Manager");
@@ -247,7 +251,7 @@ namespace IndiaEventsWebApi.Controllers
                     {
                         var EmailIdCell = row.Cells.FirstOrDefault(c => c.ColumnId == EmailColumnId);
                         var UsernameIdCell = row.Cells.FirstOrDefault(c => c.ColumnId == UsernameColumnId);
-
+                        var ComplianceCell = row.Cells.FirstOrDefault(c => c.ColumnId == ComplianceId);
                         var roleCell = row.Cells.FirstOrDefault(c => c.ColumnId == roleColumnId);
                         var ReportingManagerCell = row.Cells.FirstOrDefault(c => c.ColumnId == ReportingManagerColumnId);
                         var FirstLevelManagerCell = row.Cells.FirstOrDefault(c => c.ColumnId == FirstLevelManagerId);
@@ -268,7 +272,7 @@ namespace IndiaEventsWebApi.Controllers
                             }
                             var username = UsernameIdCell.Value?.ToString();
                             var email = EmailIdCell.Value?.ToString();
-
+                            var Compliance = ComplianceCell.Value?.ToString();
                             var role = roleCell.Value?.ToString();
                             var ReportingManager = ReportingManagerCell.Value?.ToString();
                             var FirstLevelManager = FirstLevelManagerCell.Value?.ToString();
@@ -280,7 +284,7 @@ namespace IndiaEventsWebApi.Controllers
                             var FinanceAccounts = FinanceAccountsCell.Value?.ToString();
                             var SalesCoordinator = SalesCoordinatorCell.Value?.ToString();
 
-                            var token = CreateJwt(username, email, role, ReportingManager, FirstLevelManager, RBM_BM, SalesHead, MarketingHead, MedicalAffairsHead,FinanceTreasury ,FinanceAccounts, SalesCoordinator);
+                            var token = CreateJwt(username, email, role, ReportingManager, FirstLevelManager, RBM_BM, SalesHead, MarketingHead, Compliance, MedicalAffairsHead,FinanceTreasury ,FinanceAccounts, SalesCoordinator);
 
                             return Ok(new
                             { Token = token, Message = "Login Success!" });
@@ -299,7 +303,7 @@ namespace IndiaEventsWebApi.Controllers
             }
             
         }
-        private string CreateJwt(string username, string email,string role, string reportingmanager, string firstLevelManager, string RBM_BM,string SalesHead, string MarketingHead, string MedicalAffairsHead, string FinanceTreasury, string FinanceAccounts, string SalesCoordinator)
+        private string CreateJwt(string username, string email,string role, string reportingmanager, string firstLevelManager, string RBM_BM,string SalesHead, string compliance, string MarketingHead, string MedicalAffairsHead, string FinanceTreasury, string FinanceAccounts, string SalesCoordinator)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes("veryveryveryveryverysecret......................");
@@ -313,6 +317,7 @@ namespace IndiaEventsWebApi.Controllers
                 new Claim("RBM_BM",RBM_BM),
                 new Claim("SalesHead",SalesHead),
                 new Claim("MarketingHead",MarketingHead),
+                new Claim("ComplianceHead",compliance),
                 new Claim("MedicalAffairsHead",MedicalAffairsHead),
                 new Claim("FinanceTreasury",FinanceTreasury),
                 new Claim("FinanceAccounts",FinanceAccounts),

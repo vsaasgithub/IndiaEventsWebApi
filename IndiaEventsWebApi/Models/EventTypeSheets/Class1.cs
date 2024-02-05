@@ -3,7 +3,6 @@
     public class Class1
     {
         public string? EventId { get; set; }
-
         public string? EventTopic { get; set; }
         public string? EventType { get; set; }
         public DateTime? EventDate { get; set; }
@@ -28,7 +27,7 @@
         public string? Initiator_Email { get; set; }
         public List<string>? Files { get; set; }
         public List<string>? DeviationFiles { get; set; }
-        public List<string>? Role { get; set; }
+        public string? Role { get; set; }
     }
     public class Class11
     {

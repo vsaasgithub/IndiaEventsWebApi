@@ -201,11 +201,11 @@ namespace IndiaEventsWebApi.Controllers
             }
             else if (bytes.Length >= 4 && (bytes[0] == 0xD0 && bytes[1] == 0xCF && bytes[2] == 0x11 && bytes[3] == 0xE0))
             {
-                return "doc"; // .doc format
+                return "doc";
             }
             else if (bytes.Length >= 4 && (bytes[0] == 0x50 && bytes[1] == 0x4B && bytes[2] == 0x03 && bytes[3] == 0x04))
             {
-                return "docx"; // .docx format
+                return "docx"; 
             }
             else
             {
@@ -256,10 +256,10 @@ namespace IndiaEventsWebApi.Controllers
                 #region
 
                 SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+
                 string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
                 long.TryParse(sheetId_SpeakerCode, out long parsedSheetId_SpeakerCode);
                 Sheet sheet_SpeakerCode = smartsheet.SheetResources.GetSheet(parsedSheetId_SpeakerCode, null, null, null, null, null, null, null);
-
 
                 string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
                 long.TryParse(sheetId, out long parsedSheetId);
@@ -268,7 +268,28 @@ namespace IndiaEventsWebApi.Controllers
                 string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
                 long.TryParse(sheetId1, out long parsedSheetId1);
                 Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
-                
+
+                string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
+                long.TryParse(processSheet, out long parsedProcessSheet);
+                Sheet processSheetData = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, null, null, null, null, null);
+
+                long rowId = 0;
+
+                Column processIdColumn = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
+                if (processIdColumn != null)
+                {
+                    // Find all rows with the specified speciality
+                    List<Row> targetRows = processSheetData.Rows
+                        .Where(row => row.Cells.Any(cell => cell.ColumnId == processIdColumn.Id && cell.Value.ToString() == EventID))
+                        .ToList();
+
+                    if (targetRows.Any())
+                    {
+                        var rowIds =targetRows.Select(row=>row.Id).ToList();
+                        rowId = (long)rowIds[0];
+                    }
+                  
+                }
 
 
                 Column SpecialityColumn = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
@@ -338,11 +359,7 @@ namespace IndiaEventsWebApi.Controllers
                             {
                                 newRow[columnName] = cell.DisplayValue;
                             }
-                            //else if (columnName == "HCPName" || columnName == "InviteeName")
-                            //{
-
-                            //    //newRow[columnName] = cell.DisplayValue;
-                            //}
+                          
                         }
 
                         dtMai.Rows.Add(newRow);
@@ -393,8 +410,9 @@ namespace IndiaEventsWebApi.Controllers
                 string filePath = Path.Combine(pathToSave, filename);
                 System.IO.File.WriteAllBytes(filePath, fileBytes);
 
+                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                            parsedProcessSheet, rowId, filePath, "application/msword");
 
-              
             }
             catch (Exception ex)
             {
@@ -474,7 +492,7 @@ namespace IndiaEventsWebApi.Controllers
 
     }
 }
- //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ // /////////  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
