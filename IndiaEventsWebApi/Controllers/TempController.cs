@@ -413,6 +413,11 @@ namespace IndiaEventsWebApi.Controllers
                 var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                             parsedProcessSheet, rowId, filePath, "application/msword");
 
+
+
+
+                List<Attachment> attachments = GetAttachmentsFromSheet(sheet_SpeakerCode, EventID);
+
             }
             catch (Exception ex)
             {
@@ -488,7 +493,43 @@ namespace IndiaEventsWebApi.Controllers
             byte[] result = ms.ToArray();
             return result;
         }
-       
+        //private List<Attachment> GetAttachmentsFromSheet(Sheet sheet, string eventID)
+        //{
+        //    Column attachmentColumn = sheet.Columns.FirstOrDefault(column => column.Title == "Attachments");
+        //    List<Attachment> attachments = new List<Attachment>();
+
+        //    if (attachmentColumn != null)
+        //    {
+        //        foreach (Row row in sheet.Rows)
+        //        {
+        //            string eventId = row.Cells.FirstOrDefault(cell => cell.ColumnId == attachmentColumn.Id)?.Value?.ToString();
+
+        //            if (!string.IsNullOrEmpty(eventId) && eventId.Equals(eventID, StringComparison.OrdinalIgnoreCase))
+        //            {
+        //                attachments.AddRange(row.Attachments);
+        //            }
+        //        }
+        //    }
+
+        //    return attachments;
+        //}
+
+        private List<Attachment> GetAttachmentsFromSheet(Sheet sheet, string eventID)
+        {
+            List<Attachment> attachments = new List<Attachment>();
+
+            foreach (Row row in sheet.Rows)
+            {
+                string eventId = row.Cells.FirstOrDefault(cell => cell.DisplayValue == eventID)?.Value?.ToString();
+
+                if (!string.IsNullOrEmpty(eventId) && eventId.Equals(eventID, StringComparison.OrdinalIgnoreCase))
+                {
+                    attachments.AddRange(row.Attachments);
+                }
+            }
+
+            return attachments;
+        }
 
     }
 }

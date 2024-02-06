@@ -79,8 +79,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                 var mis = "";
                 var sheetval = "";
                 string trainerType = formData.TrainerType;
-                //string lastTrainerCode = GetLastTrainerCode(parsedSheetId, trainerType, smartsheet);
-                //string newTrainerCode = IncrementTrainerCode(lastTrainerCode);
                 foreach (string i in sheetIds)
                 {
                     long.TryParse(i, out long p);
