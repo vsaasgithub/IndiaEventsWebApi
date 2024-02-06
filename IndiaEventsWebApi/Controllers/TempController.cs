@@ -6,6 +6,8 @@ using System.Text;
 using System.Data;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using IndiaEventsWebApi.Junk.Test;
+using Microsoft.Extensions.Logging;
 
 namespace IndiaEventsWebApi.Controllers
 {
@@ -285,10 +287,10 @@ namespace IndiaEventsWebApi.Controllers
 
                     if (targetRows.Any())
                     {
-                        var rowIds =targetRows.Select(row=>row.Id).ToList();
+                        var rowIds = targetRows.Select(row => row.Id).ToList();
                         rowId = (long)rowIds[0];
                     }
-                  
+
                 }
 
 
@@ -297,20 +299,20 @@ namespace IndiaEventsWebApi.Controllers
                 Column targetColumn2 = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventDate", StringComparison.OrdinalIgnoreCase));
                 Column targetColumn3 = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "VenueName", StringComparison.OrdinalIgnoreCase));
 
-                if ( SpecialityColumn != null)
+                if (SpecialityColumn != null)
                 {
                     Row targetRow = sheet1.Rows
                      .FirstOrDefault(row => row.Cells?.Any(cell => cell.ColumnId == SpecialityColumn.Id && cell.Value?.ToString() == EventID) == true);
 
                     if (targetRow != null)
                     {
-                        
+
                         EventCode = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == SpecialityColumn.Id)?.Value?.ToString();
                         EventName = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn1.Id)?.Value?.ToString();
                         EventDate = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn2.Id)?.Value?.ToString();
                         EventVenue = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn3.Id)?.Value?.ToString();
 
-                       
+
                     }
 
 
@@ -323,7 +325,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
-                List<string> requiredColumns = new List<string> { "HCPName","MISCode", "Speciality", "HCP Type" };
+                List<string> requiredColumns = new List<string> { "HCPName", "MISCode", "Speciality", "HCP Type" };
 
                 List<Column> selectedColumns = sheet_SpeakerCode.Columns
                     .Where(column => requiredColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase))
@@ -337,7 +339,7 @@ namespace IndiaEventsWebApi.Controllers
                 }
                 dtMai.Columns.Add("Sign");
                 int Sr_No = 1;
-                
+
 
                 foreach (Row row in sheet_SpeakerCode.Rows)
                 {
@@ -349,17 +351,17 @@ namespace IndiaEventsWebApi.Controllers
 
                         DataRow newRow = dtMai.NewRow();
                         newRow["S.No"] = Sr_No;
-                       
+
                         foreach (Cell cell in row.Cells)
                         {
                             string columnName = sheet_SpeakerCode.Columns
                                 .FirstOrDefault(c => c.Id == cell.ColumnId)?.Title;
 
-                            if (requiredColumns.Contains(columnName, StringComparer.OrdinalIgnoreCase) )
+                            if (requiredColumns.Contains(columnName, StringComparer.OrdinalIgnoreCase))
                             {
                                 newRow[columnName] = cell.DisplayValue;
                             }
-                          
+
                         }
 
                         dtMai.Rows.Add(newRow);
@@ -386,7 +388,7 @@ namespace IndiaEventsWebApi.Controllers
                             {
                                 newRow[columnName] = cell.DisplayValue;
                             }
-                          
+
                         }
 
                         dtMai.Rows.Add(newRow);
@@ -399,7 +401,7 @@ namespace IndiaEventsWebApi.Controllers
 
                 byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue);
                 string filename = "Sample_PDF_" + EventID + ".pdf";
-               
+
                 var folderName = Path.Combine("Resources", "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 if (!Directory.Exists(pathToSave))
@@ -410,14 +412,53 @@ namespace IndiaEventsWebApi.Controllers
                 string filePath = Path.Combine(pathToSave, filename);
                 System.IO.File.WriteAllBytes(filePath, fileBytes);
 
-                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                            parsedProcessSheet, rowId, filePath, "application/msword");
+                //var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                //            parsedProcessSheet, rowId, filePath, "application/msword");
 
 
 
 
-                List<Attachment> attachments = GetAttachmentsFromSheet(sheet_SpeakerCode, EventID);
+                //List<Attachment> attachments = GetAttachmentsFromSheet(sheet_SpeakerCode, EventID, parsedSheetId_SpeakerCode);
+                List<Attachment> attachments = new List<Attachment>();
 
+
+                foreach (Row row in sheet.Rows)
+                {
+                    Cell matchingCell = row.Cells.FirstOrDefault(cell => cell.DisplayValue == EventID);
+
+                    if (matchingCell != null && matchingCell.Value != null)
+                    {
+                        var Id =(long) row.Id;
+                        string eventId = matchingCell.Value.ToString();
+
+                        if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase))
+
+                        {
+                            var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(parsedSheetId_SpeakerCode, 6722568910180228, null);
+                            var url = "";
+                            foreach (var x in a.Data)
+                            {
+                                if (x != null)
+                                {
+                                    var AID = (long)x.Id;
+                                    var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(parsedSheetId_SpeakerCode, AID);
+                                    url = file.Url;
+
+                                }
+
+                                if (url != "")
+                                {
+                                    ////smartsheet.SheetResources.RowResources.AttachmentResources.AttachUrl(parsedProcessSheet, Id, url);
+                                    smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedProcessSheet, Id, url, "application/msword");
+                                    //url = "";
+
+                                }
+                              
+                            }
+                        }
+                    }
+
+                }
             }
             catch (Exception ex)
             {
@@ -493,47 +534,60 @@ namespace IndiaEventsWebApi.Controllers
             byte[] result = ms.ToArray();
             return result;
         }
-        //private List<Attachment> GetAttachmentsFromSheet(Sheet sheet, string eventID)
+     
+
+        //private List<Attachment> GetAttachmentsFromSheet(Sheet sheet, string eventID ,long sheetId)
         //{
-        //    Column attachmentColumn = sheet.Columns.FirstOrDefault(column => column.Title == "Attachments");
         //    List<Attachment> attachments = new List<Attachment>();
 
-        //    if (attachmentColumn != null)
+      
+        //    foreach (Row row in sheet.Rows)
         //    {
-        //        foreach (Row row in sheet.Rows)
+        //        Cell matchingCell = row.Cells.FirstOrDefault(cell => cell.DisplayValue == eventID);
+
+        //        if (matchingCell != null && matchingCell.Value != null)
         //        {
-        //            string eventId = row.Cells.FirstOrDefault(cell => cell.ColumnId == attachmentColumn.Id)?.Value?.ToString();
+        //            var rowId = row.Id;
+        //            string eventId = matchingCell.Value.ToString();
 
         //            if (!string.IsNullOrEmpty(eventId) && eventId.Equals(eventID, StringComparison.OrdinalIgnoreCase))
+
         //            {
-        //                attachments.AddRange(row.Attachments);
+        //                var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheetId, rowId, null);
+        //                if (row.Attachments != null)
+        //                {
+        //                    attachments.AddRange(row.Attachments);
+        //                }
+                      
         //            }
         //        }
         //    }
 
         //    return attachments;
         //}
+        //private getIds(Sheet sheet, string eventId)
+        //{
+        //    Column processIdColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
+        //    if (processIdColumn != null)
+        //    {
+        //        // Find all rows with the specified speciality
+        //        List<Row> targetRows = sheet.Rows
+        //            .Where(row => row.Cells.Any(cell => cell.ColumnId == processIdColumn.Id && cell.Value.ToString() == eventId))
+        //            .ToList();
 
-        private List<Attachment> GetAttachmentsFromSheet(Sheet sheet, string eventID)
-        {
-            List<Attachment> attachments = new List<Attachment>();
+        //        if (targetRows.Any())
+        //        {
+        //            var rowIds = targetRows.Select(row => row.Id).ToList();
+        //            var rowId = (long)rowIds[0];
+        //            ;
+        //        }
 
-            foreach (Row row in sheet.Rows)
-            {
-                string eventId = row.Cells.FirstOrDefault(cell => cell.DisplayValue == eventID)?.Value?.ToString();
-
-                if (!string.IsNullOrEmpty(eventId) && eventId.Equals(eventID, StringComparison.OrdinalIgnoreCase))
-                {
-                    attachments.AddRange(row.Attachments);
-                }
-            }
-
-            return attachments;
-        }
+        //    }
+        //}
 
     }
 }
- // /////////  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ // /////////  //////////////////////////////////////////////////////////////// /// ///// //// //// //// /// ////// ////// //// //// //////////
 
 
 
