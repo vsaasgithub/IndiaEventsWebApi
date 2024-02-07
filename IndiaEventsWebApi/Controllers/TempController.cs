@@ -239,23 +239,13 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-                //EventID = "RQID95";
-
-                //DataTable dtMain = new DataTable();
-                //dtMain.Columns.Add("S.No");
-                //dtMain.Columns.Add("HCP Name");
-                //dtMain.Columns.Add("MIS Code");
-                //dtMain.Columns.Add("GO/Non-GO");
-                //dtMain.Columns.Add("Speciality");
-                //dtMain.Columns.Add("Sign");
-                //int SrNo = 1;
 
                 var EventCode = "";
                 var EventName = "";
                 var EventDate = "";
                 var EventVenue = "";
 
-                #region
+
 
                 SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
@@ -397,7 +387,7 @@ namespace IndiaEventsWebApi.Controllers
                 }
 
 
-                #endregion
+
 
                 byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue);
                 string filename = "Sample_PDF_" + EventID + ".pdf";
@@ -412,29 +402,33 @@ namespace IndiaEventsWebApi.Controllers
                 string filePath = Path.Combine(pathToSave, filename);
                 System.IO.File.WriteAllBytes(filePath, fileBytes);
 
-                //var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                //            parsedProcessSheet, rowId, filePath, "application/msword");
+                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                            parsedProcessSheet, rowId, filePath, "application/msword");
 
 
+                //if (System.IO.File.Exists(filePath))
+                //{
+                //    System.IO.File.Delete(filePath);
+                //}
 
 
                 //List<Attachment> attachments = GetAttachmentsFromSheet(sheet_SpeakerCode, EventID, parsedSheetId_SpeakerCode);
                 List<Attachment> attachments = new List<Attachment>();
 
 
-                foreach (Row row in sheet.Rows)
+                foreach (Row row in sheet_SpeakerCode.Rows)
                 {
                     Cell matchingCell = row.Cells.FirstOrDefault(cell => cell.DisplayValue == EventID);
 
                     if (matchingCell != null && matchingCell.Value != null)
                     {
-                        var Id =(long) row.Id;
+                        var Id = (long)row.Id;
                         string eventId = matchingCell.Value.ToString();
 
                         if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase))
 
                         {
-                            var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(parsedSheetId_SpeakerCode, 6722568910180228, null);
+                            var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(parsedSheetId_SpeakerCode, Id, null);
                             var url = "";
                             foreach (var x in a.Data)
                             {
@@ -448,12 +442,44 @@ namespace IndiaEventsWebApi.Controllers
 
                                 if (url != "")
                                 {
-                                    ////smartsheet.SheetResources.RowResources.AttachmentResources.AttachUrl(parsedProcessSheet, Id, url);
-                                    smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedProcessSheet, Id, url, "application/msword");
-                                    //url = "";
+                                    using (HttpClient client = new HttpClient())
+                                    {
+                                        byte[] data = client.GetByteArrayAsync(url).Result;
+                                        string base64 = Convert.ToBase64String(data);
+
+                                        byte[] xy = Convert.FromBase64String(base64);
+                                        var f = Path.Combine("Resources", "Images");
+                                        var ps = Path.Combine(Directory.GetCurrentDirectory(), f);
+                                        if (!Directory.Exists(ps))
+                                        {
+                                            Directory.CreateDirectory(ps);
+                                        }
+
+                                        string ft = GetFileType(xy);
+                                        string fileName = eventId + "-" + x + " AttachedFile." + ft;
+
+                                        string fp = Path.Combine(ps, fileName);
+
+                                        var addedRow = rowId;
+
+                                        System.IO.File.WriteAllBytes(fp, xy);
+                                        string type = GetContentType(ft);
+                                        var z = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                                parsedProcessSheet, addedRow, fp, "application/msword");
+                                    }
+                                    ////string bs64 = ConvertImageURLToBase64(url);
+                                    var bs64 = "";
+
+
+
+
+
+                                    //////smartsheet.SheetResources.RowResources.AttachmentResources.AttachUrl(parsedProcessSheet, Id, url);
+                                    //smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedProcessSheet, Id, url, "application/msword");
+                                    ////url = "";
 
                                 }
-                              
+
                             }
                         }
                     }
