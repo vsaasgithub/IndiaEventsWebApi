@@ -2,8 +2,7 @@
 
 namespace IndiaEventsWebApi.Models.EventTypeSheets
 {
-    public class MedicalUtility
-    {
+   
         public class MedicalUtilityData
         {
             public string? EventTopic { get; set; }
@@ -27,11 +26,11 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
             public string? InitiatorName { get; set; }
             public string? Role { get; set; }
             public string? Initiator_Email { get; set; }
-            public List<string>? AggregateDeviationFiles { get; set; }
+           // public List<string>? AggregateDeviationFiles { get; set; }
             public string? UploadDeviationFile { get; set; }
         }
 
-        public class HCPList
+        public class HCPListData
         {
             public string? HcpName { get; set; }
             public string? MisCode { get; set; }
@@ -49,7 +48,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
             public DateTime? Fcpadate { get; set; }            
         }
 
-        public class ExpenseList
+        public class ExpenseListData
         {
             public string? Expense { get; set; }
             public string? BTC_BTE { get; set; }
@@ -62,10 +61,10 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         {
             public MedicalUtilityData? MedicalUtilityData { get; set; }
             public List<EventRequestBrandsList>? BrandsList { get; set; }
-            public List<ExpenseList>? ExpenseSheet { get; set; }
-            public List<HCPList>? HcpList { get; set; }
+            public List<ExpenseListData>? ExpenseSheet { get; set; }
+            public List<HCPListData>? HcpList { get; set; }
         }
 
        
-    }
+    
 }
