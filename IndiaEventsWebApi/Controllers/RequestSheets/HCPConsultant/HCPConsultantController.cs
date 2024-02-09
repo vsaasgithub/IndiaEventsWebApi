@@ -1,4 +1,5 @@
-﻿using IndiaEventsWebApi.Models;
+﻿using Aspose.Pdf.Plugins;
+using IndiaEventsWebApi.Models;
 using IndiaEventsWebApi.Models.EventTypeSheets;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -795,6 +796,98 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
 
         }
 
+        [HttpPost("HcpFollowup")]
+        public IActionResult HcpFollowup(List<HCPfollow_upsheet> formDataList)
+        {
+            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+            string sheetId1 = configuration.GetSection("SmartsheetSettings:HcpFollowup").Value;
+            long.TryParse(sheetId1, out long parsedSheetId1);
+            Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
+
+            foreach (var formdata in formDataList)
+            {
+                try
+                {
+
+                    var newRow = new Row();
+                    newRow.Cells = new List<Cell>();
+                    newRow.Cells.Add(new Cell
+                    {
+                        ColumnId = GetColumnIdByName(sheet1, "HCP Name"),
+                        Value = formdata.HCPName
+                    });
+
+                    newRow.Cells.Add(new Cell
+                    {
+                        ColumnId = GetColumnIdByName(sheet1, "MIS Code"),
+                        Value = formdata.MisCode
+                    });
+                    newRow.Cells.Add(new Cell
+                    {
+                        ColumnId = GetColumnIdByName(sheet1, "GO/N-GO"),
+                        Value = formdata.GO_NGO
+                    });
+                    newRow.Cells.Add(new Cell
+                    {
+                        ColumnId = GetColumnIdByName(sheet1, "Country"),
+                        Value = formdata.Country
+                    });
+                    newRow.Cells.Add(new Cell
+                    {
+                        ColumnId = GetColumnIdByName(sheet1, "How many days since the parent event Completes"),
+                        Value = formdata.How_many_days_since_the_parent_event_completes
+                    });
+                    newRow.Cells.Add(new Cell
+                    {
+                        ColumnId = GetColumnIdByName(sheet1, "Follow-up Event Date"),
+                        Value = formdata.Follow_up_Event_Date
+                    });
+
+                    newRow.Cells.Add(new Cell
+                    {
+                        ColumnId = GetColumnIdByName(sheet1, "Follow-up Event Code"),
+                        Value = formdata.Follow_up_Event
+                    });
+                    var addedRows = smartsheet.SheetResources.RowResources.AddRows(parsedSheetId1, new Row[] { newRow });
+
+                    if (formdata.AgreementFile != "")
+                    {
+                        byte[] fileBytes = Convert.FromBase64String(formdata.AgreementFile);
+                        var folderName = Path.Combine("Resources", "Images");
+                        var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                        if (!Directory.Exists(pathToSave))
+                        {
+                            Directory.CreateDirectory(pathToSave);
+                        }
+
+                        string fileType = GetFileType(fileBytes);
+                        string fileName = "AgreementFile." + fileType;
+                        // string fileName = val+x + ": AttachedFile." + fileType;
+                        string filePath = Path.Combine(pathToSave, fileName);
+
+
+                        var addedRow = addedRows[0];
+
+                        System.IO.File.WriteAllBytes(filePath, fileBytes);
+                        string type = GetContentType(fileType);
+                        var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                parsedSheetId1, addedRow.Id.Value, filePath, "application/msword");
+
+                    }
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+            return Ok(new { Message = " success!" });
+        }
+
+
+
 
         private string GetContentType(string fileExtension)
         {
@@ -857,9 +950,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
             }
         }
 
-
-
-
         private long GetColumnIdByName(Sheet sheet, string columnname)
         {
             foreach (var column in sheet.Columns)
@@ -871,6 +961,10 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
             }
             return 0;
         }
+
+
+
+
         private Row GetRowById(SmartsheetClient smartsheet, long sheetId, string val)
         {
             Sheet sheet = smartsheet.SheetResources.GetSheet(sheetId, null, null, null, null, null, null, null);
