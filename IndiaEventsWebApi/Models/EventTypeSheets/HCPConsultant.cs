@@ -7,6 +7,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? EventTopic { get; set; }
         public string? EventType { get; set; }
         public DateTime? EventDate { get; set; }
+        public DateTime? EventEndDate { get; set; }
         public string? StartTime { get; set; }
         public string? EndTime { get; set; }
         public string? VenueName { get; set; }
@@ -79,18 +80,16 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
     //    public List<EventRequestExpenseSheet>? EventRequestExpenseSheet { get; set; }
     //    // public IFormFile? formFile { get; set; }
     //}
-
-
-
     public class HCPfollow_upsheet
     {
         public string? HCPName { get; set; }
         public string? MisCode { get; set; }
-        public DateTime? GO_NGO { get; set; }
+        public string? GO_NGO { get; set; }
         public string? Country { get; set; }
         public string? How_many_days_since_the_parent_event_completes { get; set; }
         public string? Follow_up_Event { get; set; }
         public DateTime? Follow_up_Event_Date { get; set; }
+        public DateTime? Event_Date { get; set; }
         public string? AgreementFile { get; set; }
     }
 }
