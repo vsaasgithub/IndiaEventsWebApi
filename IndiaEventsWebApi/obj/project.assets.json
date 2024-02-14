@@ -8405,11 +8405,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
+      "projectUniqueName": "D:\\vsaasGit\\API\\MieProject\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
       "projectName": "IndiaEventsWebApi",
-      "projectPath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
+      "projectPath": "D:\\vsaasGit\\API\\MieProject\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
       "packagesPath": "C:\\Users\\srikanth.n\\.nuget\\packages\\",
-      "outputPath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\obj\\",
+      "outputPath": "D:\\vsaasGit\\API\\MieProject\\IndiaEventsWebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
