@@ -357,8 +357,6 @@ namespace IndiaEventsWebApi.Controllers
 
     }
 }
-// /////////  //////////////////////////////////////////////////////////////// /// ///// //// //// //// /// ////// ////// //// //// //////////
-
 
 //private List<Attachment> GetAttachmentsFromSheet(Sheet sheet, string eventID ,long sheetId)
 //{

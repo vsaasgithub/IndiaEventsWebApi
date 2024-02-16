@@ -69,13 +69,13 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                 Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
                 string[] sheetIds = {
                 //configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster4").Value,
+                //configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
+                //configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
+                //configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
+                //configuration.GetSection("SmartsheetSettings:HcpMaster4").Value,
                 configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value,
-                configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value,
-                configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value
+                //configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value,
+                //configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value
 
                 };
                 var mis = "";
@@ -113,6 +113,28 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                     {
                         var newRow = new Row();
                         newRow.Cells = new List<Cell>();
+                        newRow.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet, "Initiator Name"),
+                            Value = formData.InitiatorNameName
+                        });
+
+                        newRow.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet, "Initiator Email"),
+                            Value = formData.InitiatorEmail
+                        });
+                        newRow.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet, "Sales Head"),
+                            Value = formData.SalesHead
+                        });
+                        newRow.Cells.Add(new Cell
+                        {
+                            ColumnId = GetColumnIdByName(sheet, "Medical Affairs Head"),
+                            Value = formData.MedicalAffairsHead
+                        });
+
                         newRow.Cells.Add(new Cell
                         {
                             ColumnId = GetColumnIdByName(sheet, "SpeakerName"),
