@@ -233,10 +233,13 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 var x = 1;
                 foreach (var p in formDataList.class1.Files)
                 {
+                    string[] words = p.Split(':');
+                    var r = words[0];
+                    var q = words[1];
 
 
 
-                    byte[] fileBytes = Convert.FromBase64String(p);
+                    byte[] fileBytes = Convert.FromBase64String(q);
                     var folderName = Path.Combine("Resources", "Images");
                     var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                     if (!Directory.Exists(pathToSave))
@@ -245,7 +248,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     }
 
                     string fileType = GetFileType(fileBytes);
-                    string fileName = val + "-" + x + " AttachedFile." + fileType;
+                    string fileName = r;
                     // string fileName = val+x + ": AttachedFile." + fileType;
                     string filePath = Path.Combine(pathToSave, fileName);
 
@@ -305,10 +308,12 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         var j = 1;
                         foreach (var p in formDataList.class1.DeviationFiles)
                         {
+                            string[] words = p.Split(':');
+                            var r = words[0];
+                            var q = words[1];
 
 
-
-                            byte[] fileBytes = Convert.FromBase64String(p);
+                            byte[] fileBytes = Convert.FromBase64String(q);
                             var folderName = Path.Combine("Resources", "Images");
                             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                             if (!Directory.Exists(pathToSave))
@@ -317,7 +322,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             }
 
                             string fileType = GetFileType(fileBytes);
-                            string fileName = eventId + "-" + j + " AttachedFile." + fileType;
+                            string fileName = r;
                             // string fileName = val+x + ": AttachedFile." + fileType;
                             string filePath = Path.Combine(pathToSave, fileName);
 
