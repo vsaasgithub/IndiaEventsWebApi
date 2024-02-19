@@ -8,6 +8,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using IndiaEventsWebApi.Junk.Test;
 using Microsoft.Extensions.Logging;
+using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 
 namespace IndiaEventsWebApi.Controllers
 {
@@ -22,6 +23,49 @@ namespace IndiaEventsWebApi.Controllers
             this.configuration = configuration;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
         }
+
+        [HttpPost("Basestring")]
+        public IActionResult Basestring(string[] data)
+        {
+            foreach (var x in data)
+            {
+                // string phrase = "The quick:brown fox jumps over the lazy dog.";
+                string[] words = x.Split(':');
+                var p = words[0];
+                var q = words[1];
+
+                byte[] fileBytes = Convert.FromBase64String(q);
+                var folderName = Path.Combine("Resources", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                if (!Directory.Exists(pathToSave))
+                {
+                    Directory.CreateDirectory(pathToSave);
+                }
+
+                string fileType = GetFileType(fileBytes);
+                string fileName = p + fileType;
+                // string fileName = val+x + ": AttachedFile." + fileType;
+                string filePath = Path.Combine(pathToSave, fileName);
+
+
+                //var addedRow = addeddeviationrow[0];
+
+                System.IO.File.WriteAllBytes(filePath, fileBytes);
+                string type = GetContentType(fileType);
+                //var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                //parsedSheetId7, addedRow.Id.Value, filePath, "application/msword");
+                //j++;
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+            }
+            return Ok("Null");
+        }
+
+
         [HttpGet("GenerateSummaryPDF")]
         public void GenerateSummaryPDF(string EventID)
         {
@@ -469,10 +513,107 @@ namespace IndiaEventsWebApi.Controllers
             }
             return 0;
         }
+
+
+
       
+
+
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //private List<Attachment> GetAttachmentsFromSheet(Sheet sheet, string eventID ,long sheetId)
 //{
