@@ -391,7 +391,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "SpeakerCode"), Value = formData.SpeakerCode });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "TrainerCode"), Value = formData.TrainerCode });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "HonorariumRequired"), Value = formData.HonorariumRequired });
-                               
+                    newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "AgreementAmount"), Value = formData.HonarariumAmount });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Speciality"), Value = formData.Speciality });
                     if (formData.HcpRole == "Speaker")
                     {
