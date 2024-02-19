@@ -105,115 +105,42 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                         }
                     }
                 }
-                    if (mis != "")
-                    {
-                        return Ok($"MIS Code: {formData.MISCode} already exist in sheetname:{sheetval}");
-                    }
-                    else
-                    {
-                        var newRow = new Row();
-                        newRow.Cells = new List<Cell>();
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Initiator Name"),
-                            Value = formData.InitiatorNameName
-                        });
+                if (mis != "")
+                {
+                    return Ok($"MIS Code: {formData.MISCode} already exist in sheetname:{sheetval}");
+                }
+                else
+                {
+                    var newRow = new Row();
+                    newRow.Cells = new List<Cell>();
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Initiator Name"), Value = formData.InitiatorNameName });
 
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Initiator Email"),
-                            Value = formData.InitiatorEmail
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Sales Head"),
-                            Value = formData.SalesHead
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Medical Affairs Head"),
-                            Value = formData.MedicalAffairsHead
-                        });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Initiator Email"), Value = formData.InitiatorEmail });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Sales Head"), Value = formData.SalesHead });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Medical Affairs Head"), Value = formData.MedicalAffairsHead });
 
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "SpeakerName"),
-                            Value = formData.SpeakerName
-                        });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "SpeakerName"), Value = formData.SpeakerName });
 
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Speaker Code"),
-                            Value = formData.SpeakerCode
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "MisCode"),
-                            Value = formData.MISCode
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Division"),
-                            Value = formData.Division
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Speciality"),
-                            Value = formData.Speciality
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Qualification"),
-                            Value = formData.Qualification
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Address"),
-                            Value = formData.Address
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "City"),
-                            Value = formData.City
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "State"),
-                            Value = formData.State
-
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Country"),
-                            Value = formData.Country
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Contact Number"),
-                            Value = formData.Contact_Number
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Speaker Type"),
-                            Value = formData.Speaker_Type
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Speaker Category"),
-                            Value = formData.Speaker_Category
-                        });
-                        newRow.Cells.Add(new Cell
-                        {
-                            ColumnId = GetColumnIdByName(sheet, "Speaker Criteria"),
-                            Value = formData.Speaker_Criteria
-                        });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Speaker Code"), Value = formData.SpeakerCode });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "MisCode"), Value = formData.MISCode });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Division"), Value = formData.Division });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Speciality"), Value = formData.Speciality });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Qualification"), Value = formData.Qualification });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Address"), Value = formData.Address });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "City"), Value = formData.City });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "State"), Value = formData.State });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Country"), Value = formData.Country });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Contact Number"), Value = formData.Contact_Number });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Speaker Type"), Value = formData.Speaker_Type });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Speaker Category"), Value = formData.Speaker_Category });
+                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Speaker Criteria"), Value = formData.Speaker_Criteria });
 
 
 
-                        var addedRows = smartsheet.SheetResources.RowResources.AddRows(parsedSheetId, new Row[] { newRow });
-                    }   
-                
-                
+                    var addedRows = smartsheet.SheetResources.RowResources.AddRows(parsedSheetId, new Row[] { newRow });
+                }
+
+
                 return Ok(new
                 { Message = "Data added successfully." });
 
@@ -236,7 +163,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
             return 0;
         }
     }
-  
+
 }
 
 
