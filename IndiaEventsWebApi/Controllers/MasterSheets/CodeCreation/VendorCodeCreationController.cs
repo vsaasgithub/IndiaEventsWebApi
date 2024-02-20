@@ -314,7 +314,93 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                 var IsChequeDocument = !string.IsNullOrEmpty(formData.ChequeDocument) ? "Yes" : "No";
                 var IsTaxResidenceCertificate = !string.IsNullOrEmpty(formData.TaxResidenceCertificate) ? "Yes" : "No";
 
+                if (IsChequeDocument == "Yes")
+                {
 
+                    byte[] fileBytes = Convert.FromBase64String(formData.ChequeDocument);
+                    var folderName = Path.Combine("Resources", "Images");
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    if (!Directory.Exists(pathToSave))
+                    {
+                        Directory.CreateDirectory(pathToSave);
+                    }
+
+                    string fileType = GetFileType(fileBytes);
+                    string fileName = " ChequeDocument." + fileType;
+
+                    string filePath = Path.Combine(pathToSave, fileName);
+
+
+                    var addedRow = updatedRow[0];
+
+                    System.IO.File.WriteAllBytes(filePath, fileBytes);
+                    // string type = GetContentType(fileType);
+                    var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                            parsedSheetId, addedRow.Id.Value, filePath, "application/msword");
+
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
+                if (IsPanCardDocument == "Yes")
+                {
+                    //var addFile = AddFile(formData.TrainerCV,RowId );
+                    byte[] fileBytes = Convert.FromBase64String(formData.PanCardDocument);
+                    var folderName = Path.Combine("Resources", "Images");
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    if (!Directory.Exists(pathToSave))
+                    {
+                        Directory.CreateDirectory(pathToSave);
+                    }
+
+                    string fileType = GetFileType(fileBytes);
+                    string fileName = " PanCardDocument." + fileType;
+                    // string fileName = val+x + ": AttachedFile." + fileType;
+                    string filePath = Path.Combine(pathToSave, fileName);
+
+
+                    var addedRow = updatedRow[0];
+
+                    System.IO.File.WriteAllBytes(filePath, fileBytes);
+                    // string type = GetContentType(fileType);
+                    var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                            parsedSheetId, addedRow.Id.Value, filePath, "application/msword");
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+
+                }
+                if (IsTaxResidenceCertificate == "Yes")
+                {
+                    //var addFile = AddFile(formData.TrainerCV,RowId );
+                    byte[] fileBytes = Convert.FromBase64String(formData.TaxResidenceCertificate);
+                    var folderName = Path.Combine("Resources", "Images");
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    if (!Directory.Exists(pathToSave))
+                    {
+                        Directory.CreateDirectory(pathToSave);
+                    }
+
+                    string fileType = GetFileType(fileBytes);
+                    string fileName = " TaxResidenceCertificate." + fileType;
+                    // string fileName = val+x + ": AttachedFile." + fileType;
+                    string filePath = Path.Combine(pathToSave, fileName);
+
+
+                    var addedRow = updatedRow[0];
+
+                    System.IO.File.WriteAllBytes(filePath, fileBytes);
+                    // string type = GetContentType(fileType);
+                    var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                            parsedSheetId, addedRow.Id.Value, filePath, "application/msword");
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+
+                }
 
 
 
@@ -347,6 +433,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                 long.TryParse(i, out long p);
                 Sheet sheeti = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
                 Column misCodeColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "VendorId");
+                Column DateColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "Tax Residence Certificate Date");
                 if (misCodeColumn != null)
                 {
                     Row existingRow = sheeti.Rows.FirstOrDefault(row =>
@@ -358,6 +445,14 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                     if (existingRow != null)
                     {
                         Cell VendorCell = existingRow.Cells.FirstOrDefault(cell => cell.ColumnId == misCodeColumn.Id);
+                        Cell DateCell = existingRow.Cells.FirstOrDefault(cell => cell.ColumnId == DateColumn.Id);
+
+                        var date = DateCell?.Value?.ToString();
+
+
+                        var TaxResidenceCertificateDate = !string.IsNullOrEmpty(date) ? $"{"TaxResidenceCertificateDate"}:{date}" : "No";
+
+
                         var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(p, existingRow.Id.Value, null);
                         var url = "";
 
@@ -384,8 +479,8 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                             }
                         }
                         return Ok(new
-                        {                         
-                            rowData,
+                        {
+                            TaxResidenceCertificateDate,
                             dataArray
                         });
                     }
