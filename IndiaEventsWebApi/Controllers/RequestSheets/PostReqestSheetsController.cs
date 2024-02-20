@@ -589,7 +589,13 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 string panalist = addedHcpData.ToString();
 
 
+                //var meetingtype = "";
 
+                //var target = sheet1.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formData.RequestHonorariumList.EventId));
+                //if(target != null)
+                //{
+
+                //}
 
 
                 var newRow = new Row();
