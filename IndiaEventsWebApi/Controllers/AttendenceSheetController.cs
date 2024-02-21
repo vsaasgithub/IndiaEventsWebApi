@@ -21,8 +21,8 @@ namespace IndiaEventsWebApi.Controllers
             this.configuration = configuration;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
         }
-        [HttpGet("GenerateSummaryPDF")]
-        public void GenerateSummaryPDF(string EventID)
+        [HttpGet("GenerateAttendencePDF")]
+        public IActionResult GenerateAttendencePDF(string EventID)
         {
             try
             {
@@ -46,18 +46,18 @@ namespace IndiaEventsWebApi.Controllers
                 long.TryParse(sheetId1, out long parsedSheetId1);
                 Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
 
+
                 string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
                 long.TryParse(processSheet, out long parsedProcessSheet);
                 Sheet processSheetData = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, null, null, null, null, null);
 
                 long rowId = 0;
-
-                Column processIdColumn = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
-                if (processIdColumn != null)
+                Column IdColumn = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
+                if (IdColumn != null)
                 {
                     // Find all rows with the specified speciality
-                    List<Row> targetRows = processSheetData.Rows
-                        .Where(row => row.Cells.Any(cell => cell.ColumnId == processIdColumn.Id && cell.Value.ToString() == EventID))
+                    List<Row> targetRows = sheet1.Rows
+                        .Where(row => row.Cells.Any(cell => cell.ColumnId == IdColumn.Id && cell.Value.ToString() == EventID))
                         .ToList();
 
                     if (targetRows.Any())
@@ -67,6 +67,10 @@ namespace IndiaEventsWebApi.Controllers
                     }
 
                 }
+                var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(parsedSheetId1, rowId, null);
+
+
+
 
 
                 Column SpecialityColumn = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
@@ -141,8 +145,25 @@ namespace IndiaEventsWebApi.Controllers
                         Sr_No++;
                     }
                 }
+                foreach (var x in a.Data)
+                {
+                    long Id = (long)x.Id;
+                    var Fullname = x.Name.Split("-");
+                    var splitName = Fullname[0];
+
+                    if (splitName == "AttendenceSheet")
+                    {
+
+                        smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
+                          parsedSheetId1,           // sheetId
+                          Id            // attachmentId
+                        );
+
+                    }
+                }
+
                 byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, dtMai);
-                string filename = "Sample_PDF_" + EventID + ".pdf";
+                string filename = "AttendenceSheet-" + EventID + ".pdf";
                 var folderName = Path.Combine("Resources", "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 if (!Directory.Exists(pathToSave))
@@ -152,68 +173,32 @@ namespace IndiaEventsWebApi.Controllers
                 string fileType = GetFileType(fileBytes);
                 string filePath = Path.Combine(pathToSave, filename);
                 System.IO.File.WriteAllBytes(filePath, fileBytes);
-                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedProcessSheet, rowId, filePath, "application/msword");
+
+                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedSheetId1, rowId, filePath, "application/msword");
+
+                var FileUrl = "";
+                var AID = (long)attachment.Id;
+                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(parsedSheetId1, AID);
+                FileUrl = file.Url;
+
+                //string downloadLink = GetDownloadLink(filename);
                 if (System.IO.File.Exists(filePath))
                 {
                     System.IO.File.Delete(filePath);
                 }
-                List<Attachment> attachments = new List<Attachment>();
 
-                foreach (Row row in sheet_SpeakerCode.Rows)
-                {
-                    Cell matchingCell = row.Cells.FirstOrDefault(cell => cell.DisplayValue == EventID);
 
-                    if (matchingCell != null && matchingCell.Value != null)
-                    {
-                        var Id = (long)row.Id;
-                        string eventId = matchingCell.Value.ToString();
-                        if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase))
-                        {
-                            var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(parsedSheetId_SpeakerCode, Id, null);
-                            var url = "";
-                            foreach (var x in a.Data)
-                            {
-                                if (x != null)
-                                {
-                                    var AID = (long)x.Id;
-                                    var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(parsedSheetId_SpeakerCode, AID);
-                                    url = file.Url;
-                                }
-                                if (url != "")
-                                {
-                                    using (HttpClient client = new HttpClient())
-                                    {
-                                        byte[] data = client.GetByteArrayAsync(url).Result;
-                                        string base64 = Convert.ToBase64String(data);
-                                        byte[] xy = Convert.FromBase64String(base64);
-                                        var f = Path.Combine("Resources", "Images");
-                                        var ps = Path.Combine(Directory.GetCurrentDirectory(), f);
-                                        if (!Directory.Exists(ps))
-                                        {
-                                            Directory.CreateDirectory(ps);
-                                        }
-                                        string ft = GetFileType(xy);
-                                        string fileName = eventId + "-" + x + " AttachedFile." + ft;
-                                        string fp = Path.Combine(ps, fileName);
-                                        var addedRow = rowId;
-                                        System.IO.File.WriteAllBytes(fp, xy);
-                                        string type = GetContentType(ft);
-                                        var z = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedProcessSheet, addedRow, fp, "application/msword");
-                                    }
-                                    var bs64 = "";
-                                }
-                            }
-                        }
-                    }
-                }
+                return Ok(new { FileUrl});
+
+
             }
             catch (Exception ex)
             {
-                //return BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
-          private byte[] exportpdf(DataTable dtEmployee, string EventCode, string EventName, string EventDate, string EventVenue , DataTable dtMai)
+        private byte[] exportpdf(DataTable dtEmployee, string EventCode, string EventName, string EventDate, string EventVenue, DataTable dtMai)
         {
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
             iTextSharp.text.Rectangle rec = new iTextSharp.text.Rectangle(PageSize.A4);
@@ -256,7 +241,7 @@ namespace IndiaEventsWebApi.Controllers
             doc.Add(new Paragraph("\n "));
             PdfPTable table = new PdfPTable(dtEmployee.Columns.Count);
             table.WidthPercentage = 100;
-            float[] columnWidths = Enumerable.Range(0, dtEmployee.Columns.Count).Select(i=>i==dtEmployee.Columns.IndexOf("HCPName") ? 2f : 1f).ToArray(); /*Count).Select(i => 1f).ToArray();*/
+            float[] columnWidths = Enumerable.Range(0, dtEmployee.Columns.Count).Select(i => i == dtEmployee.Columns.IndexOf("HCPName") ? 2f : 1f).ToArray(); /*Count).Select(i => 1f).ToArray();*/
             table.SetWidths(columnWidths);
 
             for (int i = 0; i < dtEmployee.Columns.Count; i++)
@@ -282,29 +267,6 @@ namespace IndiaEventsWebApi.Controllers
             return result;
         }
 
-        private string GetContentType(string fileExtension)
-        {
-            switch (fileExtension.ToLower())
-            {
-                case "jpg":
-                case "jpeg":
-                    return "image/jpeg";
-                case "pdf":
-                    return "application/pdf";
-                case "gif":
-                    return "image/gif";
-                case "png":
-                    return "image/png";
-                case "webp":
-                    return "image/webp";
-                case "doc":
-                    return "application/msword";
-                case "docx":
-                    return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                default:
-                    return "application/octet-stream";
-            }
-        }
 
         private string GetFileType(byte[] bytes)
         {
@@ -342,6 +304,8 @@ namespace IndiaEventsWebApi.Controllers
                 return "unknown";
             }
         }
+
+
 
     }
 
