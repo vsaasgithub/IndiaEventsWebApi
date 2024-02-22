@@ -188,7 +188,7 @@ namespace IndiaEventsWebApi.Controllers
                 }
 
 
-                return Ok(new { FileUrl});
+                return Ok(new { FileUrl });
 
 
             }
@@ -200,7 +200,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
         [HttpGet("AttendencesheetBase64value")]
-           public IActionResult AttendencesheetBase64value(string EventID)
+        public IActionResult AttendencesheetBase64value(string EventID)
         {
             try
             {
@@ -374,9 +374,9 @@ namespace IndiaEventsWebApi.Controllers
                     var base64String = Convert.ToBase64String(fileContent);
 
 
-                     data = $"{Name}:{base64String}";
+                    data = $"{Name}:{base64String}";
 
-                   
+
                 }
                 return Ok(new { data });
 

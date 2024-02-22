@@ -275,13 +275,11 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     var eventId = val;
                     try
                     {
-
                         var newRow7 = new Row();
                         newRow7.Cells = new List<Cell>();
 
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Event Topic"), Value = formDataList.class1.EventTopic });
-
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EventType"), Value = formDataList.class1.EventType });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EventDate"), Value = formDataList.class1.EventDate });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "StartTime"), Value = formDataList.class1.StartTime });
@@ -289,13 +287,11 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "VenueName"), Value = formDataList.class1.VenueName });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "City"), Value = formDataList.class1.City });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "State"), Value = formDataList.class1.State });
-
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EventOpen30days"), Value = formDataList.class1.EventOpen30days });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EventWithin7days"), Value = formDataList.class1.EventWithin7days });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"), Value = formDataList.class1.FB_Expense_Excluding_Tax });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Sales Head"), Value = formDataList.class1.Sales_Head });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.class1.Sales_Head });
-
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "InitiatorName"), Value = formDataList.class1.InitiatorName });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.class1.Initiator_Email });
 
@@ -334,7 +330,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                     parsedSheetId7, addedRow.Id.Value, filePath, "application/msword");
                             j++;
-                            // ////////////////////////////////
                             if (System.IO.File.Exists(filePath))
                             {
                                 System.IO.File.Delete(filePath);
@@ -387,7 +382,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     var newRow1 = new Row();
                     newRow1.Cells = new List<Cell>();
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "HcpRole"), Value = formData.HcpRole });
-
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "MISCode"), Value = formData.MisCode });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Travel"), Value = formData.Travel });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "TotalSpend"), Value = formData.FinalAmount });
@@ -403,7 +397,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "HCPName"), Value = formData.HcpName });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.class1.EventTopic });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.class1.EventType });
-
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Venue name"), Value = formDataList.class1.VenueName });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.class1.EventDate });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.class1.EventDate });
@@ -414,13 +407,11 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     {
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.class1.EventTopic });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.class1.EventType });
-
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Venue name"), Value = formDataList.class1.VenueName });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.class1.EventDate });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.class1.EventDate });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "HCPName"), Value = formData.HcpName });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Start Time"), Value = formDataList.class1.StartTime });
-
                     }
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Tier"), Value = formData.Tier });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "HCP Type"), Value = formData.GOorNGO });
