@@ -208,6 +208,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                                 if (fn == "30DaysDeviationFile")
                                 {
                                     newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EventOpen30days"), Value = EventOpen30Days });
+                                    newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Outstanding Events"), Value = formDataList.MedicalUtilityData.EventOpen30dayscount });
+
                                     newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Deviation Type"), Value = "Outstanding with intiator for more than 30 days" });
 
                                 }

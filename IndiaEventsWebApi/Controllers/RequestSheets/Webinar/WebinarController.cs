@@ -304,7 +304,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                             {
                                 newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EventOpen30days"), Value = formDataList.Webinar.EventOpen30days });
                                 newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Deviation Type"), Value = "Outstanding with intiator for more than 30 days" });
-
+                                newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Outstanding Events"), Value = formDataList.Webinar.EventOpen30dayscount });
                             }
                             else if (file == "7DaysDeviationFile")
                             {
