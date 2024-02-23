@@ -936,7 +936,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Total Travel & Accommodation Amount"), Value = formData.TotalTravelAndAccomodationSpend });
                 newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Total Honorarium Amount"), Value = formData.TotalHonorariumSpend });
                 newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Total Budget"), Value = formData.TotalSpend });
-
                 newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Total Actual"), Value = formData.TotalActuals });
                 newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Advance Utilized For Event"), Value = formData.AdvanceUtilizedForEvents });
                 newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Pay Back Amount To Company"), Value = formData.PayBackAmountToCompany });
@@ -954,9 +953,11 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 foreach (var p in formData.Files)
                 {
 
+                    string[] words = p.Split(':');
+                    var r = words[0];
+                    var q = words[1];
 
-
-                    byte[] fileBytes = Convert.FromBase64String(p);
+                    byte[] fileBytes = Convert.FromBase64String(q);
                     var folderName = Path.Combine("Resources", "Images");
                     var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                     if (!Directory.Exists(pathToSave))
@@ -965,7 +966,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     }
 
                     string fileType = GetFileType(fileBytes);
-                    string fileName = val + "-" + x + " AttachedFile." + fileType;
+                    string fileName = r;//val + "-" + x + " AttachedFile." + fileType;
                     string filePath = Path.Combine(pathToSave, fileName);
 
 
@@ -983,7 +984,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         System.IO.File.Delete(filePath);
                     }
                 }
-                if (formData.EventOpen30Days == "Yes" || formData.EventLessThan5Days == "Yes")
+                if (formData.EventOpen30Days == "Yes" || formData.EventLessThan5Days == "Yes" || formData.IsDeviationUpload == "Yes")
                 {
                     List<string> DeviationNames = new List<string>();
                     foreach (var p in formData.DeviationFiles)
@@ -1012,21 +1013,24 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "VenueName"), Value = formData.VenueName });
                             newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "City"), Value = formData.City });
                             newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "State"), Value = formData.State });
-                            if(file == "")
+                            if(file == "30DaysDeviationFile")
                             {
-
+                                newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "POST- Beyond30Days Deviation Date Trigger"), Value = formData.EventOpen30Days });
+                                newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Deviation Type"), Value = "Outstanding with intiator for more than 30 days" });
                             }
-                            else if (file == "")
+                            else if (file == "Lessthan5InviteesDeviationFile")
                             {
-
+                                newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "POST-Lessthan5Invitees Deviation Trigger"), Value = formData.EventLessThan5Days });
+                                newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Deviation Type"), Value = "Less than 5 attendees excluding speaker" });
                             }
-                            else if(file == "")
+                            else if(file == "ExcludingGSTDeviationFile")
                             {
-
+                                newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "POST-Deviation Excluding GST?"), Value = "Yes" });
+                                newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Deviation Type"), Value = "POST-Deviation Excluding GST" });
                             }
-                            newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "POST- Beyond30Days Deviation Date Trigger"), Value = formData.EventOpen30Days });
-                            newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "POST-Lessthan5Invitees Deviation Trigger"), Value = formData.EventLessThan5Days });
-                            newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "POST-Deviation Excluding GST?"), Value = "Yes" });
+                           
+                            
+                           
                             newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Sales Head"), Value = formData.Compliance });
                             newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "Finance Head"), Value = formData.Compliance });
                             newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "InitiatorName"), Value = formData.InitiatorName });
@@ -1040,37 +1044,36 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             var j = 1;
                             foreach (var p in formData.DeviationFiles)
                             {
-
-
-
-                                byte[] fileBytes = Convert.FromBase64String(p);
-                                var folderName = Path.Combine("Resources", "Images");
-                                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                                if (!Directory.Exists(pathToSave))
+                                string[] words = p.Split(':');
+                                var r = words[0];
+                                var q = words[1];
+                                if (deviationname == r)
                                 {
-                                    Directory.CreateDirectory(pathToSave);
+                                    byte[] fileBytes = Convert.FromBase64String(q);
+                                    var folderName = Path.Combine("Resources", "Images");
+                                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                                    if (!Directory.Exists(pathToSave))
+                                    {
+                                        Directory.CreateDirectory(pathToSave);
+                                    }
+                                    string fileType = GetFileType(fileBytes);
+                                    string fileName = r;//val + "-" + j + " AttachedFile." + fileType;
+                                    string filePath = Path.Combine(pathToSave, fileName);
+                                    var addedRow = addeddeviationrow[0];
+                                    System.IO.File.WriteAllBytes(filePath, fileBytes);
+                                    string type = GetContentType(fileType);
+                                    var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                            parsedSheetId7, addedRow.Id.Value, filePath, "application/msword");
+                                    j++;
+
+                                    if (System.IO.File.Exists(filePath))
+                                    {
+                                        System.IO.File.Delete(filePath);
+                                    }
                                 }
 
-                                string fileType = GetFileType(fileBytes);
-                                string fileName = val + "-" + j + " AttachedFile." + fileType;
-                                // string fileName = val+x + ": AttachedFile." + fileType;
-                                string filePath = Path.Combine(pathToSave, fileName);
 
-
-                                var addedRow = addeddeviationrow[0];
-
-                                System.IO.File.WriteAllBytes(filePath, fileBytes);
-                                string type = GetContentType(fileType);
-                                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                        parsedSheetId7, addedRow.Id.Value, filePath, "application/msword");
-                                j++;
-
-
-
-                                if (System.IO.File.Exists(filePath))
-                                {
-                                    System.IO.File.Delete(filePath);
-                                }
+                                  
                             }
                         }
                         catch (Exception ex)
