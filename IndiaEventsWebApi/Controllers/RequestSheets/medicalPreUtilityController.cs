@@ -297,8 +297,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Objective Criteria"), Value = formData.Objective });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Rationale"), Value = formData.Rationale });
 
-                    newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.MedicalUtilityData.EventTopic });
 
+                    newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.MedicalUtilityData.EventTopic });                   
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.MedicalUtilityData.EventType });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.MedicalUtilityData.ValidFrom });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.MedicalUtilityData.ValidTill });
@@ -492,6 +492,11 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
                     newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "BTC/BTE"), Value = formdata.BTC_BTE });
                     newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Amount"), Value = formdata.TotalExpenseAmount });
+
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Topic"), Value = formDataList.MedicalUtilityData.EventTopic });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Type"), Value = formDataList.MedicalUtilityData.EventType });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.MedicalUtilityData.ValidFrom });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event End Date"), Value = formDataList.MedicalUtilityData.ValidTill });
 
                     smartsheet.SheetResources.RowResources.AddRows(parsedSheetId6, new Row[] { newRow6 });
                 }
