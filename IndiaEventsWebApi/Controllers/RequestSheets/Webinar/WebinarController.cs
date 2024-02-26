@@ -173,7 +173,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                 newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet1, "StartTime"), Value = formDataList.Webinar.StartTime });
                 newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet1, "EndTime"), Value = formDataList.Webinar.EndTime });
 
-                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet1, "Meeting Type"),  Value = formDataList.Webinar.Meeting_Type  });
+                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet1, "Meeting Type"), Value = formDataList.Webinar.Meeting_Type });
 
                 newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet1, "Brands"), Value = brand });
                 newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet1, "Expenses"), Value = Expense });
@@ -366,7 +366,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                                 }
 
 
-                               
+
                             }
                         }
                         catch (Exception ex)
@@ -374,7 +374,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                             return BadRequest(ex.Message);
                         }
                     }
-                   
+
                 }
 
 
@@ -428,26 +428,31 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "HonorariumRequired"), Value = formData.HonorariumRequired });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "AgreementAmount"), Value = formData.HonarariumAmount });
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Speciality"), Value = formData.Speciality });
+
+                    newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.Webinar.EventTopic });
+                    newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.Webinar.EventType });
+                    newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.Webinar.EventDate });
+                    newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.Webinar.EventDate });
+                    //newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Start Time"), Value = formDataList.Webinar.StartTime });
+
                     if (formData.HcpRole == "Speaker")
                     {
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "HCPName"), Value = formData.HcpName });
-                        newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.Webinar.EventTopic });
-                        newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.Webinar.EventType });
+
                         //newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Venue name"), Value = formDataList.Webinar.VenueName });
-                        newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.Webinar.EventDate });
-                        newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.Webinar.EventDate });
+                        //newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.Webinar.EventDate });
+                        //newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.Webinar.EventDate });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "HonorariumAmount"), Value = formData.HonarariumAmount });
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "PAN card name"), Value = formData.HcpName });
                     }
                     if (formData.HcpRole == "Trainer")
                     {
-                        newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.Webinar.EventTopic });
-                        newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.Webinar.EventType });
+                        //    newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.Webinar.EventTopic });
+                        //    newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.Webinar.EventType });
                         //newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Venue name"), Value = formDataList.Webinar.VenueName });
-                        newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.Webinar.EventDate });
-                        newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.Webinar.EventDate });
+
                         newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "HCPName"), Value = formData.HcpName });
-                        newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Start Time"), Value = formDataList.Webinar.StartTime });
+                      
 
                     }
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Tier"), Value = formData.Tier });
@@ -490,13 +495,21 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                     var newRow3 = new Row();
                     newRow3.Cells = new List<Cell>();
                     newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet3, "HCPName"), Value = formdata.InviteeName });
-                   
+
                     newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet3, "LocalConveyance"), Value = formdata.LocalConveyance });
                     newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet3, "BTC/BTE"), Value = formdata.BtcorBte });
                     newRow3.Cells.Add(new Cell
                     { ColumnId = GetColumnIdByName(sheet3, "LcAmount"), Value = formdata.LcAmount });
                     newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet3, "EventId/EventRequestId"), Value = val });
                     newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet3, "Invitee Source"), Value = formdata.InviteedFrom });
+
+
+                    newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet3, "Event Topic"), Value = formDataList.Webinar.EventTopic });
+                    newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet3, "Event Type"), Value = formDataList.Webinar.EventType });
+                    newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet3, "Event Date Start"), Value = formDataList.Webinar.EventDate });
+                    newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet3, "Event End Date"), Value = formDataList.Webinar.EventDate });
+                   // newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Start Time"), Value = formDataList.Webinar.StartTime });
+
                     if (formdata.InviteedFrom == "Others")
                     {
                         newRow3.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet3, "Speciality"), Value = formdata.Speciality });
@@ -539,6 +552,11 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                     newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "BudgetAmount"), Value = formdata.BudgetAmount });
                     newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "BTCAmount"), Value = formdata.BtcAmount });
                     newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "BTEAmount"), Value = formdata.BteAmount });
+
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Topic"), Value = formDataList.Webinar.EventTopic });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Type"), Value = formDataList.Webinar.EventType });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.Webinar.EventDate });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event End Date"), Value = formDataList.Webinar.EventDate });
 
                     smartsheet.SheetResources.RowResources.AddRows(parsedSheetId6, new Row[] { newRow6 });
                 }
@@ -729,7 +747,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EventDate"), Value = formData.RequestHonorariumList.EventDate });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "StartTime"), Value = formData.RequestHonorariumList.StartTime });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EndTime"), Value = formData.RequestHonorariumList.EndTime });
-                      
+
 
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "HON-2Workingdays Deviation Date Trigger"), Value = formData.RequestHonorariumList.IsDeviationUpload });
 
@@ -1006,7 +1024,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EventDate"), Value = formData.EventDate });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "StartTime"), Value = formData.StartTime });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "EndTime"), Value = formData.EndTime });
-                      
+
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "POST- Beyond30Days Deviation Date Trigger"), Value = formData.EventOpen30Days });
                         newRow7.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet7, "POST-Lessthan5Invitees Deviation Trigger"), Value = formData.EventLessThan5Days });
 

@@ -357,6 +357,11 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.StallFabrication
                     newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "BTCAmount"), Value = formdata.BtcAmount });
                     newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "BTEAmount"), Value = formdata.BteAmount });
 
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Topic"), Value = formDataList.StallFabrication.EventName });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Type"), Value = formDataList.StallFabrication.EventType });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.StallFabrication.StartDate });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event End Date"), Value = formDataList.StallFabrication.EndDate });
+
                     smartsheet.SheetResources.RowResources.AddRows(parsedSheetId6, new Row[] { newRow6 });
                 }
 

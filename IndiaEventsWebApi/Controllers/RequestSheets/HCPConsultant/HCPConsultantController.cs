@@ -394,6 +394,13 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "FCPA Date"), Value = formData.Fcpadate });
 
 
+                    //newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.HcpConsultant.EventTopic });
+                    //newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "EventType"), Value = formDataList.HcpConsultant.EventType });
+                    //newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "EventDate"), Value = formDataList.HcpConsultant.EventDate });
+                    //newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.HcpConsultant.EventEndDate });
+                    //newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "VenueName"), Value = formDataList.HcpConsultant.VenueName });
+
+
                     newRow1.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet4, "EventId/EventRequestId"), Value = val });
 
                     // ///////////////////////////////////////////////////
@@ -460,6 +467,14 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                     newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "EventId/EventRequestID"), Value = val });
                     newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "BTC/BTE"), Value = formdata.BTC_BTE });
                     newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Registration Amount"), Value = formdata.RegstAmount });
+
+
+
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Topic"), Value = formDataList.HcpConsultant.EventTopic });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Type"), Value = formDataList.HcpConsultant.EventType });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.HcpConsultant.EventDate });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Event End Date"), Value = formDataList.HcpConsultant.EventEndDate });
+                    newRow6.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet6, "Venue name"), Value = formDataList.HcpConsultant.VenueName });
                     //newRow6.Cells.Add(new Cell
                     //{
                     //    ColumnId = GetColumnIdByName(sheet6, "BTCAmount"),
