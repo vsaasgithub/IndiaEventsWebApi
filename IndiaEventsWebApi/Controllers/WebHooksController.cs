@@ -65,21 +65,16 @@ namespace IndiaEventsWebApi.Controllers
                     List<Row> targetRows = processSheetData.Rows
                         .Where(row => row.Cells.Any(cell => cell.ColumnId == processIdColumn.Id && cell.Value.ToString() == EventID))
                         .ToList();
-
                     if (targetRows.Any())
                     {
                         var rowIds = targetRows.Select(row => row.Id).ToList();
                         rowId = (long)rowIds[0];
                     }
-
                 }
-
-
                 Column SpecialityColumn = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
                 Column targetColumn1 = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "Event Topic", StringComparison.OrdinalIgnoreCase));
                 Column targetColumn2 = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventDate", StringComparison.OrdinalIgnoreCase));
                 Column targetColumn3 = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "VenueName", StringComparison.OrdinalIgnoreCase));
-
                 if (SpecialityColumn != null)
                 {
                     Row targetRow = sheet1.Rows
@@ -94,7 +89,6 @@ namespace IndiaEventsWebApi.Controllers
                         EventVenue = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn3.Id)?.Value?.ToString();
                     }
                 }
-
                 List<string> requiredColumns = new List<string> { "HCPName", "MISCode", "Speciality", "HCP Type" };
                 List<Column> selectedColumns = sheet_SpeakerCode.Columns
                     .Where(column => requiredColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase)).ToList();
@@ -126,7 +120,6 @@ namespace IndiaEventsWebApi.Controllers
                         Sr_No++;
                     }
                 }
-
                 foreach (Row row in sheet.Rows)
                 {
                     string eventId = row.Cells.FirstOrDefault(cell => sheet.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title == "EventId/EventRequestId")?.DisplayValue;
@@ -147,6 +140,7 @@ namespace IndiaEventsWebApi.Controllers
                         Sr_No++;
                     }
                 }
+
                 byte[] fileBytes = SheetHelper.exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, dtMai);
                 string filename = "Sample_PDF_" + EventID + ".pdf";
                 var folderName = Path.Combine("Resources", "Images");
@@ -218,66 +212,66 @@ namespace IndiaEventsWebApi.Controllers
                 //return BadRequest(ex.Message);
             }
         }
-        private string GetContentType(string fileExtension)
-        {
-            switch (fileExtension.ToLower())
-            {
-                case "jpg":
-                case "jpeg":
-                    return "image/jpeg";
-                case "pdf":
-                    return "application/pdf";
-                case "gif":
-                    return "image/gif";
-                case "png":
-                    return "image/png";
-                case "webp":
-                    return "image/webp";
-                case "doc":
-                    return "application/msword";
-                case "docx":
-                    return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                default:
-                    return "application/octet-stream";
-            }
-        }
+        //private string GetContentType(string fileExtension)
+        //{
+        //    switch (fileExtension.ToLower())
+        //    {
+        //        case "jpg":
+        //        case "jpeg":
+        //            return "image/jpeg";
+        //        case "pdf":
+        //            return "application/pdf";
+        //        case "gif":
+        //            return "image/gif";
+        //        case "png":
+        //            return "image/png";
+        //        case "webp":
+        //            return "image/webp";
+        //        case "doc":
+        //            return "application/msword";
+        //        case "docx":
+        //            return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+        //        default:
+        //            return "application/octet-stream";
+        //    }
+        //}
 
-        private string GetFileType(byte[] bytes)
-        {
+        //private string GetFileType(byte[] bytes)
+        //{
 
-            if (bytes.Length >= 2 && bytes[0] == 0xFF && bytes[1] == 0xD8)
-            {
-                return "jpg";
-            }
-            else if (bytes.Length >= 4 && Encoding.UTF8.GetString(bytes, 0, 4) == "%PDF")
-            {
-                return "pdf";
-            }
-            else if (bytes.Length >= 3 && Encoding.UTF8.GetString(bytes, 0, 3) == "GIF")
-            {
-                return "gif";
-            }
-            else if (bytes.Length >= 8 && Encoding.UTF8.GetString(bytes, 0, 8) == "PNG\r\n\x1A\n")
-            {
-                return "png";
-            }
-            else if (bytes.Length >= 4 && Encoding.UTF8.GetString(bytes, 0, 4) == "RIFF" && Encoding.UTF8.GetString(bytes, 8, 4) == "WEBP")
-            {
-                return "webp";
-            }
-            else if (bytes.Length >= 4 && (bytes[0] == 0xD0 && bytes[1] == 0xCF && bytes[2] == 0x11 && bytes[3] == 0xE0))
-            {
-                return "doc";
-            }
-            else if (bytes.Length >= 4 && (bytes[0] == 0x50 && bytes[1] == 0x4B && bytes[2] == 0x03 && bytes[3] == 0x04))
-            {
-                return "docx";
-            }
-            else
-            {
-                return "unknown";
-            }
-        }
+        //    if (bytes.Length >= 2 && bytes[0] == 0xFF && bytes[1] == 0xD8)
+        //    {
+        //        return "jpg";
+        //    }
+        //    else if (bytes.Length >= 4 && Encoding.UTF8.GetString(bytes, 0, 4) == "%PDF")
+        //    {
+        //        return "pdf";
+        //    }
+        //    else if (bytes.Length >= 3 && Encoding.UTF8.GetString(bytes, 0, 3) == "GIF")
+        //    {
+        //        return "gif";
+        //    }
+        //    else if (bytes.Length >= 8 && Encoding.UTF8.GetString(bytes, 0, 8) == "PNG\r\n\x1A\n")
+        //    {
+        //        return "png";
+        //    }
+        //    else if (bytes.Length >= 4 && Encoding.UTF8.GetString(bytes, 0, 4) == "RIFF" && Encoding.UTF8.GetString(bytes, 8, 4) == "WEBP")
+        //    {
+        //        return "webp";
+        //    }
+        //    else if (bytes.Length >= 4 && (bytes[0] == 0xD0 && bytes[1] == 0xCF && bytes[2] == 0x11 && bytes[3] == 0xE0))
+        //    {
+        //        return "doc";
+        //    }
+        //    else if (bytes.Length >= 4 && (bytes[0] == 0x50 && bytes[1] == 0x4B && bytes[2] == 0x03 && bytes[3] == 0x04))
+        //    {
+        //        return "docx";
+        //    }
+        //    else
+        //    {
+        //        return "unknown";
+        //    }
+        //}
 
 
 
