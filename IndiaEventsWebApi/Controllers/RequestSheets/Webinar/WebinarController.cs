@@ -267,14 +267,14 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                             newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EndTime"), Value = formDataList.Webinar.EndTime });
                             if (file == "30DaysDeviationFile")
                             {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen30days"), Value = formDataList.Webinar.EventOpen30days });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = "Outstanding with intiator for more than 30 days" });
+                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = formDataList.Webinar.EventOpen30days });
+                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = "Outstanding with intiator for more than 45 days" });
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = formDataList.Webinar.EventOpen30dayscount });
                             }
                             else if (file == "7DaysDeviationFile")
                             {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin7days"), Value = formDataList.Webinar.EventWithin7days });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = "7 days from the Event Date" });
+                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin5days"), Value = formDataList.Webinar.EventWithin7days });
+                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = "5 days from the Event Date" });
 
                             }
                             else if (file == "ExpenseExcludingTax")
