@@ -1,4 +1,5 @@
-﻿using IndiaEventsWebApi.Models;
+﻿using IndiaEventsWebApi.Helper;
+using IndiaEventsWebApi.Models;
 using IndiaEventsWebApi.Models.MasterSheets;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -341,13 +342,13 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
 
                     var newRow = new Row();
                     newRow.Cells = new List<Cell>();
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "FirstName"), Value = i.FirstName });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "LastName"), Value = i.LastName });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "HCPName"), Value = i.HCPName });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "HCP Type"), Value = i.GOorNGO });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "MisCode"), Value = i.MISCode });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Speciality"), Value = i.Speciality });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Company Name"), Value = i.CompanyName });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "FirstName"), Value = i.FirstName });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "LastName"), Value = i.LastName });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HCPName"), Value = i.HCPName });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HCP Type"), Value = i.GOorNGO });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "MisCode"), Value = i.MISCode });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Speciality"), Value = i.Speciality });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Company Name"), Value = i.CompanyName });
 
 
                     smartsheet.SheetResources.RowResources.AddRows(parsedSheetId, new Row[] { newRow });
@@ -499,12 +500,12 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
 
 //                var newRow = new Row();
 //                newRow.Cells = new List<Cell>();
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "FirstName"), Value = i.FirstName });
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "LastName"), Value = i.LastName });
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "HCPName"), Value = i.HCPName });
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "HCP Type"), Value = i.GOorNGO });
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "MisCode"), Value = i.MISCode });
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Speciality"), Value = i.Speciality });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "FirstName"), Value = i.FirstName });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "LastName"), Value = i.LastName });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HCPName"), Value = i.HCPName });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HCP Type"), Value = i.GOorNGO });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "MisCode"), Value = i.MISCode });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Speciality"), Value = i.Speciality });
 
 
 //                smartsheet.SheetResources.RowResources.AddRows(parsedSheetId, new Row[] { newRow });

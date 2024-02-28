@@ -344,3 +344,8 @@ D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\Serilo
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\Serilog.Sinks.Console.dll
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\Serilog.Sinks.Debug.dll
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\Serilog.Sinks.File.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Authorization.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Metadata.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
