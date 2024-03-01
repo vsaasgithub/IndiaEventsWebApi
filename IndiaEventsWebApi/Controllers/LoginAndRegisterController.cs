@@ -303,40 +303,76 @@ namespace IndiaEventsWebApi.Controllers
             }
             
         }
-        private string CreateJwt(string username, string email,string role, string reportingmanager, string firstLevelManager, string RBM_BM,string SalesHead, string compliance, string MarketingHead, string MedicalAffairsHead, string FinanceTreasury, string FinanceAccounts, string SalesCoordinator)
+        //private string CreateJwt(string username, string email,string role, string reportingmanager, string firstLevelManager, string RBM_BM,string SalesHead, string compliance, string MarketingHead, string MedicalAffairsHead, string FinanceTreasury, string FinanceAccounts, string SalesCoordinator)
+        //{
+        //    var jwtTokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes("veryveryveryveryverysecret......................");
+        //    var identity = new ClaimsIdentity(new Claim[]
+        //    {
+        //        new Claim(ClaimTypes.Name,username),
+        //        new Claim(ClaimTypes.Email,email),
+        //        new Claim(ClaimTypes.Role,role),
+        //        new Claim("reportingmanager",reportingmanager),
+        //        new Claim("firstLevelManager",firstLevelManager),
+        //        new Claim("RBM_BM",RBM_BM),
+        //        new Claim("SalesHead",SalesHead),
+        //        new Claim("MarketingHead",MarketingHead),
+        //        new Claim("ComplianceHead",compliance),
+        //        new Claim("MedicalAffairsHead",MedicalAffairsHead),
+        //        new Claim("FinanceTreasury",FinanceTreasury),
+        //        new Claim("FinanceAccounts",FinanceAccounts),
+        //        new Claim("SalesCoordinator",SalesCoordinator),
+
+
+        //    });
+        //    var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //        Subject = identity,
+        //        Expires = DateTime.Now.AddDays(1),
+        //        SigningCredentials = credentials
+        //    };
+        //    var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+        //    return jwtTokenHandler.WriteToken(token);
+        //}
+
+        private string CreateJwt(string username, string email, string role, string reportingmanager, string firstLevelManager, string RBM_BM, string SalesHead, string compliance, string MarketingHead, string MedicalAffairsHead, string FinanceTreasury, string FinanceAccounts, string SalesCoordinator)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("veryveryveryveryverysecret......................");
-            var identity = new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Name,username),
-                new Claim(ClaimTypes.Email,email),
-                new Claim(ClaimTypes.Role,role),
-                new Claim("reportingmanager",reportingmanager),
-                new Claim("firstLevelManager",firstLevelManager),
-                new Claim("RBM_BM",RBM_BM),
-                new Claim("SalesHead",SalesHead),
-                new Claim("MarketingHead",MarketingHead),
-                new Claim("ComplianceHead",compliance),
-                new Claim("MedicalAffairsHead",MedicalAffairsHead),
-                new Claim("FinanceTreasury",FinanceTreasury),
-                new Claim("FinanceAccounts",FinanceAccounts),
-                new Claim("SalesCoordinator",SalesCoordinator),
-            
-                
-            });
-            var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryveryveryveryverysecret......................"));
 
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var identity = new Claim[]
             {
-                Subject = identity,
-                Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = credentials
+        new Claim(ClaimTypes.Name, username),
+        new Claim(ClaimTypes.Email, email),
+        new Claim(ClaimTypes.Role, role),
+        new Claim("reportingmanager", reportingmanager),
+        new Claim("firstLevelManager", firstLevelManager),
+        new Claim("RBM_BM", RBM_BM),
+        new Claim("SalesHead", SalesHead),
+        new Claim("MarketingHead", MarketingHead),
+        new Claim("ComplianceHead", compliance),
+        new Claim("MedicalAffairsHead", MedicalAffairsHead),
+        new Claim("FinanceTreasury", FinanceTreasury),
+        new Claim("FinanceAccounts", FinanceAccounts),
+        new Claim("SalesCoordinator", SalesCoordinator),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
-            var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+
+            // Combine roles into a comma-separated string
+            //var roles = string.Join(",", new[] { "AM", "ABM", "BM", "RBM", "MM" });
+
+            var token = new JwtSecurityToken(
+                issuer: "http://localhost:5098",
+                audience: "ABM", // Use roles as the audience
+                expires: DateTime.Now.AddDays(1),
+                claims: identity,
+                signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+            );
+
             return jwtTokenHandler.WriteToken(token);
         }
-
 
     }
 }

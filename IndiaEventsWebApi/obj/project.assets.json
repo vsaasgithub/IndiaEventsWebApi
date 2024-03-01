@@ -2835,6 +2835,38 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "IndiaEvents.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Aspose.Cells": "24.1.0",
+          "Aspose.PDF": "24.1.0",
+          "DinkToPdf": "1.0.8",
+          "Google.Apis.Auth": "1.64.0",
+          "Microsoft.AspNet.WebApi.Core": "5.3.0",
+          "Microsoft.AspNet.WebHooks.Common": "1.2.2",
+          "Microsoft.AspNetCore.Authentication.Google": "6.0.25",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.27",
+          "Microsoft.AspNetCore.Authorization": "6.0.23",
+          "Microsoft.EntityFrameworkCore": "7.0.14",
+          "Microsoft.Extensions.Configuration": "7.0.0",
+          "Serilog": "3.1.1",
+          "Serilog.AspNetCore": "8.0.1",
+          "Serilog.Extensions.Logging": "8.0.0",
+          "Serilog.Sinks.Console": "5.0.1",
+          "Smartsheet.Core": "2.0.1",
+          "Swashbuckle.AspNetCore": "6.5.0",
+          "System.IdentityModel.Tokens.Jwt": "7.0.3",
+          "iTextSharp": "5.5.13.3",
+          "smartsheet-csharp-sdk": "2.101.0"
+        },
+        "compile": {
+          "bin/placeholder/IndiaEvents.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/IndiaEvents.Models.dll": {}
+        }
       }
     }
   },
@@ -8556,6 +8588,11 @@
         "system.xml.xdocument.4.0.11.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "IndiaEvents.Models/1.0.0": {
+      "type": "project",
+      "path": "../IndiaEvents.Models/IndiaEvents.Models.csproj",
+      "msbuildProject": "../IndiaEvents.Models/IndiaEvents.Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -8564,6 +8601,7 @@
       "Aspose.PDF >= 24.1.0",
       "DinkToPdf >= 1.0.8",
       "Google.Apis.Auth >= 1.64.0",
+      "IndiaEvents.Models >= 1.0.0",
       "Microsoft.AspNet.WebApi.Core >= 5.3.0",
       "Microsoft.AspNet.WebHooks.Common >= 1.2.2",
       "Microsoft.AspNetCore.Authentication.Google >= 6.0.25",
@@ -8590,11 +8628,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
+      "projectUniqueName": "D:\\vsaasGit\\API\\MieProject\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
       "projectName": "IndiaEventsWebApi",
-      "projectPath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
+      "projectPath": "D:\\vsaasGit\\API\\MieProject\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
       "packagesPath": "C:\\Users\\srikanth.n\\.nuget\\packages\\",
-      "outputPath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\obj\\",
+      "outputPath": "D:\\vsaasGit\\API\\MieProject\\IndiaEventsWebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -8615,7 +8653,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\vsaasGit\\API\\MieProject\\IndiaEvents.Models\\IndiaEvents.Models.csproj": {
+              "projectPath": "D:\\vsaasGit\\API\\MieProject\\IndiaEvents.Models\\IndiaEvents.Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
