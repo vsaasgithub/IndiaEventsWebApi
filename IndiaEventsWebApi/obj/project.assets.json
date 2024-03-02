@@ -8628,11 +8628,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\vsaasGit\\API\\MieProject\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
+      "projectUniqueName": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
       "projectName": "IndiaEventsWebApi",
-      "projectPath": "D:\\vsaasGit\\API\\MieProject\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
+      "projectPath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
       "packagesPath": "C:\\Users\\srikanth.n\\.nuget\\packages\\",
-      "outputPath": "D:\\vsaasGit\\API\\MieProject\\IndiaEventsWebApi\\obj\\",
+      "outputPath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -8654,8 +8654,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\vsaasGit\\API\\MieProject\\IndiaEvents.Models\\IndiaEvents.Models.csproj": {
-              "projectPath": "D:\\vsaasGit\\API\\MieProject\\IndiaEvents.Models\\IndiaEvents.Models.csproj"
+            "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\IndiaEvents.Models.csproj": {
+              "projectPath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\IndiaEvents.Models.csproj"
             }
           }
         }

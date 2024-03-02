@@ -483,3 +483,5 @@ D:\vsaasGit\API\MieProject\IndiaEventsWebApi\bin\Debug\net6.0\Microsoft.Identity
 D:\vsaasGit\API\MieProject\IndiaEventsWebApi\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\vsaasGit\API\MieProject\IndiaEventsWebApi\bin\Debug\net6.0\IndiaEvents.Models.dll
 D:\vsaasGit\API\MieProject\IndiaEventsWebApi\bin\Debug\net6.0\IndiaEvents.Models.pdb
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\IndiaEvents.Models.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\IndiaEvents.Models.pdb
