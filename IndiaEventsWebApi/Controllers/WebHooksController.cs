@@ -47,13 +47,13 @@ namespace IndiaEventsWebApi.Controllers
                 Serilog.Log.Information(string.Join(";", requestHeaders.Select(x => x.Key + "=" + x.Value).ToArray()));
 
 
-                //var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
                 //Attachementfile(RequestWebhook);
 
                 var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
-                  //return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
-                  return Ok();
+                  return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                  //return Ok();
             }
             catch (Exception ex)
             {

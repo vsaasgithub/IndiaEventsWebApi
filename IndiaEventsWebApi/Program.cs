@@ -43,11 +43,12 @@ builder.Services.AddAuthentication(options =>
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return Task.CompletedTask;
-            //return context.Response.WriteAsync(new
+            //return context.Response.WriteAsJsonAsync(new
             //{
             //    Message = "Invalid token",
             //    Error = context.Exception.Message
             //}.ToString());
+
 
         }
     };

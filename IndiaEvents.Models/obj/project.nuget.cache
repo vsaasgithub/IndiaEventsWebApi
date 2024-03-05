@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Bd0Yjwi89PFUYwmbXpx+clYhPS3E4g+fE6zipLGlmj7iCMcenTWlHdp8WLZL3f6pjQhPp5A9UjCm7kamUO2cEQ==",
+  "dgSpecHash": "8PxXhF+mskwnbwyY6u3rYPCUTazALr6+lQsDZrpl/NoXDds54jD80fqBIbdha+4qZm09XHbozJKdofVZm0VfBQ==",
   "success": true,
   "projectFilePath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\IndiaEvents.Models.csproj",
   "expectedPackageFiles": [
@@ -73,7 +73,7 @@
     "C:\\Users\\srikanth.n\\.nuget\\packages\\serilog\\3.1.1\\serilog.3.1.1.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\serilog.aspnetcore\\8.0.1\\serilog.aspnetcore.8.0.1.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\serilog.extensions.hosting\\8.0.0\\serilog.extensions.hosting.8.0.0.nupkg.sha512",
-    "C:\\Users\\srikanth.n\\.nuget\\packages\\serilog.extensions.logging\\8.0.0\\serilog.extensions.logging.8.0.0.nupkg.sha512",
+    "C:\\Users\\srikanth.n\\.nuget\\packages\\serilog.extensions.logging\\8.0.1-dev-10377\\serilog.extensions.logging.8.0.1-dev-10377.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\serilog.formatting.compact\\2.0.0\\serilog.formatting.compact.2.0.0.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\serilog.settings.configuration\\8.0.0\\serilog.settings.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\serilog.sinks.console\\5.0.1\\serilog.sinks.console.5.0.1.nupkg.sha512",

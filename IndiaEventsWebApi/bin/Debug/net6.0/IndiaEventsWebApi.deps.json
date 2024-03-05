@@ -23,7 +23,7 @@
           "Microsoft.Extensions.Configuration": "7.0.0",
           "Serilog": "3.1.1",
           "Serilog.AspNetCore": "8.0.1",
-          "Serilog.Extensions.Logging": "8.0.0",
+          "Serilog.Extensions.Logging": "8.0.1-dev-10377",
           "Serilog.Sinks.Console": "5.0.1",
           "Smartsheet.Core": "2.0.1",
           "Swashbuckle.AspNetCore": "6.5.0",
@@ -744,7 +744,7 @@
           "Microsoft.Extensions.Logging": "8.0.0",
           "Serilog": "3.1.1",
           "Serilog.Extensions.Hosting": "8.0.0",
-          "Serilog.Extensions.Logging": "8.0.0",
+          "Serilog.Extensions.Logging": "8.0.1-dev-10377",
           "Serilog.Formatting.Compact": "2.0.0",
           "Serilog.Settings.Configuration": "8.0.0",
           "Serilog.Sinks.Console": "5.0.1",
@@ -764,7 +764,7 @@
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
           "Serilog": "3.1.1",
-          "Serilog.Extensions.Logging": "8.0.0"
+          "Serilog.Extensions.Logging": "8.0.1-dev-10377"
         },
         "runtime": {
           "lib/net6.0/Serilog.Extensions.Hosting.dll": {
@@ -773,7 +773,7 @@
           }
         }
       },
-      "Serilog.Extensions.Logging/8.0.0": {
+      "Serilog.Extensions.Logging/8.0.1-dev-10377": {
         "dependencies": {
           "Microsoft.Extensions.Logging": "8.0.0",
           "Serilog": "3.1.1"
@@ -781,7 +781,7 @@
         "runtime": {
           "lib/net6.0/Serilog.Extensions.Logging.dll": {
             "assemblyVersion": "7.0.0.0",
-            "fileVersion": "8.0.0.0"
+            "fileVersion": "8.0.1.0"
           }
         }
       },
@@ -1743,7 +1743,7 @@
           "Microsoft.Extensions.Configuration": "7.0.0",
           "Serilog": "3.1.1",
           "Serilog.AspNetCore": "8.0.1",
-          "Serilog.Extensions.Logging": "8.0.0",
+          "Serilog.Extensions.Logging": "8.0.1-dev-10377",
           "Serilog.Sinks.Console": "5.0.1",
           "Smartsheet.Core": "2.0.1",
           "Swashbuckle.AspNetCore": "6.5.0",
@@ -2246,12 +2246,12 @@
       "path": "serilog.extensions.hosting/8.0.0",
       "hashPath": "serilog.extensions.hosting.8.0.0.nupkg.sha512"
     },
-    "Serilog.Extensions.Logging/8.0.0": {
+    "Serilog.Extensions.Logging/8.0.1-dev-10377": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-YEAMWu1UnWgf1c1KP85l1SgXGfiVo0Rz6x08pCiPOIBt2Qe18tcZLvdBUuV5o1QHvrs8FAry9wTIhgBRtjIlEg==",
-      "path": "serilog.extensions.logging/8.0.0",
-      "hashPath": "serilog.extensions.logging.8.0.0.nupkg.sha512"
+      "sha512": "sha512-oj0sLFT7h6N4wXh6URuOPG++xiDvfP5R3CYT+1F6Mi6wcCy2JJixoKECZoaNBYjWVOD/7MKGxMVnQCH1RTt/mw==",
+      "path": "serilog.extensions.logging/8.0.1-dev-10377",
+      "hashPath": "serilog.extensions.logging.8.0.1-dev-10377.nupkg.sha512"
     },
     "Serilog.Formatting.Compact/2.0.0": {
       "type": "package",

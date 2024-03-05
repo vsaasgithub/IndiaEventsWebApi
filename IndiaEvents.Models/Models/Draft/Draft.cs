@@ -10,7 +10,7 @@ namespace IndiaEvents.Models.Models.Draft
 {
     public class DraftData
     {
-        public Class1? class1 { get; set; }
+        public Draft? Draft { get; set; }
         public List<EventRequestBrandsList>? RequestBrandsList { get; set; }
         public List<EventRequestInvitees>? EventRequestInvitees { get; set; }
         public List<EventRequestsHcpRole>? EventRequestHcpRole { get; set; }
@@ -26,5 +26,33 @@ namespace IndiaEvents.Models.Models.Draft
         public string? Isfile { get; set; }
         public List<string>? UploadFiles { get; set; }
     }
-    
+    public class Draft
+    {
+        public string? DraftId { get; set; }
+        public string? EventTopic { get; set; }
+        public string? EventType { get; set; }
+        public DateTime? EventDate { get; set; }
+        public string? StartTime { get; set; }
+        public string? EndTime { get; set; }
+        public DateTime? EventEndDate { get; set; }
+        public string? VenueName { get; set; }
+        public string? City { get; set; }
+        public string? State { get; set; }       
+        public string? HCPRole { get; set; }
+        public string? IsAdvanceRequired { get; set; }
+        public string? TotalInvitees { get; set; }        
+        public string? AdvanceAmount { get; set; }        
+        public string? ClassIIIEventCode { get; set; }
+        public string? MeetingType { get; set; }
+        public string? SponcershipSocietyname { get; set; }
+        public string? VenueCountry { get; set; }
+        public string? MedicalUtilityType { get; set; }
+        public string? MedicalUtilityDescription { get; set; }
+        public string? ValidFrom { get; set; }
+        public string? ValidTo { get; set; }
+        public string? Role { get; set; }        
+        public string? InitiatorName { get; set; }
+        public string? Initiator_Email { get; set; }
+        public List<string>? Files { get; set; }        
+    }
 }
