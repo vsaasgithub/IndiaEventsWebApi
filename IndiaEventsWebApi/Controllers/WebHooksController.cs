@@ -10,7 +10,8 @@ using Smartsheet.Api.Models;
 using System.Data;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using static IndiaEvents.Models.Models.Webhook.WebhookModels;
+using IndiaEvents.Models.Models.Webhook;
 
 namespace IndiaEventsWebApi.Controllers
 {
@@ -46,9 +47,12 @@ namespace IndiaEventsWebApi.Controllers
                 Serilog.Log.Information(string.Join(";", requestHeaders.Select(x => x.Key + "=" + x.Value).ToArray()));
 
 
+                var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                Attachementfile(RequestWebhook);
+
                 var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
-                  return Ok(challenge);
+                  return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
             }
             catch (Exception ex)
             {
@@ -59,6 +63,30 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
+        private void Attachementfile(Root RequestWebhook)
+        {
+            try
+            {
+                //Log.Information("RequestWebhook Object - " + JsonConvert.SerializeObject(RequestWebhook));
+                if (RequestWebhook != null && RequestWebhook.events != null)
+                {
+                    foreach (var WebHookEvent in RequestWebhook.events)
+                    {
+                        Serilog.Log.Information("EventType in RequestWebhook - " + WebHookEvent.eventType);
+                        Serilog.Log.Information("RowID in RequestWebhook - " + WebHookEvent.rowId);
+                        if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
+                        {
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error($"Error occured on Webhook apicontroller Attachementfile method {ex.Message} at {DateTime.Now}");
+                Serilog.Log.Error(ex.StackTrace);
+            }
+        }
 
 
         #region
@@ -396,25 +424,25 @@ namespace IndiaEventsWebApi.Controllers
         public class Webhook
         {
             public string? smartsheetHookResponse { get; set; }
-            public string challenge { get; set; }
-            public string webhookId { get; set; }
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public string challenge { get; set; }
+        public string webhookId { get; set; }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 }
 //string BaseHref => $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";

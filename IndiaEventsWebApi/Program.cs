@@ -36,21 +36,21 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryveryveryveryverysecret......................"))
     };
 
-    //options.Events = new JwtBearerEvents
-    //{
-    //    OnAuthenticationFailed = context =>
-    //    {
-    //        context.Response.ContentType = "application/json";
-    //        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return Task.CompletedTask;
+            //return context.Response.WriteAsync(new
+            //{
+            //    Message = "Invalid token",
+            //    Error = context.Exception.Message
+            //}.ToString());
 
-    //        //return context.Response.WriteAsync(new
-    //        //{
-    //        //    Message = "Invalid token",
-    //        //    Error = context.Exception.Message
-    //        //}.ToString());
-            
-    //    }
-    //};
+        }
+    };
 })
 .AddGoogle(options =>
 {
