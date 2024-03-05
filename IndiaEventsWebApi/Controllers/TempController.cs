@@ -275,6 +275,59 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
+        // Testing using row id
+        [HttpGet("GenerateSummaryTest")]
+        public IActionResult GenerateSummaryTest(long rowId)
+        {
+            try
+            {
+                var EventID = "";
+              
+
+                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+
+              
+
+                string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
+                long.TryParse(processSheet, out long parsedProcessSheet);
+                Sheet processSheetData = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, null, null, null, null, null);
+
+                Column processIdColumn = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
+
+                Row targetRow = processSheetData.Rows.FirstOrDefault(row => row.Id == rowId);
+
+
+                if (targetRow != null)
+                {
+                   
+                   
+                   
+                    if (processIdColumn != null)
+                    {
+                        var columnValue = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn.Id)?.Value;
+                        EventID=columnValue?.ToString();
+                    }
+                   
+                }
+                else
+                {
+                    
+                    return BadRequest("Row not found in the specified sheet.");
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                //return BadRequest(ex.Message);
+            }
+            return Ok("created and attached in process sheet ...");
+        }
+
+
+
+
 
 
         // testing sample pdf without passing eventid for webhook part
