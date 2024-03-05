@@ -14,6 +14,8 @@ using static IndiaEvents.Models.Models.Webhook.WebhookModels;
 using IndiaEvents.Models.Models.Webhook;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
+using static iTextSharp.text.pdf.AcroFields;
+using Microsoft.Extensions.Logging;
 
 namespace IndiaEventsWebApi.Controllers
 {
@@ -66,6 +68,11 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
+                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+                string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
+                long.TryParse(processSheet, out long parsedProcessSheet);
+                Sheet processSheetData = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, null, null, null, null, null);
+
 
                 if (RequestWebhook != null && RequestWebhook.events != null)
                 {
@@ -76,11 +83,31 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
-                        if (WebHookEvent.eventType.ToLower() == "approved")
+                        if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
                         {
-                            //int timeInterval = 300000;
-                            //await Task.Delay(timeInterval);
-                            GenerateSummaryPDF(WebHookEvent.rowId);
+                            var DataInSheet = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, new List<long> { WebHookEvent.rowId }, null, null, null, null, null, null).Rows;
+
+
+                            Column processIdColumn1 = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
+                            Column processIdColumn2 = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "Event Request Status", StringComparison.OrdinalIgnoreCase));
+
+
+                            Row targetRowId = processSheetData.Rows.FirstOrDefault(row => row.Id == WebHookEvent.rowId);
+
+
+
+                            if (processIdColumn1 != null && processIdColumn2 != null)
+                            {
+                                var columnValue = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn1.Id)?.Value.ToString();
+                                var status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn2.Id)?.Value.ToString();
+                                if (status != null && status == "Approved")
+                                {
+                                    GenerateSummaryPDF(columnValue);
+                                }
+
+                            }
+
+                            
                         }
                     }
                 }
@@ -95,9 +122,204 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
-        private void GenerateSummaryPDF(long RowId)
+        //private void GenerateSummaryPDF(string EventID)
+        //{
+        //    //var EventID = "";
+        //    try
+        //    {
+
+        //        var EventCode = "";
+        //        var EventName = "";
+        //        var EventDate = "";
+        //        var EventVenue = "";
+
+        //        SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+
+        //        string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
+        //        long.TryParse(sheetId_SpeakerCode, out long parsedSheetId_SpeakerCode);
+        //        Sheet sheet_SpeakerCode = smartsheet.SheetResources.GetSheet(parsedSheetId_SpeakerCode, null, null, null, null, null, null, null);
+
+        //        string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
+        //        long.TryParse(sheetId, out long parsedSheetId);
+        //        Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
+
+        //        string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
+        //        long.TryParse(sheetId1, out long parsedSheetId1);
+        //        Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
+
+        //        string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
+        //        long.TryParse(processSheet, out long parsedProcessSheet);
+        //        Sheet processSheetData = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, null, null, null, null, null);
+
+
+
+        //        //Column processIdColumn1 = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
+        //        //Column processIdColumn2 = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "Event Request Status", StringComparison.OrdinalIgnoreCase));
+
+
+        //        //Row targetRowId = processSheetData.Rows.FirstOrDefault(row => row.Id == RowId);
+
+
+
+        //        //if (processIdColumn1 != null && processIdColumn2 != null)
+        //        //{
+        //        //    var columnValue = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn1.Id)?.Value;
+        //        //    var status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn2.Id)?.Value;
+        //        //    if(status != null && status == "Approved")
+        //        //    {
+        //        //        EventID = columnValue?.ToString();
+        //        //    }
+
+        //        //}
+
+
+        //        Column SpecialityColumn = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
+        //        Column targetColumn1 = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "Event Topic", StringComparison.OrdinalIgnoreCase));
+        //        Column targetColumn2 = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventDate", StringComparison.OrdinalIgnoreCase));
+        //        Column targetColumn3 = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "VenueName", StringComparison.OrdinalIgnoreCase));
+
+        //        if (SpecialityColumn != null)
+        //        {
+        //            Row targetRow = sheet1.Rows
+        //             .FirstOrDefault(row => row.Cells?.Any(cell => cell.ColumnId == SpecialityColumn.Id && cell.Value?.ToString() == EventID) == true);
+
+        //            if (targetRow != null)
+        //            {
+
+        //                EventCode = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == SpecialityColumn.Id)?.Value?.ToString();
+        //                EventName = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn1.Id)?.Value?.ToString();
+        //                EventDate = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn2.Id)?.Value?.ToString();
+        //                EventVenue = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn3.Id)?.Value?.ToString();
+        //            }
+        //        }
+
+        //        List<string> requiredColumns = new List<string> { "HCPName", "MISCode", "Speciality", "HCP Type" };
+        //        List<Column> selectedColumns = sheet_SpeakerCode.Columns
+        //            .Where(column => requiredColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase)).ToList();
+        //        DataTable dtMai = new DataTable();
+        //        dtMai.Columns.Add("S.No", typeof(int));
+        //        foreach (Column column in selectedColumns)
+        //        {
+        //            dtMai.Columns.Add(column.Title);
+        //        }
+        //        dtMai.Columns.Add("Sign");
+        //        int Sr_No = 1;
+        //        foreach (Row row in sheet_SpeakerCode.Rows)
+        //        {
+        //            string eventId = row.Cells
+        //                .FirstOrDefault(cell => sheet_SpeakerCode.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title == "EventId/EventRequestId")?.DisplayValue;
+        //            if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase))
+        //            {
+        //                DataRow newRow = dtMai.NewRow();
+        //                newRow["S.No"] = Sr_No;
+        //                foreach (Cell cell in row.Cells)
+        //                {
+        //                    string columnName = sheet_SpeakerCode.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title;
+        //                    if (requiredColumns.Contains(columnName, StringComparer.OrdinalIgnoreCase))
+        //                    {
+        //                        newRow[columnName] = cell.DisplayValue;
+        //                    }
+        //                }
+        //                dtMai.Rows.Add(newRow);
+        //                Sr_No++;
+        //            }
+        //        }
+
+        //        foreach (Row row in sheet.Rows)
+        //        {
+        //            string eventId = row.Cells.FirstOrDefault(cell => sheet.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title == "EventId/EventRequestId")?.DisplayValue;
+        //            if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase))
+        //            {
+        //                DataRow newRow = dtMai.NewRow();
+        //                newRow["S.No"] = Sr_No;
+        //                foreach (Cell cell in row.Cells)
+        //                {
+        //                    string columnName = sheet.Columns
+        //                        .FirstOrDefault(c => c.Id == cell.ColumnId)?.Title;
+        //                    if (requiredColumns.Contains(columnName, StringComparer.OrdinalIgnoreCase))
+        //                    {
+        //                        newRow[columnName] = cell.DisplayValue;
+        //                    }
+        //                }
+        //                dtMai.Rows.Add(newRow);
+        //                Sr_No++;
+        //            }
+        //        }
+        //        byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, dtMai);
+        //        string filename = "Sample_PDF_" + EventID + ".pdf";
+        //        var folderName = Path.Combine("Resources", "Images");
+        //        var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+        //        if (!Directory.Exists(pathToSave))
+        //        {
+        //            Directory.CreateDirectory(pathToSave);
+        //        }
+        //        string fileType = SheetHelper.GetFileType(fileBytes);
+        //        string filePath = Path.Combine(pathToSave, filename);
+        //        System.IO.File.WriteAllBytes(filePath, fileBytes);
+        //        var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedProcessSheet, rowId, filePath, "application/msword");
+        //        if (System.IO.File.Exists(filePath))
+        //        {
+        //            System.IO.File.Delete(filePath);
+        //        }
+        //        List<Attachment> attachments = new List<Attachment>();
+
+        //        foreach (Row row in sheet_SpeakerCode.Rows)
+        //        {
+        //            Cell matchingCell = row.Cells.FirstOrDefault(cell => cell.DisplayValue == EventID);
+
+        //            if (matchingCell != null && matchingCell.Value != null)
+        //            {
+        //                var Id = (long)row.Id;
+        //                string eventId = matchingCell.Value.ToString();
+        //                if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase))
+        //                {
+        //                    var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(parsedSheetId_SpeakerCode, Id, null);
+        //                    var url = "";
+        //                    foreach (var x in a.Data)
+        //                    {
+        //                        if (x != null)
+        //                        {
+        //                            var AID = (long)x.Id;
+        //                            var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(parsedSheetId_SpeakerCode, AID);
+        //                            url = file.Url;
+        //                        }
+        //                        if (url != "")
+        //                        {
+        //                            using (HttpClient client = new HttpClient())
+        //                            {
+        //                                byte[] data = client.GetByteArrayAsync(url).Result;
+        //                                string base64 = Convert.ToBase64String(data);
+        //                                byte[] xy = Convert.FromBase64String(base64);
+        //                                var f = Path.Combine("Resources", "Images");
+        //                                var ps = Path.Combine(Directory.GetCurrentDirectory(), f);
+        //                                if (!Directory.Exists(ps))
+        //                                {
+        //                                    Directory.CreateDirectory(ps);
+        //                                }
+        //                                string ft = SheetHelper.GetFileType(xy);
+        //                                string fileName = eventId + "-" + x + " AttachedFile." + ft;
+        //                                string fp = Path.Combine(ps, fileName);
+        //                                var addedRow = RowId;
+        //                                System.IO.File.WriteAllBytes(fp, xy);
+        //                                string type = SheetHelper.GetContentType(ft);
+        //                                var z = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedProcessSheet, addedRow, fp, "application/msword");
+        //                            }
+        //                            var bs64 = "";
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //return BadRequest(ex.Message);
+        //    }
+        //}
+
+
+        private void GenerateSummaryPDF(string EventID)
         {
-            var EventID = "";
             try
             {
 
@@ -124,17 +346,21 @@ namespace IndiaEventsWebApi.Controllers
                 long.TryParse(processSheet, out long parsedProcessSheet);
                 Sheet processSheetData = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, null, null, null, null, null);
 
-               
+                long rowId = 0;
 
                 Column processIdColumn = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
-                Row targetRowId = processSheetData.Rows.FirstOrDefault(row => row.Id == RowId);
-
-
-
                 if (processIdColumn != null)
                 {
-                    var columnValue = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn.Id)?.Value;
-                    EventID = columnValue?.ToString();
+                    // Find all rows with the specified speciality
+                    List<Row> targetRows = processSheetData.Rows
+                        .Where(row => row.Cells.Any(cell => cell.ColumnId == processIdColumn.Id && cell.Value.ToString() == EventID))
+                        .ToList();
+
+                    if (targetRows.Any())
+                    {
+                        var rowIds = targetRows.Select(row => row.Id).ToList();
+                        rowId = (long)rowIds[0];
+                    }
                 }
 
 
@@ -221,7 +447,7 @@ namespace IndiaEventsWebApi.Controllers
                 string fileType = SheetHelper.GetFileType(fileBytes);
                 string filePath = Path.Combine(pathToSave, filename);
                 System.IO.File.WriteAllBytes(filePath, fileBytes);
-                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedProcessSheet, RowId, filePath, "application/msword");
+                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedProcessSheet, rowId, filePath, "application/msword");
                 if (System.IO.File.Exists(filePath))
                 {
                     System.IO.File.Delete(filePath);
@@ -264,7 +490,7 @@ namespace IndiaEventsWebApi.Controllers
                                         string ft = SheetHelper.GetFileType(xy);
                                         string fileName = eventId + "-" + x + " AttachedFile." + ft;
                                         string fp = Path.Combine(ps, fileName);
-                                        var addedRow = RowId;
+                                        var addedRow = rowId;
                                         System.IO.File.WriteAllBytes(fp, xy);
                                         string type = SheetHelper.GetContentType(ft);
                                         var z = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedProcessSheet, addedRow, fp, "application/msword");

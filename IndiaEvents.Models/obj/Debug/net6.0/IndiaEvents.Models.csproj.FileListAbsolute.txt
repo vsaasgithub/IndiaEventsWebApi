@@ -40,3 +40,17 @@ D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\refin
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\IndiaEvents.Models.pdb
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\IndiaEvents.Models.genruntimeconfig.cache
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\ref\IndiaEvents.Models.dll
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\bin\Debug\net6.0\IndiaEvents.Models.deps.json
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\bin\Debug\net6.0\IndiaEvents.Models.runtimeconfig.json
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\bin\Debug\net6.0\IndiaEvents.Models.dll
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\bin\Debug\net6.0\IndiaEvents.Models.pdb
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\IndiaEvents.Models.csproj.AssemblyReference.cache
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\IndiaEvents.Models.GeneratedMSBuildEditorConfig.editorconfig
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\IndiaEvents.Models.AssemblyInfoInputs.cache
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\IndiaEvents.Models.AssemblyInfo.cs
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\IndiaEvents.Models.csproj.CoreCompileInputs.cache
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\IndiaEvents.Models.dll
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\refint\IndiaEvents.Models.dll
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\IndiaEvents.Models.pdb
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\IndiaEvents.Models.genruntimeconfig.cache
+D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net6.0\ref\IndiaEvents.Models.dll
