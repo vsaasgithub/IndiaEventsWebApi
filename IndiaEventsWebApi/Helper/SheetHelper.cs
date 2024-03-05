@@ -50,8 +50,6 @@ namespace IndiaEventsWebApi.Helper
             return sheetData;
         }
 
-
-
         internal static string testingFile(string Invoice_QuotationUpload, string eventId , string name)
         {
             byte[] fileBytes = Convert.FromBase64String(Invoice_QuotationUpload);
@@ -64,8 +62,7 @@ namespace IndiaEventsWebApi.Helper
             string fileType = GetFileType(fileBytes);
             string fileName = eventId + "-"  +name+ "." + fileType;
             string filePath = Path.Combine(pathToSave, fileName);           
-            System.IO.File.WriteAllBytes(filePath, fileBytes);
-           
+            System.IO.File.WriteAllBytes(filePath, fileBytes);           
 
             return filePath;           
 

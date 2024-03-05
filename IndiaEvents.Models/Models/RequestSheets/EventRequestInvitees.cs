@@ -10,7 +10,7 @@
         public string? LcAmount { get; set; }
         public string? InviteedFrom { get; set; }
 
-        public string? InviteeName { get; set; } // HcpName
+        public string? InviteeName { get; set; } 
         public string? Speciality { get; set; }
         public string? HCPType { get; set; }
 

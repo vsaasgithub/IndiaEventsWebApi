@@ -9,12 +9,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using IndiaEventsWebApi.Helper;
 using Microsoft.Extensions.DependencyInjection;
+using Aspose.Pdf.Plugins;
+using iTextSharp.text.pdf.security;
+using Smartsheet.Api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
-
-
-var key = Encoding.ASCII.GetBytes("veryveryveryveryverysecret......................");
 
 
 
@@ -36,20 +36,21 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryveryveryveryverysecret......................"))
     };
 
-    options.Events = new JwtBearerEvents
-    {
-        OnAuthenticationFailed = context =>
-        {
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+    //options.Events = new JwtBearerEvents
+    //{
+    //    OnAuthenticationFailed = context =>
+    //    {
+    //        context.Response.ContentType = "application/json";
+    //        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
 
-            return context.Response.WriteAsync(new
-            {
-                Message = "Invalid token",
-                Error = context.Exception.Message
-            }.ToString());
-        }
-    };
+    //        //return context.Response.WriteAsync(new
+    //        //{
+    //        //    Message = "Invalid token",
+    //        //    Error = context.Exception.Message
+    //        //}.ToString());
+            
+    //    }
+    //};
 })
 .AddGoogle(options =>
 {

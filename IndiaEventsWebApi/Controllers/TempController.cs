@@ -65,6 +65,22 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpGet("GenerateSummaryPDF")]
         public void GenerateSummaryPDF(string EventID)
         {
