@@ -19,17 +19,17 @@ namespace IndiaEventsWebApi.Controllers
     [ApiController]
     public class WebHooksController : ControllerBase
     {
-        private readonly string accessToken;
-        private readonly IConfiguration configuration;
-        private readonly SmartsheetClient _smartsheetClient;
-        private readonly ILogger<WebHooksController> _logger;
-        public WebHooksController(IConfiguration configuration, ILogger<WebHooksController> logger, SmartsheetClient smartsheetClient)
-        {
-            this.configuration = configuration;
-            accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
-            _smartsheetClient = smartsheetClient;
-            _logger = logger;
-        }
+        //private readonly string accessToken;
+        //private readonly IConfiguration configuration;
+        //private readonly SmartsheetClient _smartsheetClient;
+        //private readonly ILogger<WebHooksController> _logger;
+        //public WebHooksController(IConfiguration configuration, ILogger<WebHooksController> logger, SmartsheetClient smartsheetClient)
+        //{
+        //    this.configuration = configuration;
+        //    accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
+        //    _smartsheetClient = smartsheetClient;
+        //    _logger = logger;
+        //}
 
 
         [HttpPost(Name = "WebHook")]
@@ -41,7 +41,7 @@ namespace IndiaEventsWebApi.Controllers
                 string rawContent = string.Empty;
                 using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
                 {
-                    rawContent = await reader.ReadToEndAsync();
+                   rawContent = await reader.ReadToEndAsync();
                 }
                 requestHeaders.Add("Body", rawContent);
                 Serilog.Log.Information(string.Join(";", requestHeaders.Select(x => x.Key + "=" + x.Value).ToArray()));
