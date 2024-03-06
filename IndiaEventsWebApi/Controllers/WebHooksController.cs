@@ -331,7 +331,7 @@ namespace IndiaEventsWebApi.Controllers
                 var EventName = "";
                 var EventDate = "";
                 var EventVenue = "";
-
+                List<string> Speakers = new List<string>();
                 SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
                 string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
@@ -412,6 +412,11 @@ namespace IndiaEventsWebApi.Controllers
                             string columnName = sheet_SpeakerCode.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title;
                             if (requiredColumns.Contains(columnName, StringComparer.OrdinalIgnoreCase))
                             {
+                                if (columnName == "HCPName")
+                                {
+                                    var val = cell.DisplayValue;
+                                    Speakers.Add(val);
+                                }
                                 newRow[columnName] = cell.DisplayValue;
                             }
                         }
@@ -440,7 +445,8 @@ namespace IndiaEventsWebApi.Controllers
                         Sr_No++;
                     }
                 }
-                byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, dtMai);
+                string resultString = string.Join(", ", Speakers);
+                byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, dtMai, resultString);
                 string filename = "Attendance Sheet_" + EventID + ".pdf";
                 var folderName = Path.Combine("Resources", "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
@@ -533,7 +539,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
-        private byte[] exportpdf(DataTable dtEmployee, string EventCode, string EventName, string EventDate, string EventVenue, DataTable dtMai)
+        private byte[] exportpdf(DataTable dtEmployee, string EventCode, string EventName, string EventDate, string EventVenue, DataTable dtMai,string speakers)
         {
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
             iTextSharp.text.Rectangle rec = new iTextSharp.text.Rectangle(PageSize.A4);
@@ -570,7 +576,7 @@ namespace IndiaEventsWebApi.Controllers
             //    pBody.Add(new Chunk(" " + hcpName));
             //}
 
-            string hcpNames = string.Join(", ", dtMai.AsEnumerable().Select(row => row["HCPName"].ToString()));
+            string hcpNames = speakers;//string.Join(", ", dtMai.AsEnumerable().Select(row => row["HCPName"].ToString()));
             pBody.Add(new Chunk(" " + hcpNames));
             doc.Add(pBody);
             doc.Add(new Paragraph("\n "));
