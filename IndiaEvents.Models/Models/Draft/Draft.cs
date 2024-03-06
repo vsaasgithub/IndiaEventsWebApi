@@ -23,6 +23,8 @@ namespace IndiaEvents.Models.Models.Draft
         public DateTime? EventDate { get; set; }
         public string? InitiatorName { get; set; }
         public string? InitiatorEmail { get; set; }
+        public string? Role { get; set; }
+
         public string? Isfile { get; set; }
         public List<string>? UploadFiles { get; set; }
     }
@@ -40,7 +42,7 @@ namespace IndiaEvents.Models.Models.Draft
         public string? State { get; set; }       
         public string? HCPRole { get; set; }
         public string? IsAdvanceRequired { get; set; }
-        public string? TotalInvitees { get; set; }        
+       // public string? TotalInvitees { get; set; }        
         public string? AdvanceAmount { get; set; }        
         public string? ClassIIIEventCode { get; set; }
         public string? MeetingType { get; set; }
@@ -48,11 +50,17 @@ namespace IndiaEvents.Models.Models.Draft
         public string? VenueCountry { get; set; }
         public string? MedicalUtilityType { get; set; }
         public string? MedicalUtilityDescription { get; set; }
-        public string? ValidFrom { get; set; }
-        public string? ValidTo { get; set; }
-        public string? Role { get; set; }        
-        public string? InitiatorName { get; set; }
-        public string? Initiator_Email { get; set; }
+        public DateTime? ValidFrom { get; set; }
+        public DateTime? ValidTo { get; set; }
+        //public string? Role { get; set; }        
+        //public string? InitiatorName { get; set; }
+        //public string? Initiator_Email { get; set; }
+        public string? IsFiles { get; set; }
+        public string? IsBrands { get; set; }
+        public string? IsPanelists { get; set; }
+        public string? IsSlideKits { get; set; }
+        public string? IsInvitees { get; set; }
+        public string? IsExpense { get; set; }
         public List<string>? Files { get; set; }        
     }
 }

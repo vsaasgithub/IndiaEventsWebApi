@@ -24,6 +24,7 @@ namespace IndiaEventsWebApi.Helper
             }
             return 0;
         }
+
         internal static Sheet GetSheetById(SmartsheetClient smartsheet, string sheetId)
         {
             long.TryParse(sheetId, out long parsedSheetId);
@@ -73,8 +74,7 @@ namespace IndiaEventsWebApi.Helper
         {
             System.IO.File.Delete(filePath);
             return "ok";
-        }
-    
+        }    
 
         internal static byte[] exportpdf(DataTable dtEmployee, string EventCode, string EventName, string EventDate, string EventVenue, DataTable dtMai)
         {
@@ -139,7 +139,6 @@ namespace IndiaEventsWebApi.Helper
             byte[] result = ms.ToArray();
             return result;
         }
-
 
         internal static string GetContentType(string fileExtension)
         {

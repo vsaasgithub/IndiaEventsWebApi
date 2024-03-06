@@ -370,6 +370,7 @@ namespace IndiaEventsWebApi.Controllers
                 issuer: "http://localhost:5098",
                 audience: "ABM", // Use roles as the audience
                 expires: DateTime.Now.AddDays(1),
+                //expires: DateTime.Now.AddMinutes(5),
                 claims: identity,
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
             );

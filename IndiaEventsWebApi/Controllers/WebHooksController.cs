@@ -30,6 +30,7 @@ namespace IndiaEventsWebApi.Controllers
         {
             this.configuration = configuration;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
+
         }
 
         [HttpPost(Name = "WebHook")]
@@ -78,14 +79,14 @@ namespace IndiaEventsWebApi.Controllers
                 {
                     foreach (var WebHookEvent in RequestWebhook.events)
                     {
-                        Serilog.Log.Information("EventType in RequestWebhook - " + WebHookEvent.eventType);
-                        Serilog.Log.Information("RowID in RequestWebhook - " + WebHookEvent.rowId);
+                        //Serilog.Log.Information("EventType in RequestWebhook - " + WebHookEvent.eventType);
+                        //Serilog.Log.Information("RowID in RequestWebhook - " + WebHookEvent.rowId);
 
 
 
                         if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
                         {
-                            var DataInSheet = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, new List<long> { WebHookEvent.rowId }, null, null, null, null, null, null).Rows;
+                            //var DataInSheet = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, new List<long> { WebHookEvent.rowId }, null, null, null, null, null, null).Rows;
 
 
                             Column processIdColumn1 = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
@@ -102,6 +103,9 @@ namespace IndiaEventsWebApi.Controllers
                                 var status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn2.Id)?.Value.ToString();
                                 if (status != null && status == "Approved")
                                 {
+                                    int timeInterval = 90000;
+                                    await Task.Delay(timeInterval);
+
                                     GenerateSummaryPDF(columnValue);
                                 }
 
@@ -437,7 +441,7 @@ namespace IndiaEventsWebApi.Controllers
                     }
                 }
                 byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, dtMai);
-                string filename = "Sample_PDF_" + EventID + ".pdf";
+                string filename = "Attendance Sheet_" + EventID + ".pdf";
                 var folderName = Path.Combine("Resources", "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 if (!Directory.Exists(pathToSave))
@@ -597,11 +601,6 @@ namespace IndiaEventsWebApi.Controllers
             byte[] result = ms.ToArray();
             return result;
         }
-
-
-
-
-
 
     }
 

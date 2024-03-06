@@ -64,7 +64,6 @@ namespace IndiaEventsWebApi.Controllers.FMV
 
 
         [HttpGet("GetFMVData")]
-
         public IActionResult GetFMVData()
         {
             try
