@@ -111,12 +111,12 @@ namespace IndiaEventsWebApi.Controllers
 
                             }
 
-                            
+
                         }
                     }
                 }
             }
-            
+
             catch (Exception ex)
             {
                 Serilog.Log.Error($"Error occured on Webhook apicontroller Attachementfile method {ex.Message} at {DateTime.Now}");
@@ -476,6 +476,7 @@ namespace IndiaEventsWebApi.Controllers
                         {
                             var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(parsedSheetId_SpeakerCode, Id, null);
                             var url = "";
+                            var name = "";
                             foreach (var x in a.Data)
                             {
                                 if (x != null)
@@ -483,6 +484,7 @@ namespace IndiaEventsWebApi.Controllers
                                     var AID = (long)x.Id;
                                     var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(parsedSheetId_SpeakerCode, AID);
                                     url = file.Url;
+                                    name = file.Name;
                                 }
                                 if (url != "")
                                 {
@@ -498,7 +500,7 @@ namespace IndiaEventsWebApi.Controllers
                                             Directory.CreateDirectory(ps);
                                         }
                                         string ft = SheetHelper.GetFileType(xy);
-                                        string fileName = eventId + "-" + x + " AttachedFile." + ft;
+                                        string fileName =name;
                                         string fp = Path.Combine(ps, fileName);
                                         var addedRow = rowId;
                                         System.IO.File.WriteAllBytes(fp, xy);
@@ -539,7 +541,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
-        private byte[] exportpdf(DataTable dtEmployee, string EventCode, string EventName, string EventDate, string EventVenue, DataTable dtMai,string speakers)
+        private byte[] exportpdf(DataTable dtEmployee, string EventCode, string EventName, string EventDate, string EventVenue, DataTable dtMai, string speakers)
         {
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
             iTextSharp.text.Rectangle rec = new iTextSharp.text.Rectangle(PageSize.A4);
