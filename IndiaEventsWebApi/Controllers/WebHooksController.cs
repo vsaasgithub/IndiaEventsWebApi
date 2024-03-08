@@ -439,7 +439,7 @@ namespace IndiaEventsWebApi.Controllers
                 }
                 string resultString = string.Join(", ", Speakers);
 
-                byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, resultString);
+                byte[] fileBytes = SheetHelper.exportAttendencepdf(dtMai, EventCode, EventName, EventDate, EventVenue, resultString);
                 string filename = "Attendance Sheet_" + EventID + ".pdf";
                 var folderName = Path.Combine("Resources", "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);

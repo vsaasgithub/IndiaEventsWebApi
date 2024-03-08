@@ -14,6 +14,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? MedicalUtilityDescription { get; set; }
         public string? Class_III_EventCode { get; set; }
         public string? IsAdvanceRequired { get; set; }
+        public string? AdvanceAmount { get; set; }
         public string? EventOpen30daysFile { get; set; }
         public string? EventOpen30dayscount { get; set; }
 

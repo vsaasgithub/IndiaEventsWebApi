@@ -31,9 +31,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
             string sheetId2 = configuration.GetSection("SmartsheetSettings:EventRequestBrandsList").Value;
-            //string sheetId3 = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
             string sheetId4 = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
-            //string sheetId5 = configuration.GetSection("SmartsheetSettings:EventRequestsHcpSlideKit").Value;
             string sheetId6 = configuration.GetSection("SmartsheetSettings:EventRequestsExpensesSheet").Value;
             string sheetId7 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
 
@@ -41,24 +39,25 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
 
             long.TryParse(sheetId1, out long parsedSheetId1);
             long.TryParse(sheetId2, out long parsedSheetId2);
-            //long.TryParse(sheetId3, out long parsedSheetId3);
             long.TryParse(sheetId4, out long parsedSheetId4);
-            //long.TryParse(sheetId5, out long parsedSheetId5);
             long.TryParse(sheetId6, out long parsedSheetId6);
             long.TryParse(sheetId7, out long parsedSheetId7);
 
-            Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
-            Sheet sheet2 = smartsheet.SheetResources.GetSheet(parsedSheetId2, null, null, null, null, null, null, null);
-            //Sheet sheet3 = smartsheet.SheetResources.GetSheet(parsedSheetId3, null, null, null, null, null, null, null);
-            Sheet sheet4 = smartsheet.SheetResources.GetSheet(parsedSheetId4, null, null, null, null, null, null, null);
-            //Sheet sheet5 = smartsheet.SheetResources.GetSheet(parsedSheetId5, null, null, null, null, null, null, null);
-            Sheet sheet6 = smartsheet.SheetResources.GetSheet(parsedSheetId6, null, null, null, null, null, null, null);
-            Sheet sheet7 = smartsheet.SheetResources.GetSheet(parsedSheetId7, null, null, null, null, null, null, null);
+            Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+
+
+            //Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
+            //Sheet sheet2 = smartsheet.SheetResources.GetSheet(parsedSheetId2, null, null, null, null, null, null, null);
+            //Sheet sheet4 = smartsheet.SheetResources.GetSheet(parsedSheetId4, null, null, null, null, null, null, null);
+            //Sheet sheet6 = smartsheet.SheetResources.GetSheet(parsedSheetId6, null, null, null, null, null, null, null);
+            //Sheet sheet7 = smartsheet.SheetResources.GetSheet(parsedSheetId7, null, null, null, null, null, null, null);
 
             StringBuilder addedBrandsData = new StringBuilder();
-            //StringBuilder addedInviteesData = new StringBuilder();
             StringBuilder addedHcpData = new StringBuilder();
-            //StringBuilder addedSlideKitData = new StringBuilder();
             StringBuilder addedExpences = new StringBuilder();
 
             int addedSlideKitDataNo = 1;
@@ -114,7 +113,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                 var x = string.Format(hindi, "{0:#,#}", HM);
                 var t = int.Parse(formdata.TravelAmount) + int.Parse(formdata.AccomAmount);
                 var y = string.Format(hindi, "{0:#,#}", t);
-                //string rowData = $"{addedHcpDataNo}. {formdata.HcpRole} |Name: {formdata.HcpName} | Honr.Amt: {formdata.HonarariumAmount} |Trav.Amt: {formdata.Travel} |Acco.Amt: {formdata.Accomdation} ";
                 string rowData = $"{addedHcpDataNo}. {formdata.MisCode} |{formdata.HcpName} | Regst.Amt: {x} |Trav.&Acc.Amt: {y} ";
 
                 addedHcpData.AppendLine(rowData);
@@ -153,6 +151,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Sponsorship Society Name"), Value = formDataList.HcpConsultant.SponsorshipSocietyName });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Venue Country"), Value = formDataList.HcpConsultant.Country });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "IsAdvanceRequired"), Value = formDataList.HcpConsultant.IsAdvanceRequired });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = formDataList.HcpConsultant.AdvanceAmount });
+
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Brands"), Value = brand });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Expenses"), Value = Expense });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Panelists"), Value = HCP });
@@ -314,14 +314,11 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "MISCode"), Value = formData.MisCode });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HCP Type"), Value = formData.HcpType });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel"), Value = formData.TravelAmount });
-                    // newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventType"), Value = formDataList.HcpConsultant.EventType });
-
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.HcpConsultant.EventTopic });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.HcpConsultant.EventType });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.HcpConsultant.EventDate });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.HcpConsultant.EventEndDate });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Venue name"), Value = formDataList.HcpConsultant.VenueName });
-
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation"), Value = formData.AccomAmount });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "LocalConveyance"), Value = formData.LcAmount });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Registration Amount"), Value = formData.RegistrationAmount });
@@ -330,18 +327,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Objective Criteria"), Value = formData.Objective });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Rationale"), Value = formData.Rationale });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "FCPA Date"), Value = formData.Fcpadate });
-
-
-                    //newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.HcpConsultant.EventTopic });
-                    //newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "EventType"), Value = formDataList.HcpConsultant.EventType });
-                    //newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "EventDate"), Value = formDataList.HcpConsultant.EventDate });
-                    //newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.HcpConsultant.EventEndDate });
-                    //newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "VenueName"), Value = formDataList.HcpConsultant.VenueName });
-
-
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "EventId/EventRequestId"), Value = val });
 
-                    // ///////////////////////////////////////////////////
 
 
                     var addeddatarow = smartsheet.SheetResources.RowResources.AddRows(parsedSheetId4, new Row[] { newRow1 });
@@ -349,29 +336,13 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                     var columnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
                     var Cell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == columnId);
                     var value = Cell.DisplayValue;
-
                     if (FCPA == "Yes")
                     {
-
-
                         var filename = " FCPA";
                         var filePath = SheetHelper.testingFile(formDataList.HcpConsultant.FcpaFile, value, filename);
-
-
-
-
                         var addedRow = addeddatarow[0];
-
-
-                        var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                parsedSheetId4, addedRow.Id.Value, filePath, "application/msword");
-
+                        var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedSheetId4, addedRow.Id.Value, filePath, "application/msword");
                     }
-
-
-
-
-
                 }
 
                 foreach (var formdata in formDataList.BrandsList)
@@ -398,9 +369,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "EventId/EventRequestID"), Value = val });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formdata.BTC_BTE });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Registration Amount"), Value = formdata.RegstAmount });
-
-
-
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Topic"), Value = formDataList.HcpConsultant.EventTopic });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Type"), Value = formDataList.HcpConsultant.EventType });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.HcpConsultant.EventDate });
@@ -409,32 +377,13 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
 
                     smartsheet.SheetResources.RowResources.AddRows(parsedSheetId6, new Row[] { newRow6 });
                 }
-
                 return Ok(new
                 { Message = " Success!" });
-
-
-
             }
-
-
-
             catch (Exception ex)
             {
                 return BadRequest($"Could not find {ex.Message}");
             }
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
 

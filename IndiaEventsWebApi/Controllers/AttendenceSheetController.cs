@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 using System.Data;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace IndiaEventsWebApi.Controllers
@@ -17,10 +18,24 @@ namespace IndiaEventsWebApi.Controllers
 
         private readonly string accessToken;
         private readonly IConfiguration configuration;
+        private readonly SmartsheetClient smartsheet;
+        private readonly Sheet sheet_SpeakerCode;
+        private readonly Sheet sheet;
+        private readonly Sheet sheet1;
+        private readonly Sheet processSheetData;
         public AttendenceSheetController(IConfiguration configuration)
         {
             this.configuration = configuration;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
+            string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
+            string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
+            string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
+            string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
+            smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+            processSheetData = SheetHelper.GetSheetById(smartsheet, processSheet);
+            sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+            sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+            sheet_SpeakerCode = SheetHelper.GetSheetById(smartsheet, sheetId_SpeakerCode);
         }
         [HttpGet("GenerateAttendencePDF")]
         public IActionResult GenerateAttendencePDF(string EventID)
@@ -33,24 +48,25 @@ namespace IndiaEventsWebApi.Controllers
                 var EventDate = "";
                 var EventVenue = "";
                 List<string> Speakers = new List<string>();
-                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
-                string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
-                long.TryParse(sheetId_SpeakerCode, out long parsedSheetId_SpeakerCode);
-                Sheet sheet_SpeakerCode = smartsheet.SheetResources.GetSheet(parsedSheetId_SpeakerCode, null, null, null, null, null, null, null);
+               // SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
-                string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
-                long.TryParse(sheetId, out long parsedSheetId);
-                Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
+                //string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
+                //long.TryParse(sheetId_SpeakerCode, out long parsedSheetId_SpeakerCode);
+                //Sheet sheet_SpeakerCode = smartsheet.SheetResources.GetSheet(parsedSheetId_SpeakerCode, null, null, null, null, null, null, null);
 
-                string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
-                long.TryParse(sheetId1, out long parsedSheetId1);
-                Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
+                //string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
+                //long.TryParse(sheetId, out long parsedSheetId);
+                //Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
+
+                //string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
+                //long.TryParse(sheetId1, out long parsedSheetId1);
+                //Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
 
 
-                string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
-                long.TryParse(processSheet, out long parsedProcessSheet);
-                Sheet processSheetData = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, null, null, null, null, null);
+                //string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
+                //long.TryParse(processSheet, out long parsedProcessSheet);
+                //Sheet processSheetData = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, null, null, null, null, null);
 
                 long rowId = 0;
                 Column IdColumn = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
@@ -68,7 +84,7 @@ namespace IndiaEventsWebApi.Controllers
                     }
 
                 }
-                var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(parsedSheetId1, rowId, null);
+                var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments((long)sheet1.Id, rowId, null);
 
 
 
@@ -160,14 +176,15 @@ namespace IndiaEventsWebApi.Controllers
                     {
 
                         smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
-                          parsedSheetId1,           // sheetId
+                          (long)sheet1.Id,           // sheetId
                           Id            // attachmentId
                         );
 
                     }
                 }
+
                 string resultString = string.Join(", ", Speakers);
-                byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, resultString);/*exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, dtMai);*/
+                byte[] fileBytes = SheetHelper.exportAttendencepdf(dtMai, EventCode, EventName, EventDate, EventVenue, resultString);/*exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, dtMai);*/
                 string filename = "AttendenceSheet-" + EventID + ".pdf";
                 var folderName = Path.Combine("Resources", "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
@@ -179,11 +196,11 @@ namespace IndiaEventsWebApi.Controllers
                 string filePath = Path.Combine(pathToSave, filename);
                 System.IO.File.WriteAllBytes(filePath, fileBytes);
 
-                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedSheetId1, rowId, filePath, "application/msword");
+                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile((long)sheet1.Id, rowId, filePath, "application/msword");
 
                 var FileUrl = "";
                 var AID = (long)attachment.Id;
-                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(parsedSheetId1, AID);
+                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment((long)sheet1.Id, AID);
                 FileUrl = file.Url;
 
                 //string downloadLink = GetDownloadLink(filename);
@@ -214,25 +231,25 @@ namespace IndiaEventsWebApi.Controllers
                 var EventName = "";
                 var EventDate = "";
                 var EventVenue = "";
-
+                List<string> Speakers = new List<string>();
                 SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
-                string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
-                long.TryParse(sheetId_SpeakerCode, out long parsedSheetId_SpeakerCode);
-                Sheet sheet_SpeakerCode = smartsheet.SheetResources.GetSheet(parsedSheetId_SpeakerCode, null, null, null, null, null, null, null);
+                //string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
+                //long.TryParse(sheetId_SpeakerCode, out long parsedSheetId_SpeakerCode);
+                //Sheet sheet_SpeakerCode = smartsheet.SheetResources.GetSheet(parsedSheetId_SpeakerCode, null, null, null, null, null, null, null);
 
-                string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
-                long.TryParse(sheetId, out long parsedSheetId);
-                Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
+                //string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
+                //long.TryParse(sheetId, out long parsedSheetId);
+                //Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
 
-                string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
-                long.TryParse(sheetId1, out long parsedSheetId1);
-                Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
+                //string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
+                //long.TryParse(sheetId1, out long parsedSheetId1);
+                //Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
 
 
-                string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
-                long.TryParse(processSheet, out long parsedProcessSheet);
-                Sheet processSheetData = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, null, null, null, null, null);
+                //string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
+                //long.TryParse(processSheet, out long parsedProcessSheet);
+                //Sheet processSheetData = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, null, null, null, null, null);
 
                 long rowId = 0;
                 Column IdColumn = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
@@ -250,7 +267,7 @@ namespace IndiaEventsWebApi.Controllers
                     }
 
                 }
-                var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(parsedSheetId1, rowId, null);
+                var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments((long)sheet1.Id, rowId, null);
 
 
 
@@ -289,8 +306,7 @@ namespace IndiaEventsWebApi.Controllers
                 int Sr_No = 1;
                 foreach (Row row in sheet_SpeakerCode.Rows)
                 {
-                    string eventId = row.Cells
-                        .FirstOrDefault(cell => sheet_SpeakerCode.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title == "EventId/EventRequestId")?.DisplayValue;
+                    string eventId = row.Cells.FirstOrDefault(cell => sheet_SpeakerCode.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title == "EventId/EventRequestId")?.DisplayValue;
                     if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase))
                     {
                         DataRow newRow = dtMai.NewRow();
@@ -300,6 +316,11 @@ namespace IndiaEventsWebApi.Controllers
                             string columnName = sheet_SpeakerCode.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title;
                             if (requiredColumns.Contains(columnName, StringComparer.OrdinalIgnoreCase))
                             {
+                                if (columnName == "HCPName")
+                                {
+                                    var val = cell.DisplayValue;
+                                    Speakers.Add(val);
+                                }
                                 newRow[columnName] = cell.DisplayValue;
                             }
                         }
@@ -307,7 +328,6 @@ namespace IndiaEventsWebApi.Controllers
                         Sr_No++;
                     }
                 }
-
                 foreach (Row row in sheet.Rows)
                 {
                     string eventId = row.Cells.FirstOrDefault(cell => sheet.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title == "EventId/EventRequestId")?.DisplayValue;
@@ -338,14 +358,16 @@ namespace IndiaEventsWebApi.Controllers
                     {
 
                         smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
-                          parsedSheetId1,           // sheetId
+                          (long)sheet1.Id,           // sheetId
                           Id            // attachmentId
                         );
 
                     }
                 }
 
-                byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, dtMai);
+                string resultString = string.Join(", ", Speakers);
+                byte[] fileBytes = SheetHelper.exportAttendencepdf(dtMai, EventCode, EventName, EventDate, EventVenue, resultString);
+               // byte[] fileBytes = exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, resultString);
                 string filename = "AttendenceSheet-" + EventID + ".pdf";
                 var folderName = Path.Combine("Resources", "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
@@ -357,12 +379,12 @@ namespace IndiaEventsWebApi.Controllers
                 string filePath = Path.Combine(pathToSave, filename);
                 System.IO.File.WriteAllBytes(filePath, fileBytes);
 
-                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(parsedSheetId1, rowId, filePath, "application/msword");
+                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile((long)sheet1.Id, rowId, filePath, "application/msword");
 
                 var FileUrl = "";
                 var AID = (long)attachment.Id;
                 var Name = attachment.Name;
-                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(parsedSheetId1, AID);
+                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment((long)sheet1.Id, AID);
                 FileUrl = file.Url;
 
 
@@ -391,77 +413,6 @@ namespace IndiaEventsWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
-        private byte[] exportpdf(DataTable dtEmployee, string EventCode, string EventName, string EventDate, string EventVenue, DataTable dtMai)
-        {
-            System.IO.MemoryStream ms = new System.IO.MemoryStream();
-            iTextSharp.text.Rectangle rec = new iTextSharp.text.Rectangle(PageSize.A4);
-            rec.BackgroundColor = new BaseColor(System.Drawing.Color.Olive);
-            Document doc = new Document(rec);
-            doc.SetPageSize(iTextSharp.text.PageSize.A4);
-            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
-            doc.Open();
-            BaseFont bfntHead = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-            iTextSharp.text.Font fntHead = new iTextSharp.text.Font(bfntHead, 16, 1, iTextSharp.text.BaseColor.BLUE);
-            Paragraph prgHeading = new Paragraph();
-            prgHeading.Alignment = Element.ALIGN_LEFT;
-            prgHeading.Add(new Chunk("Attendance Sheet".ToUpper(), fntHead));
-            doc.Add(prgHeading);
-            Paragraph prgGeneratedBY = new Paragraph();
-            BaseFont btnAuthor = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-            iTextSharp.text.Font fntAuthor = new iTextSharp.text.Font(btnAuthor, 8, 2, iTextSharp.text.BaseColor.BLUE);
-            prgGeneratedBY.Alignment = Element.ALIGN_RIGHT;
-            doc.Add(prgGeneratedBY);
-            Paragraph p = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, iTextSharp.text.BaseColor.BLACK, Element.ALIGN_LEFT, 1)));
-            doc.Add(p);
-            doc.Add(new Chunk("\n", fntHead));
-
-            Paragraph pBody = new Paragraph();
-            pBody.Add(new Chunk("Event Code:" + EventCode));
-            pBody.Add(new Chunk("\nEvent Name:" + EventName));
-            pBody.Add(new Chunk("\nEvent Date:" + EventDate));
-            pBody.Add(new Chunk("\nEvent Venue:" + EventVenue));
-            pBody.Add(new Chunk("\n\nSpeakers: "));
-
-            //foreach(DataRow row in dtMai.Rows)
-            //{
-            //    string hcpName = row["HCPName"].ToString();
-            //    pBody.Add(new Chunk(" " + hcpName));
-            //}
-
-            string hcpNames = string.Join(", ", dtMai.AsEnumerable().Select(row => row["HCPName"].ToString()));
-            pBody.Add(new Chunk(" " + hcpNames));
-            doc.Add(pBody);
-            doc.Add(new Paragraph("\n "));
-            PdfPTable table = new PdfPTable(dtEmployee.Columns.Count);
-            table.WidthPercentage = 100;
-            float[] columnWidths = Enumerable.Range(0, dtEmployee.Columns.Count).Select(i => i == dtEmployee.Columns.IndexOf("HCPName") ? 2f : 1f).ToArray(); /*Count).Select(i => 1f).ToArray();*/
-            table.SetWidths(columnWidths);
-
-            for (int i = 0; i < dtEmployee.Columns.Count; i++)
-            {
-                string cellText = dtEmployee.Columns[i].ColumnName;
-                PdfPCell cell = new PdfPCell();
-                cell.Phrase = new Phrase(cellText, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.TIMES_ROMAN, 8, 1, new BaseColor(System.Drawing.ColorTranslator.FromHtml("#000000"))));
-                cell.BackgroundColor = new BaseColor(System.Drawing.ColorTranslator.FromHtml("#C8C8C8"));
-                cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell.PaddingBottom = 5;
-                table.AddCell(cell);
-            }
-            for (int i = 0; i < dtEmployee.Rows.Count; i++)
-            {
-                for (int j = 0; j < dtEmployee.Columns.Count; j++)
-                {
-                    table.AddCell(dtEmployee.Rows[i][j].ToString());
-                }
-            }
-            doc.Add(table);
-            doc.Close();
-            byte[] result = ms.ToArray();
-            return result;
-        }
-
 
 
         private byte[] exportpdf(DataTable dtEmployee, string EventCode, string EventName, string EventDate, string EventVenue, string speakers)

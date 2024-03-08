@@ -33,6 +33,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? Invoice_QuotationUpload { get; set; }
         public string? IsDeviationUpload { get; set; }
         public string? IsAdvanceRequired { get; set; }
+        public string? AdvanceAmount { get; set; }
 
     }
 
