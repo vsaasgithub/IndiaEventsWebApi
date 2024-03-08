@@ -101,7 +101,7 @@ namespace IndiaEventsWebApi.Controllers
                             {
                                 var columnValue = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn1.Id)?.Value.ToString();
                                 var status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn2.Id)?.Value.ToString();
-                                if (status != null && status == "Approved")
+                                if (status != null && status == "Approved"  )
                                 {
                                     int timeInterval = 90000;
                                     await Task.Delay(timeInterval);

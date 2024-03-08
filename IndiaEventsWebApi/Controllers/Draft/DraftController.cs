@@ -85,40 +85,63 @@ namespace IndiaEventsWebApi.Controllers.Draft
                 }
                 for (int i = 0; i < columnNames.Count; i++)
                 {
+                    var x = existingRow.Cells[i].Value;
                     if (columnNames[i] == "Brands")
                     {
-                        string b = existingRow.Cells[i].Value.ToString();
-                        string[] brandLines = b.Split('\n');
-                        List<object> resultBrandsList = new List<object>();
-
-                        foreach (var line in brandLines)
+                        if (x != null || x == "")
                         {
-                            string[] values = line.Split('|');
-
-                            if (values.Length == 3)
-                            {
-                                string brandName = values[0].Split(':')[1].Trim();
-                                string projectId = values[1].Split(':')[1].Trim();
-                                string percentAllocation = values[2].Split(':')[1].Trim();
-
-                                var brandObject = new
-                                {
-                                    brandName,
-                                    projectId,
-                                    percentAllocation
-                                };
-
-                                resultBrandsList.Add(brandObject);
-                            }
+                            List<object> brandsList = ConvertToJsonObject(existingRow.Cells[i].Value.ToString());
+                            DraftData[columnNames[i]] = brandsList;
                         }
-                        DraftData[columnNames[i]] = resultBrandsList;
+
                     }
-                    DraftData[columnNames[i]] = existingRow.Cells[i].Value;
+                    else if (columnNames[i] == "Panelists")
+                    {
+                        if (x != null || x == "")
+                        {
+                            List<object> Panelists = ConvertToJsonObject(existingRow.Cells[i].Value.ToString());
+                            DraftData[columnNames[i]] = Panelists;
+                        }
+                    }
+                    else if (columnNames[i] == "SlideKits")
+                    {
+                        if (x != null || x == "")
+                        {
+                            List<object> SlideKits = ConvertToJsonObject(existingRow.Cells[i].Value.ToString());
+                            DraftData[columnNames[i]] = SlideKits;
+                        }
+                    }
+                    else if (columnNames[i] == "Invitees")
+                    {
+                        if (x != null || x == "")
+                        {
+                            List<object> Invitees = ConvertToJsonObject(existingRow.Cells[i].Value.ToString());
+                            DraftData[columnNames[i]] = Invitees;
+                        }
+                    }
+
+
+                    else if (columnNames[i] == "Expenses")
+                    {
+                        if (x != null || x == "")
+                        {
+                            List<object> Expenses = ConvertToJsonObject(existingRow.Cells[i].Value.ToString());
+                            DraftData[columnNames[i]] = Expenses;
+
+                        }
+                    }
+                    else
+                    {
+                        DraftData[columnNames[i]] = existingRow.Cells[i].Value;
+                    }
+
+                    
                 }
 
                 var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet.Id.Value, existingRow.Id.Value, null);
 
                 List<Dictionary<string, object>> attachmentsList = new List<Dictionary<string, object>>();
+                
                 foreach (var attachment in attachments.Data)
                 {
                     var AID = (long)attachment.Id;
@@ -284,6 +307,34 @@ namespace IndiaEventsWebApi.Controllers.Draft
         }
 
 
+        private List<object> ConvertToJsonObject(string data)
+        {
+            string[] lines = data.Split('\n');
+            List<object> resultList = new List<object>();
+
+            foreach (var line in lines)
+            {
+                string[] values = line.Split('|');
+
+                if (values.Length > 0)
+                {
+                    Dictionary<string, string> item = new Dictionary<string, string>();
+
+                    foreach (var value in values)
+                    {
+                        string[] keyValue = value.Trim().Split(':');
+                        if (keyValue.Length == 2)
+                        {
+                            item.Add(keyValue[0].Trim(), keyValue[1].Trim());
+                        }
+                    }
+
+                    resultList.Add(item);
+                }
+            }
+
+            return resultList;
+        }
     }
 }
 
