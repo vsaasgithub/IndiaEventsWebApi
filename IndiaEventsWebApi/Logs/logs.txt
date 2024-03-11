@@ -4258,3 +4258,205 @@ System.FormatException: Input string was not in a correct format.
 [16:44:06 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"'
 [16:44:06 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NGPQQNOT"" completed keep alive response.
 [16:44:06 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 POST http://localhost:5098/api/medicalPreUtility/PreEventData application/json 2398 - 200 - application/json;+charset=utf-8 32254.1310ms
+[17:05:03 Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory [Debug] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[17:05:03 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting starting
+[17:05:03 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Information] User profile is available. Using '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[17:05:03 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-157c5ede-f40c-4ae7-8053-31353ad9f7e6.xml"'.
+[17:05:03 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f.xml"'.
+[17:05:03 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-fbbed531-59ac-40e0-8903-14f0f383c43a.xml"'.
+[17:05:03 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {157c5ede-f40c-4ae7-8053-31353ad9f7e6}.
+[17:05:03 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f}.
+[17:05:03 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {fbbed531-59ac-40e0-8903-14f0f383c43a}.
+[17:05:03 Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver [Debug] Considering key {fbbed531-59ac-40e0-8903-14f0f383c43a} with expiration date 2024-05-11 05:12:17Z as default key.
+[17:05:03 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[17:05:03 Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor [Debug] Decrypting secret element using Windows DPAPI.
+[17:05:03 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[17:05:03 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+[17:05:03 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+[17:05:04 Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider [Debug] Using key {fbbed531-59ac-40e0-8903-14f0f383c43a} as the default key.
+[17:05:04 Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService [Debug] Key ring with default key {fbbed531-59ac-40e0-8903-14f0f383c43a} was loaded during application startup.
+[17:05:04 Microsoft.Hosting.Lifetime [Information] Now listening on: "http://localhost:5098"
+[17:05:04 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "IndiaEventsWebApi"
+[17:05:04 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.Watch.BrowserRefresh"
+[17:05:04 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.WebTools.BrowserLink.Net"
+[17:05:04 Microsoft.Hosting.Lifetime [Information] Application started. Press Ctrl+C to shut down.
+[17:05:04 Microsoft.Hosting.Lifetime [Information] Hosting environment: "Development"
+[17:05:04 Microsoft.Hosting.Lifetime [Information] Content root path: "D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\"
+[17:05:04 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting started
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBG"" accepted.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBH"" accepted.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBG"" started.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBH"" started.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN21NT5QRUBH"" received FIN.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN21NT5QRUBG"" received FIN.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN21NT5QRUBH"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN21NT5QRUBG"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBH"" disconnecting.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBG"" disconnecting.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBG"" stopped.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBH"" stopped.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBI"" accepted.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBI"" started.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBJ"" accepted.
+[17:05:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBJ"" started.
+[17:05:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[17:05:05 Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware [Debug] Wildcard detected, all requests with hosts will be allowed.
+[17:05:05 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[17:05:05 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[17:05:05 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[17:05:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[17:05:05 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBK"" accepted.
+[17:05:05 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBK"" started.
+[17:05:05 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[17:05:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[17:05:05 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBJ"" completed keep alive response.
+[17:05:05 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBI"" completed keep alive response.
+[17:05:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 31.7387ms
+[17:05:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 631.3483ms
+[17:05:05 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBK"" completed keep alive response.
+[17:05:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 68.4870ms
+[17:05:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[17:05:05 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[17:05:05 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[17:05:05 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBK"" completed keep alive response.
+[17:05:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 180.1457ms
+[17:05:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 POST http://localhost:5098/api/medicalPreUtility/PreEventData application/json 3927
+[17:05:27 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/medicalPreUtility/PreEventData"'
+[17:05:27 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"' with route pattern '"api/medicalPreUtility/PreEventData"' is valid for the request path '"/api/medicalPreUtility/PreEventData"'
+[17:05:27 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"'
+[17:05:27 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[17:05:27 Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware [Warning] Failed to determine the https port for redirect.
+[17:05:27 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Debug] The request has an origin header: '"http://localhost:5098"'.
+[17:05:27 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Information] CORS policy execution successful.
+[17:05:27 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[17:05:27 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"'
+[17:05:27 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"PreEventData\", controller = \"medicalPreUtility\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult PreEventData(IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload)" on controller "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController" ("IndiaEventsWebApi").
+[17:05:27 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[17:05:27 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[17:05:27 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[17:05:27 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[17:05:27 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[17:05:27 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController" ("IndiaEventsWebApi")
+[17:05:27 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController" ("IndiaEventsWebApi")
+[17:05:27 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"' ...
+[17:05:27 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"' using the name '""' in request data ...
+[17:05:27 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Selected input formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter"' for content type '"application/json"'.
+[17:05:27 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN21NT5QRUBK"", Request id ""0HN21NT5QRUBK:00000004"": started reading request body.
+[17:05:27 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN21NT5QRUBK"", Request id ""0HN21NT5QRUBK:00000004"": done reading request body.
+[17:05:28 Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter [Debug] JSON input formatter succeeded, deserializing to type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'
+[17:05:28 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Done attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'.
+[17:05:28 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'.
+[17:05:28 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"' ...
+[17:05:28 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'.
+[17:05:54 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[17:05:54 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[17:05:54 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[17:05:54 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[17:05:54 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter"' and content type '"text/plain"' to write the response.
+[17:05:54 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "BadRequestObjectResult", writing value of type '"System.String"'.
+[17:05:54 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)" in 26931.7785ms
+[17:05:54 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"'
+[17:05:54 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBK"" completed keep alive response.
+[17:05:54 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 POST http://localhost:5098/api/medicalPreUtility/PreEventData application/json 3927 - 400 - text/plain;+charset=utf-8 27199.7902ms
+[17:06:19 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 POST http://localhost:5098/api/medicalPreUtility/PreEventData application/json 3158
+[17:06:19 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/medicalPreUtility/PreEventData"'
+[17:06:19 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"' with route pattern '"api/medicalPreUtility/PreEventData"' is valid for the request path '"/api/medicalPreUtility/PreEventData"'
+[17:06:19 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"'
+[17:06:19 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[17:06:19 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Debug] The request has an origin header: '"http://localhost:5098"'.
+[17:06:19 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Information] CORS policy execution successful.
+[17:06:19 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[17:06:19 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"'
+[17:06:19 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"PreEventData\", controller = \"medicalPreUtility\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult PreEventData(IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload)" on controller "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController" ("IndiaEventsWebApi").
+[17:06:19 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[17:06:19 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[17:06:19 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[17:06:19 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[17:06:19 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[17:06:19 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController" ("IndiaEventsWebApi")
+[17:06:19 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController" ("IndiaEventsWebApi")
+[17:06:19 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"' ...
+[17:06:19 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"' using the name '""' in request data ...
+[17:06:19 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Selected input formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter"' for content type '"application/json"'.
+[17:06:19 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN21NT5QRUBK"", Request id ""0HN21NT5QRUBK:00000005"": started reading request body.
+[17:06:19 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN21NT5QRUBK"", Request id ""0HN21NT5QRUBK:00000005"": done reading request body.
+[17:06:19 Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter [Debug] JSON input formatter succeeded, deserializing to type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'
+[17:06:19 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Done attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'.
+[17:06:19 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'.
+[17:06:19 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"' ...
+[17:06:19 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'.
+[17:06:37 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[17:06:37 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[17:06:37 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[17:06:37 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[17:06:37 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter"' and content type '"text/plain"' to write the response.
+[17:06:37 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "BadRequestObjectResult", writing value of type '"System.String"'.
+[17:06:37 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)" in 17906.8973ms
+[17:06:37 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"'
+[17:06:37 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBK"" completed keep alive response.
+[17:06:37 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 POST http://localhost:5098/api/medicalPreUtility/PreEventData application/json 3158 - 400 - text/plain;+charset=utf-8 18010.4400ms
+[17:07:09 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 POST http://localhost:5098/api/medicalPreUtility/PreEventData application/json 3158
+[17:07:09 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/medicalPreUtility/PreEventData"'
+[17:07:09 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"' with route pattern '"api/medicalPreUtility/PreEventData"' is valid for the request path '"/api/medicalPreUtility/PreEventData"'
+[17:07:09 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"'
+[17:07:09 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[17:07:09 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Debug] The request has an origin header: '"http://localhost:5098"'.
+[17:07:09 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Information] CORS policy execution successful.
+[17:07:09 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[17:07:09 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"'
+[17:07:09 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"PreEventData\", controller = \"medicalPreUtility\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult PreEventData(IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload)" on controller "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController" ("IndiaEventsWebApi").
+[17:07:09 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[17:07:09 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[17:07:09 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[17:07:09 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[17:07:09 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[17:07:09 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController" ("IndiaEventsWebApi")
+[17:07:09 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController" ("IndiaEventsWebApi")
+[17:07:09 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"' ...
+[17:07:09 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"' using the name '""' in request data ...
+[17:07:09 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Selected input formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter"' for content type '"application/json"'.
+[17:07:09 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN21NT5QRUBK"", Request id ""0HN21NT5QRUBK:00000006"": started reading request body.
+[17:07:09 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN21NT5QRUBK"", Request id ""0HN21NT5QRUBK:00000006"": done reading request body.
+[17:07:09 Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter [Debug] JSON input formatter succeeded, deserializing to type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'
+[17:07:09 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Done attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'.
+[17:07:09 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'.
+[17:07:09 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"' ...
+[17:07:09 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"formDataList"' of type '"IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtilityPreEventPayload"'.
+[17:08:29 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[17:08:29 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[17:08:29 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[17:08:29 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[17:08:29 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter"' and content type '"text/plain"' to write the response.
+[17:08:29 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "BadRequestObjectResult", writing value of type '"System.String"'.
+[17:08:29 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)" in 79094.9871ms
+[17:08:29 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.RequestSheets.medicalPreUtilityController.PreEventData (IndiaEventsWebApi)"'
+[17:08:29 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBK"" completed keep alive response.
+[17:08:29 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 POST http://localhost:5098/api/medicalPreUtility/PreEventData application/json 3158 - 400 - text/plain;+charset=utf-8 79186.2839ms
+[17:10:06 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN21NT5QRUBJ"" received FIN.
+[17:10:06 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN21NT5QRUBI"" received FIN.
+[17:10:06 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBJ"" disconnecting.
+[17:10:06 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBI"" disconnecting.
+[17:10:06 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN21NT5QRUBJ"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[17:10:06 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN21NT5QRUBI"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[17:10:06 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBJ"" stopped.
+[17:10:06 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBI"" stopped.
+[17:13:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[17:13:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBL"" accepted.
+[17:13:04 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[17:13:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBL"" started.
+[17:13:04 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[17:13:04 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[17:13:04 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[17:13:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBK"" completed keep alive response.
+[17:13:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 54.0858ms
+[17:13:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[17:13:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[17:13:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBK"" completed keep alive response.
+[17:13:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBL"" completed keep alive response.
+[17:13:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 27.1401ms
+[17:13:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 36.9084ms
+[17:13:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[17:13:05 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[17:13:05 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[17:13:05 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN21NT5QRUBL"" completed keep alive response.
+[17:13:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 46.4138ms

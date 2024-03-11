@@ -310,7 +310,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "IFSC Code"), Value = formData.IFSCCode });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "FCPA Date"), Value = formData.Fcpadate });
 
-                    if (formData.HcpRole == "Other")
+                    if (formData.HcpRole == "Others")
                     {
 
                         newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Other Type"), Value = formData.OthersType });
