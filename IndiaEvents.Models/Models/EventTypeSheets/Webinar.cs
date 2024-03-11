@@ -8,6 +8,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? EventTopic { get; set; }
         public string? EventType { get; set; }
         public DateTime? EventDate { get; set; }
+        public DateTime? EventEndDate { get; set; }
         public string? StartTime { get; set; }
         public string? EndTime { get; set; }
         public string? Meeting_Type { get; set; }

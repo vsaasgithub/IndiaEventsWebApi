@@ -57,7 +57,10 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? MedicalUtilityCostAmount { get; set; }
         public string? Legitimate { get; set; }
         public string? Objective { get; set; }
-        //public DateTime? Fcpadate { get; set; }
+        public DateTime? RequestDate { get; set; }
+        public string? ExpenseType { get; set; }
+        public string? MedicalUtilityDescription { get; set; }
+        public DateTime? Fcpadate { get; set; }
     }
 
     public class ExpenseListData
@@ -66,6 +69,8 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
 
         public string? Expense { get; set; }
         public string? BTC_BTE { get; set; }
+        public string? BtcAmount { get; set; }
+        public string? BteAmount { get; set; }
         public string? TotalExpenseAmount { get; set; }
 
     }

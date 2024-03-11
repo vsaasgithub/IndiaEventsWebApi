@@ -5,7 +5,12 @@ VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IndiaEventsWebApi", "IndiaEventsWebApi\IndiaEventsWebApi.csproj", "{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndiaEvents.Models", "IndiaEvents.Models\IndiaEvents.Models.csproj", "{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IndiaEvents.Models", "IndiaEvents.Models\IndiaEvents.Models.csproj", "{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3F891982-261B-4E02-9D94-3287AA3A6F29}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
