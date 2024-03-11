@@ -17,7 +17,8 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? AdvanceAmount { get; set; }
         public string? EventOpen30daysFile { get; set; }
         public string? EventOpen30dayscount { get; set; }
-
+        public string? TotalExpenseBTC { get; set; }
+        public string? TotalExpenseBTE { get; set; }
         public string? EventWithin7daysFile { get; set; }
         // public string? FcpaFile { get; set; }
         public string? IsDeviationUpload { get; set; }

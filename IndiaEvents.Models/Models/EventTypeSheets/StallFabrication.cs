@@ -34,7 +34,8 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? IsDeviationUpload { get; set; }
         public string? IsAdvanceRequired { get; set; }
         public string? AdvanceAmount { get; set; }
-
+        public string? TotalExpenseBTC { get; set; }
+        public string? TotalExpenseBTE { get; set; }
     }
 
     public class AllStallFabrication

@@ -26,7 +26,8 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? Marketing_Head { get; set; }
         //public string? MedicalAffairsEmail { get; set; }
         public string? SalesCoordinatorEmail { get; set; }
-
+        public string? TotalExpenseBTC { get; set; }
+        public string? TotalExpenseBTE { get; set; }
         public string? MedicalAffairsEmail { get; set; }
         public string? ReportingManagerEmail { get; set; }
         public string? FirstLevelEmail { get; set; }
