@@ -100,6 +100,7 @@ namespace IndiaEventsWebApi.Controllers
                             Column processIdColumn1 = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
                             Column processIdColumn2 = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "Event Request Status", StringComparison.OrdinalIgnoreCase));
                             Column processIdColumn3 = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "Meeting Type", StringComparison.OrdinalIgnoreCase));
+                            Column processIdColumn4 = processSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventType", StringComparison.OrdinalIgnoreCase));
 
 
                             Row targetRowId = processSheetData.Rows.FirstOrDefault(row => row.Id == WebHookEvent.rowId);
@@ -111,27 +112,32 @@ namespace IndiaEventsWebApi.Controllers
                                 var columnValue = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn1.Id)?.Value.ToString();
                                 var status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn2.Id)?.Value.ToString();
                                 var meetingType = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn3.Id)?.Value;
-                                if (status != null && status == "Approved")
+                                var EventType = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn4.Id)?.Value.ToString();
+                                if(EventType == "Class I" ||  EventType == "Webinar")
                                 {
-                                    //int timeInterval = 90000;
-                                    //await Task.Delay(timeInterval);
-                                    if (meetingType != null)
+                                    if (status != null && status == "Approved")
                                     {
-                                        if (meetingType.ToString() == "Other |")
+                                        int timeInterval = 90000;
+                                        await Task.Delay(timeInterval);
+                                        if (meetingType != null)
                                         {
+                                            if (meetingType.ToString() == "Other |")
+                                            {
 
+                                                moveAttachments(columnValue, WebHookEvent.rowId);
+                                            }
+                                        }
+
+                                        else
+                                        {
+                                            GenerateSummaryPDF(columnValue, WebHookEvent.rowId);
                                             moveAttachments(columnValue, WebHookEvent.rowId);
                                         }
-                                    }
-                                    
-                                    else
-                                    {
-                                        GenerateSummaryPDF(columnValue, WebHookEvent.rowId);
-                                        moveAttachments(columnValue, WebHookEvent.rowId);
-                                    }
 
 
+                                    }
                                 }
+                               
                           
 
                             }
