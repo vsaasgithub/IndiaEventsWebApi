@@ -46,19 +46,49 @@ namespace IndiaEventsWebApi.Controllers.FMV
                     {
                         return Ok(columnValue);
                     }
+                    //else
+                    //{
+                    //    return NotFound($"Value not found for {specialty} in {columnTitle} column.");
+                    //}
                     else
                     {
-                        return NotFound($"Value not found for {specialty} in {columnTitle} column.");
+                        var notFoundObject = new
+                        {
+                            Message = $"Value not found for {specialty} in {columnTitle} column.",
+                            StatusCode = 404
+                        };
+
+                        return NotFound(notFoundObject);
                     }
                 }
+                //else
+                //{
+                //    return NotFound($"Speciality '{specialty}' not found.");
+                //}
                 else
                 {
-                    return NotFound($"Speciality '{specialty}' not found.");
+                    var notFoundObject = new
+                    {
+                        Message = $"Speciality '{specialty}' not found.",
+                        StatusCode = 404
+                    };
+
+                    return NotFound(notFoundObject);
                 }
             }
+            //else
+            //{
+            //    return NotFound($"Column '{columnTitle}' not found.");
+            //}
             else
             {
-                return NotFound($"Column '{columnTitle}' not found.");
+                var notFoundObject = new
+                {
+                    Message = $"Column '{columnTitle}' not found.",
+                    StatusCode = 404
+                };
+
+                return NotFound(notFoundObject);
             }
         }
 

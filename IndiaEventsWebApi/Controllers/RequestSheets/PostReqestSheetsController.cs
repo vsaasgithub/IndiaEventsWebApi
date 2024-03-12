@@ -13,6 +13,7 @@ using System.Globalization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 using IndiaEventsWebApi.Helper;
+using IndiaEvents.Models.Models.Webhook;
 
 namespace IndiaEventsWebApi.Controllers.RequestSheets
 {
@@ -216,10 +217,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.class1.Role });
 
 
-
-
-
-
                 var addedRows = smartsheet.SheetResources.RowResources.AddRows(parsedSheetId1, new Row[] { newRow });
 
                 var eventIdColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
@@ -232,38 +229,41 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     string[] words = p.Split(':');
                     var r = words[0];
                     var q = words[1];
-
                     var name = r.Split(".")[0];
-
                     var filePath = SheetHelper.testingFile(q, val, name);
-
-
-                    //byte[] fileBytes = Convert.FromBase64String(q);
-                    //var folderName = Path.Combine("Resources", "Images");
-                    //var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                    //if (!Directory.Exists(pathToSave))
-                    //{
-                    //    Directory.CreateDirectory(pathToSave);
-                    //}
-
-                    //string fileType = SheetHelper.GetFileType(fileBytes);
-                    //string fileName = r;
-                    //string filePath = Path.Combine(pathToSave, fileName);
-
-
                     var addedRow = addedRows[0];
-
-                    //System.IO.File.WriteAllBytes(filePath, fileBytes);
-                    //string type = SheetHelper.GetContentType(fileType);
                     var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                            parsedSheetId1, addedRow.Id.Value, filePath, "application/msword");
                     x++;
+
                     // ////////////////////////////////////////////////
                     if (System.IO.File.Exists(filePath))
                     {
                         SheetHelper.DeleteFile(filePath);
                     }
                 }
+
+                //var targetRow = addedRows[0];
+                //long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                //var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formDataList.class1.Role };
+                //Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
+                //var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                //if (cellToUpdate != null) { cellToUpdate.Value = formDataList.class1.Role; }
+
+                //smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId1, new Row[] { updateRow });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -450,7 +450,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     }
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Beneficiary Name"), Value = formData.BeneficiaryName });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Pan Number"), Value = formData.PanNumber });
-                    
+
 
 
                     if (formData.HcpRole == "Others")
