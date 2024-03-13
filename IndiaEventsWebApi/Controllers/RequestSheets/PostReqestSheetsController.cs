@@ -160,8 +160,14 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
             var FormattedTotalHCPLcAmount = string.Format(hindi, "{0:#,#}", TotalHCPLcAmount);
             var FornattedTotalInviteesLcAmount = string.Format(hindi, "{0:#,#}", TotalInviteesLcAmount);
             var FormattedTotalExpenseAmount = string.Format(hindi, "{0:#,#}", TotalExpenseAmount);
+
             var c = TotalHCPLcAmount + TotalInviteesLcAmount;
             var FormattedTotalLC = string.Format(hindi, "{0:#,#}", c);
+
+
+            //var BTE = int.Parse(formDataList.class1.TotalExpenseBTE);
+            //var BTC = int.Parse(formDataList.class1.TotalExpenseBTC);
+            //var total = BTC + BTE;
             var total = TotalHonorariumAmount + TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount;
 
             var FormattedTotal = string.Format(hindi, "{0:#,#}", total);

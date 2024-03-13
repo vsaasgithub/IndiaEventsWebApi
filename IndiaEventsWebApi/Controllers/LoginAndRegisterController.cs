@@ -15,6 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Text;
+using IndiaEventsWebApi.Helper;
 
 namespace IndiaEventsWebApi.Controllers
 {
@@ -82,19 +83,6 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
-
-        private long GetColumnIdByName(Sheet sheet, string columnname)
-        {
-            foreach (var column in sheet.Columns)
-            {
-                if (column.Title == columnname)
-                {
-                    return column.Id.Value;
-                }
-            }
-            return 0;
-        }
-
         [HttpPost("Login")]
         public IActionResult Login([FromBody] EmployeeMaster userData)
         {
@@ -112,22 +100,22 @@ namespace IndiaEventsWebApi.Controllers
                     Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
 
 
-                    var EmailColumnId = GetColumnIdByName(sheet, "EmailId");
-                    var UsernameColumnId = GetColumnIdByName(sheet, "UserName");
-                    var passwordColumnId = GetColumnIdByName(sheet, "Password");
-                    var IsActiveColumnId = GetColumnIdByName(sheet, "IsActive");
-                    var roleColumnId = GetColumnIdByName(sheet, "Designation");
-                    var ReportingManagerColumnId = GetColumnIdByName(sheet, "Reporting Manager");
-                    var FirstLevelManagerId = GetColumnIdByName(sheet, "1stLevelManager");
-                    var RBM_BMId = GetColumnIdByName(sheet, "RBM/BM");
-                    var SalesHeadId = GetColumnIdByName(sheet, "Sales Head");
-                    var MarketingHeadId = GetColumnIdByName(sheet, "Marketing Head");
-                    var ComplianceId = GetColumnIdByName(sheet, "Compliance Head");
+                    var EmailColumnId = SheetHelper.GetColumnIdByName(sheet, "EmailId");
+                    var UsernameColumnId = SheetHelper.GetColumnIdByName(sheet, "UserName");
+                    var passwordColumnId = SheetHelper.GetColumnIdByName(sheet, "Password");
+                    var IsActiveColumnId = SheetHelper.GetColumnIdByName(sheet, "IsActive");
+                    var roleColumnId = SheetHelper.GetColumnIdByName(sheet, "Designation");
+                    var ReportingManagerColumnId = SheetHelper.GetColumnIdByName(sheet, "Reporting Manager");
+                    var FirstLevelManagerId = SheetHelper.GetColumnIdByName(sheet, "1stLevelManager");
+                    var RBM_BMId = SheetHelper.GetColumnIdByName(sheet, "RBM/BM");
+                    var SalesHeadId = SheetHelper.GetColumnIdByName(sheet, "Sales Head");
+                    var MarketingHeadId = SheetHelper.GetColumnIdByName(sheet, "Marketing Head");
+                    var ComplianceId = SheetHelper.GetColumnIdByName(sheet, "Compliance Head");
 
-                    var MedicalAffairsHeadId = GetColumnIdByName(sheet, "Medical Affairs Head");
-                    var FinanceTreasuryId = GetColumnIdByName(sheet, "Finance Treasury");
-                    var FinanceAccountsId = GetColumnIdByName(sheet, "Finance Accounts");
-                    var SalesCoordinatorId = GetColumnIdByName(sheet, "Sales Coordinator");
+                    var MedicalAffairsHeadId = SheetHelper.GetColumnIdByName(sheet, "Medical Affairs Head");
+                    var FinanceTreasuryId = SheetHelper.GetColumnIdByName(sheet, "Finance Treasury");
+                    var FinanceAccountsId = SheetHelper.GetColumnIdByName(sheet, "Finance Accounts");
+                    var SalesCoordinatorId = SheetHelper.GetColumnIdByName(sheet, "Sales Coordinator");
 
 
 
@@ -224,20 +212,20 @@ namespace IndiaEventsWebApi.Controllers
                     long.TryParse(sheetId, out long parsedSheetId);
                     Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
 
-                    var EmailColumnId = GetColumnIdByName(sheet, "EmailId");
-                    var UsernameColumnId = GetColumnIdByName(sheet, "UserName");
-                    var ComplianceId = GetColumnIdByName(sheet, "Compliance Head");
-                    var IsActiveColumnId = GetColumnIdByName(sheet, "IsActive");
-                    var roleColumnId = GetColumnIdByName(sheet, "Designation");
-                    var ReportingManagerColumnId = GetColumnIdByName(sheet, "Reporting Manager");
-                    var FirstLevelManagerId = GetColumnIdByName(sheet, "1stLevelManager");
-                    var RBM_BMId = GetColumnIdByName(sheet, "RBM/BM");
-                    var SalesHeadId = GetColumnIdByName(sheet, "Sales Head");
-                    var MarketingHeadId = GetColumnIdByName(sheet, "Marketing Head");
-                    var MedicalAffairsHeadId = GetColumnIdByName(sheet, "Medical Affairs Head");
-                    var FinanceTreasuryId = GetColumnIdByName(sheet, "Finance Treasury");
-                    var FinanceAccountsId = GetColumnIdByName(sheet, "Finance Accounts");
-                    var SalesCoordinatorId = GetColumnIdByName(sheet, "Sales Coordinator");
+                    var EmailColumnId = SheetHelper.GetColumnIdByName(sheet, "EmailId");
+                    var UsernameColumnId = SheetHelper.GetColumnIdByName(sheet, "UserName");
+                    var ComplianceId = SheetHelper.GetColumnIdByName(sheet, "Compliance Head");
+                    var IsActiveColumnId = SheetHelper.GetColumnIdByName(sheet, "IsActive");
+                    var roleColumnId = SheetHelper.GetColumnIdByName(sheet, "Designation");
+                    var ReportingManagerColumnId = SheetHelper.GetColumnIdByName(sheet, "Reporting Manager");
+                    var FirstLevelManagerId = SheetHelper.GetColumnIdByName(sheet, "1stLevelManager");
+                    var RBM_BMId = SheetHelper.GetColumnIdByName(sheet, "RBM/BM");
+                    var SalesHeadId = SheetHelper.GetColumnIdByName(sheet, "Sales Head");
+                    var MarketingHeadId = SheetHelper.GetColumnIdByName(sheet, "Marketing Head");
+                    var MedicalAffairsHeadId = SheetHelper.GetColumnIdByName(sheet, "Medical Affairs Head");
+                    var FinanceTreasuryId = SheetHelper.GetColumnIdByName(sheet, "Finance Treasury");
+                    var FinanceAccountsId = SheetHelper.GetColumnIdByName(sheet, "Finance Accounts");
+                    var SalesCoordinatorId = SheetHelper.GetColumnIdByName(sheet, "Sales Coordinator");
 
 
                     if (EmailColumnId == 0)

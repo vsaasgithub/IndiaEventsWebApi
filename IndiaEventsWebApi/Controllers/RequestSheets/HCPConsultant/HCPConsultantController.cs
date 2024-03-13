@@ -72,6 +72,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
             var TotalHCPLcAmount = 0;
             var TotalInviteesLcAmount = 0;
             var TotalExpenseAmount = 0;
+            var TotalRegstAmount = 0;
+
 
             CultureInfo hindi = new CultureInfo("hi-IN");
 
@@ -82,38 +84,36 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
             var FCPA = !string.IsNullOrEmpty(formDataList.HcpConsultant.FcpaFile) ? "Yes" : "No";
 
 
-
-
             foreach (var formdata in formDataList.ExpenseSheet)
             {
                 string rowData = $"{addedExpencesNo}. {formdata.Expense} | RegstAmount: {formdata.RegstAmount}| {formdata.BTC_BTE}";
                 addedExpences.AppendLine(rowData);
                 addedExpencesNo++;
-                var amount = int.Parse(formdata.RegstAmount);
+
+                var amount = int.Parse(formdata.ExpenseAmount);
+                var regst = int.Parse(formdata.RegstAmount);
                 TotalExpenseAmount = TotalExpenseAmount + amount;
+                TotalRegstAmount = TotalRegstAmount + regst;
             }
             string Expense = addedExpences.ToString();
 
             foreach (var formdata in formDataList.BrandsList)
             {
-
                 string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
                 addedBrandsData.AppendLine(rowData);
                 addedBrandsDataNo++;
             }
             string brand = addedBrandsData.ToString();
 
-
-
-
             foreach (var formdata in formDataList.HcpList)
             {
-
                 var HM = int.Parse(formdata.RegistrationAmount);
                 var x = string.Format(hindi, "{0:#,#}", HM);
                 var t = int.Parse(formdata.TravelAmount) + int.Parse(formdata.AccomAmount);
                 var y = string.Format(hindi, "{0:#,#}", t);
                 string rowData = $"{addedHcpDataNo}. {formdata.MisCode} |{formdata.HcpName} | Regst.Amt: {x} |Trav.&Acc.Amt: {y} ";
+
+
 
                 addedHcpData.AppendLine(rowData);
                 addedHcpDataNo++;
@@ -123,22 +123,17 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                 TotalHCPLcAmount = TotalHCPLcAmount + int.Parse(formdata.LcAmount);
             }
             string HCP = addedHcpData.ToString();
-
-
             var c = TotalHCPLcAmount + TotalInviteesLcAmount;
+            var total =TotalHonorariumAmount+TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount+ TotalRegstAmount;
+            //var BTE = int.Parse(formDataList.HcpConsultant.TotalExpenseBTE);
+            //var BTC = int.Parse(formDataList.HcpConsultant.TotalExpenseBTC);
 
-            var total = TotalHonorariumAmount + TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount;
-
+            //var total = BTC + BTE;
 
             var s = (TotalTravelAmount + TotalAccomodateAmount);
 
-
-
-
-
             try
             {
-
                 var newRow = new Row();
                 newRow.Cells = new List<Cell>();
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Topic"), Value = formDataList.HcpConsultant.EventTopic });
@@ -152,12 +147,12 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Venue Country"), Value = formDataList.HcpConsultant.Country });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "IsAdvanceRequired"), Value = formDataList.HcpConsultant.IsAdvanceRequired });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = formDataList.HcpConsultant.AdvanceAmount });
-
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Brands"), Value = brand });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Expenses"), Value = Expense });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Panelists"), Value = HCP });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "InitiatorName"), Value = formDataList.HcpConsultant.InitiatorName });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total HCP Registration Amount"), Value = TotalHonorariumAmount });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total HCP Registration Amount"), Value = TotalRegstAmount+TotalHonorariumAmount });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total HCP Registration Amount"), Value = TotalExpenseAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel Amount"), Value = TotalTravelAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel & Accommodation Amount"), Value = s });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Accomodation Amount"), Value = TotalAccomodateAmount });
@@ -179,10 +174,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.HcpConsultant.TotalExpenseBTC });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.HcpConsultant.TotalExpenseBTE });
 
-
-
                 var addedRows = smartsheet.SheetResources.RowResources.AddRows(parsedSheetId1, new Row[] { newRow });
-
                 var eventIdColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
                 var eventIdCell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == eventIdColumnId);
                 var val = eventIdCell.DisplayValue;
@@ -381,6 +373,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTCAmount"), Value = formdata.BtcAmount });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTEAmount"), Value = formdata.BteAmount });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Registration Amount"), Value = formdata.RegstAmount });
+                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Amount"), Value = formdata.ExpenseAmount });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Topic"), Value = formDataList.HcpConsultant.EventTopic });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Type"), Value = formDataList.HcpConsultant.EventType });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.HcpConsultant.EventDate });

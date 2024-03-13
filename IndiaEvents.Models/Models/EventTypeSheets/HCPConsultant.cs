@@ -28,6 +28,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? SalesCoordinatorEmail { get; set; }
         public string? TotalExpenseBTC { get; set; }
         public string? TotalExpenseBTE { get; set; }
+
         public string? MedicalAffairsEmail { get; set; }
         public string? ReportingManagerEmail { get; set; }
         public string? FirstLevelEmail { get; set; }
@@ -65,9 +66,12 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
     }
     public class ExpenseList
     {
+
         public string? Expense { get; set; }
         public string? BTC_BTE { get; set; }
+
         public string? RegstAmount { get; set; }
+        public string? ExpenseAmount { get; set; }
         public string? BtcAmount { get; set; }
         public string? BteAmount { get; set; }
 

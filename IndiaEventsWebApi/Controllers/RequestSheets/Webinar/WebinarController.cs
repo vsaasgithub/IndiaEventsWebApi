@@ -130,6 +130,14 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
             var FormattedTotalExpenseAmount = string.Format(hindi, "{0:#,#}", TotalExpenseAmount);
             var c = TotalHCPLcAmount + TotalInviteesLcAmount;
             var FormattedTotalLC = string.Format(hindi, "{0:#,#}", c);
+
+            //var BTE = int.Parse(formDataList.Webinar.TotalExpenseBTE);
+            //var BTC = int.Parse(formDataList.Webinar.TotalExpenseBTC);
+
+            //var total = BTC + BTE;
+
+
+
             var total = TotalHonorariumAmount + TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount;
             var FormattedTotal = string.Format(hindi, "{0:#,#}", total);
             var s = (TotalTravelAmount + TotalAccomodateAmount);
@@ -433,6 +441,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                 return BadRequest($"Could not find {ex.Message}");
             }
         }
+
     }
 }
 

@@ -77,6 +77,10 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.StallFabrication
 
             var FormattedTotalExpenseAmount = string.Format(hindi, "{0:#,#}", TotalExpenseAmount);
 
+            //var BTE = int.Parse(formDataList.StallFabrication.TotalExpenseBTE);
+            //var BTC = int.Parse(formDataList.StallFabrication.TotalExpenseBTC);
+            //var total = BTC + BTE;
+
             var total = TotalExpenseAmount;
 
             var FormattedTotal = string.Format(hindi, "{0:#,#}", total);

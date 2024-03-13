@@ -133,7 +133,10 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
             string HCP = addedHcpData.ToString();
 
 
+            //var BTE = int.Parse(formDataList.MedicalUtilityData.TotalExpenseBTE);
+            //var BTC = int.Parse(formDataList.MedicalUtilityData.TotalExpenseBTC);
 
+            //var total = BTC + BTE;
             var total = TotalExpenseAmount;
 
 
