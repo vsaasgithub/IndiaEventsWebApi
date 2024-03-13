@@ -124,7 +124,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
             }
             string HCP = addedHcpData.ToString();
             var c = TotalHCPLcAmount + TotalInviteesLcAmount;
-            var total =TotalHonorariumAmount+TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount+ TotalRegstAmount;
+            var total =TotalHonorariumAmount+TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount ;
             //var BTE = int.Parse(formDataList.HcpConsultant.TotalExpenseBTE);
             //var BTC = int.Parse(formDataList.HcpConsultant.TotalExpenseBTC);
 
