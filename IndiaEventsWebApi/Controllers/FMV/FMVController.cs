@@ -23,6 +23,7 @@ namespace IndiaEventsWebApi.Controllers.FMV
         [HttpGet("GetfmvColumnValue")]
         public IActionResult GetfmvColumnValue(string specialty, string columnTitle)
         {
+            int defaultval = 0;
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             string sheetId = configuration.GetSection("SmartsheetSettings:fmv").Value;
             long.TryParse(sheetId, out long parsedSheetId);
@@ -32,7 +33,6 @@ namespace IndiaEventsWebApi.Controllers.FMV
             Column targetColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, columnTitle, StringComparison.OrdinalIgnoreCase));
             if (targetColumn != null && SpecialityColumn != null)
             {
-                // Find the row with the specified speciality
                 Row targetRow = sheet.Rows.FirstOrDefault(row => row.Cells.Any(cell => cell.ColumnId == SpecialityColumn.Id && cell.Value.ToString() == specialty));
 
                 if (targetRow != null)
@@ -45,37 +45,40 @@ namespace IndiaEventsWebApi.Controllers.FMV
 
                     else
                     {
-                        var notFoundObject = new
-                        {
-                            Message = $"Value not found for {specialty} in {columnTitle} column.",
-                            code = 404
-                        };
+                        //var notFoundObject = new
+                        //{
+                        //    Message = $"Value not found for {specialty} in {columnTitle} column.",
+                        //    code = 404
+                        //};
 
-                        return NotFound(notFoundObject);
+                        //return NotFound(notFoundObject);
+                        return Ok(defaultval);
                     }
                 }
 
                 else
                 {
-                    var notFoundObject = new
-                    {
-                        Message = $"Speciality '{specialty}' not found.",
-                        code = 404
-                    };
+                    //var notFoundObject = new
+                    //{
+                    //    Message = $"Speciality '{specialty}' not found.",
+                    //    code = 404
+                    //};
 
-                    return NotFound(notFoundObject);
+                    //return NotFound(notFoundObject);
+                    return Ok(defaultval);
                 }
             }
 
             else
             {
-                var notFoundObject = new
-                {
-                    Message = $"Column '{columnTitle}' not found.",
-                    code = 404
-                };
+                //var notFoundObject = new
+                //{
+                //    Message = $"Column '{columnTitle}' not found.",
+                //    code = 404
+                //};
 
-                return NotFound(notFoundObject);
+                //return NotFound(notFoundObject);
+                return Ok(defaultval);
             }
         }
 
