@@ -24,7 +24,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.StallFabrication
 
         }
 
-        [HttpPost("PreEventData")]
+        [HttpPost("PreEventData"), DisableRequestSizeLimit]
         public IActionResult PreEventData(AllStallFabrication formDataList)
         {
 

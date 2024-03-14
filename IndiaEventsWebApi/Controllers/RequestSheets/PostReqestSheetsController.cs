@@ -33,7 +33,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
         }
 
 
-        [HttpPost("AllObjModelsData")]
+        [HttpPost("AllObjModelsData"), DisableRequestSizeLimit]
         public IActionResult AllObjModelsData(AllObjModels formDataList)
         {
 
@@ -557,7 +557,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
         }
 
 
-        [HttpPost("AddHonorariumData")]
+        [HttpPost("AddHonorariumData"), DisableRequestSizeLimit]
         public IActionResult AddHonorariumData(HonorariumPaymentList formData)
         {
             try
@@ -798,7 +798,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
 
 
-        [HttpPost("AddEventSettlementData")]
+        [HttpPost("AddEventSettlementData"), DisableRequestSizeLimit]
         public IActionResult AddEventSettlementData(EventSettlement formData)
         {
 
@@ -1050,7 +1050,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
 
 
-        [HttpPost("AddEventRequestExpensesData")]
+        [HttpPost("AddEventRequestExpensesData"), DisableRequestSizeLimit]
         public IActionResult AddEventRequestExpensesData(EventRequestExpenseSheet formData)
         {
             try

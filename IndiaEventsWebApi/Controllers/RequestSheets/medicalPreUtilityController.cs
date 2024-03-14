@@ -24,7 +24,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
         }
 
-        [HttpPost("PreEventData")]
+        [HttpPost("PreEventData"), DisableRequestSizeLimit]
         public IActionResult PreEventData(MedicalUtilityPreEventPayload formDataList)
         {
 

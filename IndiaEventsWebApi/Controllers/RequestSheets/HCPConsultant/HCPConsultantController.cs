@@ -24,7 +24,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
 
         }
-        [HttpPost("HCPConsultant")]
+        [HttpPost("HCPConsultant"), DisableRequestSizeLimit]
         public IActionResult AllObjModelsData(HCPConsultantPayload formDataList)
         {
 
@@ -427,7 +427,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
         }
 
 
-        [HttpPost("HcpFollowup")]
+        [HttpPost("HcpFollowup"), DisableRequestSizeLimit]
         public IActionResult HcpFollowup(List<HCPfollow_upsheet> formDataList)
         {
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();

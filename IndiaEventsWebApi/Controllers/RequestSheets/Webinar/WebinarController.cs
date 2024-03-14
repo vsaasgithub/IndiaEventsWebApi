@@ -27,7 +27,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
         }
 
 
-        [HttpPost("AllObjModelsData")]
+        [HttpPost("AllObjModelsData"), DisableRequestSizeLimit]
         public IActionResult AllObjModelsData(WebinarPayload formDataList)
         {
 

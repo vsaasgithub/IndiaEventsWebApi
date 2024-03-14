@@ -48,7 +48,7 @@ namespace IndiaEventsWebApi.Controllers
             //sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
         }
 
-        [HttpPost("ClassIPreEvent")]
+        [HttpPost("ClassIPreEvent"),DisableRequestSizeLimit]
         public IActionResult ClassIPreEvent(AllObjModels formDataList)
         {
             
@@ -202,7 +202,7 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.class1.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.class1.FirstLevelEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.class1.MedicalAffairsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.class1.Role });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.class1.Role });
 
 
                 var addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet1.Id.Value, new Row[] { newRow });
@@ -448,6 +448,17 @@ namespace IndiaEventsWebApi.Controllers
                     smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, new Row[] { newRow6 });
                 }
 
+
+
+                var targetRow = addedRows[0];
+                long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formDataList.class1.Role };
+                Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
+                var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                if (cellToUpdate != null) { cellToUpdate.Value = formDataList.class1.Role; }
+
+                smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
+
                 return Ok(new
                 { Message = " Success!" });
 
@@ -460,7 +471,7 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
-        [HttpPost("WebinarPreEvent")]
+        [HttpPost("WebinarPreEvent"), DisableRequestSizeLimit]
         public IActionResult WebinarPreEvent(WebinarPayload formDataList)
         {
 
@@ -605,7 +616,7 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.Webinar.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.Webinar.FirstLevelEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.Webinar.MedicalAffairsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.Webinar.Role });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.Webinar.Role });
                 var addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet1.Id.Value, new Row[] { newRow });
                 var eventIdColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
                 var eventIdCell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == eventIdColumnId);
@@ -854,6 +865,20 @@ namespace IndiaEventsWebApi.Controllers
 
                     smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, new Row[] { newRow6 });
                 }
+
+
+                var targetRow = addedRows[0];
+                long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formDataList.Webinar.Role };
+                Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
+                var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                if (cellToUpdate != null) { cellToUpdate.Value = formDataList.Webinar.Role; }
+
+                smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
+
+
+
+
                 return Ok(new
                 { Message = " Success!" });
             }
@@ -864,7 +889,7 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
-        [HttpPost("StallFabricationPreEvent")]
+        [HttpPost("StallFabricationPreEvent"), DisableRequestSizeLimit]
         public IActionResult StallFabricationPreEvent(AllStallFabrication formDataList)
         {
             string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
@@ -953,7 +978,7 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.StallFabrication.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.StallFabrication.FirstLevelEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.StallFabrication.MedicalAffairsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.StallFabrication.Role });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.StallFabrication.Role });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.StallFabrication.TotalExpenseBTC });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.StallFabrication.TotalExpenseBTE });
 
@@ -1133,6 +1158,18 @@ namespace IndiaEventsWebApi.Controllers
                     smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, new Row[] { newRow6 });
                 }
 
+
+                var targetRow = addedRows[0];
+                long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formDataList.StallFabrication.Role };
+                Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
+                var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                if (cellToUpdate != null) { cellToUpdate.Value = formDataList.StallFabrication.Role; }
+
+                smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
+
+
+
                 return Ok(new
                 { Message = " Success!" });
 
@@ -1161,9 +1198,9 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
-        [HttpPost("HCPConsultantPreEvent")]
+        [HttpPost("HCPConsultantPreEvent"), DisableRequestSizeLimit]
         public IActionResult HCPConsultantPreEvent(HCPConsultantPayload formDataList)
-        {        
+        {
 
             string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
             string sheetId2 = configuration.GetSection("SmartsheetSettings:EventRequestBrandsList").Value;
@@ -1181,26 +1218,6 @@ namespace IndiaEventsWebApi.Controllers
             //Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
             Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
             Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
-
-            //string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
-            //string sheetId2 = configuration.GetSection("SmartsheetSettings:EventRequestBrandsList").Value;
-            //string sheetId4 = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
-            //string sheetId6 = configuration.GetSection("SmartsheetSettings:EventRequestsExpensesSheet").Value;
-            //string sheetId7 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
-
-
-
-            //long.TryParse(sheetId1, out long parsedSheetId1);
-            //long.TryParse(sheetId2, out long parsedSheetId2);
-            //long.TryParse(sheetId4, out long parsedSheetId4);
-            //long.TryParse(sheetId6, out long parsedSheetId6);
-            //long.TryParse(sheetId7, out long parsedSheetId7);
-
-            //Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
-            //Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
-            //Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
-            //Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
-            //Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
 
 
             //Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
@@ -1225,6 +1242,8 @@ namespace IndiaEventsWebApi.Controllers
             var TotalHCPLcAmount = 0;
             var TotalInviteesLcAmount = 0;
             var TotalExpenseAmount = 0;
+            var TotalRegstAmount = 0;
+
 
             CultureInfo hindi = new CultureInfo("hi-IN");
 
@@ -1235,38 +1254,36 @@ namespace IndiaEventsWebApi.Controllers
             var FCPA = !string.IsNullOrEmpty(formDataList.HcpConsultant.FcpaFile) ? "Yes" : "No";
 
 
-
-
             foreach (var formdata in formDataList.ExpenseSheet)
             {
                 string rowData = $"{addedExpencesNo}. {formdata.Expense} | RegstAmount: {formdata.RegstAmount}| {formdata.BTC_BTE}";
                 addedExpences.AppendLine(rowData);
                 addedExpencesNo++;
-                var amount = int.Parse(formdata.RegstAmount);
+
+                var amount = int.Parse(formdata.ExpenseAmount);
+                var regst = int.Parse(formdata.RegstAmount);
                 TotalExpenseAmount = TotalExpenseAmount + amount;
+                TotalRegstAmount = TotalRegstAmount + regst;
             }
             string Expense = addedExpences.ToString();
 
             foreach (var formdata in formDataList.BrandsList)
             {
-
                 string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
                 addedBrandsData.AppendLine(rowData);
                 addedBrandsDataNo++;
             }
             string brand = addedBrandsData.ToString();
 
-
-
-
             foreach (var formdata in formDataList.HcpList)
             {
-
                 var HM = int.Parse(formdata.RegistrationAmount);
                 var x = string.Format(hindi, "{0:#,#}", HM);
                 var t = int.Parse(formdata.TravelAmount) + int.Parse(formdata.AccomAmount);
                 var y = string.Format(hindi, "{0:#,#}", t);
                 string rowData = $"{addedHcpDataNo}. {formdata.MisCode} |{formdata.HcpName} | Regst.Amt: {x} |Trav.&Acc.Amt: {y} ";
+
+
 
                 addedHcpData.AppendLine(rowData);
                 addedHcpDataNo++;
@@ -1276,22 +1293,17 @@ namespace IndiaEventsWebApi.Controllers
                 TotalHCPLcAmount = TotalHCPLcAmount + int.Parse(formdata.LcAmount);
             }
             string HCP = addedHcpData.ToString();
-
-
             var c = TotalHCPLcAmount + TotalInviteesLcAmount;
+            var total = TotalHonorariumAmount + TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount;
+            //var BTE = int.Parse(formDataList.HcpConsultant.TotalExpenseBTE);
+            //var BTC = int.Parse(formDataList.HcpConsultant.TotalExpenseBTC);
 
-            var total = TotalHonorariumAmount + TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount;
-
+            //var total = BTC + BTE;
 
             var s = (TotalTravelAmount + TotalAccomodateAmount);
 
-
-
-
-
             try
             {
-
                 var newRow = new Row();
                 newRow.Cells = new List<Cell>();
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Topic"), Value = formDataList.HcpConsultant.EventTopic });
@@ -1305,12 +1317,12 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Venue Country"), Value = formDataList.HcpConsultant.Country });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "IsAdvanceRequired"), Value = formDataList.HcpConsultant.IsAdvanceRequired });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = formDataList.HcpConsultant.AdvanceAmount });
-
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Brands"), Value = brand });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Expenses"), Value = Expense });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Panelists"), Value = HCP });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "InitiatorName"), Value = formDataList.HcpConsultant.InitiatorName });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total HCP Registration Amount"), Value = TotalHonorariumAmount });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total HCP Registration Amount"), Value = TotalExpenseAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel Amount"), Value = TotalTravelAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel & Accommodation Amount"), Value = s });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Accomodation Amount"), Value = TotalAccomodateAmount });
@@ -1328,11 +1340,9 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.HcpConsultant.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.HcpConsultant.FirstLevelEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.HcpConsultant.MedicalAffairsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.HcpConsultant.Role });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.HcpConsultant.Role });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.HcpConsultant.TotalExpenseBTC });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.HcpConsultant.TotalExpenseBTE });
-
-
 
                 var addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet1.Id.Value, new Row[] { newRow });
 
@@ -1503,8 +1513,8 @@ namespace IndiaEventsWebApi.Controllers
                     {
                         var filename = " FCPA";
                         var filePath = SheetHelper.testingFile(formDataList.HcpConsultant.FcpaFile, value, filename);
-                        var addedRow = addeddatarow[0];
-                        var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                        var addedRow = addedRows[0];
+                        var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword");
                     }
                 }
 
@@ -1534,6 +1544,7 @@ namespace IndiaEventsWebApi.Controllers
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTCAmount"), Value = formdata.BtcAmount });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTEAmount"), Value = formdata.BteAmount });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Registration Amount"), Value = formdata.RegstAmount });
+                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Amount"), Value = formdata.ExpenseAmount });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Topic"), Value = formDataList.HcpConsultant.EventTopic });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Type"), Value = formDataList.HcpConsultant.EventType });
                     newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.HcpConsultant.EventDate });
@@ -1542,6 +1553,19 @@ namespace IndiaEventsWebApi.Controllers
 
                     smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, new Row[] { newRow6 });
                 }
+
+
+
+
+                var targetRow = addedRows[0];
+                long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formDataList.HcpConsultant.Role };
+                Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
+                var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                if (cellToUpdate != null) { cellToUpdate.Value = formDataList.HcpConsultant.Role; }
+
+                smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
+
                 return Ok(new
                 { Message = " Success!" });
             }
@@ -1552,8 +1576,8 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
-        [HttpPost("PreEventData")]
-        public IActionResult PreEventData(MedicalUtilityPreEventPayload formDataList)
+        [HttpPost("MedicalUtilityPreEvent"), DisableRequestSizeLimit]
+        public IActionResult MedicalUtilityPreEvent(MedicalUtilityPreEventPayload formDataList)
         {
 
 
@@ -1720,7 +1744,7 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.MedicalUtilityData.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.MedicalUtilityData.FirstLevelEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.MedicalUtilityData.MedicalAffairsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.MedicalUtilityData.Role });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.MedicalUtilityData.Role });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.MedicalUtilityData.TotalExpenseBTC });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.MedicalUtilityData.TotalExpenseBTE });
 
@@ -1928,6 +1952,17 @@ namespace IndiaEventsWebApi.Controllers
 
                     smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, new Row[] { newRow6 });
                 }
+
+
+
+                var targetRow = addedRows[0];
+                long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formDataList.MedicalUtilityData.Role };
+                Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
+                var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                if (cellToUpdate != null) { cellToUpdate.Value = formDataList.MedicalUtilityData.Role; }
+
+                smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
 
                 return Ok(new
                 { Message = " Success!" });

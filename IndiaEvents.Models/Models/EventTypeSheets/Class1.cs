@@ -1,4 +1,6 @@
-﻿namespace IndiaEventsWebApi.Models.EventTypeSheets
+﻿using Microsoft.AspNetCore.Http;
+
+namespace IndiaEventsWebApi.Models.EventTypeSheets
 {
     public class Class1
     {
@@ -52,6 +54,6 @@
         public string? EventId { get; set; }
 
       
-        public List<string>? File { get; set; }
+        public List<IFormFile>? File { get; set; }
     }
 }

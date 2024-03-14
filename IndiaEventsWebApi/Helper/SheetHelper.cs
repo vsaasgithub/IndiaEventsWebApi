@@ -50,9 +50,10 @@ namespace IndiaEventsWebApi.Helper
             return sheetData;
         }
 
-        internal static string testingFile(string Invoice_QuotationUpload, string eventId , string name)
+        internal static string testingFile(string Invoice_QuotationUpload, string eventId, string name)
         {
             byte[] fileBytes = Convert.FromBase64String(Invoice_QuotationUpload);
+            var fileSize = (fileBytes.Length)/1048576;
             var folderName = Path.Combine("Resources", "Images");
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
             if (!Directory.Exists(pathToSave))
@@ -60,20 +61,17 @@ namespace IndiaEventsWebApi.Helper
                 Directory.CreateDirectory(pathToSave);
             }
             string fileType = GetFileType(fileBytes);
-            string fileName = eventId + "-"  +name+ "." + fileType;
-            string filePath = Path.Combine(pathToSave, fileName);           
-            System.IO.File.WriteAllBytes(filePath, fileBytes);           
-
-            return filePath;           
-
-           
+            string fileName = eventId + "-" + name + "." + fileType;
+            string filePath = Path.Combine(pathToSave, fileName);
+            System.IO.File.WriteAllBytes(filePath, fileBytes);
+            return filePath;
         }
 
         internal static string DeleteFile(string filePath)
         {
             System.IO.File.Delete(filePath);
             return "ok";
-        }    
+        }
 
         //internal static byte[] exportpdf(DataTable dtEmployee, string EventCode, string EventName, string EventDate, string EventVenue, DataTable dtMai)
         //{
