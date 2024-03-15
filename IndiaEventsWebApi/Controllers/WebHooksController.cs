@@ -82,6 +82,81 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
+        [HttpPost("WebHookForAgreements")]
+        public async Task<IActionResult> WebHookPostmethod()
+        {
+            try
+            {
+                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                string rawContent = string.Empty;
+                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                {
+                    rawContent = await reader.ReadToEndAsync();
+                }
+                requestHeaders.Add("Body", rawContent);
+
+
+
+               var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                // AgreementsTrigger(RequestWebhook);
+
+                var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+
+                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                //return Ok();
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error($"Error occured on Webhook apicontroller PostData method {ex.Message} at {DateTime.Now}");
+                Serilog.Log.Error(ex.StackTrace);
+                return BadRequest(ex.StackTrace);
+            }
+        }
+
+
+
+
+        //private async void AgreementsTrigger(Root RequestWebhook)
+        //{
+        //    try
+        //    {
+
+        //        if (RequestWebhook != null && RequestWebhook.events != null)
+        //        {
+        //            foreach (var WebHookEvent in RequestWebhook.events)
+        //            {
+
+        //                if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
+        //                {
+        //                    //var DataInSheet = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, new List<long> { WebHookEvent.rowId }, null, null, null, null, null, null).Rows;
+
+
+
+        //                    Row targetRowId = processSheetData.Rows.FirstOrDefault(row => row.Id == WebHookEvent.rowId);
+
+
+
+
+
+
+
+
+
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        Serilog.Log.Error($"Error occured on Webhook apicontroller Attachementfile method {ex.Message} at {DateTime.Now}");
+        //        Serilog.Log.Error(ex.StackTrace);
+        //    }
+
+        //}
+
+
+
         private async void Attachementfile(Root RequestWebhook)
         {
             try
