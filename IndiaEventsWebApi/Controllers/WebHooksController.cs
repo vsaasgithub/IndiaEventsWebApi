@@ -47,7 +47,7 @@ namespace IndiaEventsWebApi.Controllers
             sheet_SpeakerCode = SheetHelper.GetSheetById(smartsheet, sheetId_SpeakerCode);
 
         }
-       
+
 
 
         [HttpPost(Name = "WebHook")]
@@ -97,8 +97,8 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
-               var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                // AgreementsTrigger(RequestWebhook);
+                var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                AgreementsTrigger(RequestWebhook);
 
                 var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
@@ -116,44 +116,57 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
-        //private async void AgreementsTrigger(Root RequestWebhook)
-        //{
-        //    try
-        //    {
+        private async void AgreementsTrigger(Root RequestWebhook)
+        {
+            try
+            {
 
-        //        if (RequestWebhook != null && RequestWebhook.events != null)
-        //        {
-        //            foreach (var WebHookEvent in RequestWebhook.events)
-        //            {
+                if (RequestWebhook != null && RequestWebhook.events != null)
+                {
+                    foreach (var WebHookEvent in RequestWebhook.events)
+                    {
 
-        //                if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
-        //                {
-        //                    //var DataInSheet = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, new List<long> { WebHookEvent.rowId }, null, null, null, null, null, null).Rows;
-
-
-
-        //                    Row targetRowId = processSheetData.Rows.FirstOrDefault(row => row.Id == WebHookEvent.rowId);
+                        if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
+                        {
+                            //var DataInSheet = smartsheet.SheetResources.GetSheet(sheet_SpeakerCode.Id.Value, null, null, new List<long> { WebHookEvent.rowId }, null, null, null, null, null, null).Rows;
 
 
 
+                            Row targetRowId = sheet_SpeakerCode.Rows.FirstOrDefault(row => row.Id == WebHookEvent.rowId);
+
+
+                            long ColumnId = SheetHelper.GetColumnIdByName(sheet_SpeakerCode, "Agreement Trigger");
+                            Cell updatedCell = new Cell
+                            {
+                                ColumnId = ColumnId,
+                                Value = "Yes"
+                            };
+                            Row updatedRow = new Row
+                            {
+                                Id = targetRowId.Id,
+                                Cells = new List<Cell> { updatedCell }
+                            };
+
+
+
+                            smartsheet.SheetResources.RowResources.UpdateRows(sheet_SpeakerCode.Id.Value, new Row[] { updatedRow });
 
 
 
 
 
+                        }
+                    }
+                }
+            }
 
-        //                }
-        //            }
-        //        }
-        //    }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error($"Error occured on Webhook apicontroller Attachementfile method {ex.Message} at {DateTime.Now}");
+                Serilog.Log.Error(ex.StackTrace);
+            }
 
-        //    catch (Exception ex)
-        //    {
-        //        Serilog.Log.Error($"Error occured on Webhook apicontroller Attachementfile method {ex.Message} at {DateTime.Now}");
-        //        Serilog.Log.Error(ex.StackTrace);
-        //    }
-
-        //}
+        }
 
 
 
@@ -161,12 +174,12 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-               
+
                 if (RequestWebhook != null && RequestWebhook.events != null)
                 {
                     foreach (var WebHookEvent in RequestWebhook.events)
                     {
-                       
+
                         if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
                         {
                             //var DataInSheet = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, new List<long> { WebHookEvent.rowId }, null, null, null, null, null, null).Rows;
@@ -188,7 +201,7 @@ namespace IndiaEventsWebApi.Controllers
                                 var status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn2.Id)?.Value.ToString();
                                 var meetingType = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn3.Id)?.Value;
                                 var EventType = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn4.Id)?.Value.ToString();
-                                if(EventType == "Class I" ||  EventType == "Webinar")
+                                if (EventType == "Class I" || EventType == "Webinar")
                                 {
                                     if (status != null && status == "Approved")
                                     {
@@ -212,8 +225,8 @@ namespace IndiaEventsWebApi.Controllers
 
                                     }
                                 }
-                               
-                          
+
+
 
                             }
 
@@ -228,7 +241,7 @@ namespace IndiaEventsWebApi.Controllers
                 Serilog.Log.Error($"Error occured on Webhook apicontroller Attachementfile method {ex.Message} at {DateTime.Now}");
                 Serilog.Log.Error(ex.StackTrace);
             }
-          
+
         }
 
 
@@ -427,8 +440,8 @@ namespace IndiaEventsWebApi.Controllers
         //    }
         //}
 
-        
-        private void GenerateSummaryPDF(string EventID,long rowId)
+
+        private void GenerateSummaryPDF(string EventID, long rowId)
         {
             try
             {
@@ -438,7 +451,7 @@ namespace IndiaEventsWebApi.Controllers
                 var EventDate = "";
                 var EventVenue = "";
                 List<string> Speakers = new List<string>();
-                
+
 
 
 
@@ -587,7 +600,7 @@ namespace IndiaEventsWebApi.Controllers
                                     string ft = SheetHelper.GetFileType(xy);
                                     string fileName = name;
                                     string fp = Path.Combine(ps, fileName);
-                                    
+
                                     System.IO.File.WriteAllBytes(fp, xy);
                                     string type = SheetHelper.GetContentType(ft);
                                     var z = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile((long)processSheetData.Id, rowId, fp, "application/msword");
