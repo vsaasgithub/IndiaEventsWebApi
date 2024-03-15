@@ -8,7 +8,7 @@ using Smartsheet.Api.Models;
 using System.Globalization;
 using System.Text;
 
-namespace IndiaEventsWebApi.Controllers
+namespace IndiaEventsWebApi.Controllers.EventsController
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -48,10 +48,10 @@ namespace IndiaEventsWebApi.Controllers
             //sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
         }
 
-        [HttpPost("ClassIPreEvent"),DisableRequestSizeLimit]
+        [HttpPost("ClassIPreEvent"), DisableRequestSizeLimit]
         public IActionResult ClassIPreEvent(AllObjModels formDataList)
         {
-            
+
             string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
             string sheetId2 = configuration.GetSection("SmartsheetSettings:EventRequestBrandsList").Value;
             string sheetId3 = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
@@ -155,7 +155,7 @@ namespace IndiaEventsWebApi.Controllers
             var total = TotalHonorariumAmount + TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount;
 
             var FormattedTotal = string.Format(hindi, "{0:#,#}", total);
-            var s = (TotalTravelAmount + TotalAccomodateAmount);
+            var s = TotalTravelAmount + TotalAccomodateAmount;
             var FormattedTotalTAAmount = string.Format(hindi, "{0:#,#}", s);
 
 
@@ -475,7 +475,7 @@ namespace IndiaEventsWebApi.Controllers
         public IActionResult WebinarPreEvent(WebinarPayload formDataList)
         {
 
-            
+
             string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
             string sheetId2 = configuration.GetSection("SmartsheetSettings:EventRequestBrandsList").Value;
             string sheetId3 = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
@@ -572,7 +572,7 @@ namespace IndiaEventsWebApi.Controllers
             var FormattedTotalLC = string.Format(hindi, "{0:#,#}", c);
             var total = TotalHonorariumAmount + TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount;
             var FormattedTotal = string.Format(hindi, "{0:#,#}", total);
-            var s = (TotalTravelAmount + TotalAccomodateAmount);
+            var s = TotalTravelAmount + TotalAccomodateAmount;
             var FormattedTotalTAAmount = string.Format(hindi, "{0:#,#}", s);
             try
             {
@@ -894,7 +894,7 @@ namespace IndiaEventsWebApi.Controllers
         {
             string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
             string sheetId2 = configuration.GetSection("SmartsheetSettings:EventRequestBrandsList").Value;
-           // string sheetId3 = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
+            // string sheetId3 = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
             // sheetId4 = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
             // sheetId5 = configuration.GetSection("SmartsheetSettings:EventRequestsHcpSlideKit").Value;
             string sheetId6 = configuration.GetSection("SmartsheetSettings:EventRequestsExpensesSheet").Value;
@@ -903,9 +903,9 @@ namespace IndiaEventsWebApi.Controllers
 
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
-           // Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
-           // Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
-           // Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+            // Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+            // Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+            // Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
             Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
             Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
             StringBuilder addedBrandsData = new StringBuilder();
@@ -1300,7 +1300,7 @@ namespace IndiaEventsWebApi.Controllers
 
             //var total = BTC + BTE;
 
-            var s = (TotalTravelAmount + TotalAccomodateAmount);
+            var s = TotalTravelAmount + TotalAccomodateAmount;
 
             try
             {

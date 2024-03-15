@@ -32,7 +32,6 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
         {
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             string[] sheetIds = {
-                //configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
@@ -69,54 +68,6 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
 
 
 
-        //[HttpGet("GetAllHCPdata")]  
-        //public IActionResult GetAllHCPdata()
-        //{
-        //    SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-        //    string[] sheetIds = {
-        ////configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
-        //configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
-        //configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
-        //configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
-        //configuration.GetSection("SmartsheetSettings:HcpMaster4").Value
-        //};
-
-        //    ConcurrentBag<List<Dictionary<string, string>>> allData = new ConcurrentBag<List<Dictionary<string, string>>>();
-
-        //    Parallel.ForEach(sheetIds, sheetId =>
-        //    {
-        //        long.TryParse(sheetId, out long p);
-        //        Sheet sheet = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
-
-        //        List<Dictionary<string, string>> sheetData = new List<Dictionary<string, string>>();
-
-        //        foreach (Row row in sheet.Rows)
-        //        {
-        //            Dictionary<string, string> rowData = new Dictionary<string, string>();
-
-        //            foreach (Cell cell in row.Cells)
-        //            {
-        //                Column column = sheet.Columns.FirstOrDefault(col => col.Id == cell.ColumnId);
-        //                if (column != null)
-        //                {
-        //                    rowData.Add(column.Title, cell.Value?.ToString() ?? string.Empty);
-        //                }
-        //            }
-
-        //            sheetData.Add(rowData);
-        //        }
-
-        //        allData.Add(sheetData);
-        //    });
-
-        //    return Ok(allData);
-        //}
-
-
-
-
-
-
         [HttpGet("GetRowDataUsingMISCode")]
         public IActionResult GetRowDataUsingMISCode(string misCode)
         {
@@ -131,10 +82,58 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
             return Ok("No Data Found");
 
 
-
-
-
             #region
+
+            //[HttpGet("GetAllHCPdata")]  
+            //public IActionResult GetAllHCPdata()
+            //{
+            //    SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+            //    string[] sheetIds = {
+            ////configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
+            //configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
+            //configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
+            //configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
+            //configuration.GetSection("SmartsheetSettings:HcpMaster4").Value
+            //};
+
+            //    ConcurrentBag<List<Dictionary<string, string>>> allData = new ConcurrentBag<List<Dictionary<string, string>>>();
+
+            //    Parallel.ForEach(sheetIds, sheetId =>
+            //    {
+            //        long.TryParse(sheetId, out long p);
+            //        Sheet sheet = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
+
+            //        List<Dictionary<string, string>> sheetData = new List<Dictionary<string, string>>();
+
+            //        foreach (Row row in sheet.Rows)
+            //        {
+            //            Dictionary<string, string> rowData = new Dictionary<string, string>();
+
+            //            foreach (Cell cell in row.Cells)
+            //            {
+            //                Column column = sheet.Columns.FirstOrDefault(col => col.Id == cell.ColumnId);
+            //                if (column != null)
+            //                {
+            //                    rowData.Add(column.Title, cell.Value?.ToString() ?? string.Empty);
+            //                }
+            //            }
+
+            //            sheetData.Add(rowData);
+            //        }
+
+            //        allData.Add(sheetData);
+            //    });
+
+            //    return Ok(allData);
+            //}
+
+
+
+
+
+
+
+
 
             ////foreach (string i in sheetIds)
             ////{

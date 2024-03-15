@@ -45,39 +45,21 @@ namespace IndiaEventsWebApi.Controllers.FMV
 
                     else
                     {
-                        //var notFoundObject = new
-                        //{
-                        //    Message = $"Value not found for {specialty} in {columnTitle} column.",
-                        //    code = 404
-                        //};
-
-                        //return NotFound(notFoundObject);
+                       
                         return Ok(defaultval);
                     }
                 }
 
                 else
                 {
-                    //var notFoundObject = new
-                    //{
-                    //    Message = $"Speciality '{specialty}' not found.",
-                    //    code = 404
-                    //};
-
-                    //return NotFound(notFoundObject);
+                   
                     return Ok(defaultval);
                 }
             }
 
             else
             {
-                //var notFoundObject = new
-                //{
-                //    Message = $"Column '{columnTitle}' not found.",
-                //    code = 404
-                //};
-
-                //return NotFound(notFoundObject);
+             
                 return Ok(defaultval);
             }
         }
