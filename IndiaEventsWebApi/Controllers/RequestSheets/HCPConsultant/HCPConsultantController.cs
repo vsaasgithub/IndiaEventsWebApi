@@ -170,7 +170,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.HcpConsultant.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.HcpConsultant.FirstLevelEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.HcpConsultant.MedicalAffairsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.HcpConsultant.Role });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.HcpConsultant.Role });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.HcpConsultant.TotalExpenseBTC });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.HcpConsultant.TotalExpenseBTE });
 
@@ -383,6 +383,18 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
 
                     smartsheet.SheetResources.RowResources.AddRows(parsedSheetId6, new Row[] { newRow6 });
                 }
+
+
+
+                var addedrow = addedRows[0];
+                long ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                var UpdateB = new Cell { ColumnId = ColumnId, Value = formDataList.HcpConsultant.Role };
+                Row updateRows = new Row { Id = addedrow.Id, Cells = new Cell[] { UpdateB } };
+                var cellsToUpdate = addedrow.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
+                if (cellsToUpdate != null) { cellsToUpdate.Value = formDataList.HcpConsultant.Role; }
+
+                smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId1, new Row[] { updateRows });
+
                 return Ok(new
                 { Message = " Success!" });
             }

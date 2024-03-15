@@ -220,7 +220,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.class1.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.class1.FirstLevelEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.class1.MedicalAffairsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.class1.Role });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.class1.Role });
 
 
                 var addedRows = smartsheet.SheetResources.RowResources.AddRows(parsedSheetId1, new Row[] { newRow });
@@ -249,14 +249,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     }
                 }
 
-                //var targetRow = addedRows[0];
-                //long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
-                //var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formDataList.class1.Role };
-                //Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
-                //var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
-                //if (cellToUpdate != null) { cellToUpdate.Value = formDataList.class1.Role; }
-
-                //smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId1, new Row[] { updateRow });
+              
 
 
 
@@ -529,6 +522,15 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     smartsheet.SheetResources.RowResources.AddRows(parsedSheetId6, new Row[] { newRow6 });
                 }
 
+                var targetRow = addedRows[0];
+                long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formDataList.class1.Role };
+                Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
+                var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                if (cellToUpdate != null) { cellToUpdate.Value = formDataList.class1.Role; }
+
+                smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId1, new Row[] { updateRow });
+
                 return Ok(new
                 { Message = " Success!" });
 
@@ -649,7 +651,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Reporting Manager"), Value = formData.RequestHonorariumList.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "1 Up Manager"), Value = formData.RequestHonorariumList.FirstLevelEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Medical Affairs Head"), Value = formData.RequestHonorariumList.MedicalAffairsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Role"), Value = formData.RequestHonorariumList.Role });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Role"), Value = formData.RequestHonorariumList.Role });
 
 
 
@@ -781,7 +783,14 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
                 }
 
+                var s = addedRows[0];
+                long ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                var UpdateB = new Cell { ColumnId = ColumnId, Value = formData.RequestHonorariumList.Role };
+                Row updateRows = new Row { Id = s.Id, Cells = new Cell[] { UpdateB } };
+                var cellsToUpdate = s.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
+                if (cellsToUpdate != null) { cellsToUpdate.Value = formData.RequestHonorariumList.Role; }
 
+                smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId, new Row[] { updateRows });
 
 
 
@@ -884,7 +893,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Reporting Manager"), Value = formData.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "1 Up Manager"), Value = formData.FirstLevelEmail });
                 //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Medical Affairs Head"), Value = formData.MedicalAffairsHead });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Role"), Value = formData.Role });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Role"), Value = formData.Role });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Travel Amount"), Value = formData.TotalTravelSpend });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Accommodation Amount"), Value = formData.TotalAccomodationSpend });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Expense"), Value = formData.TotalExpenses });
@@ -1024,7 +1033,22 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             return BadRequest(ex.Message);
                         }
                     }
+
+
+
                 }
+
+
+                var s = addedRows[0];
+                long ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                var UpdateB = new Cell { ColumnId = ColumnId, Value = formData.Role };
+                Row updateRows = new Row { Id = s.Id, Cells = new Cell[] { UpdateB } };
+                var cellsToUpdate = s.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
+                if (cellsToUpdate != null) { cellsToUpdate.Value = formData.Role; }
+
+                smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId, new Row[] { updateRows });
+
+
                 return Ok(new
                 { Message = "Data added successfully." });
 

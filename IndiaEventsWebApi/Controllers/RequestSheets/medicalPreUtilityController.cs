@@ -6,6 +6,7 @@ using Smartsheet.Api;
 using Smartsheet.Api.Models;
 using System.Globalization;
 using System.Text;
+using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 //using static IndiaEventsWebApi.Models.EventTypeSheets.MedicalUtility;
 
 namespace IndiaEventsWebApi.Controllers.RequestSheets
@@ -176,7 +177,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.MedicalUtilityData.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.MedicalUtilityData.FirstLevelEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.MedicalUtilityData.MedicalAffairsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.MedicalUtilityData.Role });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.MedicalUtilityData.Role });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.MedicalUtilityData.TotalExpenseBTC });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.MedicalUtilityData.TotalExpenseBTE });
 
@@ -384,6 +385,17 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
                     smartsheet.SheetResources.RowResources.AddRows(parsedSheetId6, new Row[] { newRow6 });
                 }
+
+
+                var s = addedRows[0];
+                long ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                var UpdateB = new Cell { ColumnId = ColumnId, Value = formDataList.MedicalUtilityData.Role };
+                Row updateRows = new Row { Id = s.Id, Cells = new Cell[] { UpdateB } };
+                var cellsToUpdate = s.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
+                if (cellsToUpdate != null) { cellsToUpdate.Value = formDataList.MedicalUtilityData.Role; }
+
+                smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId1, new Row[] { updateRows });
+
 
                 return Ok(new
                 { Message = " Success!" });
