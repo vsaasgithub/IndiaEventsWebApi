@@ -784,7 +784,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 }
 
                 var s = addedRows[0];
-                long ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                long ColumnId = SheetHelper.GetColumnIdByName(sheet, "Role");
                 var UpdateB = new Cell { ColumnId = ColumnId, Value = formData.RequestHonorariumList.Role };
                 Row updateRows = new Row { Id = s.Id, Cells = new Cell[] { UpdateB } };
                 var cellsToUpdate = s.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
@@ -1040,7 +1040,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
 
                 var s = addedRows[0];
-                long ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                long ColumnId = SheetHelper.GetColumnIdByName(sheet, "Role");
                 var UpdateB = new Cell { ColumnId = ColumnId, Value = formData.Role };
                 Row updateRows = new Row { Id = s.Id, Cells = new Cell[] { UpdateB } };
                 var cellsToUpdate = s.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
