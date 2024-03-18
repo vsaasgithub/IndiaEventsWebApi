@@ -126,7 +126,7 @@ namespace IndiaEventsWebApi.Controllers
                     foreach (var WebHookEvent in RequestWebhook.events)
                     {
 
-                        if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
+                        if (WebHookEvent.eventType.ToLower() == "updated" /*|| WebHookEvent.eventType.ToLower() == "created"*/)
                         {
                             //var DataInSheet = smartsheet.SheetResources.GetSheet(sheet_SpeakerCode.Id.Value, null, null, new List<long> { WebHookEvent.rowId }, null, null, null, null, null, null).Rows;
 
