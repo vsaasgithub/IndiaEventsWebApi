@@ -205,8 +205,8 @@ namespace IndiaEventsWebApi.Controllers
                                 {
                                     if (status != null && status == "Approved")
                                     {
-                                        int timeInterval = 250000;
-                                        await Task.Delay(timeInterval);
+                                        //int timeInterval = 250000;
+                                        //await Task.Delay(timeInterval);
                                         if (meetingType != null)
                                         {
                                             if (meetingType.ToString() == "Other |")

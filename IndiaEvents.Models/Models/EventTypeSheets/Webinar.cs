@@ -28,6 +28,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? EventWithin7days { get; set; }
         public string? FB_Expense_Excluding_Tax { get; set; }
         public string? RBMorBM { get; set; }
+        public string? FinanceHead { get; set; }
 
 
         //public string? MedicalAffairsEmail { get; set; }

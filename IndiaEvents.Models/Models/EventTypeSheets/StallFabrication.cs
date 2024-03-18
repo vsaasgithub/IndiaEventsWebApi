@@ -36,6 +36,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? AdvanceAmount { get; set; }
         public string? TotalExpenseBTC { get; set; }
         public string? TotalExpenseBTE { get; set; }
+        public string? FinanceHead { get; set; }
     }
 
     public class AllStallFabrication
