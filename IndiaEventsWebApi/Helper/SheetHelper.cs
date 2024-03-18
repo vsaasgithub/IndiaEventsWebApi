@@ -247,11 +247,6 @@ namespace IndiaEventsWebApi.Helper
             pBody.Add(new Chunk("\nEvent Venue:" + EventVenue));
             pBody.Add(new Chunk("\n\nSpeakers: "));
 
-            //foreach(DataRow row in dtMai.Rows)
-            //{
-            //    string hcpName = row["HCPName"].ToString();
-            //    pBody.Add(new Chunk(" " + hcpName));
-            //}
 
             string hcpNames = speakers;//string.Join(", ", dtMai.AsEnumerable().Select(row => row["HCPName"].ToString()));
             pBody.Add(new Chunk(" " + hcpNames));
@@ -280,6 +275,99 @@ namespace IndiaEventsWebApi.Helper
                 }
             }
             doc.Add(table);
+            doc.Close();
+            byte[] result = ms.ToArray();
+            return result;
+        }
+
+        internal static byte[] exportAttendencepdfnew(DataTable dtEmployee,DataTable MenariniEmployee, string EventCode, string EventName, string EventDate, string EventVenue, string speakers )
+        {
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            iTextSharp.text.Rectangle rec = new iTextSharp.text.Rectangle(PageSize.A4);
+            rec.BackgroundColor = new BaseColor(System.Drawing.Color.Olive);
+            Document doc = new Document(rec);
+            doc.SetPageSize(iTextSharp.text.PageSize.A4);
+            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
+            doc.Open();
+            BaseFont bfntHead = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            iTextSharp.text.Font fntHead = new iTextSharp.text.Font(bfntHead, 16, 1, iTextSharp.text.BaseColor.BLUE);
+            Paragraph prgHeading = new Paragraph();
+            prgHeading.Alignment = Element.ALIGN_LEFT;
+            prgHeading.Add(new Chunk("Attendance Sheet".ToUpper(), fntHead));
+            doc.Add(prgHeading);
+            Paragraph prgGeneratedBY = new Paragraph();
+            BaseFont btnAuthor = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            iTextSharp.text.Font fntAuthor = new iTextSharp.text.Font(btnAuthor, 8, 2, iTextSharp.text.BaseColor.BLUE);
+            prgGeneratedBY.Alignment = Element.ALIGN_RIGHT;
+            doc.Add(prgGeneratedBY);
+            Paragraph p = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, iTextSharp.text.BaseColor.BLACK, Element.ALIGN_LEFT, 1)));
+            doc.Add(p);
+            doc.Add(new Chunk("\n", fntHead));
+
+            Paragraph pBody = new Paragraph();
+            pBody.Add(new Chunk("Event Code:" + EventCode));
+            pBody.Add(new Chunk("\nEvent Name:" + EventName));
+            pBody.Add(new Chunk("\nEvent Date:" + EventDate));
+            pBody.Add(new Chunk("\nEvent Venue:" + EventVenue));
+            pBody.Add(new Chunk("\n\nSpeakers: "));
+
+
+            string hcpNames = speakers;//string.Join(", ", dtMai.AsEnumerable().Select(row => row["HCPName"].ToString()));
+            pBody.Add(new Chunk(" " + hcpNames));
+            doc.Add(pBody);
+            doc.Add(new Paragraph("\n "));
+
+            PdfPTable table = new PdfPTable(dtEmployee.Columns.Count);
+            table.WidthPercentage = 100;
+            float[] columnWidths = Enumerable.Range(0, dtEmployee.Columns.Count).Select(i => i == dtEmployee.Columns.IndexOf("HCPName") ? 2f : 1f).ToArray(); /*Count).Select(i => 1f).ToArray();*/
+            table.SetWidths(columnWidths);
+
+            for (int i = 0; i < dtEmployee.Columns.Count; i++)
+            {
+                string cellText = dtEmployee.Columns[i].ColumnName;
+                PdfPCell cell = new PdfPCell();
+                cell.Phrase = new Phrase(cellText, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.TIMES_ROMAN, 8, 1, new BaseColor(System.Drawing.ColorTranslator.FromHtml("#000000"))));
+                cell.BackgroundColor = new BaseColor(System.Drawing.ColorTranslator.FromHtml("#C8C8C8"));
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.PaddingBottom = 5;
+                table.AddCell(cell);
+            }
+            for (int i = 0; i < dtEmployee.Rows.Count; i++)
+            {
+                for (int j = 0; j < dtEmployee.Columns.Count; j++)
+                {
+                    table.AddCell(dtEmployee.Rows[i][j].ToString());
+                }
+            }
+            doc.Add(table);
+            doc.Add(new Paragraph("\n "));
+
+            PdfPTable Menarinitable = new PdfPTable(MenariniEmployee.Columns.Count);
+            Menarinitable.WidthPercentage = 100;
+            float[] columnWidth = Enumerable.Range(0, MenariniEmployee.Columns.Count).Select(i => i == MenariniEmployee.Columns.IndexOf("HCPName") ? 2f : 1f).ToArray(); /*Count).Select(i => 1f).ToArray();*/
+            Menarinitable.SetWidths(columnWidths);
+
+            for (int i = 0; i < MenariniEmployee.Columns.Count; i++)
+            {
+                string cellText = MenariniEmployee.Columns[i].ColumnName;
+                PdfPCell cell = new PdfPCell();
+                cell.Phrase = new Phrase(cellText, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.TIMES_ROMAN, 8, 1, new BaseColor(System.Drawing.ColorTranslator.FromHtml("#000000"))));
+                cell.BackgroundColor = new BaseColor(System.Drawing.ColorTranslator.FromHtml("#C8C8C8"));
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.PaddingBottom = 5;
+                Menarinitable.AddCell(cell);
+            }
+            for (int i = 0; i < MenariniEmployee.Rows.Count; i++)
+            {
+                for (int j = 0; j < MenariniEmployee.Columns.Count; j++)
+                {
+                    Menarinitable.AddCell(MenariniEmployee.Rows[i][j].ToString());
+                }
+            }
+            doc.Add(Menarinitable);
+
+
+
             doc.Close();
             byte[] result = ms.ToArray();
             return result;

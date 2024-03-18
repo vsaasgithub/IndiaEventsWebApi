@@ -39,6 +39,10 @@
         public string? BeneficiaryName { get; set; }
         public string? PanNumber { get; set; }
         //Currency,Other Currency Type,Beneficiary Name,Pan Number,
+        public string? LcBtcorBte { get; set; }
+        public string? TravelBtcorBte { get; set; }
+        public string? AccomodationBtcorBte { get; set; }
+
 
 
 
