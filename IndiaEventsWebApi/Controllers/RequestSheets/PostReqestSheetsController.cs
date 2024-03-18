@@ -663,10 +663,13 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 foreach (var p in formData.RequestHonorariumList.Files)
                 {
 
+                    string[] words = p.Split(':');
+                    var r = words[0];
+                    var q = words[1];
 
-                    var name = " AttachedFile";
+                    var name = r.Split(".")[0];
 
-                    var filePath = SheetHelper.testingFile(p, eventId, name);
+                    var filePath = SheetHelper.testingFile(q, eventId, name);
 
 
 
