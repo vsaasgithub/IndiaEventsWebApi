@@ -454,8 +454,8 @@ namespace IndiaEventsWebApi.Helper
             {
                 {"S.No","S.No" },
                 { "HCPName", "Name" },
-                { "MISCode", "Employee code" },
-                { "Speciality", "Designation" },
+                { "Employee Code", "Employee Code" },
+                { "Designation", "Designation" },
                 { "Sign", "Sign" },
                 // Add more mappings if needed
             };

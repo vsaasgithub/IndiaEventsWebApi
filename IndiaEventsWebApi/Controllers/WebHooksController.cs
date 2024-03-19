@@ -205,8 +205,8 @@ namespace IndiaEventsWebApi.Controllers
                                 {
                                     if (status != null && status == "Approved")
                                     {
-                                        //int timeInterval = 250000;
-                                        //await Task.Delay(timeInterval);
+                                        int timeInterval = 250000;
+                                        await Task.Delay(timeInterval);
                                         if (meetingType != null)
                                         {
                                             if (meetingType.ToString() == "Other |")
@@ -224,6 +224,13 @@ namespace IndiaEventsWebApi.Controllers
 
 
                                     }
+
+                                }
+                                else if (status != null && status == "Approved")
+                                {
+                                    int timeInterval = 250000;
+                                    await Task.Delay(timeInterval);
+                                    moveAttachments(columnValue, WebHookEvent.rowId);
                                 }
 
 
@@ -489,7 +496,7 @@ namespace IndiaEventsWebApi.Controllers
                 }
 
                 List<string> requiredColumns = new List<string> { "HCPName", "MISCode", "Speciality", "HCP Type" };
-                List<string> MenariniColumns = new List<string> { "HCPName", "MISCode", "Speciality" };
+                List<string> MenariniColumns = new List<string> { "HCPName", "Employee Code", "Designation" };
 
                 List<Column> selectedColumns = sheet_SpeakerCode.Columns.Where(column => requiredColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase)).ToList();
                 List<Column> selectedMenariniColumns = sheet.Columns.Where(column => MenariniColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase)).ToList();

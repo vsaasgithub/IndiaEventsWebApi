@@ -112,7 +112,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
                 List<string> requiredColumns = new List<string> { "HCPName", "MISCode", "Speciality", "HCP Type" };
-                List<string> MenariniColumns = new List<string> { "HCPName", "MISCode", "Speciality" };
+                List<string> MenariniColumns = new List<string> { "HCPName", "Employee Code", "Designation" };
 
                 List<Column> selectedColumns = sheet_SpeakerCode.Columns.Where(column => requiredColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase)).ToList();
                 List<Column> selectedMenariniColumns = sheet.Columns.Where(column => MenariniColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase)).ToList();
@@ -213,7 +213,7 @@ namespace IndiaEventsWebApi.Controllers
 
                     if (splitName == "AttendanceSheet")
                     {
-                        
+
                         var ExistingFile = smartsheet.SheetResources.AttachmentResources.GetAttachment((long)sheet1.Id, Id);
                         url = ExistingFile.Url;
 
@@ -259,7 +259,7 @@ namespace IndiaEventsWebApi.Controllers
 
                     return Ok(new { url });
                 }
-              
+
 
 
             }
