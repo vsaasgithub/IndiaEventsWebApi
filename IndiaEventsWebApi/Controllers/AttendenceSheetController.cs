@@ -110,9 +110,14 @@ namespace IndiaEventsWebApi.Controllers
                     }
                 }
 
+
                 List<string> requiredColumns = new List<string> { "HCPName", "MISCode", "Speciality", "HCP Type" };
-                List<Column> selectedColumns = sheet_SpeakerCode.Columns
-                    .Where(column => requiredColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase)).ToList();
+                List<string> MenariniColumns = new List<string> { "HCPName", "MISCode", "Speciality" };
+
+                List<Column> selectedColumns = sheet_SpeakerCode.Columns.Where(column => requiredColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase)).ToList();
+                List<Column> selectedMenariniColumns = sheet.Columns.Where(column => MenariniColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase)).ToList();
+
+
                 DataTable dtMai = new DataTable();
                 dtMai.Columns.Add("S.No", typeof(int));
                 foreach (Column column in selectedColumns)
@@ -120,7 +125,18 @@ namespace IndiaEventsWebApi.Controllers
                     dtMai.Columns.Add(column.Title);
                 }
                 dtMai.Columns.Add("Sign");
+
+                DataTable MenariniTable = new DataTable();
+                MenariniTable.Columns.Add("S.No", typeof(int));
+                foreach (Column column in selectedMenariniColumns)
+                {
+                    MenariniTable.Columns.Add(column.Title);
+                }
+                MenariniTable.Columns.Add("Sign");
+
                 int Sr_No = 1;
+                int m_no = 1;
+
                 foreach (Row row in sheet_SpeakerCode.Rows)
                 {
                     string eventId = row.Cells.FirstOrDefault(cell => sheet_SpeakerCode.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title == "EventId/EventRequestId")?.DisplayValue;
@@ -145,11 +161,11 @@ namespace IndiaEventsWebApi.Controllers
                         Sr_No++;
                     }
                 }
-
                 foreach (Row row in sheet.Rows)
                 {
                     string eventId = row.Cells.FirstOrDefault(cell => sheet.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title == "EventId/EventRequestId")?.DisplayValue;
-                    if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase))
+                    string InviteeSource = row.Cells.FirstOrDefault(cell => sheet.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title == "Invitee Source")?.DisplayValue;
+                    if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase) && !InviteeSource.Equals("Menarini Employees", StringComparison.OrdinalIgnoreCase))
                     {
                         DataRow newRow = dtMai.NewRow();
                         newRow["S.No"] = Sr_No;
@@ -165,52 +181,85 @@ namespace IndiaEventsWebApi.Controllers
                         dtMai.Rows.Add(newRow);
                         Sr_No++;
                     }
+                    else if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase) && InviteeSource.Equals("Menarini Employees", StringComparison.OrdinalIgnoreCase))
+                    {
+                        DataRow newRow = MenariniTable.NewRow();
+                        newRow["S.No"] = m_no;
+                        foreach (Cell cell in row.Cells)
+                        {
+                            string columnName = sheet.Columns
+                                .FirstOrDefault(c => c.Id == cell.ColumnId)?.Title;
+                            if (MenariniColumns.Contains(columnName, StringComparer.OrdinalIgnoreCase))
+                            {
+                                newRow[columnName] = cell.DisplayValue;
+                            }
+                        }
+                        MenariniTable.Rows.Add(newRow);
+                        m_no++;
+                    }
+
+
+
+
+
+
                 }
+                var url = "";
                 foreach (var x in a.Data)
                 {
                     long Id = (long)x.Id;
                     var Fullname = x.Name.Split("-");
                     var splitName = Fullname[0];
 
-                    if (splitName == "AttendenceSheet")
+                    if (splitName == "AttendanceSheet")
                     {
+                        
+                        var ExistingFile = smartsheet.SheetResources.AttachmentResources.GetAttachment((long)sheet1.Id, Id);
+                        url = ExistingFile.Url;
 
-                        smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
-                          (long)sheet1.Id,           // sheetId
-                          Id            // attachmentId
-                        );
+                        //smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
+                        //  (long)sheet1.Id,           // sheetId
+                        //  Id            // attachmentId
+                        //);
 
                     }
                 }
-
-                string resultString = string.Join(", ", Speakers);
-                byte[] fileBytes = SheetHelper.exportAttendencepdf(dtMai, EventCode, EventName, EventDate, EventVenue, resultString);/*exportpdf(dtMai, EventCode, EventName, EventDate, EventVenue, dtMai);*/
-                string filename = "AttendenceSheet-" + EventID + ".pdf";
-                var folderName = Path.Combine("Resources", "Images");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                if (!Directory.Exists(pathToSave))
+                if (url != "")
                 {
-                    Directory.CreateDirectory(pathToSave);
+                    return Ok(new { url });
                 }
-                string fileType = SheetHelper.GetFileType(fileBytes);
-                string filePath = Path.Combine(pathToSave, filename);
-                System.IO.File.WriteAllBytes(filePath, fileBytes);
-
-                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile((long)sheet1.Id, rowId, filePath, "application/msword");
-
-                var FileUrl = "";
-                var AID = (long)attachment.Id;
-                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment((long)sheet1.Id, AID);
-                FileUrl = file.Url;
-
-                //string downloadLink = GetDownloadLink(filename);
-                if (System.IO.File.Exists(filePath))
+                else
                 {
-                    System.IO.File.Delete(filePath);
+                    string resultString = string.Join(", ", Speakers);
+                    byte[] fileBytes = SheetHelper.exportAttendencepdfnew(dtMai, MenariniTable, EventCode, EventName, EventDate, EventVenue, resultString);
+                    string filename = "AttendanceSheet-" + EventID + ".pdf";
+                    var folderName = Path.Combine("Resources", "Images");
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    if (!Directory.Exists(pathToSave))
+                    {
+                        Directory.CreateDirectory(pathToSave);
+                    }
+                    string fileType = SheetHelper.GetFileType(fileBytes);
+                    string filePath = Path.Combine(pathToSave, filename);
+                    System.IO.File.WriteAllBytes(filePath, fileBytes);
+
+                    var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile((long)sheet1.Id, rowId, filePath, "application/msword");
+
+                    //var FileUrl = "";
+                    var AID = (long)attachment.Id;
+                    var file = smartsheet.SheetResources.AttachmentResources.GetAttachment((long)sheet1.Id, AID);
+                    url = file.Url;
+
+                    //string downloadLink = GetDownloadLink(filename);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+
+
+                    return Ok(new { url });
                 }
-
-
-                return Ok(new { FileUrl });
+              
 
 
             }
