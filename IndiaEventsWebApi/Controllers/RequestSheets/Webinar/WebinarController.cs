@@ -55,12 +55,15 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
             Sheet sheet7 = smartsheet.SheetResources.GetSheet(parsedSheetId7, null, null, null, null, null, null, null);
             StringBuilder addedBrandsData = new StringBuilder();
             StringBuilder addedInviteesData = new StringBuilder();
+            StringBuilder addedMEnariniInviteesData = new StringBuilder();
+
             StringBuilder addedHcpData = new StringBuilder();
             StringBuilder addedSlideKitData = new StringBuilder();
             StringBuilder addedExpences = new StringBuilder();
             int addedSlideKitDataNo = 1;
             int addedHcpDataNo = 1;
             int addedInviteesDataNo = 1;
+            int addedInviteesDataNoforMenarini = 1;
             int addedBrandsDataNo = 1;
             int addedExpencesNo = 1;
             var TotalHonorariumAmount = 0;
@@ -98,12 +101,29 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
 
             foreach (var formdata in formDataList.EventRequestInvitees)
             {
-                string rowData = $"{addedInviteesDataNo}. {formdata.InviteeName}";
-                addedInviteesData.AppendLine(rowData);
-                addedInviteesDataNo++;
+
+
+
+
+                // string rowData = $"{addedInviteesDataNo}. Name: {formdata.InviteeName} | MIS Code: {formdata.MISCode} | LocalConveyance: {formdata.LocalConveyance} ";
+                if (formdata.InviteedFrom == "Menarini Employees")
+                {
+                    string row = $"{addedInviteesDataNoforMenarini}. {formdata.InviteeName}";
+                    addedMEnariniInviteesData.AppendLine(row);
+                    addedInviteesDataNoforMenarini++;
+                }
+                else
+                {
+                    string rowData = $"{addedInviteesDataNo}. {formdata.InviteeName}";
+                    addedInviteesData.AppendLine(rowData);
+                    addedInviteesDataNo++;
+                }
+
                 TotalInviteesLcAmount = TotalInviteesLcAmount + int.Parse(formdata.LcAmount);
             }
             string Invitees = addedInviteesData.ToString();
+            string MenariniInvitees = addedMEnariniInviteesData.ToString();
+
 
 
             foreach (var formdata in formDataList.EventRequestHcpRole)

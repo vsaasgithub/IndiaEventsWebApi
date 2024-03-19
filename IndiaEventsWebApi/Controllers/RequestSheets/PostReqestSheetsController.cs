@@ -67,6 +67,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
             StringBuilder addedBrandsData = new StringBuilder();
             StringBuilder addedInviteesData = new StringBuilder();
+            StringBuilder addedMEnariniInviteesData = new StringBuilder();
             StringBuilder addedHcpData = new StringBuilder();
             StringBuilder addedSlideKitData = new StringBuilder();
             StringBuilder addedExpences = new StringBuilder();
@@ -74,6 +75,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
             int addedSlideKitDataNo = 1;
             int addedHcpDataNo = 1;
             int addedInviteesDataNo = 1;
+            int addedInviteesDataNoforMenarini = 1;
             int addedBrandsDataNo = 1;
             int addedExpencesNo = 1;
 
@@ -126,12 +128,23 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
 
                 // string rowData = $"{addedInviteesDataNo}. Name: {formdata.InviteeName} | MIS Code: {formdata.MISCode} | LocalConveyance: {formdata.LocalConveyance} ";
-                string rowData = $"{addedInviteesDataNo}. {formdata.InviteeName}";
-                addedInviteesData.AppendLine(rowData);
-                addedInviteesDataNo++;
+                if (formdata.InviteedFrom == "Menarini Employees")
+                {
+                    string row = $"{addedInviteesDataNoforMenarini}. {formdata.InviteeName}";
+                    addedMEnariniInviteesData.AppendLine(row);
+                    addedInviteesDataNoforMenarini++;
+                }
+                else
+                {
+                    string rowData = $"{addedInviteesDataNo}. {formdata.InviteeName}";
+                    addedInviteesData.AppendLine(rowData);
+                    addedInviteesDataNo++;
+                }
+
                 TotalInviteesLcAmount = TotalInviteesLcAmount + int.Parse(formdata.LcAmount);
             }
             string Invitees = addedInviteesData.ToString();
+            string MenariniInvitees = addedMEnariniInviteesData.ToString();
 
 
             foreach (var formdata in formDataList.EventRequestHcpRole)
@@ -191,6 +204,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "State"), Value = formDataList.class1.State });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Panelists"), Value = HCP });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Invitees"), Value = Invitees });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "MIPL Invitees"), Value = MenariniInvitees });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventType"), Value = formDataList.class1.EventType });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventDate"), Value = formDataList.class1.EventDate });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Brands"), Value = brand });
@@ -201,8 +215,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventWithin7days"), Value = formDataList.class1.EventWithin7days });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "InitiatorName"), Value = formDataList.class1.InitiatorName });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = int.Parse(formDataList.class1.AdvanceAmount) });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value =int.Parse(formDataList.class1.TotalExpenseBTC)});
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = int.Parse(formDataList.class1.TotalExpenseBTE )});
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = int.Parse(formDataList.class1.TotalExpenseBTC) });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = int.Parse(formDataList.class1.TotalExpenseBTE) });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Honorarium Amount"), Value = TotalHonorariumAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel Amount"), Value = TotalTravelAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel & Accommodation Amount"), Value = s });
@@ -250,7 +264,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                     }
                 }
 
-              
+
 
 
 
