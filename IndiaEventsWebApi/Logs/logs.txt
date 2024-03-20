@@ -16732,3 +16732,527 @@ Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/
 [11:37:49 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.GetHCPDataUsingMISCode (IndiaEventsWebApi)"'
 [11:37:49 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KFRLSK0O"" completed keep alive response.
 [11:37:49 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/api/FCPAMaster/GetHCPDataUsingMISCode?misCode=144568&SelectedType=Trainer - - - 200 - application/json;+charset=utf-8 14403.7817ms
+[11:55:55 Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory [Debug] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[11:55:55 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting starting
+[11:55:55 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Information] User profile is available. Using '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[11:55:55 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-157c5ede-f40c-4ae7-8053-31353ad9f7e6.xml"'.
+[11:55:55 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f.xml"'.
+[11:55:55 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-fbbed531-59ac-40e0-8903-14f0f383c43a.xml"'.
+[11:55:55 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {157c5ede-f40c-4ae7-8053-31353ad9f7e6}.
+[11:55:55 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f}.
+[11:55:55 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {fbbed531-59ac-40e0-8903-14f0f383c43a}.
+[11:55:55 Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver [Debug] Considering key {fbbed531-59ac-40e0-8903-14f0f383c43a} with expiration date 2024-05-11 05:12:17Z as default key.
+[11:55:55 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[11:55:55 Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor [Debug] Decrypting secret element using Windows DPAPI.
+[11:55:55 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[11:55:55 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+[11:55:55 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+[11:55:55 Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider [Debug] Using key {fbbed531-59ac-40e0-8903-14f0f383c43a} as the default key.
+[11:55:55 Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService [Debug] Key ring with default key {fbbed531-59ac-40e0-8903-14f0f383c43a} was loaded during application startup.
+[11:55:55 Microsoft.Hosting.Lifetime [Information] Now listening on: "http://localhost:5098"
+[11:55:55 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "IndiaEventsWebApi"
+[11:55:55 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.Watch.BrowserRefresh"
+[11:55:55 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.WebTools.BrowserLink.Net"
+[11:55:55 Microsoft.Hosting.Lifetime [Information] Application started. Press Ctrl+C to shut down.
+[11:55:55 Microsoft.Hosting.Lifetime [Information] Hosting environment: "Development"
+[11:55:55 Microsoft.Hosting.Lifetime [Information] Content root path: "D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\"
+[11:55:55 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting started
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9M"" accepted.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9L"" accepted.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9M"" started.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9L"" started.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9L"" received FIN.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9M"" received FIN.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9M"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9L"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9M"" disconnecting.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9L"" disconnecting.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9L"" stopped.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9M"" stopped.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9N"" accepted.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9N"" started.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9O"" accepted.
+[11:55:56 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9O"" started.
+[11:55:56 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[11:55:56 Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware [Debug] Wildcard detected, all requests with hosts will be allowed.
+[11:55:56 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[11:55:56 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[11:55:57 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[11:55:57 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[11:55:57 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9P"" accepted.
+[11:55:57 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[11:55:57 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9O"" completed keep alive response.
+[11:55:57 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9P"" started.
+[11:55:57 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9N"" completed keep alive response.
+[11:55:57 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 42.4052ms
+[11:55:57 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[11:55:57 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 811.4758ms
+[11:55:57 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9P"" completed keep alive response.
+[11:55:57 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 52.6665ms
+[11:55:57 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[11:55:57 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[11:55:57 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[11:55:57 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9P"" completed keep alive response.
+[11:55:57 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 208.8302ms
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9O"" received FIN.
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9P"" received FIN.
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9N"" received FIN.
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9P"" disconnecting.
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9O"" disconnecting.
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9N"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9P"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9O"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9N"" disconnecting.
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9N"" stopped.
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9P"" stopped.
+[12:00:58 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9O"" stopped.
+[12:16:43 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9Q"" paused.
+[12:16:43 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9Q"" accepted.
+[12:16:43 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9Q"" started.
+[12:16:43 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104801
+[12:16:43 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[12:16:43 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"' with route pattern '"api/FCPAMaster/UploadFcpaFileAndDate"' is valid for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[12:16:43 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[12:16:43 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[12:16:43 Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware [Warning] Failed to determine the https port for redirect.
+[12:16:43 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Debug] The request has an origin header: '"http://localhost:5098"'.
+[12:16:43 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Information] CORS policy execution successful.
+[12:16:43 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[12:16:43 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[12:16:43 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"UploadFcpaFileAndDate\", controller = \"FCPAMaster\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult UploadFcpaFileAndDate(IndiaEvents.Models.Models.MasterSheets.FcpaUpload)" on controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi").
+[12:16:43 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[12:16:43 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[12:16:43 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[12:16:43 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[12:16:43 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[12:16:43 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[12:16:43 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[12:16:43 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[12:16:43 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' using the name '""' in request data ...
+[12:16:43 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Selected input formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter"' for content type '"application/json"'.
+[12:16:43 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28KQCREN9Q"", Request id ""0HN28KQCREN9Q:00000002"": started reading request body.
+[12:16:43 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9Q"" resumed.
+[12:16:43 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28KQCREN9Q"", Request id ""0HN28KQCREN9Q:00000002"": done reading request body.
+[12:16:43 Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter [Debug] JSON input formatter succeeded, deserializing to type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'
+[12:16:43 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[12:16:43 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[12:16:43 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[12:16:43 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[12:25:24 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[12:25:24 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[12:25:24 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[12:25:24 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[12:25:24 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[12:25:24 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "OkObjectResult", writing value of type '"<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[12:25:24 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)" in 521171.0834ms
+[12:25:24 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[12:25:24 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9Q"" completed keep alive response.
+[12:25:24 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104801 - 200 - application/json;+charset=utf-8 521550.5335ms
+[12:25:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[12:25:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9R"" accepted.
+[12:25:25 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[12:25:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9R"" started.
+[12:25:25 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[12:25:25 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[12:25:25 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[12:25:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9Q"" completed keep alive response.
+[12:25:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 56.3488ms
+[12:25:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[12:25:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[12:25:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9Q"" completed keep alive response.
+[12:25:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 27.7932ms
+[12:25:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9R"" completed keep alive response.
+[12:25:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 29.8165ms
+[12:25:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[12:25:25 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[12:25:25 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[12:25:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9R"" completed keep alive response.
+[12:25:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 36.9348ms
+[12:25:51 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9R"" paused.
+[12:25:51 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104801
+[12:25:51 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[12:25:51 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"' with route pattern '"api/FCPAMaster/UploadFcpaFileAndDate"' is valid for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[12:25:51 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[12:25:51 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[12:25:51 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Debug] The request has an origin header: '"http://localhost:5098"'.
+[12:25:51 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Information] CORS policy execution successful.
+[12:25:51 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[12:25:51 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[12:25:51 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"UploadFcpaFileAndDate\", controller = \"FCPAMaster\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult UploadFcpaFileAndDate(IndiaEvents.Models.Models.MasterSheets.FcpaUpload)" on controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi").
+[12:25:51 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[12:25:51 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[12:25:51 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[12:25:51 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[12:25:51 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[12:25:51 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[12:25:51 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[12:25:51 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[12:25:51 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' using the name '""' in request data ...
+[12:25:51 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Selected input formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter"' for content type '"application/json"'.
+[12:25:51 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28KQCREN9R"", Request id ""0HN28KQCREN9R:00000004"": started reading request body.
+[12:25:51 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9R"" resumed.
+[12:25:51 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28KQCREN9R"", Request id ""0HN28KQCREN9R:00000004"": done reading request body.
+[12:25:51 Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter [Debug] JSON input formatter succeeded, deserializing to type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'
+[12:25:51 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[12:25:51 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[12:25:51 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[12:25:51 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[12:30:34 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9Q"" received FIN.
+[12:30:34 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28KQCREN9Q"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[12:30:34 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9Q"" disconnecting.
+[12:30:34 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28KQCREN9Q"" stopped.
+[12:52:36 Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory [Debug] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[12:52:36 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting starting
+[12:52:36 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Information] User profile is available. Using '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[12:52:36 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-157c5ede-f40c-4ae7-8053-31353ad9f7e6.xml"'.
+[12:52:36 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f.xml"'.
+[12:52:36 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-fbbed531-59ac-40e0-8903-14f0f383c43a.xml"'.
+[12:52:36 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {157c5ede-f40c-4ae7-8053-31353ad9f7e6}.
+[12:52:36 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f}.
+[12:52:36 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {fbbed531-59ac-40e0-8903-14f0f383c43a}.
+[12:52:36 Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver [Debug] Considering key {fbbed531-59ac-40e0-8903-14f0f383c43a} with expiration date 2024-05-11 05:12:17Z as default key.
+[12:52:36 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[12:52:36 Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor [Debug] Decrypting secret element using Windows DPAPI.
+[12:52:36 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[12:52:36 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+[12:52:36 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+[12:52:36 Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider [Debug] Using key {fbbed531-59ac-40e0-8903-14f0f383c43a} as the default key.
+[12:52:36 Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService [Debug] Key ring with default key {fbbed531-59ac-40e0-8903-14f0f383c43a} was loaded during application startup.
+[12:52:36 Microsoft.Hosting.Lifetime [Information] Now listening on: "http://localhost:5098"
+[12:52:36 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "IndiaEventsWebApi"
+[12:52:36 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.Watch.BrowserRefresh"
+[12:52:36 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.WebTools.BrowserLink.Net"
+[12:52:36 Microsoft.Hosting.Lifetime [Information] Application started. Press Ctrl+C to shut down.
+[12:52:36 Microsoft.Hosting.Lifetime [Information] Hosting environment: "Development"
+[12:52:36 Microsoft.Hosting.Lifetime [Information] Content root path: "D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\"
+[12:52:36 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting started
+[12:52:37 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P7"" accepted.
+[12:52:37 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P7"" started.
+[12:52:37 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28LQ2E52P7"" received FIN.
+[12:52:37 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28LQ2E52P7"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[12:52:37 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P7"" disconnecting.
+[12:52:37 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P7"" stopped.
+[12:52:37 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P8"" accepted.
+[12:52:37 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P8"" started.
+[12:52:37 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P9"" accepted.
+[12:52:37 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P9"" started.
+[12:52:37 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[12:52:37 Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware [Debug] Wildcard detected, all requests with hosts will be allowed.
+[12:52:37 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[12:52:37 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[12:52:38 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[12:52:38 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[12:52:38 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[12:52:38 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P9"" completed keep alive response.
+[12:52:38 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P8"" completed keep alive response.
+[12:52:38 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 17.4569ms
+[12:52:38 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 785.1489ms
+[12:52:38 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[12:52:38 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P8"" completed keep alive response.
+[12:52:38 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 46.1095ms
+[12:52:38 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[12:52:38 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[12:52:38 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[12:52:38 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28LQ2E52P8"" completed keep alive response.
+[12:52:38 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 216.0145ms
+[12:52:58 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104801
+[12:52:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28LQ2E52P8"" paused.
+[12:52:58 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[12:52:58 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"' with route pattern '"api/FCPAMaster/UploadFcpaFileAndDate"' is valid for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[12:52:58 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[12:52:58 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[12:52:58 Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware [Warning] Failed to determine the https port for redirect.
+[12:52:58 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Debug] The request has an origin header: '"http://localhost:5098"'.
+[12:52:58 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Information] CORS policy execution successful.
+[12:52:58 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[12:52:58 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[12:52:58 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"UploadFcpaFileAndDate\", controller = \"FCPAMaster\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult UploadFcpaFileAndDate(IndiaEvents.Models.Models.MasterSheets.FcpaUpload)" on controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi").
+[12:52:58 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[12:52:58 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[12:52:58 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[12:52:58 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[12:52:58 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[12:52:58 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[12:52:58 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[12:52:58 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[12:52:58 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' using the name '""' in request data ...
+[12:52:58 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Selected input formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter"' for content type '"application/json"'.
+[12:52:58 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28LQ2E52P8"", Request id ""0HN28LQ2E52P8:00000005"": started reading request body.
+[12:52:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28LQ2E52P8"" resumed.
+[12:52:58 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28LQ2E52P8"", Request id ""0HN28LQ2E52P8:00000005"": done reading request body.
+[12:52:58 Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter [Debug] JSON input formatter succeeded, deserializing to type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'
+[12:52:58 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[12:52:58 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[12:52:58 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[12:52:58 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:03:15 Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory [Debug] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[13:03:15 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting starting
+[13:03:16 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Information] User profile is available. Using '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[13:03:16 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-157c5ede-f40c-4ae7-8053-31353ad9f7e6.xml"'.
+[13:03:16 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f.xml"'.
+[13:03:16 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-fbbed531-59ac-40e0-8903-14f0f383c43a.xml"'.
+[13:03:16 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {157c5ede-f40c-4ae7-8053-31353ad9f7e6}.
+[13:03:16 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f}.
+[13:03:16 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {fbbed531-59ac-40e0-8903-14f0f383c43a}.
+[13:03:16 Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver [Debug] Considering key {fbbed531-59ac-40e0-8903-14f0f383c43a} with expiration date 2024-05-11 05:12:17Z as default key.
+[13:03:16 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[13:03:16 Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor [Debug] Decrypting secret element using Windows DPAPI.
+[13:03:16 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[13:03:16 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+[13:03:16 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+[13:03:16 Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider [Debug] Using key {fbbed531-59ac-40e0-8903-14f0f383c43a} as the default key.
+[13:03:16 Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService [Debug] Key ring with default key {fbbed531-59ac-40e0-8903-14f0f383c43a} was loaded during application startup.
+[13:03:16 Microsoft.Hosting.Lifetime [Information] Now listening on: "http://localhost:5098"
+[13:03:16 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "IndiaEventsWebApi"
+[13:03:16 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.Watch.BrowserRefresh"
+[13:03:16 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.WebTools.BrowserLink.Net"
+[13:03:16 Microsoft.Hosting.Lifetime [Information] Application started. Press Ctrl+C to shut down.
+[13:03:16 Microsoft.Hosting.Lifetime [Information] Hosting environment: "Development"
+[13:03:16 Microsoft.Hosting.Lifetime [Information] Content root path: "D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\"
+[13:03:16 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting started
+[13:03:16 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S3"" received FIN.
+[13:03:17 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S3"" accepted.
+[13:03:17 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S3"" started.
+[13:03:17 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S3"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[13:03:17 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S3"" disconnecting.
+[13:03:17 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S3"" stopped.
+[13:03:17 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S4"" accepted.
+[13:03:17 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S5"" accepted.
+[13:03:17 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S4"" started.
+[13:03:17 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S5"" started.
+[13:03:17 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[13:03:17 Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware [Debug] Wildcard detected, all requests with hosts will be allowed.
+[13:03:17 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[13:03:17 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[13:03:18 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[13:03:18 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S6"" accepted.
+[13:03:18 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[13:03:18 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S6"" started.
+[13:03:18 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[13:03:18 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S5"" completed keep alive response.
+[13:03:18 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S4"" completed keep alive response.
+[13:03:18 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[13:03:18 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 34.9389ms
+[13:03:18 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 806.5253ms
+[13:03:18 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S6"" completed keep alive response.
+[13:03:18 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 59.2156ms
+[13:03:18 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[13:03:18 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[13:03:18 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[13:03:18 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S6"" completed keep alive response.
+[13:03:18 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 204.7849ms
+[13:03:53 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S6"" paused.
+[13:03:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104801
+[13:03:53 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[13:03:53 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"' with route pattern '"api/FCPAMaster/UploadFcpaFileAndDate"' is valid for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[13:03:53 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:03:53 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[13:03:53 Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware [Warning] Failed to determine the https port for redirect.
+[13:03:53 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Debug] The request has an origin header: '"http://localhost:5098"'.
+[13:03:53 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Information] CORS policy execution successful.
+[13:03:53 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[13:03:53 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:03:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"UploadFcpaFileAndDate\", controller = \"FCPAMaster\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult UploadFcpaFileAndDate(IndiaEvents.Models.Models.MasterSheets.FcpaUpload)" on controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi").
+[13:03:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[13:03:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[13:03:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[13:03:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[13:03:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[13:03:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[13:03:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[13:03:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[13:03:53 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' using the name '""' in request data ...
+[13:03:53 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Selected input formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter"' for content type '"application/json"'.
+[13:03:53 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28M014U4S6"", Request id ""0HN28M014U4S6:00000004"": started reading request body.
+[13:03:53 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S6"" resumed.
+[13:03:53 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28M014U4S6"", Request id ""0HN28M014U4S6:00000004"": done reading request body.
+[13:03:53 Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter [Debug] JSON input formatter succeeded, deserializing to type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'
+[13:03:53 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:03:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:03:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[13:03:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:05:53 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[13:05:53 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[13:05:53 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[13:05:53 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[13:05:53 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[13:05:53 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "OkObjectResult", writing value of type '"<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[13:05:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)" in 120021.1779ms
+[13:05:53 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:05:53 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S6"" completed keep alive response.
+[13:05:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104801 - 200 - application/json;+charset=utf-8 120424.9756ms
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S5"" received FIN.
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S7"" accepted.
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S4"" received FIN.
+[13:08:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S5"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S4"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S7"" started.
+[13:08:27 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S5"" disconnecting.
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S4"" disconnecting.
+[13:08:27 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S5"" stopped.
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S4"" stopped.
+[13:08:27 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[13:08:27 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S6"" completed keep alive response.
+[13:08:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 77.7202ms
+[13:08:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[13:08:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S6"" completed keep alive response.
+[13:08:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 20.1824ms
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S7"" completed keep alive response.
+[13:08:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 31.1764ms
+[13:08:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[13:08:27 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[13:08:27 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[13:08:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S7"" completed keep alive response.
+[13:08:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 47.7955ms
+[13:13:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S6"" received FIN.
+[13:13:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S7"" received FIN.
+[13:13:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S6"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[13:13:58 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S7"" disconnecting.
+[13:13:58 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S6"" disconnecting.
+[13:13:58 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S7"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[13:13:58 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S7"" stopped.
+[13:13:58 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S6"" stopped.
+[13:14:36 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S8"" accepted.
+[13:14:36 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S8"" started.
+[13:14:36 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S9"" accepted.
+[13:14:36 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[13:14:36 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S9"" started.
+[13:14:36 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[13:14:36 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[13:14:36 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[13:14:36 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[13:14:36 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S8"" completed keep alive response.
+[13:14:36 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[13:14:36 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 55.8832ms
+[13:14:36 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[13:14:36 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S9"" completed keep alive response.
+[13:14:36 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S8"" completed keep alive response.
+[13:14:36 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 22.6271ms
+[13:14:36 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 11.2157ms
+[13:14:36 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[13:14:36 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[13:14:36 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[13:14:36 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S8"" completed keep alive response.
+[13:14:36 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 43.2798ms
+[13:14:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104801
+[13:14:53 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S8"" paused.
+[13:14:53 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[13:14:53 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"' with route pattern '"api/FCPAMaster/UploadFcpaFileAndDate"' is valid for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[13:14:53 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:14:53 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[13:14:53 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Debug] The request has an origin header: '"http://localhost:5098"'.
+[13:14:53 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Information] CORS policy execution successful.
+[13:14:53 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[13:14:53 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:14:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"UploadFcpaFileAndDate\", controller = \"FCPAMaster\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult UploadFcpaFileAndDate(IndiaEvents.Models.Models.MasterSheets.FcpaUpload)" on controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi").
+[13:14:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[13:14:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[13:14:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[13:14:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[13:14:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[13:14:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[13:14:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[13:14:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[13:14:53 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' using the name '""' in request data ...
+[13:14:53 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Selected input formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter"' for content type '"application/json"'.
+[13:14:53 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28M014U4S8"", Request id ""0HN28M014U4S8:00000005"": started reading request body.
+[13:14:53 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S8"" resumed.
+[13:14:53 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28M014U4S8"", Request id ""0HN28M014U4S8:00000005"": done reading request body.
+[13:14:53 Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter [Debug] JSON input formatter succeeded, deserializing to type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'
+[13:14:53 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:14:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:14:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[13:14:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:15:30 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[13:15:30 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[13:15:30 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[13:15:30 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[13:15:30 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[13:15:30 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "OkObjectResult", writing value of type '"<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[13:15:30 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)" in 37032.7834ms
+[13:15:30 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:15:30 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S8"" completed keep alive response.
+[13:15:30 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104801 - 200 - application/json;+charset=utf-8 37107.8656ms
+[13:15:42 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104798
+[13:15:42 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S8"" paused.
+[13:15:42 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[13:15:42 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"' with route pattern '"api/FCPAMaster/UploadFcpaFileAndDate"' is valid for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[13:15:42 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:15:42 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[13:15:42 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Debug] The request has an origin header: '"http://localhost:5098"'.
+[13:15:42 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Information] CORS policy execution successful.
+[13:15:42 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[13:15:42 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:15:42 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"UploadFcpaFileAndDate\", controller = \"FCPAMaster\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult UploadFcpaFileAndDate(IndiaEvents.Models.Models.MasterSheets.FcpaUpload)" on controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi").
+[13:15:42 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[13:15:42 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[13:15:42 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[13:15:42 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[13:15:42 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[13:15:42 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[13:15:42 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[13:15:42 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[13:15:42 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' using the name '""' in request data ...
+[13:15:42 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Selected input formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter"' for content type '"application/json"'.
+[13:15:42 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28M014U4S8"", Request id ""0HN28M014U4S8:00000006"": started reading request body.
+[13:15:42 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S8"" resumed.
+[13:15:42 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28M014U4S8"", Request id ""0HN28M014U4S8:00000006"": done reading request body.
+[13:15:42 Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter [Debug] JSON input formatter succeeded, deserializing to type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'
+[13:15:42 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:15:42 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:15:42 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[13:15:42 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:17:15 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[13:17:15 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[13:17:15 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[13:17:15 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[13:17:15 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[13:17:15 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "OkObjectResult", writing value of type '"<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[13:17:15 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)" in 93514.8621ms
+[13:17:15 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:17:15 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S8"" completed keep alive response.
+[13:17:15 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104798 - 200 - application/json;+charset=utf-8 93600.6320ms
+[13:17:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104797
+[13:17:53 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S8"" paused.
+[13:17:53 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[13:17:53 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"' with route pattern '"api/FCPAMaster/UploadFcpaFileAndDate"' is valid for the request path '"/api/FCPAMaster/UploadFcpaFileAndDate"'
+[13:17:53 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:17:53 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[13:17:53 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Debug] The request has an origin header: '"http://localhost:5098"'.
+[13:17:53 Microsoft.AspNetCore.Cors.Infrastructure.CorsService [Information] CORS policy execution successful.
+[13:17:53 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[13:17:53 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:17:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"UploadFcpaFileAndDate\", controller = \"FCPAMaster\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult UploadFcpaFileAndDate(IndiaEvents.Models.Models.MasterSheets.FcpaUpload)" on controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi").
+[13:17:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[13:17:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[13:17:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[13:17:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[13:17:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[13:17:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[13:17:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.FCPAMasterController" ("IndiaEventsWebApi")
+[13:17:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[13:17:53 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' using the name '""' in request data ...
+[13:17:53 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Selected input formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter"' for content type '"application/json"'.
+[13:17:53 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28M014U4S8"", Request id ""0HN28M014U4S8:00000007"": started reading request body.
+[13:17:53 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN28M014U4S8"" resumed.
+[13:17:53 Microsoft.AspNetCore.Server.Kestrel [Debug] Connection id ""0HN28M014U4S8"", Request id ""0HN28M014U4S8:00000007"": done reading request body.
+[13:17:53 Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter [Debug] JSON input formatter succeeded, deserializing to type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'
+[13:17:53 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:17:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:17:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"' ...
+[13:17:53 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"formdata"' of type '"IndiaEvents.Models.Models.MasterSheets.FcpaUpload"'.
+[13:18:05 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[13:18:05 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[13:18:05 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[13:18:05 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[13:18:05 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[13:18:05 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "BadRequestObjectResult", writing value of type '"<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[13:18:05 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)" in 12670.9084ms
+[13:18:05 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.FCPAMasterController.UploadFcpaFileAndDate (IndiaEventsWebApi)"'
+[13:18:05 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN28M014U4S8"" completed keep alive response.
+[13:18:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 PUT http://localhost:5098/api/FCPAMaster/UploadFcpaFileAndDate application/json 1104797 - 400 - application/json;+charset=utf-8 12739.8639ms
