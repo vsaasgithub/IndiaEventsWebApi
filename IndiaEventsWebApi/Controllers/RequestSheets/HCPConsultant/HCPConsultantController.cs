@@ -263,6 +263,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
                                         var addedRow = addeddeviationrow[0];
                                         var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                                 parsedSheetId7, addedRow.Id.Value, filePath, "application/msword");
+                                        var attachmentintoMain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                                parsedSheetId1, addedRows[0].Id.Value, filePath, "application/msword");
                                         if (System.IO.File.Exists(filePath))
                                         {
                                             SheetHelper.DeleteFile(filePath);
