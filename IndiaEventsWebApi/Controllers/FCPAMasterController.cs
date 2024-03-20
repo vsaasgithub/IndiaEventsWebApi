@@ -1,4 +1,5 @@
-﻿using IndiaEvents.Models.Models.MasterSheets;
+﻿using Aspose.Pdf.Plugins;
+using IndiaEvents.Models.Models.MasterSheets;
 using IndiaEventsWebApi.Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace IndiaEventsWebApi.Controllers
         [HttpGet("GetHCPDataUsingMISCode")]
         public IActionResult GetHCPDataUsingMISCode(string misCode)
         {
-             
+
             string[] sheetIds = {
         //configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
         //configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
@@ -114,94 +115,22 @@ namespace IndiaEventsWebApi.Controllers
         [HttpPut("UploadFcpaFileAndDate")]
         public IActionResult UploadFcpaFileAndDate(FcpaUpload formdata)
         {
-            string SheetId1 = configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value;
-            string SheetId2 = configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value;
-            //string SheetId3 = configuration.GetSection("SmartsheetSettings:HcpMaster").Value;
-            string SheetId4 = configuration.GetSection("SmartsheetSettings:HcpMaster1").Value;
-            string SheetId5 = configuration.GetSection("SmartsheetSettings:HcpMaster2").Value;
-            string SheetId6 = configuration.GetSection("SmartsheetSettings:HcpMaster3").Value;
-            string SheetId7 = configuration.GetSection("SmartsheetSettings:HcpMaster4").Value;
-
-            List<string> files = new List<string> {  SheetId4, SheetId5, SheetId6, SheetId7 };
-
-            if (formdata.SelectedType == "Speaker" || formdata.SelectedType == "Chair Person" || formdata.SelectedType == "Panelist" || formdata.SelectedType == "Moderator")
+            try
             {
-                Sheet sheet = SheetHelper.GetSheetById(smartsheet, SheetId2);
-                //Column SpecialityColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
-                var targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.MisCode));
-                if(targetRow != null)
+                string SheetId1 = configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value;
+                string SheetId2 = configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value;
+                //string SheetId3 = configuration.GetSection("SmartsheetSettings:HcpMaster").Value;
+                string SheetId4 = configuration.GetSection("SmartsheetSettings:HcpMaster1").Value;
+                string SheetId5 = configuration.GetSection("SmartsheetSettings:HcpMaster2").Value;
+                string SheetId6 = configuration.GetSection("SmartsheetSettings:HcpMaster3").Value;
+                string SheetId7 = configuration.GetSection("SmartsheetSettings:HcpMaster4").Value;
+
+                List<string> files = new List<string> { SheetId4, SheetId5, SheetId6, SheetId7 };
+
+                if (formdata.SelectedType == "Speaker" || formdata.SelectedType == "Chair Person" || formdata.SelectedType == "Panelist" || formdata.SelectedType == "Moderator")
                 {
-                    var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments((long)sheet.Id, targetRow.Id.Value, null);
-                    if (a.Data.Count > 0)
-                    {
-                        foreach (var i in a.Data)
-                        {
-                            long id = i.Id.Value;
-                            smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
-                              (long)sheet.Id,           // sheetId
-                              id            // attachmentId
-                            );
-                        }
-                    }
-
-
-                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet, "FCPA Sign Off Date");
-                    var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formdata.FcpaDate };
-                    Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
-                    var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
-                    if (cellToUpdate != null) { cellToUpdate.Value = formdata.FcpaDate; }
-
-                    var addedrow = smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
-                    var name = "FCPA";
-                    var val = "";
-                    var filePath = SheetHelper.testingFile(formdata.UploadFile, val, name);
-                    var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                                sheet.Id.Value, targetRow.Id.Value, filePath, "application/msword");
-                }
-              
-            }
-            else if (formdata.SelectedType == "Trainer")
-            {
-                Sheet sheet = SheetHelper.GetSheetById(smartsheet, SheetId1);
-               // Column SpecialityColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
-                var targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.MisCode));
-
-                if (targetRow != null)
-                {
-                    var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments((long)sheet.Id, targetRow.Id.Value, null);
-                    if (a.Data.Count > 0)
-                    {
-                        foreach (var i in a.Data)
-                        {
-                            long id = i.Id.Value;
-                            smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
-                              (long)sheet.Id,           // sheetId
-                              id            // attachmentId
-                            );
-                        }
-                    }
-
-
-                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet, "FCPA Sign Off Date");
-                    var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formdata.FcpaDate };
-                    Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
-                    var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
-                    if (cellToUpdate != null) { cellToUpdate.Value = formdata.FcpaDate; }
-
-                    var addedrow = smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
-                    var name = "FCPA";
-                    var val = "";
-                    var filePath = SheetHelper.testingFile(formdata.UploadFile, val, name);
-                    var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                                sheet.Id.Value, targetRow.Id.Value, filePath, "application/msword");
-                }
-              
-            }
-            else if (formdata.SelectedType == "Other")
-            {
-                foreach(var sheetid in files)
-                {
-                    Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetid);
+                    Sheet sheet = SheetHelper.GetSheetById(smartsheet, SheetId2);
+                    //Column SpecialityColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
                     var targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.MisCode));
                     if (targetRow != null)
                     {
@@ -232,19 +161,92 @@ namespace IndiaEventsWebApi.Controllers
                         var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                                     sheet.Id.Value, targetRow.Id.Value, filePath, "application/msword");
                     }
+
                 }
+                else if (formdata.SelectedType == "Trainer")
+                {
+                    Sheet sheet = SheetHelper.GetSheetById(smartsheet, SheetId1);
+                    // Column SpecialityColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
+                    var targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.MisCode));
+
+                    if (targetRow != null)
+                    {
+                        var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments((long)sheet.Id, targetRow.Id.Value, null);
+                        if (a.Data.Count > 0)
+                        {
+                            foreach (var i in a.Data)
+                            {
+                                long id = i.Id.Value;
+                                smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
+                                  (long)sheet.Id,           // sheetId
+                                  id            // attachmentId
+                                );
+                            }
+                        }
+
+
+                        long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet, "FCPA Sign Off Date");
+                        var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formdata.FcpaDate };
+                        Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
+                        var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                        if (cellToUpdate != null) { cellToUpdate.Value = formdata.FcpaDate; }
+
+                        var addedrow = smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
+                        var name = "FCPA";
+                        var val = "";
+                        var filePath = SheetHelper.testingFile(formdata.UploadFile, val, name);
+                        var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                                    sheet.Id.Value, targetRow.Id.Value, filePath, "application/msword");
+                    }
+
+                }
+                else if (formdata.SelectedType == "Other")
+                {
+                    foreach (var sheetid in files)
+                    {
+                        Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetid);
+                        var targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.MisCode));
+                        if (targetRow != null)
+                        {
+                            var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments((long)sheet.Id, targetRow.Id.Value, null);
+                            if (a.Data.Count > 0)
+                            {
+                                foreach (var i in a.Data)
+                                {
+                                    long id = i.Id.Value;
+                                    smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
+                                      (long)sheet.Id,           // sheetId
+                                      id            // attachmentId
+                                    );
+                                }
+                            }
+
+
+                            long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet, "FCPA Sign Off Date");
+                            var cellToUpdateB = new Cell { ColumnId = honorariumSubmittedColumnId, Value = formdata.FcpaDate };
+                            Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
+                            var cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                            if (cellToUpdate != null) { cellToUpdate.Value = formdata.FcpaDate; }
+
+                            var addedrow = smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
+                            var name = "FCPA";
+                            var val = "";
+                            var filePath = SheetHelper.testingFile(formdata.UploadFile, val, name);
+                            var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                                        sheet.Id.Value, targetRow.Id.Value, filePath, "application/msword");
+                        }
+                    }
+                }
+
+
+
+                return Ok(new { Message = "FCPA Upsated Successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-
-
-
-
-
-
-
-
-
-            return Ok();
         }
 
     }
