@@ -612,4 +612,5 @@ D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net6.0\refin
 D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net6.0\IndiaEventsWebApi.pdb
 D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net6.0\IndiaEventsWebApi.genruntimeconfig.cache
 D:\MIE_API\New folder\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net6.0\ref\IndiaEventsWebApi.dll
-D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\web.config
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\app.config
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net6.0\IndiaEventsWebApi.dll.config

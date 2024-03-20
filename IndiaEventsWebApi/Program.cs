@@ -12,10 +12,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Aspose.Pdf.Plugins;
 using iTextSharp.text.pdf.security;
 using Smartsheet.Api.Models;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
-
+int maxRequestLimit = 1073741824;
 
 //builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(60); });
 builder.Services.AddAuthentication(options =>
@@ -66,12 +67,29 @@ builder.Services.AddAuthentication(options =>
     //    }
     //};
 })
+
 .AddGoogle(options =>
 {
     options.ClientId = "200698853522-5b3nkgrgal38n7eqjqrrt6biinbt46ca.apps.googleusercontent.com";
     options.ClientSecret = "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";
 });
 
+// If using IIS
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = maxRequestLimit;
+});
+// If using Kestrel
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = maxRequestLimit;
+});
+//builder.Services.Configure<FormOptions>(x =>
+//{
+//    x. = maxRequestLimit;
+//    x.MultipartBodyLengthLimit = maxRequestLimit;
+//    x.MultipartHeadersLengthLimit = maxRequestLimit;
+//});
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("MyPolicy", builder =>
@@ -96,7 +114,6 @@ IHostBuilder CreateHostBuilder(string[] args) =>
   
 
 });
-
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
