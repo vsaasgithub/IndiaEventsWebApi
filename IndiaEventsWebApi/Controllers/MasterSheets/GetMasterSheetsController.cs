@@ -9,7 +9,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class GetMasterSheetsController : ControllerBase
     {
         private readonly string accessToken;

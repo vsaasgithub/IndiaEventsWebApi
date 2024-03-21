@@ -1,5 +1,6 @@
 ﻿using IndiaEventsWebApi.Helper;
 using IndiaEventsWebApi.Models.EventTypeSheets;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Smartsheet.Api;
@@ -13,6 +14,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class medicalPreUtilityController : ControllerBase
     {
         private readonly string accessToken;

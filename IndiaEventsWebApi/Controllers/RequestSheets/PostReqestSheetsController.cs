@@ -23,7 +23,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class PostReqestSheetsController : ControllerBase
     {
 
