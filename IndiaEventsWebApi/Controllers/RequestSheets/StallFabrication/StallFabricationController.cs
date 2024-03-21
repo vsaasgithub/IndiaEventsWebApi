@@ -13,7 +13,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.StallFabrication
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class StallFabricationController : ControllerBase
     {
         private readonly string accessToken;

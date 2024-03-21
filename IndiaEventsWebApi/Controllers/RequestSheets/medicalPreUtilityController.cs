@@ -14,7 +14,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class medicalPreUtilityController : ControllerBase
     {
         private readonly string accessToken;

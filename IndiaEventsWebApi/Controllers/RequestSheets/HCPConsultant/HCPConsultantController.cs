@@ -13,7 +13,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.HCPConsultant
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class HCPConsultantController : ControllerBase
     {
 
