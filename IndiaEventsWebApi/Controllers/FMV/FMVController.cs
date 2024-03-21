@@ -23,48 +23,49 @@ namespace IndiaEventsWebApi.Controllers.FMV
         [HttpGet("GetfmvColumnValue")]
         public IActionResult GetfmvColumnValue(string specialty, string columnTitle)
         {
+            int defaultval = 0;
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             string sheetId = configuration.GetSection("SmartsheetSettings:fmv").Value;
             long.TryParse(sheetId, out long parsedSheetId);
             Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
 
-            Column SpecialityColumn = sheet.Columns.FirstOrDefault(column =>
-           string.Equals(column.Title, "Speciality", StringComparison.OrdinalIgnoreCase));
-            Column targetColumn = sheet.Columns.FirstOrDefault(column =>
-           string.Equals(column.Title, columnTitle, StringComparison.OrdinalIgnoreCase));
+            Column SpecialityColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, "Speciality", StringComparison.OrdinalIgnoreCase));
+            Column targetColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, columnTitle, StringComparison.OrdinalIgnoreCase));
             if (targetColumn != null && SpecialityColumn != null)
             {
-                // Find the row with the specified speciality
-                Row targetRow = sheet.Rows.FirstOrDefault(row =>
-                    row.Cells.Any(cell => cell.ColumnId == SpecialityColumn.Id && cell.Value.ToString() == specialty));
+                Row targetRow = sheet.Rows.FirstOrDefault(row => row.Cells.Any(cell => cell.ColumnId == SpecialityColumn.Id && cell.Value.ToString() == specialty));
 
                 if (targetRow != null)
                 {
-                    // Retrieve the value of the specified column for the given speciality
                     var columnValue = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn.Id)?.Value;
                     if (columnValue != null)
                     {
                         return Ok(columnValue);
                     }
+
                     else
                     {
-                        return NotFound($"Value not found for {specialty} in {columnTitle} column.");
+                       
+                        return Ok(defaultval);
                     }
                 }
+
                 else
                 {
-                    return NotFound($"Speciality '{specialty}' not found.");
+                   
+                    return Ok(defaultval);
                 }
             }
+
             else
             {
-                return NotFound($"Column '{columnTitle}' not found.");
+             
+                return Ok(defaultval);
             }
         }
 
 
         [HttpGet("GetFMVData")]
-
         public IActionResult GetFMVData()
         {
             try

@@ -1,534 +1,148 @@
-﻿1 done check  211
- 
- 
- 
- 
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using IndiaEventsWebApi.Models;
+using DinkToPdf.Contracts;
+using DinkToPdf;
+using Serilog;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using IndiaEventsWebApi.Helper;
+using Microsoft.Extensions.DependencyInjection;
+using Aspose.Pdf.Plugins;
+using iTextSharp.text.pdf.security;
+using Smartsheet.Api.Models;
+
+var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 
-        [HttpPost("AddFile")]
-        public IActionResult AddFormData(Class11 i)
-        {
-            try
-            {
-
-
-                var accessToken = "jQ7rAWlaTgbtMPVvlc7RGOqeNqDWwheJRNV83";
-                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-
-                var sheetId1 = 6857973674495876;
-                Sheet sheet = smartsheet.SheetResources.GetSheet(sheetId1, null, null, null, null, null, null, null);
-
-                var newRow = new Smartsheet.Api.Models.Row();
-                newRow.Cells = new List<Cell>();
-
-                var addedRows = smartsheet.SheetResources.RowResources.AddRows(sheetId1, new Smartsheet.Api.Models.Row[] { newRow });
-                var x = 1;
-                foreach (var p in i.File)
-                {
-
-
-
-                    byte[] fileBytes = Convert.FromBase64String(p);
-                    var folderName = Path.Combine("Resources", "Images");
-                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                    if (!Directory.Exists(pathToSave))
-                    {
-                        Directory.CreateDirectory(pathToSave);
-                    }
-
-                    string fileType = GetFileType(fileBytes);
-                    string fileName = x + " ConvertedFile." + fileType;
-                    string filePath = Path.Combine(pathToSave, fileName);
-
-                    //string type = k.ContentType;//fileUploadModel.File.ContentType;
-                    var addedRow = addedRows[0];
-
-                    System.IO.File.WriteAllBytes(filePath, fileBytes);
-                    string type = GetContentType(fileType);
-                    var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                            sheetId1, addedRow.Id.Value, filePath, "application/msword");
-                    x++;
-                }
-
-
-                return Ok(new { Message = "Conversion successful" });
-
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error: {ex.Message}");
-            }
-        }
-
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- [HttpGet("EventRequestsHcpRole/{eventIdorEventRequestId}")]
-        public async Task<IActionResult> GetEventRequestsHcpRoleById(string eventIdorEventRequestId)
-        {
-            try
-            {
-                var hcpRole = await dbContext.EventRequestsHcpRoles
-                    .FirstOrDefaultAsync(e => e.EventIdorEventRequestId == eventIdorEventRequestId);
-
-                if (hcpRole == null)
-                {
-                    return NotFound(); // Return 404 Not Found if the record is not found
-                }
-
-                return Ok(hcpRole); // Return the entire row
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions appropriately, log them, and return an error response
-                return StatusCode(500, $"Error: {ex.Message}");
-            }
-        }
-
-
-
-
-
-        [HttpGet("GetEventRequestsHcpRoleById/{eventIdorEventRequestId}")]
-public IActionResult GetEventRequestsHcpRoleById(string eventIdorEventRequestId)
+//builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(60); });
+builder.Services.AddAuthentication(options =>
 {
-    try
-    {
-        SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-        string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
-        long.TryParse(sheetId, out long parsedSheetId);
-
-        // Specify additional parameters if needed
-        var sheetOptions = new SheetGetOptions(EnumSet<SheetInclusion>.of(SheetInclusion.COLUMNS));
-
-        Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, sheetOptions, null, null, null, null);
-
-        List<Dictionary<string, object>> hcpRoleData = new List<Dictionary<string, object>>();
-        List<string> columnNames = new List<string>();
-
-        foreach (Column column in sheet.Columns)
-        {
-            columnNames.Add(column.Title);
-        }
-
-        foreach (Row row in sheet.Rows)
-        {
-            // Check if the row has the specified EventIdorEventRequestId
-            var eventIdorEventRequestIdCell = row.Cells.FirstOrDefault(cell => cell.ColumnId == GetColumnIdByName(sheet, "EventIdorEventRequestId"));
-            if (eventIdorEventRequestIdCell != null && eventIdorEventRequestIdCell.Value == eventIdorEventRequestId)
-            {
-                Dictionary<string, object> hcpRoleRowData = new Dictionary<string, object>();
-
-                for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
-                {
-                    hcpRoleRowData[columnNames[i]] = row.Cells[i].Value;
-                }
-
-                hcpRoleData.Add(hcpRoleRowData);
-            }
-        }
-
-        return Ok(hcpRoleData);
-    }
-    catch (Exception ex)
-    {
-        // Enhance error handling - log the exception details, etc.
-        return BadRequest($"Error retrieving HCP Role data by ID: {ex.Message}");
-    }
-}
-
-// Helper method to get the column ID by name
-private long GetColumnIdByName(Sheet sheet, string columnName)
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
 {
-    Column column = sheet.Columns.FirstOrDefault(c => c.Title == columnName);
-    return column?.Id ?? 0;
-}
-
-
-
-
-
-        [HttpGet("GetEventRequestsHcpRoleByIds")]
-        public IActionResult GetEventRequestsHcpRoleByIds( List<string> eventIdorEventRequestIds)
-        {
-            try
-            {
-                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-
-                string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
-                long.TryParse(sheetId, out long parsedSheetId);
-                Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
-                List<Dictionary<string, object>> hcpRoleData = new List<Dictionary<string, object>>();
-                List<string> columnNames = new List<string>();
-
-                foreach (Column column in sheet1.Columns)
-                {
-                    columnNames.Add(column.Title);
-                }
-
-                foreach (Row row in sheet1.Rows)
-                {
-                    // Check if the row has the specified EventIdorEventRequestId in the list
-                    var eventIdorEventRequestIdCell = row.Cells.FirstOrDefault(cell => cell.ColumnId == GetColumnIdByName(sheet1, "EventId/EventRequestId"));
-                    var cellValue = eventIdorEventRequestIdCell?.Value?.ToString();
-
-                    if (eventIdorEventRequestIdCell != null && eventIdorEventRequestIdCell.Value != null && eventIdorEventRequestIds.Contains(cellValue))
-                    {
-                        Dictionary<string, object> hcpRoleRowData = new Dictionary<string, object>();
-
-                        for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
-                        {
-                            hcpRoleRowData[columnNames[i]] = row.Cells[i].Value;
-                        }
-
-                        hcpRoleData.Add(hcpRoleRowData);
-                    }
-                }
-
-                return Ok(hcpRoleData);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        done
-
-
-
-
-
-
-
-
-         [HttpGet("GetEventRequestsHcpDetailsTotalSpendValue")]
-        public IActionResult GetfmvColumnValue(string EventID)
-        {
-            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-            string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
-            long.TryParse(sheetId, out long parsedSheetId);
-            Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
-
-            Column SpecialityColumn = sheet.Columns.FirstOrDefault(column =>
-           string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
-
-            Column targetColumn = sheet.Columns.FirstOrDefault(column =>
-           string.Equals(column.Title, "TotalSpend", StringComparison.OrdinalIgnoreCase));
-
-            if (targetColumn != null && SpecialityColumn != null)
-            {
-                // Find the row with the specified speciality
-                Row targetRow = sheet.Rows.FirstOrDefault(row =>
-                    row.Cells.Any(cell => cell.ColumnId == SpecialityColumn.Id && cell.Value.ToString() == EventID));
-
-                if (targetRow != null)
-                {
-                    // Retrieve the value of the specified column for the given speciality
-                    var columnValue = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn.Id)?.Value;
-                    if (columnValue != null)
-                    {
-                        return Ok(columnValue);
-                    }
-                    else
-                    {
-                        return NotFound("NotFound");
-                    }
-                }
-                else
-                {
-                    return NotFound("NotFound");
-                }
-            }
-            else
-            {
-                return NotFound("NotFound");
-            }
-        }
-
-
-
-
-
-
-
-
-         //if (formDataList.formFile != null && formDataList.formFile.Length > 0)
-                //{
-                //    var fileName = formDataList.formFile.FileName;
-                //    var folderName = Path.Combine("Resources", "Images");
-                //    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                //    var fullPath = Path.Combine(pathToSave, fileName);
-                   
-                //    if (!Directory.Exists(pathToSave))
-                //    {
-                //        Directory.CreateDirectory(pathToSave);
-                //    }
-
-                //    using (var fileStream = new FileStream(fullPath, FileMode.Create))
-                //    {
-                //        formDataList.formFile.CopyTo(fileStream);
-                //    }
-
-                //    var addedRow = addedRows[0];
-                //    var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                //        parsedSheetId1, addedRow.Id.Value, fullPath, "application/msword");
-                //}
-
-
-
-
-
-
-
-                
-    [HttpGet("GenerateSummaryPDF")]
-    public IActionResult GenerateSummaryPDF(string EventID)
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters()
     {
-        try
-        {
-            EventID = "RQID95";
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = "ABM",
+        ValidIssuer = "http://localhost:5098",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryveryveryveryverysecret......................"))
+    };
 
-            DataTable dtMain = new DataTable();
-            dtMain.Columns.Add("S.No");
-            dtMain.Columns.Add("HCP Name");
-            dtMain.Columns.Add("MIS Code");
-            dtMain.Columns.Add("GO/Non-GO");
-            dtMain.Columns.Add("Speciality");
-            dtMain.Columns.Add("Sign");
-            int SrNo = 1;
+    //options.Events = new JwtBearerEvents
+    //{
+    //    OnAuthenticationFailed = context =>
+    //    {
 
-            // ... (rest of your code)
+    //        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+    //        {
+    //            context.Response.Headers.Add("Token-Expired", "true");
+    //        }
 
-            // Use ToDictionary method to convert List<Dictionary<string, object>> to DataTable
-            DataTable dt = ToDictionary(sheetData);
-            dt.DefaultView.RowFilter = "[EventId/EventRequestID] = '" + EventID + "'";
+    //        return Task.CompletedTask;
+    //    }
+    //};
+    //options.Events = new JwtBearerEvents
+    //{
+    //    OnAuthenticationFailed = context =>
+    //    {
+    //        context.Response.ContentType = "application/json";
+    //        //context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+    //        //Task.CompletedTask;
+    //        //return context.Response.WriteAsJsonAsync("Not Found");
+    //        return context.Response.WriteAsJsonAsync(new
+    //        {
+    //            Message = "Invalid token",
+    //            Error = context.Exception.Message
+    //        }.ToString());
 
-            foreach (DataRowView rowView in dt.DefaultView)
-            {
-                DataRow row = rowView.Row;
-                dtMain.Rows.Add(SrNo.ToString(), row["HCP Name"], row["MIS Code"], row["GO/Non-GO"], row["Speciality"], "");
-                SrNo++;
-            }
 
-            byte[] fileBytes = ExportPdf(dtMain);
-            string filename = "Sample_PDF_" + DateTime.Now.ToString("MMddyyyyhhmmss") + ".pdf";
+    //    }
+    //};
+})
+.AddGoogle(options =>
+{
+    options.ClientId = "200698853522-5b3nkgrgal38n7eqjqrrt6biinbt46ca.apps.googleusercontent.com";
+    options.ClientSecret = "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";
+});
 
-            var folderName = Path.Combine("Resources", "PDFs");
-            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-
-            if (!Directory.Exists(pathToSave))
-            {
-                Directory.CreateDirectory(pathToSave);
-            }
-
-            string filePath = Path.Combine(pathToSave, filename);
-            System.IO.File.WriteAllBytes(filePath, fileBytes);
-
-            // Save to EventRequestProcess
-
-            return File(fileBytes, "application/pdf", filename);
-        }
-        catch (Exception ex)
-        {
-            // Handle exceptions appropriately
-            return BadRequest(ex.Message);
-        }
-    }
-
-    private byte[] ExportPdf(DataTable dataTable)
+//builder.Services.AddCors(option =>
+//{
+//    option.AddPolicy("MyPolicy", builder =>
+//    {
+//        builder.AllowAnyOrigin()
+//        .AllowAnyMethod()
+//        .AllowAnyHeader();
+//    });
+//});
+IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+    .ConfigureAppConfiguration((hostingContext, config) =>
     {
-        var htmlContent = "<html><body>";
-
-        foreach (DataRow row in dataTable.Rows)
+        config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+    })
+.ConfigureServices((hostContext, services) =>
+{
+    IConfiguration configuration = hostContext.Configuration;
+    services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+    services.AddOptions();
+    services.Configure<SmartsheetSettings>(configuration.GetSection("SmartsheetSettings"));
+    services.AddCors(option =>
+    {
+        option.AddPolicy("MyPolicy", builder =>
         {
-            htmlContent += $"<tr><td>{row["S.No"]}</td><td>{row["HCP Name"]}</td><td>{row["MIS Code"]}</td><td>{row["GO/Non-GO"]}</td><td>{row["Speciality"]}</td><td>{row["Sign"]}</td></tr>";
-        }
-
-        htmlContent += "</body></html>";
-
-        var pdfBytes = pdfConverter.Convert(new HtmlToPdfDocument()
-        {
-            Objects = { new ObjectSettings { HtmlContent = htmlContent } }
+            builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
         });
+    });
 
-        return pdfBytes;
-    }
-
-    private DataTable ToDictionary(List<Dictionary<string, object>> list)
-    {
-        DataTable result = new DataTable();
-
-        if (list.Count > 0)
-        {
-            foreach (string key in list[0].Keys)
-            {
-                result.Columns.Add(key);
-            }
-
-            foreach (Dictionary<string, object> dict in list)
-            {
-                DataRow row = result.NewRow();
-
-                foreach (string key in dict.Keys)
-                {
-                    row[key] = dict[key];
-                }
-
-                result.Rows.Add(row);
-            }
-        }
-
-        return result;
-    }
+});
 
 
+//Log.Logger = new LoggerConfiguration()
+//    .WriteTo.Console()
+//    .CreateLogger();
 
-
-
-
-
-
-
-
-    SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
-long.TryParse(sheetId_SpeakerCode, out long parsedSheetId_SpeakerCode);
-Sheet sheet_SpeakerCode = smartsheet.SheetResources.GetSheet(parsedSheetId_SpeakerCode, null, null, null, null, null, null, null);
-
-List<string> requiredColumns = new List<string> { "Name", "Speciality", "GO/Non-GO" };
-
-List<Column> selectedColumns = sheet_SpeakerCode.Columns
-    .Where(column => requiredColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase))
-    .ToList();
-
-DataTable dtMain = new DataTable();
-dtMain.Columns.Add("S.No", typeof(int));
-foreach (Column column in selectedColumns)
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
 {
-    dtMain.Columns.Add(column.Title);
-}
-
-int SrNo = 1;
-
-foreach (Row row in sheet_SpeakerCode.Rows)
-{
-    string eventId = row.Cells
-        .FirstOrDefault(cell => sheet_SpeakerCode.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title == "EventId/EventRequestID")?.DisplayValue;
-
-    if (!string.IsNullOrEmpty(eventId) && eventId.Equals(EventID, StringComparison.OrdinalIgnoreCase))
-    {
-        DataRow newRow = dtMain.NewRow();
-        newRow["S.No"] = SrNo;
-
-        foreach (Cell cell in row.Cells)
-        {
-            string columnName = sheet_SpeakerCode.Columns
-                .FirstOrDefault(c => c.Id == cell.ColumnId)?.Title;
-
-            if (requiredColumns.Contains(columnName, StringComparer.OrdinalIgnoreCase))
-            {
-                newRow[columnName] = cell.DisplayValue;
-            }
-        }
-
-        dtMain.Rows.Add(newRow);
-        SrNo++;
-    }
-}
-
-// Now dtMain contains only the specified columns and their corresponding values for the given EventId
-// You can proceed to create the PDF using this DataTable
-byte[] fileBytes = ExportPdf(dtMain);
-// Rest of your code for saving or returning the PDF
+    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
+        .Enrich.FromLogContext()
+        .WriteTo.Console();
+}, preserveStaticLogger: true);
 
 
 
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+//builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 
+var app = builder.Build();
 
 
+//app.UseCors(options =>
+//options.WithOrigins("http://localhost:4200")
+//.AllowAnyMethod()
+//.AllowAnyHeader()
+//);
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseHttpsRedirection();
+app.UseCors("MyPolicy");
+app.UseSerilogRequestLogging();
+app.UseAuthentication();
+app.UseAuthorization();
 
-         //sample event id = RQID95
-                //SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-                //string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
-                //long.TryParse(sheetId_SpeakerCode, out long parsedSheetId_SpeakerCode);
-                //Sheet sheet_SpeakerCode = smartsheet.SheetResources.GetSheet(parsedSheetId_SpeakerCode, null, null, null, null, null, null, null);
+app.MapControllers();
 
-
-                //Column SpecialityColumn = sheet_SpeakerCode.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestID", StringComparison.OrdinalIgnoreCase));
-
-                //List<Row> targetRows = sheet_SpeakerCode.Rows
-                //    .Where(row => row.Cells?.Any(cell => cell.ColumnId == SpecialityColumn.Id && cell.Value?.ToString() == EventID) == true)
-                //    .ToList();
-                //if (targetRows.Count != 0)
-                //{
-                //    List<string> requiredColumns = new List<string> { "HCP Name", "Speciality", "GO/Non-GO", "MIS Code" };
-
-                //    List<Column> selectedColumns = sheet_SpeakerCode.Columns
-                //        .Where(column => requiredColumns.Contains(column.Title, StringComparer.OrdinalIgnoreCase))
-                //        .ToList();
-
-                //    DataTable dtMai = new DataTable();
-                //    foreach (Column column in selectedColumns)
-                //    {
-                //        dtMai.Columns.Add(column.Title);
-                //    }
-
-                //    int Sr_No = 1;
-
-                //    foreach (Row row in sheet_SpeakerCode.Rows)
-                //    {
-                //        DataRow newRow = dtMai.NewRow();
-
-                //        foreach (Cell cell in row.Cells)
-                //        {
-                //            string columnName = sheet_SpeakerCode.Columns
-                //                .FirstOrDefault(c => c.Id == cell.ColumnId)?.Title;
-
-                //            if (requiredColumns.Contains(columnName, StringComparer.OrdinalIgnoreCase))
-                //            {
-                //                newRow[columnName] = cell.DisplayValue;
-                //            }
-                //        }
-
-                //        dtMai.Rows.Add(newRow);
-                //        SrNo++;
-                //    }
-                //}
-
-                //foreach (Row row in sheet_SpeakerCode.Rows)
-                //{
-                //    DataRow newRow = dtMai.NewRow();
-
-                //    foreach (Cell cell in row.Cells)
-                //    {
-                //        if (requiredColumns.Contains(cell.ColumnTitle, StringComparer.OrdinalIgnoreCase))
-                //        {
-                //            newRow[cell.ColumnTitle] = cell.Value;
-                //        }
-                //    }
-
-                //    dtMain.Rows.Add(newRow);
-                //    Sr_No++;
-                //}
-                //}
-
-                //return Ok(sheetData);
-                //foreach (var item in sheet_SpeakerCode)
-                //{
-                //    dtMain.Rows.Add(SrNo.ToString(), "A", "B", "C", "D", "");
-
-                //    SrNo++;
-                //}
+app.Run();

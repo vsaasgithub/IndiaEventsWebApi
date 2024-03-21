@@ -1,7 +1,9 @@
-﻿using IndiaEventsWebApi.Models;
+﻿using IndiaEventsWebApi.Helper;
+using IndiaEventsWebApi.Models;
 using IndiaEventsWebApi.Models.MasterSheets;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NPOI.XSSF.UserModel;
 using NPOI.XWPF.UserModel;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
@@ -30,7 +32,6 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
         {
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             string[] sheetIds = {
-                //configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
                 configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
@@ -67,144 +68,70 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
 
 
 
-        //[HttpGet("GetAllHCPdata")]  
-        //public IActionResult GetAllHCPdata()
-        //{
-        //    SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-        //    string[] sheetIds = {
-        ////configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
-        //configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
-        //configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
-        //configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
-        //configuration.GetSection("SmartsheetSettings:HcpMaster4").Value
-        //};
-
-        //    ConcurrentBag<List<Dictionary<string, string>>> allData = new ConcurrentBag<List<Dictionary<string, string>>>();
-
-        //    Parallel.ForEach(sheetIds, sheetId =>
-        //    {
-        //        long.TryParse(sheetId, out long p);
-        //        Sheet sheet = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
-
-        //        List<Dictionary<string, string>> sheetData = new List<Dictionary<string, string>>();
-
-        //        foreach (Row row in sheet.Rows)
-        //        {
-        //            Dictionary<string, string> rowData = new Dictionary<string, string>();
-
-        //            foreach (Cell cell in row.Cells)
-        //            {
-        //                Column column = sheet.Columns.FirstOrDefault(col => col.Id == cell.ColumnId);
-        //                if (column != null)
-        //                {
-        //                    rowData.Add(column.Title, cell.Value?.ToString() ?? string.Empty);
-        //                }
-        //            }
-
-        //            sheetData.Add(rowData);
-        //        }
-
-        //        allData.Add(sheetData);
-        //    });
-
-        //    return Ok(allData);
-        //}
-
-
-
-
-
-
         [HttpGet("GetRowDataUsingMISCode")]
-        public IActionResult GetRowDataUsingMISCode( string misCode)
+        public IActionResult GetRowDataUsingMISCode(string misCode)
         {
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-            string[] sheetIds = {
-               
-                configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
-                configuration.GetSection("SmartsheetSettings:HcpMaster4").Value
-            };
 
+            var Rowdata = GetExistingRowData(smartsheet, misCode);
 
-
-
-            ConcurrentBag<Dictionary<string,string>> resultData = new ConcurrentBag<Dictionary<string, string>>();
-            Parallel.ForEach(sheetIds, sheetId =>
+            if (Rowdata.Count > 0)
             {
-                long.TryParse(sheetId, out long p);
-                Sheet sheeti = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
-                Column hcpNameColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "HCPName");
-                Column misCodeColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "MisCode");
-                Column Firstname = sheeti.Columns.FirstOrDefault(column => column.Title == "FirstName");
-                Column LastName = sheeti.Columns.FirstOrDefault(column => column.Title == "LastName");
-                Column gongoColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "HCP Type");
-                Column Company = sheeti.Columns.FirstOrDefault(column => column.Title == "Company Name");
-
-
-                if (misCodeColumn != null)
-                {
-                    Row existingRow = sheeti.Rows.FirstOrDefault(row =>
-                       row.Cells != null &&
-                       //row.Cells.Any(cell =>
-                       //    cell.ColumnId == hcpNameColumn.Id && cell.Value != null && cell.Value.ToString() == Name
-                       //) &&
-                       row.Cells.Any(cell =>
-                           cell.ColumnId == misCodeColumn.Id && cell.Value != null && cell.Value.ToString() == misCode
-                       )
-                   );
-                    if (existingRow != null)
-                    {
-                        //return Ok(existingRow);
-                        //var data = existingRow.Cells.ToDictionary(cell => sheeti.Columns.First(col => col.Id == cell.ColumnId).Title, cell => cell.Value.ToString());
-                        //return Ok(data);
-                        var hcpNameValue = existingRow.Cells
-                            .FirstOrDefault(cell => cell.ColumnId == hcpNameColumn.Id)?.Value.ToString();
-
-                        var gongoValue = existingRow.Cells
-                            .FirstOrDefault(cell => cell.ColumnId == gongoColumn.Id)?.Value.ToString();
-                        var Mis = existingRow.Cells
-                           .FirstOrDefault(cell => cell.ColumnId == misCodeColumn.Id)?.Value.ToString();
-                        var firstName = existingRow.Cells
-                            .FirstOrDefault(cell => cell.ColumnId == Firstname.Id)?.Value.ToString();
-                        var lastName = existingRow.Cells
-                           .FirstOrDefault(cell => cell.ColumnId == LastName.Id)?.Value.ToString(); 
-                        var CompanyName = existingRow.Cells
-                           .FirstOrDefault(cell => cell.ColumnId == Company.Id)?.Value.ToString();
-                        //var cn = "";
-                        //if(CompanyName.Value == null )
-                        //{
-                        //    cn = "";
-                        //}
-                        //else
-                        //{
-                        //    cn = CompanyName?.Value.ToString();
-                        //}
-
-
-                        var cellData = new Dictionary<string, string>
-                        {
-                            { "MIS Code", Mis },
-                            { "FirstName", firstName },
-                            { "LastName", lastName },
-                            { "HCPName", hcpNameValue },
-                            { "HcpType", gongoValue },
-                            {"Company Name",CompanyName }
-                        };
-                        resultData.Add(cellData);
-
-
-                       
-                    }
-                }
-
-            });
-            if(resultData.Count > 0)
-            {
-                return Ok(resultData);
+                return Ok(Rowdata);
             }
             return Ok("No Data Found");
+
+
+            #region
+
+            //[HttpGet("GetAllHCPdata")]  
+            //public IActionResult GetAllHCPdata()
+            //{
+            //    SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+            //    string[] sheetIds = {
+            ////configuration.GetSection("SmartsheetSettings:HcpMaster").Value,
+            //configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
+            //configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
+            //configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
+            //configuration.GetSection("SmartsheetSettings:HcpMaster4").Value
+            //};
+
+            //    ConcurrentBag<List<Dictionary<string, string>>> allData = new ConcurrentBag<List<Dictionary<string, string>>>();
+
+            //    Parallel.ForEach(sheetIds, sheetId =>
+            //    {
+            //        long.TryParse(sheetId, out long p);
+            //        Sheet sheet = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
+
+            //        List<Dictionary<string, string>> sheetData = new List<Dictionary<string, string>>();
+
+            //        foreach (Row row in sheet.Rows)
+            //        {
+            //            Dictionary<string, string> rowData = new Dictionary<string, string>();
+
+            //            foreach (Cell cell in row.Cells)
+            //            {
+            //                Column column = sheet.Columns.FirstOrDefault(col => col.Id == cell.ColumnId);
+            //                if (column != null)
+            //                {
+            //                    rowData.Add(column.Title, cell.Value?.ToString() ?? string.Empty);
+            //                }
+            //            }
+
+            //            sheetData.Add(rowData);
+            //        }
+
+            //        allData.Add(sheetData);
+            //    });
+
+            //    return Ok(allData);
+            //}
+
+
+
+
+
+
 
 
 
@@ -264,7 +191,79 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
             //    }
             //}
             //return Ok("False");
+            #endregion
         }
+
+
+
+        [HttpPost("GetRowDataUsingMISCodeandType")]
+        public IActionResult GetRowDataUsingMISCodeandType(MIsandType formdata)
+        {
+            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+            string ApprovedSpeakers = configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value;
+            string ApprovedTrainers = configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value;
+            string VendorMasterSheet = configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value;
+            if (formdata.Type == "Speaker")
+            {
+                long.TryParse(ApprovedSpeakers, out long p);
+                Sheet sheeti = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
+                Column misCodeColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "MisCode");
+                if (misCodeColumn != null)
+                {
+                    Row existingRow = sheeti.Rows.FirstOrDefault(row => row.Cells != null && row.Cells.Any(cell => cell.ColumnId == misCodeColumn.Id && cell.Value != null && cell.Value.ToString() == formdata.MISCode));
+                    if (existingRow != null)
+                    {
+                        return Ok(new
+                        { Message = "MIS code Already Exist in sheet" });
+                    }
+                }
+            }
+            else if (formdata.Type == "Trainer")
+            {
+                long.TryParse(ApprovedTrainers, out long p);
+                Sheet sheeti = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
+                Column misCodeColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "MisCode");
+                if (misCodeColumn != null)
+                {
+                    Row existingRow = sheeti.Rows.FirstOrDefault(row => row.Cells != null && row.Cells.Any(cell => cell.ColumnId == misCodeColumn.Id && cell.Value != null && cell.Value.ToString() == formdata.MISCode));
+                    if (existingRow != null)
+                    {
+                        return Ok(new
+                        { Message = "MIS code Already Exist in sheet" });
+                    }
+                }
+            }
+            else if (formdata.Type == "Vendor")
+            {
+                long.TryParse(VendorMasterSheet, out long p);
+                Sheet sheeti = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
+                Column misCodeColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "MisCode");
+                if (misCodeColumn != null)
+                {
+                    Row existingRow = sheeti.Rows.FirstOrDefault(row => row.Cells != null && row.Cells.Any(cell => cell.ColumnId == misCodeColumn.Id && cell.Value != null && cell.Value.ToString() == formdata.MISCode));
+                    if (existingRow != null)
+                    {
+                        return Ok(new
+                        { Message = "MIS code Already Exist in sheet" });
+                    }
+                }
+            }
+
+
+            var Rowdata = GetExistingRowData(smartsheet, formdata.MISCode);
+
+            if (Rowdata.Count > 0)
+            {
+                return Ok(Rowdata);
+            }
+            return Ok("No Data Found");
+
+
+        }
+
+
+
+
 
 
 
@@ -335,31 +334,32 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
                             smartsheet.SheetResources.RowResources.DeleteRows(parsedSheetId1, new long[] { Id }, true);
                         }
                     }
-                   
-                        //foreach (var formData in formDataList)
-                        //{
+
+                    //foreach (var formData in formDataList)
+                    //{
 
                     var newRow = new Row();
                     newRow.Cells = new List<Cell>();
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "FirstName"), Value = i.FirstName });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "LastName"), Value = i.LastName });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "HCPName"), Value = i.HCPName });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "HCP Type"), Value = i.GOorNGO });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "MisCode"), Value = i.MISCode });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Speciality"), Value = i.Speciality });
-                    newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Company Name"), Value = i.CompanyName });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "FirstName"), Value = i.FirstName });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "LastName"), Value = i.LastName });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HCPName"), Value = i.HCPName });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HCP Type"), Value = i.GOorNGO });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "MisCode"), Value = i.MISCode });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Speciality"), Value = i.Speciality });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Company Name"), Value = i.CompanyName });
 
 
                     smartsheet.SheetResources.RowResources.AddRows(parsedSheetId, new Row[] { newRow });
                     insertedCount++;
                     //}
-                    
+
                 }
 
 
                 return Ok(new { Message = insertedCount.ToString() + " out of " + totalCount.ToString() + " has been added successfully!" });
             }
         }
+
         private long GetColumnIdByName(Sheet sheet, string columnname)
         {
             foreach (var column in sheet.Columns)
@@ -396,6 +396,7 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
 
             return null;
         }
+
         private int GetColumnIndexByName(Aspose.Cells.Worksheet worksheet, string columnName)
         {
             var headerRow = worksheet.Cells.GetRow(0);
@@ -424,6 +425,75 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
             //    configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value
             };
         }
+
+        private ConcurrentBag<Dictionary<string, string>> GetExistingRowData(SmartsheetClient smartsheet, string MisCode)
+        {
+
+
+            string[] sheetIds = {
+
+                configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
+                configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
+                configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
+                configuration.GetSection("SmartsheetSettings:HcpMaster4").Value
+            };
+            ConcurrentBag<Dictionary<string, string>> resultData = new ConcurrentBag<Dictionary<string, string>>();
+            bool foundMatch = false;
+
+            Parallel.ForEach(sheetIds, sheetId =>
+            {
+                if (!foundMatch)
+                {
+                    long.TryParse(sheetId, out long p);
+                    Sheet sheeti = smartsheet.SheetResources.GetSheet(p, null, null, null, null, null, null, null);
+                    Column hcpNameColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "HCPName");
+                    Column misCodeColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "MisCode");
+                    Column Firstname = sheeti.Columns.FirstOrDefault(column => column.Title == "FirstName");
+                    Column LastName = sheeti.Columns.FirstOrDefault(column => column.Title == "LastName");
+                    Column gongoColumn = sheeti.Columns.FirstOrDefault(column => column.Title == "HCP Type");
+                    Column Company = sheeti.Columns.FirstOrDefault(column => column.Title == "Company Name");
+
+
+                    if (misCodeColumn != null)
+                    {
+                        Row existingRow = sheeti.Rows.FirstOrDefault(row => row.Cells != null && row.Cells.Any(cell => cell.ColumnId == misCodeColumn.Id && cell.Value != null && cell.Value.ToString() == MisCode));
+                        if (existingRow != null)
+                        {
+                            var hcpNameValue = existingRow.Cells.FirstOrDefault(cell => cell.ColumnId == hcpNameColumn.Id)?.Value.ToString();
+                            var gongoValue = existingRow.Cells.FirstOrDefault(cell => cell.ColumnId == gongoColumn.Id)?.Value.ToString();
+                            var Mis = existingRow.Cells.FirstOrDefault(cell => cell.ColumnId == misCodeColumn.Id)?.Value.ToString();
+                            var firstName = existingRow.Cells.FirstOrDefault(cell => cell.ColumnId == Firstname.Id)?.Value.ToString();
+                            var lastName = existingRow.Cells.FirstOrDefault(cell => cell.ColumnId == LastName.Id)?.Value.ToString();
+                            var CompanyName = existingRow.Cells.FirstOrDefault(cell => cell.ColumnId == Company.Id)?.Value.ToString();
+                            var cellData = new Dictionary<string, string>
+                        {
+                            { "MIS Code", Mis },
+                            { "FirstName", firstName },
+                            { "LastName", lastName },
+                            { "HCPName", hcpNameValue },
+                            { "HcpType", gongoValue },
+                            {"Company Name",CompanyName }
+                        };
+                            resultData.Add(cellData);
+
+                            foundMatch = true;
+
+                        }
+                    }
+                }
+               
+
+            });
+            return resultData;
+
+            //return new ConcurrentBag<Dictionary<string, string>>;
+            //return /*"No Data Found"*/;
+
+
+
+
+        }
+
     }
 
 }
@@ -499,12 +569,12 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
 
 //                var newRow = new Row();
 //                newRow.Cells = new List<Cell>();
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "FirstName"), Value = i.FirstName });
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "LastName"), Value = i.LastName });
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "HCPName"), Value = i.HCPName });
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "HCP Type"), Value = i.GOorNGO });
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "MisCode"), Value = i.MISCode });
-//                newRow.Cells.Add(new Cell { ColumnId = GetColumnIdByName(sheet, "Speciality"), Value = i.Speciality });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "FirstName"), Value = i.FirstName });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "LastName"), Value = i.LastName });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HCPName"), Value = i.HCPName });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HCP Type"), Value = i.GOorNGO });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "MisCode"), Value = i.MISCode });
+//                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Speciality"), Value = i.Speciality });
 
 
 //                smartsheet.SheetResources.RowResources.AddRows(parsedSheetId, new Row[] { newRow });

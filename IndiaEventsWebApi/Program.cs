@@ -4,30 +4,92 @@ using IndiaEventsWebApi.Models;
 using DinkToPdf.Contracts;
 using DinkToPdf;
 using Serilog;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using IndiaEventsWebApi.Helper;
+using Microsoft.Extensions.DependencyInjection;
+using Aspose.Pdf.Plugins;
+using iTextSharp.text.pdf.security;
+using Smartsheet.Api.Models;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
+int maxRequestLimit = 1073741824;
 
+//builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(60); });
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddCookie()
+.AddJwtBearer(options =>
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = "ABM",
+        ValidIssuer = "http://localhost:5098",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryveryveryveryverysecret......................"))
+    };
+    //options.Events = new JwtBearerEvents
+    //{
+    //    OnAuthenticationFailed = context =>
+    //    {
+
+    //        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+    //        {
+    //            context.Response.Headers.Add("Token-Expired", "true");
+    //        }
+
+    //        return Task.CompletedTask;
+    //    }
+    //};
+    //options.Events = new JwtBearerEvents
+    //{
+    //    OnAuthenticationFailed = context =>
+    //    {
+    //        context.Response.ContentType = "application/json";
+    //        //context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+    //        //Task.CompletedTask;
+    //        //return context.Response.WriteAsJsonAsync("Not Found");
+    //        return context.Response.WriteAsJsonAsync(new
+    //        {
+    //            Message = "Invalid token",
+    //            Error = context.Exception.Message
+    //        }.ToString());
+
+
+    //    }
+    //};
+})
+
 .AddGoogle(options =>
 {
     options.ClientId = "200698853522-5b3nkgrgal38n7eqjqrrt6biinbt46ca.apps.googleusercontent.com";
     options.ClientSecret = "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";
 });
 
-
-
-//builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-//{
-//    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-//    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-//});
-// Add services to the container.
+//// If using IIS
+////builder.Services.Configure<IISServerOptions>(options =>
+////{
+////    options.MaxRequestBodySize = maxRequestLimit;
+////});
+////// If using Kestrel
+////builder.Services.Configure<KestrelServerOptions>(options =>
+////{
+////    options.Limits.MaxRequestBodySize = maxRequestLimit;
+////});
+////builder.Services.Configure<FormOptions>(x =>
+////{
+////    x. = maxRequestLimit;
+////    x.MultipartBodyLengthLimit = maxRequestLimit;
+////    x.MultipartHeadersLengthLimit = maxRequestLimit;
+////});
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("MyPolicy", builder =>
@@ -49,10 +111,9 @@ IHostBuilder CreateHostBuilder(string[] args) =>
     services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
     services.AddOptions();
     services.Configure<SmartsheetSettings>(configuration.GetSection("SmartsheetSettings"));
-    
+  
 
 });
-
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -68,19 +129,20 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
+
 var app = builder.Build();
 
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+
+//app.UseCors(options =>
+//options.WithOrigins("http://localhost:4200")
+//.AllowAnyMethod()
+//.AllowAnyHeader()
+//);
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
