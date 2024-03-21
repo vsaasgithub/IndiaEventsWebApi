@@ -27,7 +27,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
         {
             try
             {
-               
+
                 string sheetId = configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value;
                 Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
                 List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
@@ -565,7 +565,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
         {
             try
             {
-               
+
                 string sheetId = configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value;
                 Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
                 List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
@@ -586,7 +586,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                         }
                         sheetData.Add(rowData);
                     }
-                }             
+                }
                 return Ok(sheetData);
             }
             catch (Exception ex)
@@ -598,10 +598,10 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
         public IActionResult DeviationMasterSheetData()
         {
             try
-            {               
-                string sheetId = configuration.GetSection("SmartsheetSettings:DeviationMaster").Value;              
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:DeviationMaster").Value;
                 Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
-                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);               
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
                 return Ok(sheetData);
             }
             catch (Exception ex)

@@ -8,6 +8,7 @@ using Smartsheet.Api;
 using Smartsheet.Api.Models;
 using System.Runtime.InteropServices;
 using System.Text.Json.Nodes;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 
 namespace IndiaEventsWebApi.Controllers
@@ -55,6 +56,17 @@ namespace IndiaEventsWebApi.Controllers
                 Column fcpaExpiryDateColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Expiry Date");
                 Column fcpaValidColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Valid?");
 
+                //var uniqueVal = "";
+                //if (formdata.MisCode == "NA")
+                //{
+                //    uniqueVal = formdata.NA_Id;
+                //}
+                //else
+                //{
+                //    uniqueVal = formdata.MisCode;
+                //}
+                //var targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == uniqueVal));
+
 
                 if (misCodeColumn != null)
                 {
@@ -79,25 +91,34 @@ namespace IndiaEventsWebApi.Controllers
                         var url = "";
                         foreach (var attachment in attachments.Data)
                         {
+
                             if (attachment != null)
                             {
-                                var AID = (long)attachment.Id;
-                                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet.Id.Value, AID);
-                                url = file.Url;
+                                var name = attachment.Name;
+                                if (name.Split(".")[0] == "-FCPA")
+                                {
+                                    var AID = (long)attachment.Id;
+                                    var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet.Id.Value, AID);
+                                    url = file.Url;
+                                }
+
 
                             }
                         }
-
-                        return Ok(new
+                        if (url != "")
                         {
-                            MISCode = misCodeCell?.Value,
-                            FCPASignOffDate = fcpaSignOffDateCell?.Value,
-                            FCPAExpiryDate = fcpaExpiryDateCell?.Value,
-                            FCPAValid = fcpaValidCell?.Value,
-                            Attachments = attachments,
-                            Url = url
+                            return Ok(new
+                            {
+                                MISCode = misCodeCell?.Value,
+                                FCPASignOffDate = fcpaSignOffDateCell?.Value,
+                                FCPAExpiryDate = fcpaExpiryDateCell?.Value,
+                                FCPAValid = fcpaValidCell?.Value,
+                                Attachments = attachments,
+                                Url = url
 
-                        });
+                            });
+                        }
+
                     }
                 }
 
@@ -141,23 +162,30 @@ namespace IndiaEventsWebApi.Controllers
                         {
                             if (attachment != null)
                             {
-                                var AID = (long)attachment.Id;
-                                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet.Id.Value, AID);
-                                url = file.Url;
+                                var name = attachment.Name;
+                                if (name.Split(".")[0] == "-FCPA")
+                                {
+                                    var AID = (long)attachment.Id;
+                                    var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet.Id.Value, AID);
+                                    url = file.Url;
+                                }
 
                             }
                         }
 
-                        return Ok(new
+                        if (url != "")
                         {
-                            MISCode = misCodeCell?.Value,
-                            FCPASignOffDate = fcpaSignOffDateCell?.Value,
-                            FCPAExpiryDate = fcpaExpiryDateCell?.Value,
-                            FCPAValid = fcpaValidCell?.Value,
-                            Attachments = attachments,
-                            Url = url
+                            return Ok(new
+                            {
+                                MISCode = misCodeCell?.Value,
+                                FCPASignOffDate = fcpaSignOffDateCell?.Value,
+                                FCPAExpiryDate = fcpaExpiryDateCell?.Value,
+                                FCPAValid = fcpaValidCell?.Value,
+                                Attachments = attachments,
+                                Url = url
 
-                        });
+                            });
+                        }
                     }
                 }
             }
@@ -198,23 +226,30 @@ namespace IndiaEventsWebApi.Controllers
                             {
                                 if (attachment != null)
                                 {
-                                    var AID = (long)attachment.Id;
-                                    var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet.Id.Value, AID);
-                                    url = file.Url;
+                                    var name = attachment.Name;
+                                    if (name.Split(".")[0] == "-FCPA")
+                                    {
+                                        var AID = (long)attachment.Id;
+                                        var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet.Id.Value, AID);
+                                        url = file.Url;
+                                    }
 
                                 }
                             }
 
-                            return Ok(new
+                            if (url != "")
                             {
-                                MISCode = misCodeCell?.Value,
-                                FCPASignOffDate = fcpaSignOffDateCell?.Value,
-                                FCPAExpiryDate = fcpaExpiryDateCell?.Value,
-                                FCPAValid = fcpaValidCell?.Value,
-                                Attachments = attachments,
-                                Url = url
+                                return Ok(new
+                                {
+                                    MISCode = misCodeCell?.Value,
+                                    FCPASignOffDate = fcpaSignOffDateCell?.Value,
+                                    FCPAExpiryDate = fcpaExpiryDateCell?.Value,
+                                    FCPAValid = fcpaValidCell?.Value,
+                                    Attachments = attachments,
+                                    Url = url
 
-                            });
+                                });
+                            }
                         }
                     }
                 }
@@ -244,21 +279,29 @@ namespace IndiaEventsWebApi.Controllers
 
                 if (formdata.SelectedType == "Speaker" || formdata.SelectedType == "Chairperson" || formdata.SelectedType == "Panelist" || formdata.SelectedType == "Moderator")
                 {
-                    UpdateFcpa(smartsheet, SheetId2, formdata);
-                    return Ok(new { Message = "FCPA Updated Successfully" });
+                    string data = UpdateFcpa(smartsheet, SheetId2, formdata);
+                    return Ok(new { Message = data });
                 }
                 else if (formdata.SelectedType == "Trainer")
                 {
-                    UpdateFcpa(smartsheet, SheetId1, formdata);
-                    return Ok(new { Message = "FCPA Updated Successfully" });
+                    string data = UpdateFcpa(smartsheet, SheetId1, formdata);
+                    return Ok(new { Message = data/*"FCPA Updated Successfully"*/ });
                 }
                 else if (formdata.SelectedType == "Others")
                 {
+                    var data = "";
                     foreach (var sheetid in files)
                     {
-                        UpdateFcpa(smartsheet, sheetid, formdata);
+                        data = UpdateFcpa(smartsheet, sheetid, formdata);
+                        if (data != null)
+                        {
+                            if (data == "FCPA Updated Successfully")
+                            {
+                                return Ok(new { Message = "FCPA Updated Successfully" });
+                            }
+                        }
                     }
-                    return Ok(new { Message = "FCPA Updated Successfully" });
+                    return Ok(new { Message = data});
                 }
 
 
@@ -274,11 +317,20 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
-        private void UpdateFcpa(SmartsheetClient smartsheet, string SheetId, FcpaUpload formdata)
+        private static string UpdateFcpa(SmartsheetClient smartsheet, string SheetId, FcpaUpload formdata)
         {
 
             Sheet sheet = SheetHelper.GetSheetById(smartsheet, SheetId);
-            var targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.MisCode));
+            var uniqueVal = "";
+            if (formdata.MisCode == "NA")
+            {
+                uniqueVal = formdata.NA_Id;
+            }
+            else
+            {
+                uniqueVal = formdata.MisCode;
+            }
+            var targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == uniqueVal));
             if (targetRow != null)
             {
                 var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments((long)sheet.Id, targetRow.Id.Value, null);
@@ -286,11 +338,16 @@ namespace IndiaEventsWebApi.Controllers
                 {
                     foreach (var i in a.Data)
                     {
-                        long id = i.Id.Value;
-                        smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
-                          (long)sheet.Id,           // sheetId
-                          id            // attachmentId
-                        );
+                        var Fcpaname = i.Name;
+                        if (Fcpaname.Split(".")[0] == "-FCPA")
+                        {
+                            long id = i.Id.Value;
+                            smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
+                              (long)sheet.Id,           // sheetId
+                              id            // attachmentId
+                            );
+                        }
+                       
                     }
                 }
 
@@ -308,15 +365,19 @@ namespace IndiaEventsWebApi.Controllers
                 var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                             sheet.Id.Value, targetRow.Id.Value, filePath, "application/msword");
 
+                return "FCPA Updated Successfully";
 
 
-
+            }
+            else
+            {
+                return "Row data doesn't matched !";
             }
         }
 
 
 
-        
+
     }
 }
 
