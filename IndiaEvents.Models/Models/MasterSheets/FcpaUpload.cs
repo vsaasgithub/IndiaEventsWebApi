@@ -12,5 +12,7 @@ namespace IndiaEvents.Models.Models.MasterSheets
         public string? UploadFile { get; set; }
         public DateTime? FcpaDate { get; set; }
         public string? MisCode { get; set; }
+        public string? NA_Id { get; set; }
+        
     }
 }

@@ -14,7 +14,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class WebinarController : ControllerBase
     {
 
