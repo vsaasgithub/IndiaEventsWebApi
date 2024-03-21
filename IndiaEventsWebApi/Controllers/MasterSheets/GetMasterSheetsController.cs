@@ -1,4 +1,5 @@
 ﻿using IndiaEventsWebApi.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Smartsheet.Api;
@@ -8,6 +9,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class GetMasterSheetsController : ControllerBase
     {
         private readonly string accessToken;

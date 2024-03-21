@@ -15,11 +15,13 @@ using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 using IndiaEventsWebApi.Helper;
 using IndiaEvents.Models.Models.Webhook;
 using Smartsheet.Core.Definitions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IndiaEventsWebApi.Controllers.RequestSheets
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PostReqestSheetsController : ControllerBase
     {
 
