@@ -74,21 +74,23 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = "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";
 });
 
+
+
 ////If using IIS
 
 
-builder.Services.Configure<IISServerOptions>(options =>
-{
-    options.MaxRequestBodySize = 1073741824; // 1 GB in bytes
-    options.MaxRequestBodyBufferSize = 1073741824;
-});
+//builder.Services.Configure<IISServerOptions>(options =>
+//{
+//    options.MaxRequestBodySize = 1073741824; // 1 GB in bytes
+//    options.MaxRequestBodyBufferSize = 1073741824;
+//});
 
-builder.Services.Configure<KestrelServerOptions>(options =>
-{
-    options.Limits.MaxRequestBodySize = 1073741824; // 1 GB in bytes
-     // Buffer size should be set to the same value
-    options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(20); // Set timeout to 20 minutes
-});
+//builder.Services.Configure<KestrelServerOptions>(options =>
+//{
+//    options.Limits.MaxRequestBodySize = 1073741824; // 1 GB in bytes
+
+//    options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(20); //  20 minutes
+//});
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("MyPolicy", builder =>
@@ -110,7 +112,7 @@ IHostBuilder CreateHostBuilder(string[] args) =>
     services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
     services.AddOptions();
     services.Configure<SmartsheetSettings>(configuration.GetSection("SmartsheetSettings"));
-  
+
 
 });
 

@@ -587,7 +587,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
         }
 
 
-        [HttpPost("AddHonorariumData")/*, DisableRequestSizeLimit*/]
+        [HttpPost("AddHonorariumData"), DisableRequestSizeLimit]
         public IActionResult AddHonorariumData(HonorariumPaymentList formData)
         {
             try
