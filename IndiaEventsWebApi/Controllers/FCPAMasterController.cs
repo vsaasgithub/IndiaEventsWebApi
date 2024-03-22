@@ -364,8 +364,13 @@ namespace IndiaEventsWebApi.Controllers
                 var filePath = SheetHelper.testingFile(formdata.UploadFile, val, name);
                 var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                             sheet.Id.Value, targetRow.Id.Value, filePath, "application/msword");
+                if (System.IO.File.Exists(filePath))
+                {
+                    SheetHelper.DeleteFile(filePath);
+                }
+            
 
-                return "FCPA Updated Successfully";
+            return "FCPA Updated Successfully";
 
 
             }
