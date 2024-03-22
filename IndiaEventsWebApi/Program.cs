@@ -75,21 +75,20 @@ builder.Services.AddAuthentication(options =>
 });
 
 ////If using IIS
-//builder.Services.Configure<IISServerOptions>(options =>
-//{
-//    options.MaxRequestBodySize = maxRequestLimit;
-//});
-//// If using Kestrel
-//builder.Services.Configure<KestrelServerOptions>(options =>
-//{
-//    options.Limits.MaxRequestBodySize = maxRequestLimit;
-//});
-////builder.Services.Configure<FormOptions>(x =>
-////{
-////    x. = maxRequestLimit;
-////    x.MultipartBodyLengthLimit = maxRequestLimit;
-////    x.MultipartHeadersLengthLimit = maxRequestLimit;
-////});
+
+
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = 1073741824; // 1 GB in bytes
+    options.MaxRequestBodyBufferSize = 1073741824;
+});
+
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = 1073741824; // 1 GB in bytes
+     // Buffer size should be set to the same value
+    options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(20); // Set timeout to 20 minutes
+});
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("MyPolicy", builder =>
