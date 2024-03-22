@@ -74,22 +74,22 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = "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";
 });
 
-//// If using IIS
-////builder.Services.Configure<IISServerOptions>(options =>
-////{
-////    options.MaxRequestBodySize = maxRequestLimit;
-////});
-////// If using Kestrel
-////builder.Services.Configure<KestrelServerOptions>(options =>
-////{
-////    options.Limits.MaxRequestBodySize = maxRequestLimit;
-////});
-////builder.Services.Configure<FormOptions>(x =>
-////{
-////    x. = maxRequestLimit;
-////    x.MultipartBodyLengthLimit = maxRequestLimit;
-////    x.MultipartHeadersLengthLimit = maxRequestLimit;
-////});
+//If using IIS
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = maxRequestLimit;
+});
+// If using Kestrel
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = maxRequestLimit;
+});
+//builder.Services.Configure<FormOptions>(x =>
+//{
+//    x. = maxRequestLimit;
+//    x.MultipartBodyLengthLimit = maxRequestLimit;
+//    x.MultipartHeadersLengthLimit = maxRequestLimit;
+//});
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("MyPolicy", builder =>
