@@ -84,12 +84,12 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 {
     options.Limits.MaxRequestBodySize = maxRequestLimit;
 });
-//builder.Services.Configure<FormOptions>(x =>
-//{
-//    x. = maxRequestLimit;
-//    x.MultipartBodyLengthLimit = maxRequestLimit;
-//    x.MultipartHeadersLengthLimit = maxRequestLimit;
-//});
+////builder.Services.Configure<FormOptions>(x =>
+////{
+////    x. = maxRequestLimit;
+////    x.MultipartBodyLengthLimit = maxRequestLimit;
+////    x.MultipartHeadersLengthLimit = maxRequestLimit;
+////});
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("MyPolicy", builder =>
