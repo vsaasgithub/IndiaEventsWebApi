@@ -29,12 +29,13 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
         private readonly string accessToken;
         private readonly IConfiguration configuration;
+        private readonly SmartsheetClient smartsheet;
 
         public PostReqestSheetsController(IConfiguration configuration)
         {
             this.configuration = configuration;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
-
+            smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
         }
 
 
@@ -42,7 +43,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
         public IActionResult AllObjModelsData(AllObjModels formDataList)
         {
 
-            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+
             string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
             string sheetId2 = configuration.GetSection("SmartsheetSettings:EventRequestBrandsList").Value;
             string sheetId3 = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
@@ -51,6 +52,13 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
             string sheetId6 = configuration.GetSection("SmartsheetSettings:EventRequestsExpensesSheet").Value;
             string sheetId7 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
 
+            Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+            Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+            Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
 
 
             long.TryParse(sheetId1, out long parsedSheetId1);
@@ -61,13 +69,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
             long.TryParse(sheetId6, out long parsedSheetId6);
             long.TryParse(sheetId7, out long parsedSheetId7);
 
-            Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
-            Sheet sheet2 = smartsheet.SheetResources.GetSheet(parsedSheetId2, null, null, null, null, null, null, null);
-            Sheet sheet3 = smartsheet.SheetResources.GetSheet(parsedSheetId3, null, null, null, null, null, null, null);
-            Sheet sheet4 = smartsheet.SheetResources.GetSheet(parsedSheetId4, null, null, null, null, null, null, null);
-            Sheet sheet5 = smartsheet.SheetResources.GetSheet(parsedSheetId5, null, null, null, null, null, null, null);
-            Sheet sheet6 = smartsheet.SheetResources.GetSheet(parsedSheetId6, null, null, null, null, null, null, null);
-            Sheet sheet7 = smartsheet.SheetResources.GetSheet(parsedSheetId7, null, null, null, null, null, null, null);
+            
+
 
             StringBuilder addedBrandsData = new StringBuilder();
             StringBuilder addedInviteesData = new StringBuilder();
@@ -592,21 +595,21 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
         {
             try
             {
-                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
                 string sheetId = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
                 string sheetId1 = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
                 string sheetId2 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
                 string sheetId7 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+                Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+                Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
 
                 long.TryParse(sheetId, out long parsedSheetId);
                 long.TryParse(sheetId1, out long parsedSheetId1);
                 long.TryParse(sheetId2, out long parsedSheetId2);
                 long.TryParse(sheetId7, out long parsedSheetId7);
-                Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
-                Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
-                Sheet sheet2 = smartsheet.SheetResources.GetSheet(parsedSheetId2, null, null, null, null, null, null, null);
-                Sheet sheet7 = smartsheet.SheetResources.GetSheet(parsedSheetId7, null, null, null, null, null, null, null);
+
 
                 StringBuilder addedHcpData = new StringBuilder();
 
@@ -835,7 +838,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
             try
             {
-                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
                 string sheetId = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
                 string sheetId1 = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
@@ -843,9 +845,14 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 long.TryParse(sheetId, out long parsedSheetId);
                 long.TryParse(sheetId1, out long parsedSheetId1);
                 long.TryParse(sheetId7, out long parsedSheetId7);
-                Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
-                Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
-                Sheet sheet7 = smartsheet.SheetResources.GetSheet(parsedSheetId7, null, null, null, null, null, null, null);
+
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+
+                Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+
+
+
                 StringBuilder addedInviteesData = new StringBuilder();
                 StringBuilder addedExpences = new StringBuilder();
                 int addedInviteesDataNo = 1;

@@ -20,12 +20,13 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
 
         private readonly string accessToken;
         private readonly IConfiguration configuration;
+        private readonly SmartsheetClient smartsheet;
 
         public WebinarController(IConfiguration configuration)
         {
             this.configuration = configuration;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
-
+            smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
         }
 
 
@@ -33,7 +34,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
         public IActionResult AllObjModelsData(WebinarPayload formDataList)
         {
 
-            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+
             string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
             string sheetId2 = configuration.GetSection("SmartsheetSettings:EventRequestBrandsList").Value;
             string sheetId3 = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
@@ -55,10 +56,11 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
             Sheet sheet5 = smartsheet.SheetResources.GetSheet(parsedSheetId5, null, null, null, null, null, null, null);
             Sheet sheet6 = smartsheet.SheetResources.GetSheet(parsedSheetId6, null, null, null, null, null, null, null);
             Sheet sheet7 = smartsheet.SheetResources.GetSheet(parsedSheetId7, null, null, null, null, null, null, null);
+
+
             StringBuilder addedBrandsData = new StringBuilder();
             StringBuilder addedInviteesData = new StringBuilder();
             StringBuilder addedMEnariniInviteesData = new StringBuilder();
-
             StringBuilder addedHcpData = new StringBuilder();
             StringBuilder addedSlideKitData = new StringBuilder();
             StringBuilder addedExpences = new StringBuilder();
@@ -185,7 +187,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventWithin7days"), Value = formDataList.Webinar.EventWithin7days });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "InitiatorName"), Value = formDataList.Webinar.InitiatorName });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = int.Parse(formDataList.Webinar.AdvanceAmount) });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = int.Parse(formDataList.Webinar.TotalExpenseBTC )});
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = int.Parse(formDataList.Webinar.TotalExpenseBTC) });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = int.Parse(formDataList.Webinar.TotalExpenseBTE) });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Honorarium Amount"), Value = TotalHonorariumAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel Amount"), Value = TotalTravelAmount });
@@ -295,8 +297,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
 
                                     var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                             parsedSheetId7, addedRow.Id.Value, filePath, "application/msword");
-                                   var attachmentintoMain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                            parsedSheetId1, addedRows[0].Id.Value, filePath, "application/msword");
+                                    var attachmentintoMain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                             parsedSheetId1, addedRows[0].Id.Value, filePath, "application/msword");
                                     j++;
                                     if (System.IO.File.Exists(filePath))
                                     {
@@ -491,33 +493,3 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets.Webinar
     }
 }
 
-
-//internal static string ExpenseSheetSubmit(SmartsheetClient smartsheet, Sheet sheet6, long parsedSheetId6, Array[] formdata)
-//{
-//    try
-//    {
-//        var newRow6 = new Row();
-//        newRow6.Cells = new List<Cell>();
-
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Expense"), Value = formdata.Expense });
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "EventId/EventRequestID"), Value = val });
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "AmountExcludingTax?"), Value = formdata.AmountExcludingTax });
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Amount"), Value = formdata.Amount });
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formdata.BtcorBte });
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BudgetAmount"), Value = formdata.BudgetAmount });
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTCAmount"), Value = formdata.BtcAmount });
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTEAmount"), Value = formdata.BteAmount });
-
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Topic"), Value = formDataList.Webinar.EventTopic });
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Type"), Value = formDataList.Webinar.EventType });
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.Webinar.EventDate });
-//        newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event End Date"), Value = formDataList.Webinar.EventDate });
-//        smartsheet.SheetResources.RowResources.AddRows(parsedSheetId6, new Row[] { newRow6 });
-//    }catch(Exception ex)
-//    {
-//        return ex.Message;
-//    }
-//    return "Done";
-
-
-//}
