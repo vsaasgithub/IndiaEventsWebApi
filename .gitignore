@@ -5,3 +5,4 @@
 /.vs/IndiaEventsWebApi/FileContentIndex
 /.vs/IndiaEventsWebApi/v17/.suo
 /.gitignore
+/IndiaEventsWebApi/obj/Debug/net6.0/IndiaEventsWebApi.csproj.AssemblyReference.cache

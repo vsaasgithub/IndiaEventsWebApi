@@ -1239,3 +1239,621 @@
 [10:51:53 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
 [10:51:53 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DA59VUQDT"" completed keep alive response.
 [10:51:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 45.2816ms
+[14:49:01 Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory [Debug] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[14:49:01 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting starting
+[14:49:02 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Information] User profile is available. Using '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[14:49:02 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-157c5ede-f40c-4ae7-8053-31353ad9f7e6.xml"'.
+[14:49:02 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f.xml"'.
+[14:49:02 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-fbbed531-59ac-40e0-8903-14f0f383c43a.xml"'.
+[14:49:02 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {157c5ede-f40c-4ae7-8053-31353ad9f7e6}.
+[14:49:02 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f}.
+[14:49:02 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {fbbed531-59ac-40e0-8903-14f0f383c43a}.
+[14:49:02 Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver [Debug] Considering key {fbbed531-59ac-40e0-8903-14f0f383c43a} with expiration date 2024-05-11 05:12:17Z as default key.
+[14:49:02 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[14:49:02 Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor [Debug] Decrypting secret element using Windows DPAPI.
+[14:49:02 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[14:49:02 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+[14:49:02 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+[14:49:02 Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider [Debug] Using key {fbbed531-59ac-40e0-8903-14f0f383c43a} as the default key.
+[14:49:02 Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService [Debug] Key ring with default key {fbbed531-59ac-40e0-8903-14f0f383c43a} was loaded during application startup.
+[14:49:02 Microsoft.Hosting.Lifetime [Information] Now listening on: "http://localhost:5098"
+[14:49:02 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "IndiaEventsWebApi"
+[14:49:02 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.Watch.BrowserRefresh"
+[14:49:02 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.WebTools.BrowserLink.Net"
+[14:49:02 Microsoft.Hosting.Lifetime [Information] Application started. Press Ctrl+C to shut down.
+[14:49:02 Microsoft.Hosting.Lifetime [Information] Hosting environment: "Development"
+[14:49:02 Microsoft.Hosting.Lifetime [Information] Content root path: "D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\"
+[14:49:02 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting started
+[14:49:03 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITL"" accepted.
+[14:49:03 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITL"" started.
+[14:49:03 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITM"" accepted.
+[14:49:03 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITM"" started.
+[14:49:03 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITN"" accepted.
+[14:49:03 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITN"" started.
+[14:49:03 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITO"" accepted.
+[14:49:03 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITO"" started.
+[14:49:03 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[14:49:03 Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware [Debug] Wildcard detected, all requests with hosts will be allowed.
+[14:49:03 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[14:49:03 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[14:49:04 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[14:49:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITP"" accepted.
+[14:49:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[14:49:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITP"" started.
+[14:49:04 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[14:49:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[14:49:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITO"" completed keep alive response.
+[14:49:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITN"" completed keep alive response.
+[14:49:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 24.8879ms
+[14:49:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 880.5207ms
+[14:49:04 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITP"" completed keep alive response.
+[14:49:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 77.1288ms
+[14:49:04 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[14:49:04 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[14:49:04 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[14:49:05 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITP"" completed keep alive response.
+[14:49:05 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 235.3957ms
+[14:49:29 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - -
+[14:49:29 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[14:49:29 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"' with route pattern '"api/InvoiceBase64/GetInvoiceBase64"' is valid for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[14:49:29 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[14:49:29 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[14:49:29 Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware [Warning] Failed to determine the https port for redirect.
+[14:49:29 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[14:49:29 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[14:49:29 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"GetInvoiceBase64\", controller = \"InvoiceBase64\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetInvoiceBase64(System.String)" on controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi").
+[14:49:29 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[14:49:29 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[14:49:29 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[14:49:29 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[14:49:29 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[14:49:29 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[14:49:32 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[14:49:32 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' ...
+[14:49:32 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' using the name '"EventId"' in request data ...
+[14:49:32 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[14:49:32 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[14:49:32 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"EventId"' of type '"System.String"' ...
+[14:49:32 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"EventId"' of type '"System.String"'.
+[14:49:34 Microsoft.AspNetCore.Mvc.StatusCodeResult [Information] Executing StatusCodeResult, setting HTTP status code 200
+[14:49:34 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)" in 4478.9023ms
+[14:49:34 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[14:49:34 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DEN3LOITP"" completed keep alive response.
+[14:49:34 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - - - 200 0 - 4896.5590ms
+[14:49:41 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - -
+[14:49:41 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[14:49:41 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"' with route pattern '"api/InvoiceBase64/GetInvoiceBase64"' is valid for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[14:49:41 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[14:49:41 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[14:49:41 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[14:49:41 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[14:49:41 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"GetInvoiceBase64\", controller = \"InvoiceBase64\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetInvoiceBase64(System.String)" on controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi").
+[14:49:41 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[14:49:41 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[14:49:41 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[14:49:41 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[14:49:41 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[14:49:41 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[14:49:43 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[14:49:43 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' ...
+[14:49:43 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' using the name '"EventId"' in request data ...
+[14:49:43 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[14:49:43 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[14:49:43 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"EventId"' of type '"System.String"' ...
+[14:49:43 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"EventId"' of type '"System.String"'.
+[15:06:25 Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory [Debug] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[15:06:25 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting starting
+[15:06:25 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Information] User profile is available. Using '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[15:06:25 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-157c5ede-f40c-4ae7-8053-31353ad9f7e6.xml"'.
+[15:06:25 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f.xml"'.
+[15:06:25 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-fbbed531-59ac-40e0-8903-14f0f383c43a.xml"'.
+[15:06:25 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {157c5ede-f40c-4ae7-8053-31353ad9f7e6}.
+[15:06:25 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f}.
+[15:06:25 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {fbbed531-59ac-40e0-8903-14f0f383c43a}.
+[15:06:25 Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver [Debug] Considering key {fbbed531-59ac-40e0-8903-14f0f383c43a} with expiration date 2024-05-11 05:12:17Z as default key.
+[15:06:25 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[15:06:25 Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor [Debug] Decrypting secret element using Windows DPAPI.
+[15:06:25 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[15:06:25 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+[15:06:25 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+[15:06:25 Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider [Debug] Using key {fbbed531-59ac-40e0-8903-14f0f383c43a} as the default key.
+[15:06:25 Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService [Debug] Key ring with default key {fbbed531-59ac-40e0-8903-14f0f383c43a} was loaded during application startup.
+[15:06:26 Microsoft.Hosting.Lifetime [Information] Now listening on: "http://localhost:5098"
+[15:06:26 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "IndiaEventsWebApi"
+[15:06:26 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.Watch.BrowserRefresh"
+[15:06:26 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.WebTools.BrowserLink.Net"
+[15:06:26 Microsoft.Hosting.Lifetime [Information] Application started. Press Ctrl+C to shut down.
+[15:06:26 Microsoft.Hosting.Lifetime [Information] Hosting environment: "Development"
+[15:06:26 Microsoft.Hosting.Lifetime [Information] Content root path: "D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\"
+[15:06:26 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting started
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJE"" accepted.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJE"" started.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJF"" accepted.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJF"" started.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF0QHNFJE"" received FIN.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF0QHNFJF"" received FIN.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF0QHNFJE"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF0QHNFJF"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJE"" disconnecting.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJF"" disconnecting.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJE"" stopped.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJF"" stopped.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJG"" accepted.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJG"" started.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJH"" accepted.
+[15:06:26 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJH"" started.
+[15:06:26 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[15:06:26 Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware [Debug] Wildcard detected, all requests with hosts will be allowed.
+[15:06:26 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[15:06:26 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:06:27 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[15:06:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJI"" accepted.
+[15:06:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[15:06:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJI"" started.
+[15:06:27 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[15:06:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJH"" completed keep alive response.
+[15:06:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[15:06:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJG"" completed keep alive response.
+[15:06:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 24.9212ms
+[15:06:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 698.2608ms
+[15:06:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJI"" completed keep alive response.
+[15:06:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 73.3155ms
+[15:06:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[15:06:27 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[15:06:27 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:06:27 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF0QHNFJI"" completed keep alive response.
+[15:06:27 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 199.1325ms
+[15:06:54 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - -
+[15:06:54 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:06:54 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"' with route pattern '"api/InvoiceBase64/GetInvoiceBase64"' is valid for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:06:54 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:06:54 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[15:06:54 Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware [Warning] Failed to determine the https port for redirect.
+[15:06:54 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[15:06:54 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:06:54 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"GetInvoiceBase64\", controller = \"InvoiceBase64\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetInvoiceBase64(System.String)" on controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi").
+[15:06:54 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[15:06:54 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[15:06:54 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[15:06:54 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[15:06:54 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[15:06:54 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:06:56 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:06:56 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' ...
+[15:06:56 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' using the name '"EventId"' in request data ...
+[15:06:56 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:06:56 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:06:56 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"EventId"' of type '"System.String"' ...
+[15:06:56 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"EventId"' of type '"System.String"'.
+[15:15:49 Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory [Debug] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[15:15:49 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting starting
+[15:15:49 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Information] User profile is available. Using '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[15:15:49 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-157c5ede-f40c-4ae7-8053-31353ad9f7e6.xml"'.
+[15:15:49 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f.xml"'.
+[15:15:49 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-fbbed531-59ac-40e0-8903-14f0f383c43a.xml"'.
+[15:15:49 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {157c5ede-f40c-4ae7-8053-31353ad9f7e6}.
+[15:15:49 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f}.
+[15:15:49 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {fbbed531-59ac-40e0-8903-14f0f383c43a}.
+[15:15:49 Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver [Debug] Considering key {fbbed531-59ac-40e0-8903-14f0f383c43a} with expiration date 2024-05-11 05:12:17Z as default key.
+[15:15:49 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[15:15:49 Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor [Debug] Decrypting secret element using Windows DPAPI.
+[15:15:49 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[15:15:49 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+[15:15:49 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+[15:15:49 Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider [Debug] Using key {fbbed531-59ac-40e0-8903-14f0f383c43a} as the default key.
+[15:15:49 Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService [Debug] Key ring with default key {fbbed531-59ac-40e0-8903-14f0f383c43a} was loaded during application startup.
+[15:15:49 Microsoft.Hosting.Lifetime [Information] Now listening on: "http://localhost:5098"
+[15:15:49 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "IndiaEventsWebApi"
+[15:15:49 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.Watch.BrowserRefresh"
+[15:15:49 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.WebTools.BrowserLink.Net"
+[15:15:49 Microsoft.Hosting.Lifetime [Information] Application started. Press Ctrl+C to shut down.
+[15:15:49 Microsoft.Hosting.Lifetime [Information] Hosting environment: "Development"
+[15:15:49 Microsoft.Hosting.Lifetime [Information] Content root path: "D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\"
+[15:15:49 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting started
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36S"" accepted.
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36S"" started.
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36T"" accepted.
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV36T"" received FIN.
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV36S"" received FIN.
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36T"" started.
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV36S"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV36T"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36S"" disconnecting.
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36T"" disconnecting.
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36T"" stopped.
+[15:15:49 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36S"" stopped.
+[15:15:50 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36U"" accepted.
+[15:15:50 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36U"" started.
+[15:15:50 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36V"" accepted.
+[15:15:50 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36V"" started.
+[15:15:50 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[15:15:50 Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware [Debug] Wildcard detected, all requests with hosts will be allowed.
+[15:15:50 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[15:15:50 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:15:50 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[15:15:50 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" accepted.
+[15:15:50 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[15:15:50 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" started.
+[15:15:50 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[15:15:50 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36V"" completed keep alive response.
+[15:15:50 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[15:15:50 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36U"" completed keep alive response.
+[15:15:50 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 31.0974ms
+[15:15:50 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 683.4631ms
+[15:15:50 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" completed keep alive response.
+[15:15:50 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 70.6628ms
+[15:15:50 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[15:15:50 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[15:15:50 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:15:51 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" completed keep alive response.
+[15:15:51 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 200.8352ms
+[15:16:10 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - -
+[15:16:10 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:16:10 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"' with route pattern '"api/InvoiceBase64/GetInvoiceBase64"' is valid for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:16:10 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:16:10 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[15:16:10 Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware [Warning] Failed to determine the https port for redirect.
+[15:16:10 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[15:16:10 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:16:11 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"GetInvoiceBase64\", controller = \"InvoiceBase64\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetInvoiceBase64(System.String)" on controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi").
+[15:16:11 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[15:16:11 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[15:16:11 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[15:16:11 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[15:16:11 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[15:16:11 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:16:13 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:16:13 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' ...
+[15:16:13 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' using the name '"EventId"' in request data ...
+[15:16:13 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:16:13 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:16:13 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"EventId"' of type '"System.String"' ...
+[15:16:13 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"EventId"' of type '"System.String"'.
+[15:16:28 Microsoft.AspNetCore.Mvc.StatusCodeResult [Information] Executing StatusCodeResult, setting HTTP status code 200
+[15:16:28 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)" in 17397.8808ms
+[15:16:28 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:16:28 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" completed keep alive response.
+[15:16:28 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - - - 200 0 - 17672.7885ms
+[15:17:34 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[15:17:34 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[15:17:34 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:17:34 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[15:17:34 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[15:17:34 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" completed keep alive response.
+[15:17:34 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[15:17:34 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 52.9565ms
+[15:17:34 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[15:17:34 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36U"" completed keep alive response.
+[15:17:34 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" completed keep alive response.
+[15:17:34 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 30.3478ms
+[15:17:34 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 12.0194ms
+[15:17:34 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[15:17:34 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[15:17:34 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:17:34 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" completed keep alive response.
+[15:17:34 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 49.3625ms
+[15:17:52 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - -
+[15:17:52 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:17:52 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"' with route pattern '"api/InvoiceBase64/GetInvoiceBase64"' is valid for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:17:52 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:17:52 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[15:17:52 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[15:17:52 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:17:52 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"GetInvoiceBase64\", controller = \"InvoiceBase64\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetInvoiceBase64(System.String)" on controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi").
+[15:17:52 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[15:17:52 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[15:17:52 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[15:17:52 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[15:17:52 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[15:17:52 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:17:54 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:17:54 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' ...
+[15:17:54 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' using the name '"EventId"' in request data ...
+[15:17:54 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:17:54 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:17:54 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"EventId"' of type '"System.String"' ...
+[15:17:54 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"EventId"' of type '"System.String"'.
+[15:18:09 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[15:18:09 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[15:18:09 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[15:18:09 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[15:18:09 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[15:18:09 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "OkObjectResult", writing value of type '"System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[15:18:09 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)" in 17667.9358ms
+[15:18:09 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:18:09 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" completed keep alive response.
+[15:18:09 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - - - 200 - application/json;+charset=utf-8 17737.3593ms
+[15:19:28 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[15:19:28 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[15:19:28 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:19:28 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[15:19:28 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[15:19:28 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" completed keep alive response.
+[15:19:28 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 45.6816ms
+[15:19:28 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[15:19:28 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[15:19:28 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" completed keep alive response.
+[15:19:28 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 21.7520ms
+[15:19:28 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36U"" completed keep alive response.
+[15:19:28 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 38.9148ms
+[15:19:28 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[15:19:28 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[15:19:29 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:19:29 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36U"" completed keep alive response.
+[15:19:29 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 45.1833ms
+[15:19:40 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - -
+[15:19:40 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:19:40 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"' with route pattern '"api/InvoiceBase64/GetInvoiceBase64"' is valid for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:19:40 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:19:40 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[15:19:40 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[15:19:40 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:19:40 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"GetInvoiceBase64\", controller = \"InvoiceBase64\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetInvoiceBase64(System.String)" on controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi").
+[15:19:40 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[15:19:40 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[15:19:40 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[15:19:40 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[15:19:40 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[15:19:40 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:19:42 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:19:42 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' ...
+[15:19:42 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' using the name '"EventId"' in request data ...
+[15:19:42 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:19:42 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:19:42 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"EventId"' of type '"System.String"' ...
+[15:19:42 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"EventId"' of type '"System.String"'.
+[15:19:57 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[15:19:57 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[15:19:57 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[15:19:57 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[15:19:57 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[15:19:57 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "OkObjectResult", writing value of type '"System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[15:19:57 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)" in 16888.8501ms
+[15:19:57 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:19:57 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36U"" completed keep alive response.
+[15:19:57 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - - - 200 - application/json;+charset=utf-8 16976.0834ms
+[15:21:33 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV36V"" received FIN.
+[15:21:33 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV36V"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[15:21:33 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36V"" disconnecting.
+[15:21:33 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36V"" stopped.
+[15:24:29 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV370"" received FIN.
+[15:24:29 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV370"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[15:24:29 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" disconnecting.
+[15:24:29 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV370"" stopped.
+[15:25:01 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV36U"" received FIN.
+[15:25:01 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36U"" disconnecting.
+[15:25:01 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV36U"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[15:25:01 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV36U"" stopped.
+[15:25:45 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV371"" accepted.
+[15:25:45 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV371"" started.
+[15:25:45 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - -
+[15:25:45 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:25:45 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"' with route pattern '"api/InvoiceBase64/GetInvoiceBase64"' is valid for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:25:45 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:25:45 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[15:25:45 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[15:25:45 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:25:45 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"GetInvoiceBase64\", controller = \"InvoiceBase64\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetInvoiceBase64(System.String)" on controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi").
+[15:25:45 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[15:25:45 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[15:25:45 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[15:25:45 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[15:25:45 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[15:25:45 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:25:47 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:25:47 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' ...
+[15:25:47 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' using the name '"EventId"' in request data ...
+[15:25:47 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:25:47 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:25:47 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"EventId"' of type '"System.String"' ...
+[15:25:47 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"EventId"' of type '"System.String"'.
+[15:26:07 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[15:26:07 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[15:26:07 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[15:26:07 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[15:26:07 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[15:26:07 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "OkObjectResult", writing value of type '"System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[15:26:07 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)" in 22197.6992ms
+[15:26:07 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:26:07 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV371"" completed keep alive response.
+[15:26:07 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - - - 200 - application/json;+charset=utf-8 22287.3085ms
+[15:26:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - -
+[15:26:53 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:26:53 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"' with route pattern '"api/InvoiceBase64/GetInvoiceBase64"' is valid for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:26:53 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:26:53 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[15:26:53 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[15:26:53 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:26:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"GetInvoiceBase64\", controller = \"InvoiceBase64\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetInvoiceBase64(System.String)" on controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi").
+[15:26:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[15:26:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[15:26:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[15:26:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[15:26:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[15:26:53 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:26:58 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:26:58 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' ...
+[15:26:58 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' using the name '"EventId"' in request data ...
+[15:26:58 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:26:58 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:26:58 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"EventId"' of type '"System.String"' ...
+[15:26:58 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"EventId"' of type '"System.String"'.
+[15:27:08 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[15:27:08 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[15:27:08 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[15:27:08 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[15:27:08 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[15:27:08 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "OkObjectResult", writing value of type '"System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[15:27:08 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)" in 15811.1428ms
+[15:27:08 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:27:08 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV371"" completed keep alive response.
+[15:27:08 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - - - 200 - application/json;+charset=utf-8 15885.2890ms
+[15:32:44 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV371"" received FIN.
+[15:32:44 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV371"" disconnecting.
+[15:32:44 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV371"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[15:32:44 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV371"" stopped.
+[15:33:54 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV372"" accepted.
+[15:33:54 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV372"" started.
+[15:33:54 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV373"" accepted.
+[15:33:54 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[15:33:54 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV373"" started.
+[15:33:54 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[15:33:54 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:33:54 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[15:33:54 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[15:33:54 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV372"" completed keep alive response.
+[15:33:54 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV374"" accepted.
+[15:33:54 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[15:33:54 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 72.3449ms
+[15:33:54 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV374"" started.
+[15:33:54 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV373"" completed keep alive response.
+[15:33:54 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[15:33:54 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 37.9502ms
+[15:33:54 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV372"" completed keep alive response.
+[15:33:54 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 24.2474ms
+[15:33:55 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[15:33:55 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[15:33:55 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:33:55 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV372"" completed keep alive response.
+[15:33:55 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 51.5804ms
+[15:34:12 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - -
+[15:34:12 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:34:12 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"' with route pattern '"api/InvoiceBase64/GetInvoiceBase64"' is valid for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:34:12 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:34:12 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[15:34:12 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[15:34:12 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:34:12 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"GetInvoiceBase64\", controller = \"InvoiceBase64\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetInvoiceBase64(System.String)" on controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi").
+[15:34:12 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[15:34:12 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[15:34:12 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[15:34:12 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[15:34:12 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[15:34:12 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:34:14 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:34:14 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' ...
+[15:34:14 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' using the name '"EventId"' in request data ...
+[15:34:14 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:34:14 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:34:14 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"EventId"' of type '"System.String"' ...
+[15:34:14 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"EventId"' of type '"System.String"'.
+[15:34:31 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[15:34:31 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[15:34:31 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[15:34:31 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[15:34:31 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[15:34:31 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "OkObjectResult", writing value of type '"System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[15:34:31 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)" in 18378.9828ms
+[15:34:31 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:34:31 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV372"" completed keep alive response.
+[15:34:31 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - - - 200 - application/json;+charset=utf-8 18457.0861ms
+[15:35:44 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV374"" received FIN.
+[15:35:44 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV374"" disconnecting.
+[15:35:44 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DF62EV374"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[15:35:44 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV374"" stopped.
+[15:36:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[15:36:53 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[15:36:53 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:36:53 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[15:36:53 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[15:36:53 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV372"" completed keep alive response.
+[15:36:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 29.5592ms
+[15:36:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[15:36:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[15:36:53 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV372"" completed keep alive response.
+[15:36:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 18.9147ms
+[15:36:53 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV373"" completed keep alive response.
+[15:36:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 40.6957ms
+[15:36:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[15:36:53 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[15:36:53 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:36:53 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DF62EV373"" completed keep alive response.
+[15:36:53 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 42.7905ms
+[15:37:23 Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory [Debug] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[15:37:24 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting starting
+[15:37:24 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Information] User profile is available. Using '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+[15:37:24 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-157c5ede-f40c-4ae7-8053-31353ad9f7e6.xml"'.
+[15:37:24 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f.xml"'.
+[15:37:24 Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository [Debug] Reading data from file '"C:\Users\srikanth.n\AppData\Local\ASP.NET\DataProtection-Keys\key-fbbed531-59ac-40e0-8903-14f0f383c43a.xml"'.
+[15:37:24 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {157c5ede-f40c-4ae7-8053-31353ad9f7e6}.
+[15:37:24 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {2f67d31f-2ce6-41a2-9e4e-83b1ff706a5f}.
+[15:37:24 Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager [Debug] Found key {fbbed531-59ac-40e0-8903-14f0f383c43a}.
+[15:37:24 Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver [Debug] Considering key {fbbed531-59ac-40e0-8903-14f0f383c43a} with expiration date 2024-05-11 05:12:17Z as default key.
+[15:37:24 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[15:37:24 Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor [Debug] Decrypting secret element using Windows DPAPI.
+[15:37:24 Microsoft.AspNetCore.DataProtection.TypeForwardingActivator [Debug] Forwarded activator type request from "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" to "Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60"
+[15:37:24 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"AES"' from provider 'null' with chaining mode CBC.
+[15:37:24 Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory [Debug] Opening CNG algorithm '"SHA256"' from provider 'null' with HMAC.
+[15:37:24 Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider [Debug] Using key {fbbed531-59ac-40e0-8903-14f0f383c43a} as the default key.
+[15:37:24 Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService [Debug] Key ring with default key {fbbed531-59ac-40e0-8903-14f0f383c43a} was loaded during application startup.
+[15:37:24 Microsoft.Hosting.Lifetime [Information] Now listening on: "http://localhost:5098"
+[15:37:24 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "IndiaEventsWebApi"
+[15:37:24 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.AspNetCore.Watch.BrowserRefresh"
+[15:37:24 Microsoft.AspNetCore.Hosting.Diagnostics [Debug] Loaded hosting startup assembly "Microsoft.WebTools.BrowserLink.Net"
+[15:37:24 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DFI4AQFFM"" received FIN.
+[15:37:24 Microsoft.Hosting.Lifetime [Information] Application started. Press Ctrl+C to shut down.
+[15:37:24 Microsoft.Hosting.Lifetime [Information] Hosting environment: "Development"
+[15:37:24 Microsoft.Hosting.Lifetime [Information] Content root path: "D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\"
+[15:37:24 Microsoft.Extensions.Hosting.Internal.Host [Debug] Hosting started
+[15:37:24 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFM"" accepted.
+[15:37:24 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFM"" started.
+[15:37:24 Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets [Debug] Connection id ""0HN2DFI4AQFFM"" sending FIN because: ""The Socket transport's send loop completed gracefully.""
+[15:37:24 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFM"" disconnecting.
+[15:37:24 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFM"" stopped.
+[15:37:24 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFN"" accepted.
+[15:37:24 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFO"" accepted.
+[15:37:24 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFN"" started.
+[15:37:24 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFO"" started.
+[15:37:24 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/index.html - -
+[15:37:25 Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware [Debug] Wildcard detected, all requests with hosts will be allowed.
+[15:37:25 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/index.html"'
+[15:37:25 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:37:25 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup is scheduled to include browser refresh script injection.
+[15:37:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFP"" accepted.
+[15:37:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - -
+[15:37:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFP"" started.
+[15:37:25 Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware [Debug] Response markup was updated to include browser refresh script injection.
+[15:37:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFO"" completed keep alive response.
+[15:37:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/_vs/browserLink - -
+[15:37:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFN"" completed keep alive response.
+[15:37:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_framework/aspnetcore-browser-refresh.js - - - 200 12366 application/javascript;+charset=utf-8 31.0045ms
+[15:37:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/index.html - - - 200 - text/html;charset=utf-8 652.8699ms
+[15:37:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFP"" completed keep alive response.
+[15:37:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 59.0205ms
+[15:37:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - -
+[15:37:25 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] No candidates found for the request path '"/swagger/v1/swagger.json"'
+[15:37:25 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request did not match any endpoints
+[15:37:25 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFP"" completed keep alive response.
+[15:37:25 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 195.4945ms
+[15:39:14 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request starting HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - -
+[15:39:14 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] 1 candidate(s) found for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:39:14 Microsoft.AspNetCore.Routing.Matching.DfaMatcher [Debug] Endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"' with route pattern '"api/InvoiceBase64/GetInvoiceBase64"' is valid for the request path '"/api/InvoiceBase64/GetInvoiceBase64"'
+[15:39:14 Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware [Debug] Request matched endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:39:14 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware [Debug] Static files was skipped as the request already matched an endpoint.
+[15:39:14 Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware [Warning] Failed to determine the https port for redirect.
+[15:39:14 Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler [Debug] AuthenticationScheme: "Bearer" was not authenticated.
+[15:39:14 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executing endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:39:14 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Route matched with "{action = \"GetInvoiceBase64\", controller = \"InvoiceBase64\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetInvoiceBase64(System.String)" on controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi").
+[15:39:14 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "authorization" filters (in the following order): ["None"]
+[15:39:14 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "resource" filters (in the following order): ["None"]
+[15:39:14 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "action" filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)", "Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+[15:39:14 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "exception" filters (in the following order): ["None"]
+[15:39:14 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Execution plan of "result" filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+[15:39:14 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executing controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:39:16 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Debug] Executed controller factory for controller "IndiaEventsWebApi.Controllers.InvoiceBase64Controller" ("IndiaEventsWebApi")
+[15:39:16 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' ...
+[15:39:16 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Attempting to bind parameter '"EventId"' of type '"System.String"' using the name '"EventId"' in request data ...
+[15:39:16 Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:39:16 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to bind parameter '"EventId"' of type '"System.String"'.
+[15:39:16 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Attempting to validate the bound parameter '"EventId"' of type '"System.String"' ...
+[15:39:16 Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder [Debug] Done attempting to validate the bound parameter '"EventId"' of type '"System.String"'.
+[15:39:42 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter", "Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"]
+[15:39:42 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] No information found on request to perform content negotiation.
+[15:39:42 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+[15:39:42 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Attempting to select the first formatter in the output formatters list which can write the result.
+[15:39:42 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultOutputFormatterSelector [Debug] Selected output formatter '"Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter"' and content type '"application/json"' to write the response.
+[15:39:42 Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor [Information] Executing "OkObjectResult", writing value of type '"System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"'.
+[15:39:42 Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker [Information] Executed action "IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)" in 27800.5286ms
+[15:39:42 Microsoft.AspNetCore.Routing.EndpointMiddleware [Information] Executed endpoint '"IndiaEventsWebApi.Controllers.InvoiceBase64Controller.GetInvoiceBase64 (IndiaEventsWebApi)"'
+[15:39:42 Microsoft.AspNetCore.Server.Kestrel.Connections [Debug] Connection id ""0HN2DFI4AQFFP"" completed keep alive response.
+[15:39:42 Microsoft.AspNetCore.Hosting.Diagnostics [Information] Request finished HTTP/1.1 GET http://localhost:5098/api/InvoiceBase64/GetInvoiceBase64?EventId=RQID797 - - - 200 - application/json;+charset=utf-8 28083.0966ms
