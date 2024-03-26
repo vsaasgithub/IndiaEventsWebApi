@@ -197,7 +197,7 @@ namespace IndiaEventsWebApi.Controllers
             try
             {
 
-                string GoogleclientId = "200698853522-5b3nkgrgal38n7eqjqrrt6biinbt46ca.apps.googleusercontent.com";
+                string GoogleclientId = "644106526561-5899nb8044t0k47h4bdu6lk2aebs4g1s.apps.googleusercontent.com";
                 ////200698853522 - 5b3nkgrgal38n7eqjqrrt6biinbt46ca.apps.googleusercontent.com
                 string sheetId1 = configuration.GetSection("SmartsheetSettings:SheetId1").Value;
                 string sheetId2 = configuration.GetSection("SmartsheetSettings:SheetId2").Value;

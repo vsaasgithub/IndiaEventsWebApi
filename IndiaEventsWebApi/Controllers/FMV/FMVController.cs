@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using IndiaEventsWebApi.Helper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
@@ -12,12 +13,12 @@ namespace IndiaEventsWebApi.Controllers.FMV
 
         private readonly string accessToken;
         private readonly IConfiguration configuration;
-
+        private readonly SmartsheetClient smartsheet;
         public FMVController(IConfiguration configuration)
         {
             this.configuration = configuration;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
-
+            smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
         }
 
         [HttpGet("GetfmvColumnValue")]
@@ -26,8 +27,8 @@ namespace IndiaEventsWebApi.Controllers.FMV
             int defaultval = 0;
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             string sheetId = configuration.GetSection("SmartsheetSettings:fmv").Value;
-            long.TryParse(sheetId, out long parsedSheetId);
-            Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
+            //  long.TryParse(sheetId, out long parsedSheetId);
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
 
             Column SpecialityColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, "Speciality", StringComparison.OrdinalIgnoreCase));
             Column targetColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, columnTitle, StringComparison.OrdinalIgnoreCase));
@@ -42,26 +43,11 @@ namespace IndiaEventsWebApi.Controllers.FMV
                     {
                         return Ok(columnValue);
                     }
-
-                    else
-                    {
-                       
-                        return Ok(defaultval);
-                    }
+                    else return Ok(defaultval);
                 }
-
-                else
-                {
-                   
-                    return Ok(defaultval);
-                }
+                else return Ok(defaultval);
             }
-
-            else
-            {
-             
-                return Ok(defaultval);
-            }
+            else return Ok(defaultval);
         }
 
 
@@ -70,28 +56,10 @@ namespace IndiaEventsWebApi.Controllers.FMV
         {
             try
             {
-                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
                 string sheetId = configuration.GetSection("SmartsheetSettings:fmv").Value;
-                long.TryParse(sheetId, out long parsedSheetId);
-                Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
-                List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
-                List<string> columnNames = new List<string>();
-                foreach (Column column in sheet.Columns)
-                {
-                    columnNames.Add(column.Title);
-                }
-                foreach (Row row in sheet.Rows)
-                {
-                    Dictionary<string, object> rowData = new Dictionary<string, object>();
-                    for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
-                    {
-                        rowData[columnNames[i]] = row.Cells[i].Value;
-
-                    }
-                    sheetData.Add(rowData);
-                }
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
                 return Ok(sheetData);
-
             }
             catch (Exception ex)
             {

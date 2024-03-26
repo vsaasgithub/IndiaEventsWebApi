@@ -141,6 +141,23 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("VenueSelectionChecklistMaster")]
+        public IActionResult VenueSelectionChecklistMaster()
+        {
+            try
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:VenueSelectionChecklistMaster").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+                return Ok(sheetData);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
         [HttpGet("GetBrandNameData")]
         public IActionResult GetBrandNameData()
         {

@@ -70,8 +70,9 @@ builder.Services.AddAuthentication(options =>
 
 .AddGoogle(options =>
 {
-    options.ClientId = "200698853522-5b3nkgrgal38n7eqjqrrt6biinbt46ca.apps.googleusercontent.com";
-    options.ClientSecret = "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";
+    options.ClientId = "644106526561-5899nb8044t0k47h4bdu6lk2aebs4g1s.apps.googleusercontent.com";
+    options.ClientSecret = "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";
+
 });
 
 
@@ -91,7 +92,6 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 
     options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(20); //  20 minutes
 });
-
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("MyPolicy", builder =>
