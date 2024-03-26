@@ -59,4 +59,18 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? EmailID { get; set; }
 
     }
+
+    public class SlideKitSelectionData
+    {
+        
+        public string? MISCode { get; set; }
+        public string? TrainerName { get; set; }
+        public string? TrainerType { get; set; }
+        public string? SlideKitSelection { get; set; }
+        public string? SlideKitDocument { get; set; }
+    }
+
+
+
+
 }
