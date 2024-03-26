@@ -36,36 +36,7 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = "http://localhost:5098",
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryveryveryveryverysecret......................"))
     };
-    //options.Events = new JwtBearerEvents
-    //{
-    //    OnAuthenticationFailed = context =>
-    //    {
-
-    //        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-    //        {
-    //            context.Response.Headers.Add("Token-Expired", "true");
-    //        }
-
-    //        return Task.CompletedTask;
-    //    }
-    //};
-    //options.Events = new JwtBearerEvents
-    //{
-    //    OnAuthenticationFailed = context =>
-    //    {
-    //        context.Response.ContentType = "application/json";
-    //        //context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-    //        //Task.CompletedTask;
-    //        //return context.Response.WriteAsJsonAsync("Not Found");
-    //        return context.Response.WriteAsJsonAsync(new
-    //        {
-    //            Message = "Invalid token",
-    //            Error = context.Exception.Message
-    //        }.ToString());
-
-
-    //    }
-    //};
+   
 })
 
 .AddGoogle(options =>
@@ -74,11 +45,6 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = "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";
 
 });
-
-
-
-////If using IIS
-
 
 builder.Services.Configure<IISServerOptions>(options =>
 {

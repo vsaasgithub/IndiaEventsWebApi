@@ -508,7 +508,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                     {
                         Cell VendorCell = existingRow.Cells.FirstOrDefault(cell => cell.ColumnId == misCodeColumn.Id);
                         Cell DateCell = existingRow.Cells.FirstOrDefault(cell => cell.ColumnId == DateColumn.Id);
-
                         var date = DateCell?.Value?.ToString();
 
 
