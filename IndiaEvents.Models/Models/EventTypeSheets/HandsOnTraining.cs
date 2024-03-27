@@ -19,7 +19,7 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? TrainerCountry { get; set; }
         public string? Speciality { get; set; }
         public string? TrainerCategory { get; set; }
-        public string? TrainerType  { get; set; }
+        public string? TrainerType { get; set; }
         public string? UploadNOC { get; set; }
         public string? Rationale { get; set; }
         public string? UploadFCPA { get; set; }
@@ -34,7 +34,7 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? TotalNoOfHours { get; set; }
         public string? HonorariumAmountexcludingTax { get; set; }
         public string? HonorariumAmountincludingTax { get; set; }
-       // public string? UploadDeviation { get; set; }
+        // public string? UploadDeviation { get; set; }
         public string? YTDspendIncludingCurrentEvent { get; set; }
         public string? UploadDocument { get; set; }
         public string? Expense { get; set; }
@@ -62,7 +62,6 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
 
     public class SlideKitSelectionData
     {
-        
         public string? MISCode { get; set; }
         public string? TrainerName { get; set; }
         public string? TrainerType { get; set; }
