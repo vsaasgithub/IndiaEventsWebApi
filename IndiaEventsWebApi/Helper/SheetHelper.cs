@@ -23,6 +23,14 @@ namespace IndiaEventsWebApi.Helper
             }
             return 0;
         }
+        public static int NumCheck(string val)
+        {
+            if (string.IsNullOrEmpty(val))
+            {
+                return 0;
+            }
+            return Convert.ToInt32(val);
+        }
 
         internal static Sheet GetSheetById(SmartsheetClient smartsheet, string sheetId)
         {
