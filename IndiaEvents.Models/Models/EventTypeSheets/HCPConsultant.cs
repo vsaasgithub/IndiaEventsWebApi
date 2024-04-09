@@ -61,6 +61,8 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? Rationale { get; set; }
         public DateTime? Fcpadate { get; set; }
         public string? ExpenseType { get; set; }
+        public string? IsUpload { get; set; }
+        public List<string>? FilesToUpload { get; set; }
 
 
 
@@ -72,7 +74,9 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? BTC_BTE { get; set; }
 
         public string? RegstAmount { get; set; }
+        public int? RegstAmountExcludingTax { get; set; }
         public string? ExpenseAmount { get; set; }
+        public int? ExpenseAmountExcludingTax { get; set; }
         public string? BtcAmount { get; set; }
         public string? BteAmount { get; set; }
 

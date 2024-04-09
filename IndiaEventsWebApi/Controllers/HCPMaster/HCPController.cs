@@ -209,7 +209,7 @@ namespace IndiaEventsWebApi.Controllers.HCPMaster
                     //foreach (var formData in formDataList)
                     //{
 
-                    var newRow = new Row();
+                    Row newRow = new Row();
                     newRow.Cells = new List<Cell>();
                     newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "FirstName"), Value = i.FirstName });
                     newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "LastName"), Value = i.LastName });
