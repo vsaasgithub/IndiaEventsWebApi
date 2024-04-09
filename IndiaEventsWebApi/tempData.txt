@@ -1,8 +1,129 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿  List<Row> newRows = new();
+
+                foreach (var formdata in formDataList.RequestBrandsList)
+                {
+                    Row newRow2 = new()
+                    {
+                        Cells = new List<Cell>()
+                        {
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "% Allocation"), Value = formdata.PercentAllocation },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Brands"), Value = formdata.BrandName },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Project ID"), Value = formdata.ProjectId },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "EventId/EventRequestId"), Value = val }
+                        }
+                    };
+
+                    newRows.Add(newRow2);
+                }
+
+                smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows.ToArray());
+// adding multiple rows
+
+
+
+  foreach (string p in formData.TrainerFiles)
+                    {
+                        string[] words = p.Split(':');
+                        string r = words[0];
+                        string q = words[1];
+                        string name = r.Split(".")[0];
+                        string filePath = SheetHelper.testingFile(q, val, name);
+                        Row addedRow = row[0];
+                        Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                               sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                        x++;
+
+
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            SheetHelper.DeleteFile(filePath);
+                        }
+                    }
+
+
+Row newRow3 = new()
+                    {
+                        Cells = new List<Cell>()
+                        {
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "MISCode"), Value = formdata.MisCode },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "HCPName"), Value = formdata.AttenderName },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "HCP Type"), Value = formdata.AttenderType },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Designation"), Value = formdata.Designation },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Employee Code"), Value = formdata.EmployeeCode },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "LocalConveyance"), Value = formdata.IsLocalConveyance },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "BTC/BTE"), Value = formdata.IsBtcorBte },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "LcAmount"), Value = formdata.LocalConveyanceAmountIncludingTax },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Lc Amount Excluding Tax"), Value = formdata.LocalConveyanceAmountExcludingTax },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "EventId/EventRequestId"), Value = val },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Invitee Source"), Value = formdata.InviteedFrom },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Qualification"), Value = formdata.Qualification },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Experience"), Value = formdata.Experiance },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event Topic"), Value = formDataList.HandsOnTraining.EventName },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event Type"), Value = formDataList.HandsOnTraining.EventType },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Venue name"), Value = formDataList.HandsOnTraining.VenueName },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event Date Start"), Value = formDataList.HandsOnTraining.EventDate },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event End Date"), Value = formDataList.HandsOnTraining.EventDate },
+
+                        }
+                    };
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+//int HM = int.Parse(formdata.HonarariumAmount);
+                //int HM;
+                //if (formdata.HonarariumAmount == null || !int.TryParse(formdata.HonarariumAmount, out HM))
+                //{
+                //    HM = 0;
+                //}
+
+                //int HM = int.TryParse(formdata.HonarariumAmount, out int result) ? result : 0;
+
+                int HM = formdata.HonarariumAmount != null ? int.Parse(formdata.HonarariumAmount) : 0;
+
+
+
+
+
+
+using Microsoft.AspNetCore.Authentication.Cookies;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using IndiaEventsWebApi.Models;
 using DinkToPdf.Contracts;
@@ -16,10 +137,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Aspose.Pdf.Plugins;
 using iTextSharp.text.pdf.security;
 using Smartsheet.Api.Models;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
-
+int maxRequestLimit = 1073741824;
 
 //builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(60); });
 builder.Services.AddAuthentication(options =>
@@ -39,53 +161,37 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = "http://localhost:5098",
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryveryveryveryverysecret......................"))
     };
-
-    //options.Events = new JwtBearerEvents
-    //{
-    //    OnAuthenticationFailed = context =>
-    //    {
-
-    //        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-    //        {
-    //            context.Response.Headers.Add("Token-Expired", "true");
-    //        }
-
-    //        return Task.CompletedTask;
-    //    }
-    //};
-    //options.Events = new JwtBearerEvents
-    //{
-    //    OnAuthenticationFailed = context =>
-    //    {
-    //        context.Response.ContentType = "application/json";
-    //        //context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-    //        //Task.CompletedTask;
-    //        //return context.Response.WriteAsJsonAsync("Not Found");
-    //        return context.Response.WriteAsJsonAsync(new
-    //        {
-    //            Message = "Invalid token",
-    //            Error = context.Exception.Message
-    //        }.ToString());
-
-
-    //    }
-    //};
+   
 })
+
 .AddGoogle(options =>
 {
-    options.ClientId = "200698853522-5b3nkgrgal38n7eqjqrrt6biinbt46ca.apps.googleusercontent.com";
-    options.ClientSecret = "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";
+    options.ClientId = "644106526561-5899nb8044t0k47h4bdu6lk2aebs4g1s.apps.googleusercontent.com";
+    options.ClientSecret = "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";
+
 });
 
-//builder.Services.AddCors(option =>
-//{
-//    option.AddPolicy("MyPolicy", builder =>
-//    {
-//        builder.AllowAnyOrigin()
-//        .AllowAnyMethod()
-//        .AllowAnyHeader();
-//    });
-//});
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = 1073741824; // 1 GB in bytes
+    options.MaxRequestBodyBufferSize = 1073741824;
+});
+
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = 1073741824; // 1 GB in bytes
+
+    options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(20); //  20 minutes
+});
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy("MyPolicy", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
 IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((hostingContext, config) =>
@@ -98,22 +204,13 @@ IHostBuilder CreateHostBuilder(string[] args) =>
     services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
     services.AddOptions();
     services.Configure<SmartsheetSettings>(configuration.GetSection("SmartsheetSettings"));
-    services.AddCors(option =>
-    {
-        option.AddPolicy("MyPolicy", builder =>
-        {
-            builder.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
-        });
-    });
+
 
 });
 
-
-//Log.Logger = new LoggerConfiguration()
-//    .WriteTo.Console()
-//    .CreateLogger();
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
 
 builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
 {
@@ -128,7 +225,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 
 var app = builder.Build();

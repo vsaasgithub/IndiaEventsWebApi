@@ -73,6 +73,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? BtcAmount { get; set; }
         public string? BteAmount { get; set; }
         public string? TotalExpenseAmount { get; set; }
+        public int? TotalExpenseAmountExcludingTax { get; set; }
 
     }
 

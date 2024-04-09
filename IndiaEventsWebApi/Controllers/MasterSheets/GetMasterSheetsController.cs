@@ -157,13 +157,28 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
         }
 
-
         [HttpGet("GetBrandNameData")]
         public IActionResult GetBrandNameData()
         {
             try
             {
                 string sheetId = configuration.GetSection("SmartsheetSettings:BrandMaster").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+                return Ok(sheetData);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetIndicationsMasterData")]
+        public IActionResult GetIndicationsMasterData()
+        {
+            try
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:IndicatorsMaster").Value;
                 Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
                 List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
                 return Ok(sheetData);
@@ -365,6 +380,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 string sheetId4 = configuration.GetSection("SmartsheetSettings:HcpMaster4").Value;
 
                 List<string> Sheets = new List<string>() { sheetId1, sheetId2, sheetId3, sheetId4 };
+
                 foreach (var sheetId in Sheets)
                 {
                     Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
@@ -390,6 +406,108 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
+
+
+
+        [HttpGet("GetRowsDataInHcpMasterByMisCode")]
+        public IActionResult GetRowsDataInHcpMasterByMisCode(string? searchValue)
+        {
+            try
+            {
+                List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
+                string sheetId1 = configuration.GetSection("SmartsheetSettings:HcpMaster1").Value;
+                string sheetId2 = configuration.GetSection("SmartsheetSettings:HcpMaster2").Value;
+                string sheetId3 = configuration.GetSection("SmartsheetSettings:HcpMaster3").Value;
+                string sheetId4 = configuration.GetSection("SmartsheetSettings:HcpMaster4").Value;
+                List<string> Sheets = new List<string>() { sheetId1, sheetId2, sheetId3, sheetId4 };
+                if(searchValue != null)
+                {
+
+
+                    foreach (var sheetId in Sheets)
+                    {
+                        Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                        List<string> columnNames = new List<string>();
+
+                        foreach (Column column in sheet.Columns)
+                        {
+                            columnNames.Add(column.Title);
+                        }
+
+                        int miscodeColumnIndex = columnNames.IndexOf("MisCode");
+
+                        foreach (Row row in sheet.Rows)
+                        {
+                            Cell miscodeCell = row.Cells.FirstOrDefault(cell => cell.ColumnId == sheet.Columns[miscodeColumnIndex].Id);
+                            if (miscodeCell != null && miscodeCell.Value.ToString().Contains(searchValue))
+                            {
+                                Dictionary<string, object> rowData = new Dictionary<string, object>();
+                                for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
+                                {
+                                    rowData[columnNames[i]] = row.Cells[i].Value;
+                                }
+                                sheetData.Add(rowData);
+                            }
+
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    foreach (var sheetId in Sheets)
+                    {
+                        Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                        List<string> columnNames = new List<string>();
+                        foreach (Column column in sheet.Columns)
+                        {
+                            columnNames.Add(column.Title);
+                        }
+                        foreach (Row row in sheet.Rows)
+                        {
+                            Dictionary<string, object> rowData = new Dictionary<string, object>();
+                            for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
+                            {
+                                rowData[columnNames[i]] = row.Cells[i].Value;
+                            }
+                            sheetData.Add(rowData);
+                        }
+                    }
+                }
+                return Ok(sheetData);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpGet("GetHCPRoleData")]
         public IActionResult GetHCPRoleData()
         {
