@@ -73,6 +73,8 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? FirstLevelEmail { get; set; }
         public string? MedicalAffairsEmail { get; set; }
         public string? Role { get; set; }
+        public string? IsMslSelected { get; set; }
+        public string? IsProtocolsForThreadsAndFillers { get; set; }
         //public string? ReportingManagerEmail { get; set; }
         //public string? Currency { get; set; }
         //public string? OtherCurrencyType { get; set; }
@@ -178,7 +180,6 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
     public class AttenderSelection
     {
         public string InviteedFrom { get; set; }
-
         public string? MisCode { get; set; }
         public string? AttenderName { get; set; }
         public string? AttenderType { get; set; }
@@ -189,7 +190,8 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? IsBtcorBte { get; set; }
         public int? LocalConveyanceAmountExcludingTax { get; set; }
         public int? LocalConveyanceAmountIncludingTax { get; set; }
-
+       
+       
         public string? EmployeeCode { get; set; }
         public string? Designation { get; set; }
         public List<string>? AttenderFiles { get; set; }
