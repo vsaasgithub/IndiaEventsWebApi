@@ -35,9 +35,6 @@ namespace IndiaEventsWebApi.Controllers
 
 
         [HttpPost("GetInvoiceBase64")]
-
-
-
         public IActionResult GetInvoiceBase64(InvoiceIds formdata)
         {
             Dictionary<string, string> idUrlMap = new Dictionary<string, string>();
@@ -106,7 +103,7 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
-
+        
 
     }
 

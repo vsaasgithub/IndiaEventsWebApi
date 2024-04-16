@@ -16,8 +16,8 @@
     {
         public string? EventId { get; set; }
         public string? ExpenseType { get; set; }
-        public string? Amount { get; set; }
-        public int? AmountExcludingTax { get; set; }
+        //public string? Amount { get; set; }
+        public int? AmountIncludingTax { get; set; }
         public int? ExcludingTaxAmount { get; set; }
         public string? BtcorBte { get; set; }
         public string? EventTopic { get; set; }
