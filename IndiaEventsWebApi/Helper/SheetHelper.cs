@@ -69,10 +69,10 @@ namespace IndiaEventsWebApi.Helper
 
 
         // file convert from base 64 to file  and store in local
-        internal static string testingFile(string Invoice_QuotationUpload, string eventId, string name)
+        internal static string testingFile(string base64,  string name)
         {
-            byte[] fileBytes = Convert.FromBase64String(Invoice_QuotationUpload);
-            var fileSize = (fileBytes.Length) / 1048576;
+            byte[] fileBytes = Convert.FromBase64String(base64);
+            //var fileSize = (fileBytes.Length) / 1048576;
             var folderName = Path.Combine("Resources", "Images");
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
             if (!Directory.Exists(pathToSave))
@@ -80,11 +80,12 @@ namespace IndiaEventsWebApi.Helper
                 Directory.CreateDirectory(pathToSave);
             }
             string fileType = GetFileType(fileBytes);
-            string fileName = eventId + "-" + name + "." + fileType;
+            string fileName = name + "." + fileType;
             string filePath = Path.Combine(pathToSave, fileName);
-            System.IO.File.WriteAllBytes(filePath, fileBytes);
+            File.WriteAllBytes(filePath, fileBytes);
             return filePath;
         }
+        
 
 
         // delete local file if file exists
@@ -678,6 +679,34 @@ namespace IndiaEventsWebApi.Helper
 
         //                }
 
+        internal static List<object> ConvertToJsonObject(string data)
+        {
+            string[] lines = data.Split('\n');
+            List<object> resultList = new List<object>();
+
+            foreach (var line in lines)
+            {
+                string[] values = line.Split('|');
+
+                if (values.Length > 0)
+                {
+                    Dictionary<string, string> item = new Dictionary<string, string>();
+
+                    foreach (var value in values)
+                    {
+                        string[] keyValue = value.Trim().Split(':');
+                        if (keyValue.Length == 2)
+                        {
+                            item.Add(keyValue[0].Trim(), keyValue[1].Trim());
+                        }
+                    }
+
+                    resultList.Add(item);
+                }
+            }
+
+            return resultList;
+        }
 
 
 

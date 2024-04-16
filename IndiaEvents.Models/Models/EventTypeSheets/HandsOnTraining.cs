@@ -86,7 +86,8 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         //public string? IfscCode { get; set; }
         //public string? EmailId { get; set; }
 
-        public EventRequestBenificiaryDetails? BenificiaryDetailsData { get; set; }
+        public EventRequestBenificiaryDetails? VenueBenificiaryDetailsData { get; set; }
+        public EventRequestBenificiaryDetails? AnaestheticBenificiaryDetailsData { get; set; }
         public List<string>? Files { get; set; }
         public string? IsDeviationUpload { get; set; }
         public int? EventOpen30dayscount { get; set; }
@@ -108,6 +109,7 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? TrainerType { get; set; }
         //public string? UploadNOC { get; set; }
         public string? Rationale { get; set; }
+        public string? IsAnnualTrainerAgreementValid { get; set; }
 
         public DateTime? FCPAIssueDate { get; set; }
         // public string? UploadTrainerConsent { get; set; }
