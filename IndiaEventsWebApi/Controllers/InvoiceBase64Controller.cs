@@ -81,12 +81,14 @@ namespace IndiaEventsWebApi.Controllers
 
                             foreach (var attachment in attachments.Data)
                             {
+
                                 if (attachment != null && attachment.Name.ToLower().Contains("agreement"))
                                 {
                                     long AID = (long)attachment.Id;
                                     string Name = attachment.Name;
                                     Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet.Id.Value, AID);
-                                    idUrlMap[Name+"*"+id] = file.Url;
+
+                                    idUrlMap[Name + "*" + id] = file.Url;
                                 }
                             }
                         }
