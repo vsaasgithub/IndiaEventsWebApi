@@ -1,4 +1,6 @@
-﻿namespace IndiaEventsWebApi.Models.RequestSheets
+﻿using IndiaEvents.Models.Models.RequestSheets;
+
+namespace IndiaEventsWebApi.Models.RequestSheets
 {
     public class EventRequestsHcpRole
     {
@@ -38,6 +40,63 @@
         public string? OtherCurrencyType { get; set; }
         public string? BeneficiaryName { get; set; }
         public string? PanNumber { get; set; }
+        //Currency,Other Currency Type,Beneficiary Name,Pan Number,
+        public string? LcBtcorBte { get; set; }
+        public string? TravelBtcorBte { get; set; }
+        public string? AccomodationBtcorBte { get; set; }
+
+        public int? HonarariumAmountExcludingTax { get; set; }
+        public int? TravelExcludingTax { get; set; }
+        public int? AccomdationExcludingTax { get; set; }
+        public int? LocalConveyanceExcludingTax { get; set; }
+        public string? IsUpload { get; set; }
+        public List<string>? FilesToUpload { get; set; }
+
+    }
+    public class UpdateEventRequestsHcpRole
+    {
+        public string? PanelId { get; set; }
+        public string? EventIdorEventRequestId { get; set; }
+        public string? HcpName { get; set; }
+        public string? HcpRole { get; set; }
+        public string? MisCode { get; set; }
+        public string? SpeakerCode { get; set; }
+        public string? TrainerCode { get; set; }
+        public string? Speciality { get; set; }
+        public string? Tier { get; set; }
+        public string? GOorNGO { get; set; }
+        public string? HonorariumRequired { get; set; }
+        public int? HonarariumAmount { get; set; }
+        public int? Travel { get; set; }
+        public int? Accomdation { get; set; }
+        public int? LocalConveyance { get; set; }
+        public int? FinalAmount { get; set; }
+        public string? Rationale { get; set; }
+        public int? PresentationDuration { get; set; }
+        public int? PanelSessionPreperationDuration { get; set; }
+        public int? PanelDisscussionDuration { get; set; }
+        public int? QASessionDuration { get; set; }
+        public int? BriefingSession { get; set; }
+        public int? TotalSessionHours { get; set; }
+        public string? IsInclidingGst { get; set; }
+        public int? AgreementAmount { get; set; }
+        public string? ExpenseType { get; set; }
+        public string? OthersType { get; set; }
+        public string? Fcpadate { get; set; }
+
+        public EventRequestBenificiaryDetails? BenificiaryDetailsData { get; set; }
+
+        //public string? PanCardName { get; set; }
+        //public string? BankAccountNumber { get; set; }
+        //public string? BankName { get; set; }
+        //public string? IFSCCode { get; set; }
+        //public string? Currency { get; set; }
+        //public string? OtherCurrencyType { get; set; }
+        //public string? BeneficiaryName { get; set; }
+        //public string? PanNumber { get; set; }
+
+
+
         //Currency,Other Currency Type,Beneficiary Name,Pan Number,
         public string? LcBtcorBte { get; set; }
         public string? TravelBtcorBte { get; set; }
