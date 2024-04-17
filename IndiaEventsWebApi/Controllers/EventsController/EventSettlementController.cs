@@ -318,10 +318,10 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Brands"), Value = formData.Brands });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Invitees"), Value = Invitee });
                 //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, ""), Value = formData.TotalBudgetAmount });
-                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, ""), Value = formData.TotalBudgetAmount });
-                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, ""), Value = formData.TotalBudgetAmount });
-                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, ""), Value = formData.TotalBudgetAmount });
-                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, ""), Value = formData.TotalBudgetAmount });
+                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, ""), Value = formData.ActualExpenseAmount });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Advance Amount"), Value = formData.AdvanceProvided });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Expense BTC"), Value = formData.TotalBtcAmount });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Expense BTE"), Value = formData.TotalBteAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Panelists"), Value = formData.Panalists });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "SlideKits"), Value = formData.SlideKits });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Expenses"), Value = Expense });
@@ -348,7 +348,7 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Expense"), Value = SheetHelper.NumCheck(formData.TotalExpenses) });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Travel & Accommodation Amount"), Value = SheetHelper.NumCheck(formData.TotalTravelAndAccomodationSpend) });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Honorarium Amount"), Value = SheetHelper.NumCheck(formData.TotalHonorariumSpend) });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Budget"), Value = SheetHelper.NumCheck(formData.TotalSpend) });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Budget"), Value = formData.TotalBudgetAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Actual"), Value = SheetHelper.NumCheck(formData.TotalActuals) });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Advance Utilized For Event"), Value = SheetHelper.NumCheck(formData.AdvanceUtilizedForEvents) });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Pay Back Amount To Company"), Value = SheetHelper.NumCheck(formData.PayBackAmountToCompany) });

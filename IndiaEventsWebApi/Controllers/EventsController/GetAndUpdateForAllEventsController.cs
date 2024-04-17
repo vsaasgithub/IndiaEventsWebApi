@@ -1,8 +1,10 @@
-﻿using IndiaEventsWebApi.Helper;
+﻿using IndiaEvents.Models.Models.Draft;
+using IndiaEventsWebApi.Helper;
 using IndiaEventsWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 using System.Text;
@@ -143,86 +145,364 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         //}
         #endregion
 
+        //[HttpGet("GetDataFromAllSheetsUsingEventIdInPreEvent")]
+        //public IActionResult GetDataFromAllSheetsUsingEventId(string eventId)
+        //{
+        //    List<UpdateDataForClassI> formData = new List<UpdateDataForClassI>();
+
+        //    Dictionary<string, object> resultData = new Dictionary<string, object>();
+        //    List<Sheet> sheets = new List<Sheet>
+        //    {
+        //        SheetHelper.GetSheetById(smartsheet, sheetId1),
+        //        //SheetHelper.GetSheetById(smartsheet, sheetId2),
+        //        //SheetHelper.GetSheetById(smartsheet, sheetId3),
+        //        //SheetHelper.GetSheetById(smartsheet, sheetId4),
+        //        //SheetHelper.GetSheetById(smartsheet, sheetId5),
+        //        //SheetHelper.GetSheetById(smartsheet, sheetId6),
+        //        //SheetHelper.GetSheetById(smartsheet, sheetId7),
+        //        //SheetHelper.GetSheetById(smartsheet, sheetId8),
+        //        //SheetHelper.GetSheetById(smartsheet, sheetId9)
+        //    };
+        //    foreach (var sheet in sheets)
+        //    {
+        //        List<Dictionary<string, object>> rowsData = new List<Dictionary<string, object>>();
+
+        //        foreach (var row in sheet.Rows)
+        //        {
+        //            if (row.Cells.Any(c => c.DisplayValue == eventId))
+        //            {
+        //                Dictionary<string, object> rowData = new Dictionary<string, object>();
+
+        //                List<string> columnNames = new List<string>();
+        //                foreach (Column column in sheet.Columns)
+        //                {
+        //                    columnNames.Add(column.Title);
+        //                }
+
+        //                for (int i = 0; i < columnNames.Count; i++)
+        //                {
+        //                    rowData[columnNames[i]] = row.Cells[i].Value;
+        //                }
+
+        //                var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet.Id.Value, row.Id.Value, null);
+        //                List<Dictionary<string, object>> attachmentsList = new List<Dictionary<string, object>>();
+        //                foreach (var attachment in attachments.Data)
+        //                {
+        //                    var AID = (long)attachment.Id;
+        //                    var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet.Id.Value, AID);
+        //                    Dictionary<string, object> attachmentInfo = new Dictionary<string, object>
+        //                    {
+        //                        { "Name", file.Name },
+        //                        { "Url", file.Url }
+        //                    };
+        //                    attachmentsList.Add(attachmentInfo);
+        //                }
+
+        //                rowData["Attachments"] = attachmentsList;
+        //                rowsData.Add(rowData);
+        //            }
+        //        }
+
+        //        if (rowsData.Count > 0)
+        //        {
+        //            resultData[sheet.Name] = rowsData;
+        //        }
+        //    }
+        //    //foreach(var formdata in resultData)
+        //    //{
+        //    //    if (formdata.ContainsKey("Event Topic"))
+        //    //    {
+        //    //        specificData["Event Topic"] = resultData["Event Topic"];
+        //    //    }
+        //    //}
+
+
+
+
+        //    // string jsonData = JsonConvert.SerializeObject(resultData);
+
+        //    //return Ok(jsonData);
+        //    //return Ok(specificData);
+
+
+
+
+
+        //    return Ok(resultData);
+        //    //return Ok(extractedData);
+
+
+
+
+        //}
+
         [HttpGet("GetDataFromAllSheetsUsingEventIdInPreEvent")]
         public IActionResult GetDataFromAllSheetsUsingEventId(string eventId)
         {
+            Dictionary<string, object> resultData = new();
 
-            Dictionary<string, object> resultData = new Dictionary<string, object>();
+            List<UpdateDataForClassI> formData = new();
 
-            List<Sheet> sheets = new List<Sheet>
+            List<Dictionary<string, object>> eventDetails = new();
+            List<Dictionary<string, object>> BrandseventDetails = new();
+            List<Dictionary<string, object>> InviteeseventDetails = new();
+            List<Dictionary<string, object>> PaneleventDetails = new();
+            List<Dictionary<string, object>> SlideKiteventDetails = new();
+            List<Dictionary<string, object>> ExpenseeventDetails = new();
+            List<Dictionary<string, object>> attachmentsList = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> DeviationsattachmentsList = new List<Dictionary<string, object>>();
+
+            Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+            List<string> columnNames = new List<string>();
+            foreach (Column column in sheet1.Columns)
             {
-                SheetHelper.GetSheetById(smartsheet, sheetId1),
-                SheetHelper.GetSheetById(smartsheet, sheetId2),
-                SheetHelper.GetSheetById(smartsheet, sheetId3),
-                SheetHelper.GetSheetById(smartsheet, sheetId4),
-                SheetHelper.GetSheetById(smartsheet, sheetId5),
-                SheetHelper.GetSheetById(smartsheet, sheetId6),
-                SheetHelper.GetSheetById(smartsheet, sheetId7),
-                SheetHelper.GetSheetById(smartsheet, sheetId8),
-                SheetHelper.GetSheetById(smartsheet, sheetId9)
-            };
-            foreach (var sheet in sheets)
-            {
-                List<Dictionary<string, object>> rowsData = new List<Dictionary<string, object>>();
+                columnNames.Add(column.Title);
+            }
 
-                foreach (var row in sheet.Rows)
+            foreach (var row in sheet1.Rows)
+            {
+
+                if (row.Cells.Any(c => c.DisplayValue == eventId))
                 {
-                    if (row.Cells.Any(c => c.DisplayValue == eventId))
+                    List<string> columnsToInclude = new List<string> { "EventDate", "Event Topic", "StartTime", "EndTime", "State", "City" };
+
+                    Dictionary<string, object> rowData = new Dictionary<string, object>();
+                    for (int i = 0; i < columnNames.Count; i++)
                     {
-                        Dictionary<string, object> rowData = new Dictionary<string, object>();
-
-                        List<string> columnNames = new List<string>();
-                        foreach (Column column in sheet.Columns)
-                        {
-                            columnNames.Add(column.Title);
-                        }
-
-                        for (int i = 0; i < columnNames.Count; i++)
+                        if (columnsToInclude.Contains(columnNames[i]))
                         {
                             rowData[columnNames[i]] = row.Cells[i].Value;
                         }
-
-                        var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet.Id.Value, row.Id.Value, null);
-                        List<Dictionary<string, object>> attachmentsList = new List<Dictionary<string, object>>();
-                        foreach (var attachment in attachments.Data)
-                        {
-                            var AID = (long)attachment.Id;
-                            var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet.Id.Value, AID);
-                            Dictionary<string, object> attachmentInfo = new Dictionary<string, object>
-                            {
-                                { "Name", file.Name },
-                                { "Url", file.Url }
-                            };
-                            attachmentsList.Add(attachmentInfo);
-                        }
-
-                        rowData["Attachments"] = attachmentsList;
-                        rowsData.Add(rowData);
                     }
-                }
+                    var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null);
 
-                if (rowsData.Count > 0)
+                    Dictionary<string, object> attachmentInfo = new Dictionary<string, object>();
+                    foreach (var attachment in attachments.Data)
+                    {
+                        var AID = (long)attachment.Id;
+                        var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID);
+
+
+                        attachmentInfo[file.Name] = file.Url;
+
+
+
+
+                    }
+                    attachmentsList.Add(attachmentInfo);
+
+                    eventDetails.Add(rowData);
+                }
+            }
+
+            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+            List<string> BrandsColumnNames = new List<string>();
+            foreach (Column column in sheet2.Columns)
+            {
+                BrandsColumnNames.Add(column.Title);
+            }
+
+            foreach (var row in sheet2.Rows)
+            {
+
+                if (row.Cells.Any(c => c.DisplayValue == eventId))
                 {
-                    resultData[sheet.Name] = rowsData;
+                    List<string> BrandscolumnsToInclude = new List<string> { "BrandRequestID", "Brands", "% Allocation", "Project ID" };
+
+                    Dictionary<string, object> BrandsrowData = new Dictionary<string, object>();
+                    for (int i = 0; i < BrandsColumnNames.Count; i++)
+                    {
+                        if (BrandscolumnsToInclude.Contains(BrandsColumnNames[i]))
+                        {
+                            BrandsrowData[BrandsColumnNames[i]] = row.Cells[i].Value;
+                        }
+                    }
+
+
+
+                    BrandseventDetails.Add(BrandsrowData);
+                }
+            }
+            Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+            List<string> InviteesColumnNames = new List<string>();
+            foreach (Column column in sheet3.Columns)
+            {
+                InviteesColumnNames.Add(column.Title);
+            }
+
+            foreach (var row in sheet3.Rows)
+            {
+
+                if (row.Cells.Any(c => c.DisplayValue == eventId))
+                {
+                    List<string> InviteescolumnsToInclude = new List<string> { "INV", "Invitee Source", "HCPName", "MISCode", "Employee Code", "LocalConveyance", "BTC/BTE", "LocalConveyance", "Speciality", "Lc Amount Excluding Tax", "LcAmount" };
+
+                    Dictionary<string, object> InviteesrowData = new Dictionary<string, object>();
+                    for (int i = 0; i < InviteesColumnNames.Count; i++)
+                    {
+                        if (InviteescolumnsToInclude.Contains(InviteesColumnNames[i]))
+                        {
+                            InviteesrowData[InviteesColumnNames[i]] = row.Cells[i].Value;
+                        }
+                    }
+
+
+
+                    InviteeseventDetails.Add(InviteesrowData);
+                }
+            }
+
+            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+            List<string> PanelColumnNames = new List<string>();
+            foreach (Column column in sheet4.Columns)
+            {
+                PanelColumnNames.Add(column.Title);
+            }
+
+            foreach (var row in sheet4.Rows)
+            {
+
+                if (row.Cells.Any(c => c.DisplayValue == eventId))
+                {
+                    List<string> PanelcolumnsToInclude = new List<string> { "Panelist ID", "SpeakerCode", "TrainerCode", "Tier", "Qualification", "Speciality", "Country",
+                        "Rationale", "Speciality", "FCPA Date", "LcAmount", "PresentationDuration", "PanelSessionPreparationDuration", "PanelDiscussionDuration", "QASessionDuration",
+                        "BriefingSession", "TotalSessionHours", "HcpRole", "HCPName", "MISCode", "HCP Type", "ExpenseType", "HonorariumRequired", "HonorariumAmount", "Honorarium Amount Excluding Tax",
+                        "Travel BTC/BTE", "Mode of Travel", "Travel Excluding Tax", "Travel", "Accomodation Excluding Tax", "Accomodation","Accomodation BTC/BTE",
+                        "Local Conveyance Excluding Tax", "LocalConveyance", "LC BTC/BTE",
+                        "PAN card name", "Bank Account Number", "IFSC Code", "Bank Name", "Currency", "Other Currency", "Beneficiary Name", "Pan Number", "Global FMV", "Swift Code" };
+
+                    Dictionary<string, object> PanelrowData = new Dictionary<string, object>();
+                    for (int i = 0; i < PanelColumnNames.Count; i++)
+                    {
+                        if (PanelcolumnsToInclude.Contains(PanelColumnNames[i]))
+                        {
+                            PanelrowData[PanelColumnNames[i]] = row.Cells[i].Value;
+                        }
+                    }
+
+
+
+                    PaneleventDetails.Add(PanelrowData);
+                }
+            }
+            Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+            List<string> SlideKitColumnNames = new List<string>();
+            foreach (Column column in sheet5.Columns)
+            {
+                SlideKitColumnNames.Add(column.Title);
+            }
+
+            foreach (var row in sheet5.Rows)
+            {
+
+                if (row.Cells.Any(c => c.DisplayValue == eventId))
+                {
+                    List<string> SlideKitcolumnsToInclude = new List<string> { "SlideKit ID", "HCP Name", "MIS", "HcpType", "Slide Kit Type", "SlideKit Document" };
+
+                    Dictionary<string, object> SlideKitrowData = new Dictionary<string, object>();
+                    for (int i = 0; i < SlideKitColumnNames.Count; i++)
+                    {
+                        if (SlideKitcolumnsToInclude.Contains(SlideKitColumnNames[i]))
+                        {
+                            SlideKitrowData[SlideKitColumnNames[i]] = row.Cells[i].Value;
+                        }
+                    }
+
+
+
+                    SlideKiteventDetails.Add(SlideKitrowData);
+                }
+            }
+            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+            List<string> ExpenseColumnNames = new List<string>();
+            foreach (Column column in sheet6.Columns)
+            {
+                ExpenseColumnNames.Add(column.Title);
+            }
+
+            foreach (var row in sheet6.Rows)
+            {
+
+                if (row.Cells.Any(c => c.DisplayValue == eventId))
+                {
+                    List<string> ExpensecolumnsToInclude = new List<string> { "Expenses ID", "Expense", "BTC/BTE", "Amount Excluding Tax", "Amount" };
+
+                    Dictionary<string, object> ExpenserowData = new Dictionary<string, object>();
+                    for (int i = 0; i < ExpenseColumnNames.Count; i++)
+                    {
+                        if (ExpensecolumnsToInclude.Contains(ExpenseColumnNames[i]))
+                        {
+                            ExpenserowData[ExpenseColumnNames[i]] = row.Cells[i].Value;
+                        }
+                    }
+
+
+
+                    ExpenseeventDetails.Add(ExpenserowData);
+                }
+            }
+
+            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+            List<string> DeviationscolumnNames = new List<string>();
+            foreach (Column column in sheet7.Columns)
+            {
+                DeviationscolumnNames.Add(column.Title);
+            }
+
+            foreach (var row in sheet7.Rows)
+            {
+
+                if (row.Cells.Any(c => c.DisplayValue == eventId))
+                {
+                    List<string> DeviationscolumnsToInclude = new List<string> { "Deviation Type" };
+
+                    Dictionary<string, object> DeviationsattachmentInfo = new Dictionary<string, object>();
+                    for (int i = 0; i < DeviationscolumnNames.Count; i++)
+                    {
+                        if (DeviationscolumnsToInclude.Contains(DeviationscolumnNames[i]))
+                        {
+                            var val = row.Cells[i].Value.ToString();
+                            var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet7.Id.Value, row.Id.Value, null);
+
+                            
+                            foreach (var attachment in attachments.Data)
+                            {
+                                var AID = (long)attachment.Id;
+                                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet7.Id.Value, AID);
+
+
+                                DeviationsattachmentInfo[val] = file.Url;
+
+                            }
+                        }
+                    
+
+
+
+                    }
+                    DeviationsattachmentsList.Add(DeviationsattachmentInfo);
+
                 }
             }
 
 
 
 
-            string jsonData = JsonConvert.SerializeObject(resultData);
-
-            return Ok(jsonData);
 
 
 
 
+            resultData["eventDetails"] = eventDetails;
+            resultData["Files"] = attachmentsList;
+            resultData["Brands"] = BrandseventDetails;
+            resultData["Invitees"] = InviteeseventDetails;
+            resultData["PanelDetails"] = PaneleventDetails;
+            resultData["SlideKitSelection"] = SlideKiteventDetails;
+            resultData["ExpenseSelection"] = ExpenseeventDetails;
+            resultData["Deviation"] = DeviationsattachmentsList;
 
-            //return Ok(resultData);
 
-
-
-
+            return Ok(resultData);
         }
 
         [HttpPut("UpdateClassIPreEvent")]
