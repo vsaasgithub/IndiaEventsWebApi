@@ -10,17 +10,17 @@ namespace IndiaEvents.Models.Models.Draft
     public class UpdateDataForClassI
     {
 
-        public EventDetails EventDetails { get; set; }
-        public List<BrandSelection> BrandSelection { get; set; }
-        public List<PanelSelection> PanelSelection { get; set; }
-        public List<SlideKitSelection> SlideKitSelection { get; set; }
-        public List<InviteeSelection> InviteeSelection { get; set; }
-        public List<ExpenseSelection> ExpenseSelection { get; set; }
+        public UpdateEventDetails EventDetails { get; set; }
+        public List<UpdateBrandSelection> BrandSelection { get; set; }
+        public List<UpdatePanelSelection> PanelSelection { get; set; }
+        public List<UpdateSlideKitSelection> SlideKitSelection { get; set; }
+        public List<UpdateInviteeSelection> InviteeSelection { get; set; }
+        public List<UpdateExpenseSelection> ExpenseSelection { get; set; }
         public string IsDeviationUpload { get; set; }
         public string DeviationFiles { get; set; }
     }
 
-    public class BrandSelection
+    public class UpdateBrandSelection
     {
         public string Id { get; set; }
         public string brandName { get; set; }
@@ -28,7 +28,7 @@ namespace IndiaEvents.Models.Models.Draft
         public string projectId { get; set; }
     }
 
-    public class EventDetails
+    public class UpdateEventDetails
     {
         public string Id { get; set; }
         public string EventTopic { get; set; }
@@ -55,11 +55,11 @@ namespace IndiaEvents.Models.Models.Draft
         public int? TotalExpense { get; set; }
 
         public string IsFilesUpload { get; set; }
-        public List<string> Files { get; set; }
+        public List<UpdateFiles> Files { get; set; }
 
     }
 
-    public class ExpenseSelection
+    public class UpdateExpenseSelection
     {
         public string Id { get; set; }
         public string Expense { get; set; }
@@ -69,7 +69,7 @@ namespace IndiaEvents.Models.Models.Draft
         public string FoodAndBeveragedDeviationUrl { get; set; }
     }
 
-    public class InviteeSelection
+    public class UpdateInviteeSelection
     {
         public string Id { get; set; }
         public string InviteeFrom { get; set; }
@@ -83,7 +83,7 @@ namespace IndiaEvents.Models.Models.Draft
         public int LocalConveyanceAmountExcludingTax { get; set; }
     }
 
-    public class PanelSelection
+    public class UpdatePanelSelection
     {
         public string Id { get; set; }
         public string SpeakerCode { get; set; }
@@ -132,10 +132,10 @@ namespace IndiaEvents.Models.Models.Draft
         public string IsGlobalFMVCheck { get; set; }
         public string SwiftCode { get; set; }
         public string IsFilesUpload { get; set; }
-        public List<string> Files { get; set; }
+        public List<UpdateFiles> Files { get; set; }
     }
 
-    public class SlideKitSelection
+    public class UpdateSlideKitSelection
     {
         public string Id { get; set; }
         public string HcpName { get; set; }
@@ -144,8 +144,13 @@ namespace IndiaEvents.Models.Models.Draft
         public string SlideKitType { get; set; }
         public string SlideKitOption { get; set; }
         public string IsFilesUpload { get; set; }
-        public List<string> Files { get; set; }
+        public List<UpdateFiles> Files { get; set; }
     }
 
+    public class UpdateFiles
+    {
+        public string? Id { get; set; }
+        public string? FileBase64 { get; set; }
+    }
 
 }
