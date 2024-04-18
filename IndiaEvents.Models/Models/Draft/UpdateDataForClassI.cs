@@ -9,13 +9,13 @@ namespace IndiaEvents.Models.Models.Draft
 {
     public class UpdateDataForClassI
     {
-        public PreEventCheck preEventCheck { get; set; }
-        public EventDetails eventDetails { get; set; }
-        public List<BrandSelection> brandSelection { get; set; }
-        public List<PanelSelection> panelSelection { get; set; }
-        public List<SlideKitSelection> slideKitSelection { get; set; }
-        public List<InviteeSelection> inviteeSelection { get; set; }
-        public List<ExpenseSelection> expenseSelection { get; set; }
+       
+        public EventDetails EventDetails { get; set; }
+        public List<BrandSelection> BrandSelection { get; set; }
+        public List<PanelSelection> PanelSelection { get; set; }
+        public List<SlideKitSelection> SlideKitSelection { get; set; }
+        public List<InviteeSelection> InviteeSelection { get; set; }
+        public List<ExpenseSelection> ExpenseSelection { get; set; }
         public Files files { get; set; }
     }
 
@@ -28,35 +28,35 @@ namespace IndiaEvents.Models.Models.Draft
 
     public class EventDetails
     {
-        public string eventTopic { get; set; }
-        public string startTime { get; set; }
-        public string endTime { get; set; }
-        public string venueName { get; set; }
-        public string state { get; set; }
-        public string city { get; set; }
+        public string EventTopic { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+        public string VenueName { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
     }
 
     public class ExpenseSelection
     {
-        public string expenseName { get; set; }
-        public string expenseType { get; set; }
-        public int expenseAmountIncludingTax { get; set; }
-        public int expenseAmountExcludingTax { get; set; }
-        public string foodAndBeveragedDeviationUrl { get; set; }
+        public string ExpenseName { get; set; }
+        public string ExpenseType { get; set; }
+        public int ExpenseAmountIncludingTax { get; set; }
+        public int ExpenseAmountExcludingTax { get; set; }
+        public string FoodAndBeveragedDeviationUrl { get; set; }
     }
 
     public class Files
     {
-        public string agendaFileUrl { get; set; }
-        public string invitationFileUrl { get; set; }
+        public string AgendaFileUrl { get; set; }
+        public string InvitationFileUrl { get; set; }
     }
 
     public class InviteeSelection
     {
-        public string inviteeFrom { get; set; }
-        public string name { get; set; }
-        public string misCode { get; set; }
-        public string employeeCode { get; set; }
+        public string InviteeFrom { get; set; }
+        public string Name { get; set; }
+        public string MisCode { get; set; }
+        public string EmployeeCode { get; set; }
         public string isLocalConveyance { get; set; }
         public string localConveyanceType { get; set; }
         public string speciality { get; set; }
