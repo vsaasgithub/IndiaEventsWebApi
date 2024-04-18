@@ -12,16 +12,7 @@
         public string? BteAmount { get; set; }
         public string? BudgetAmount { get; set; }
     }
-    public class UpdateEventRequestExpenseSheet
-    {
-        public string? ExpenseId { get; set; }
-        public string? EventId { get; set; }
-        public string? Expense { get; set; }
-        public int? AmountIncludingTax { get; set; }
-        public int? AmountExcludingTax { get; set; }
-        public string? BtcorBte { get; set; }
-
-    }
+   
     public class AddNewExpense
     {
         public string? EventId { get; set; }
