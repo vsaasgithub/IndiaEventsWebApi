@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 using System.Text;
+using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 
 namespace IndiaEventsWebApi.Controllers.EventsController
 {
@@ -143,7 +145,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
 
         //}
-        #endregion
+
 
         //[HttpGet("GetDataFromAllSheetsUsingEventIdInPreEvent")]
         //public IActionResult GetDataFromAllSheetsUsingEventId(string eventId)
@@ -235,7 +237,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
 
         //}
-
+        #endregion
         [HttpGet("GetDataFromAllSheetsUsingEventIdInPreEvent")]
         public IActionResult GetDataFromAllSheetsUsingEventId(string eventId)
         {
@@ -264,7 +266,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 if (row.Cells.Any(c => c.DisplayValue == eventId))
                 {
-                    List<string> columnsToInclude = new List<string> { "EventDate", "Event Topic", "StartTime", "EndTime", "State", "City", "Meeting Type" };
+                    List<string> columnsToInclude = new List<string> { "EventDate", "Event Topic", "StartTime", "EndTime", "State", "VenueName", "City", "Brands", "Panelists", "SlideKits", "Invitees", "MIPL Invitees", "Expenses", "Meeting Type" };
 
                     Dictionary<string, object> rowData = new Dictionary<string, object>();
                     for (int i = 0; i < columnNames.Count; i++)
@@ -529,91 +531,134 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             return Ok(resultData);
         }
 
-        //[HttpPut("UpdateClassIPreEvent")]
-        //public IActionResult UpdateClassIPreEvent(UpdateAllObjModels formDataList)
-        //{
-        //    Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
-        //    Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
-        //    Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
-        //    Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
-        //    Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
-        //    Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
-        //    Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+        [HttpPut("UpdateClassIPreEvent")]
+        public IActionResult UpdateClassIPreEvent(UpdateDataForClassI formDataList)
+        {
+            Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+            Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+            Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+            #region
+            //StringBuilder addedBrandsData = new();
+            //StringBuilder addedInviteesData = new();
+            //StringBuilder addedMEnariniInviteesData = new();
+            //StringBuilder addedHcpData = new();
+            //StringBuilder addedSlideKitData = new();
+            //StringBuilder addedExpences = new();
 
-        //    StringBuilder addedBrandsData = new();
-        //    StringBuilder addedInviteesData = new();
-        //    StringBuilder addedMEnariniInviteesData = new();
-        //    StringBuilder addedHcpData = new();
-        //    StringBuilder addedSlideKitData = new();
-        //    StringBuilder addedExpences = new();
-
-        //    int addedSlideKitDataNo = 1;
-        //    int addedHcpDataNo = 1;
-        //    int addedInviteesDataNo = 1;
-        //    int addedInviteesDataNoforMenarini = 1;
-        //    int addedBrandsDataNo = 1;
-        //    int addedExpencesNo = 1;
-
-
-        //    foreach (var formdata in formDataList.EventRequestExpenseSheet)
-        //    {
-        //        string rowData = $"{addedExpencesNo}. {formdata.Expense} | AmountExcludingTax: {formdata.AmountExcludingTax}| Amount: {formdata.AmountIncludingTax} | {formdata.BtcorBte}";
-        //        addedExpences.AppendLine(rowData);
-        //        addedExpencesNo++;
-
-        //    }
-
-        //    string Expense = addedExpences.ToString();
-        //    foreach (var formdata in formDataList.EventRequestHCPSlideKits)
-        //    {
-        //        string rowData = $"{addedSlideKitDataNo}. {formdata.HcpName} | {formdata.SlideKitType}";
-        //        addedSlideKitData.AppendLine(rowData);
-        //        addedSlideKitDataNo++;
-        //    }
-        //    string slideKit = addedSlideKitData.ToString();
-        //    foreach (var formdata in formDataList.RequestBrandsList)
-        //    {
-        //        string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
-        //        addedBrandsData.AppendLine(rowData);
-        //        addedBrandsDataNo++;
-        //    }
-        //    string brand = addedBrandsData.ToString();
-        //    foreach (var formdata in formDataList.EventRequestInvitees)
-        //    {
-        //        if (formdata.InviteedFrom == "Menarini Employees")
-        //        {
-        //            string row = $"{addedInviteesDataNoforMenarini}. {formdata.InviteeName}";
-        //            addedMEnariniInviteesData.AppendLine(row);
-        //            addedInviteesDataNoforMenarini++;
-        //        }
-        //        else
-        //        {
-        //            string rowData = $"{addedInviteesDataNo}. {formdata.InviteeName}";
-        //            addedInviteesData.AppendLine(rowData);
-        //            addedInviteesDataNo++;
-        //        }
-
-        //    }
-        //    string Invitees = addedInviteesData.ToString();
-        //    string MenariniInvitees = addedMEnariniInviteesData.ToString();
-        //    foreach (var formdata in formDataList.EventRequestHcpRole)
-        //    {
-
-        //        string rowData = $"{addedHcpDataNo}. {formdata.HcpRole} |{formdata.HcpName} | Honr.Amt: {formdata.HonarariumAmount} |Trav.&Acc.Amt: {formdata.Travel + formdata.Accomdation} ";
-        //        addedHcpData.AppendLine(rowData);
-        //        addedHcpDataNo++;
-
-        //    }
-        //    string HCP = addedHcpData.ToString();
+            //int addedSlideKitDataNo = 1;
+            //int addedHcpDataNo = 1;
+            //int addedInviteesDataNo = 1;
+            //int addedInviteesDataNoforMenarini = 1;
+            //int addedBrandsDataNo = 1;
+            //int addedExpencesNo = 1;
 
 
+            //foreach (var formdata in formDataList.ExpenseSelection)
+            //{
+            //    string rowData = $"{addedExpencesNo}. {formdata.Expense} | AmountExcludingTax: {formdata.ExpenseAmountExcludingTax}| Amount: {formdata.ExpenseAmountIncludingTax} | {formdata.ExpenseType}";
+            //    addedExpences.AppendLine(rowData);
+            //    addedExpencesNo++;
 
-        //    return Ok();
+            //}
+
+            //string Expense = addedExpences.ToString();
+            //foreach (var formdata in formDataList.SlideKitSelection)
+            //{
+            //    string rowData = $"{addedSlideKitDataNo}. {formdata.HcpName} | {formdata.SlideKitType}";
+            //    addedSlideKitData.AppendLine(rowData);
+            //    addedSlideKitDataNo++;
+            //}
+            //string slideKit = addedSlideKitData.ToString();
+            //foreach (var formdata in formDataList.BrandSelection)
+            //{
+            //    string rowData = $"{addedBrandsDataNo}. {formdata.brandName} | {formdata.projectId} | {formdata.percentageAllocation}";
+            //    addedBrandsData.AppendLine(rowData);
+            //    addedBrandsDataNo++;
+            //}
+            //string brand = addedBrandsData.ToString();
+            //foreach (var formdata in formDataList.InviteeSelection)
+            //{
+            //    if (formdata.InviteeFrom == "Menarini Employees")
+            //    {
+            //        string row = $"{addedInviteesDataNoforMenarini}. {formdata.Name}";
+            //        addedMEnariniInviteesData.AppendLine(row);
+            //        addedInviteesDataNoforMenarini++;
+            //    }
+            //    else
+            //    {
+            //        string rowData = $"{addedInviteesDataNo}. {formdata.Name}";
+            //        addedInviteesData.AppendLine(rowData);
+            //        addedInviteesDataNo++;
+            //    }
+
+            //}
+            //string Invitees = addedInviteesData.ToString();
+            //string MenariniInvitees = addedMEnariniInviteesData.ToString();
+            //foreach (var formdata in formDataList.PanelSelection)
+            //{
+
+            //    string rowData = $"{addedHcpDataNo}. {formdata.HcpRole} |{formdata.HcpName} | Honr.Amt: {formdata.HonarariumAmountIncludingTax} |Trav.&Acc.Amt: {formdata.TravelAmountIncludingTax + formdata.AccomdationIncludingTax} ";
+            //    addedHcpData.AppendLine(rowData);
+            //    addedHcpDataNo++;
+
+            //}
+            //string HCP = addedHcpData.ToString();
+            #endregion
+
+            var targetRow = sheet1.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formDataList.EventDetails.Id));
+            //if (targetRow == null)
+            //{
+            //    try
+            //    {
+            //        Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
+            //        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Actual Amount"), Value = formDataList.ProductName });
+            //        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Actual Amount"), Value = formDataList.IndicationsDone });
+            //        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Actual Amount"), Value = formDataList.BatchNumber });
+            //        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Actual Amount"), Value = formDataList.SubjectNameandSurName });
+
+            //        IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet4.Id.Value, new Row[] { updateRow });
+            //        if (formDataList.IsUploadDocument == "Yes")
+            //        {
+            //            foreach (var p in formDataList.UploadDocument)
+            //            {
+
+            //                string[] words = p.Split(':');
+            //                var r = words[0];
+            //                var q = words[1];
+            //                var name = r.Split(".")[0];
+            //                var filePath = SheetHelper.testingFile(q, name);
+            //                var addedRow = updatedRow[0];
+            //                var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+            //                        sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+            //                if (System.IO.File.Exists(filePath))
+            //                {
+            //                    SheetHelper.DeleteFile(filePath);
+            //                }
+            //            }
+
+            //        }
+            //    }
+            //    catch(Exception ex)
+            //    {
+            //        Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
+            //        Log.Error(ex.StackTrace);
+            //        return BadRequest(ex.Message);
+            //    }
+            //}
 
 
 
 
-        //}
+            return Ok();
+
+
+
+
+        }
 
     }
 
