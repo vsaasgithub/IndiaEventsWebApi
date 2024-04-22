@@ -23,9 +23,9 @@ namespace IndiaEvents.Models.Models.Draft
     public class UpdateBrandSelection
     {
         public string Id { get; set; }
-        public string brandName { get; set; }
-        public int percentageAllocation { get; set; }
-        public string projectId { get; set; }
+        public string BrandName { get; set; }
+        public int PercentageAllocation { get; set; }
+        public string ProjectId { get; set; }
     }
 
     public class UpdateEventDetails
@@ -66,7 +66,6 @@ namespace IndiaEvents.Models.Models.Draft
         public string ExpenseType { get; set; }
         public int ExpenseAmountIncludingTax { get; set; }
         public int ExpenseAmountExcludingTax { get; set; }
-        public string FoodAndBeveragedDeviationUrl { get; set; }
     }
 
     public class UpdateInviteeSelection
@@ -93,7 +92,6 @@ namespace IndiaEvents.Models.Models.Draft
         public string Qualification { get; set; }
         public string Country { get; set; }
         public string Rationale { get; set; }
-        public string NocFileUrl { get; set; }
         public string FcpaIssueDate { get; set; }
 
         public int PresentationDuration { get; set; }
@@ -119,8 +117,6 @@ namespace IndiaEvents.Models.Models.Draft
         public int AccomdationIncludingTax { get; set; }
         public int AccomdationExcludingTax { get; set; }
         public string AccomodationBtcorBte { get; set; }
-        public string AggregateDeviationFileUrl { get; set; }
-        public string HonorariumDeviationFileUrl { get; set; }
         public string PanCardName { get; set; }
         public string BankAccountNumber { get; set; }
         public string IFSCCode { get; set; }
@@ -149,7 +145,7 @@ namespace IndiaEvents.Models.Models.Draft
 
     public class UpdateFiles
     {
-        public string? Id { get; set; }
+        public long? Id { get; set; }
         public string? FileBase64 { get; set; }
     }
 
