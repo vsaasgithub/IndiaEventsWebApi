@@ -254,6 +254,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             List<Dictionary<string, object>> ExpenseeventDetails = new();
             List<Dictionary<string, object>> attachmentsList = new List<Dictionary<string, object>>();
             List<Dictionary<string, object>> DeviationsattachmentsList = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> attachmentInfoFiles = new();
 
             Sheet sheet1 = (Sheet)SheetHelper.GetSheetById(smartsheet, sheetId1);
             List<string> columnNames = new List<string>();
@@ -277,28 +278,92 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             rowData[columnNames[i]] = row.Cells[i].Value;
                         }
                     }
-                    var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null);
+                    PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null);
 
-                    Dictionary<string, object> attachmentInfo = new Dictionary<string, object>();
-                    foreach (var attachment in attachments.Data)
+                    //Dictionary<string, object> attachmentInfo = new Dictionary<string, object>();
+                    //foreach (var attachment in attachments.Data)
+                    //{
+                    //    var AID = (long)attachment.Id;
+                    //    var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID);
+
+                    //    var fileId = (long)attachment.Id;
+                    //    //attachmentInfo[file.Name] = file.Url;
+                    //    Dictionary<string, object> attachmentInfoData = new()
+                    //        {
+                    //            { "Name", file.Name },
+                    //            { "Id", file.Id },
+                    //            { "Url", file.Url }
+                    //        };
+                    //    attachmentInfo[file.Name] = attachmentInfoData;
+
+                    //}
+                    //attachmentsList.Add(attachmentInfo);
+                    if (attachments.Data != null || attachments.Data.Count > 0)
                     {
-                        var AID = (long)attachment.Id;
-                        var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID);
-
-                        var fileId = (long)attachment.Id;
-                        //attachmentInfo[file.Name] = file.Url;
-                        Dictionary<string, object> attachmentInfoData = new()
+                        foreach (var attachment in attachments.Data)
+                        {
+                            long AID = (long)attachment.Id;
+                            Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID);
+                            Dictionary<string, object> attachmentInfoData = new()
                             {
                                 { "Name", file.Name },
                                 { "Id", file.Id },
                                 { "Url", file.Url }
                             };
-                        attachmentInfo[file.Name] = attachmentInfoData;
-
-
-
+                            attachmentInfoFiles.Add(attachmentInfoData);
+                        }
+                        //BrandsrowData["Attachments"] = attachmentInfo;
+                        //attachmentsList.Add(attachmentInfo);
                     }
-                    attachmentsList.Add(attachmentInfo);
+                    
+
+
+                    //PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet2.Id.Value, row.Id.Value, null);
+
+                    //List<Dictionary<string, object>> BrandsattachmentsList = new();
+                    //if (attachments.Data != null || attachments.Data.Count > 0)
+                    //{
+                    //    foreach (var attachment in attachments.Data)
+                    //    {
+                    //        long AID = (long)attachment.Id;
+                    //        Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet2.Id.Value, AID);
+                    //        Dictionary<string, object> attachmentInfo = new()
+                    //        {
+                    //            { "Name", file.Name },
+                    //            { "Id", file.Id },
+
+                    //            { "Url", file.Url }
+                    //        };
+                    //        BrandsattachmentsList.Add(attachmentInfo);
+                    //    }
+                    //    BrandsrowData["Attachments"] = BrandsattachmentsList;
+                    //}
+                    //BrandseventDetails.Add(BrandsrowData);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     eventDetails.Add(rowData);
                 }
@@ -533,7 +598,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 }
             }
             resultData["eventDetails"] = eventDetails;
-            resultData["Files"] = attachmentsList;
+            resultData["Files"] = attachmentInfoFiles;
             resultData["Brands"] = BrandseventDetails;
             resultData["Invitees"] = InviteeseventDetails;
             resultData["PanelDetails"] = PaneleventDetails;
