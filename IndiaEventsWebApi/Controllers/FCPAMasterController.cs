@@ -55,8 +55,8 @@ namespace IndiaEventsWebApi.Controllers
                 Column fcpaSignOffDateColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Sign Off Date");
                 Column fcpaExpiryDateColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Expiry Date");
                 Column fcpaValidColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Valid?");
-                Column AggregateSpendOnMedicalUtility = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Spent on Medical Utility");
-                Column AggregateSpendasHCPConsultant = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Spent as HCP Consultant");
+                Column AggregateSpendOnMedicalUtility = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Honorarium Spent");
+                Column AggregateSpendasHCPConsultant = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Accommodation Spent");
 
                 //var uniqueVal = "";
                 //if (formdata.MisCode == "NA")
@@ -117,8 +117,8 @@ namespace IndiaEventsWebApi.Controllers
                                 FCPASignOffDate = fcpaSignOffDateCell?.Value,
                                 FCPAExpiryDate = fcpaExpiryDateCell?.Value,
                                 FCPAValid = fcpaValidCell?.Value,
-                                AggregateSpendOnMedicalUtility = AggregateSpendOnMedicalUtilityCell?.Value,
-                                AggregateSpendasHCPConsultant = AggregateSpendasHCPConsultantCell?.Value,
+                                AggregateHonorariumSpent = AggregateSpendOnMedicalUtilityCell?.Value,
+                                AggregateAccommodationSpent = AggregateSpendasHCPConsultantCell?.Value,
                                 Attachments = attachments,
                                 Url = url
 
@@ -138,8 +138,8 @@ namespace IndiaEventsWebApi.Controllers
                 Column fcpaSignOffDateColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Sign Off Date");
                 Column fcpaExpiryDateColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Expiry Date");
                 Column fcpaValidColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Valid?");
-                Column AggregateSpendOnMedicalUtility = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Spent on Medical Utility");
-                Column AggregateSpendasHCPConsultant = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Spent as HCP Consultant");
+                Column AggregateSpendOnMedicalUtility = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate spend on Accomodation");
+                Column AggregateSpendasHCPConsultant = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Honorarium Spent ");
 
 
                 if (misCodeColumn != null)
@@ -188,8 +188,8 @@ namespace IndiaEventsWebApi.Controllers
                                 FCPASignOffDate = fcpaSignOffDateCell?.Value,
                                 FCPAExpiryDate = fcpaExpiryDateCell?.Value,
                                 FCPAValid = fcpaValidCell?.Value,
-                                AggregateSpendOnMedicalUtility = AggregateSpendOnMedicalUtilityCell?.Value,
-                                AggregateSpendasHCPConsultant = AggregateSpendasHCPConsultantCell?.Value,
+                                AggregateSpendonAccomodation = AggregateSpendOnMedicalUtilityCell?.Value,
+                                AggregateHonorariumSpent = AggregateSpendasHCPConsultantCell?.Value,
                                 Attachments = attachments,
                                 Url = url
 
@@ -208,8 +208,8 @@ namespace IndiaEventsWebApi.Controllers
                     Column fcpaSignOffDateColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Sign Off Date");
                     Column fcpaExpiryDateColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Expiry Date");
                     Column fcpaValidColumn = sheet.Columns.FirstOrDefault(column => column.Title == "FCPA Valid?");
-                    Column AggregateSpendOnMedicalUtility = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Spent on Medical Utility");
-                    Column AggregateSpendasHCPConsultant = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Spent as HCP Consultant");
+                    Column AggregateSpendOnMedicalUtility = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Accommodation Spent");
+                    Column AggregateSpendasHCPConsultant = sheet.Columns.FirstOrDefault(column => column.Title == "Aggregate Honorarium Spent");
 
 
                     if (misCodeColumn != null)
@@ -258,8 +258,8 @@ namespace IndiaEventsWebApi.Controllers
                                     FCPASignOffDate = fcpaSignOffDateCell?.Value,
                                     FCPAExpiryDate = fcpaExpiryDateCell?.Value,
                                     FCPAValid = fcpaValidCell?.Value,
-                                    AggregateSpendOnMedicalUtility = AggregateSpendOnMedicalUtilityCell?.Value,
-                                    AggregateSpendasHCPConsultant = AggregateSpendasHCPConsultantCell?.Value,
+                                    AggregatespendonAccommodation = AggregateSpendOnMedicalUtilityCell?.Value,
+                                    AggregateHonorariumSpent = AggregateSpendasHCPConsultantCell?.Value,
                                     Attachments = attachments,
                                     Url = url
 
