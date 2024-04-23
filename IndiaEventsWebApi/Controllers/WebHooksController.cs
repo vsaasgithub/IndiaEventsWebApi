@@ -145,7 +145,103 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
+        private async void ApprovalCheckBox(Root RequestWebhook)
+        {
+            try
+            {
+                var TestingId = "6831673324818308";
+                Sheet TestingSheetData = SheetHelper.GetSheetById(smartsheet, TestingId);
 
+                if (RequestWebhook != null && RequestWebhook.events != null)
+                {
+                    foreach (var WebHookEvent in RequestWebhook.events)
+                    {
+
+                        if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
+                        {
+
+
+
+                            Row targetRowId = processSheetData.Rows.FirstOrDefault(row => row.Id == WebHookEvent.rowId);
+                            if (targetRowId != null)
+                            {
+                                string? status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 1910199395766148)?.Value.ToString();
+                                if (status.ToLower() == "approved")
+                                {
+                                    var checkboxcell = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == 7539698929979268);
+                                    if (checkboxcell != null)
+                                    {
+                                        checkboxcell.Value = true;
+                                        smartsheet.SheetResources.RowResources.UpdateRows(6831673324818308, new Row[] { targetRowId });
+                                    }
+
+                                    //long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                                    //Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = formDataList.class1.Role };
+
+                                    //Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
+                                    //Cell? cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+
+                                    //if (cellToUpdate != null) { cellToUpdate.Value = formDataList.class1.Role; }
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
+                                }
+                            }
+
+
+                            //if ()
+                            //{
+                            //    var columnValue = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn1.Id)?.Value.ToString();
+                            //    var status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn2.Id)?.Value.ToString();
+                            //    var meetingType = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn3.Id)?.Value;
+                            //    var EventType = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn4.Id)?.Value.ToString();
+                            //    if (EventType == "Class I" || EventType == "Webinar")
+                            //    {
+                            //        if (status != null && (status == "Approved" || status == "Waiting for Finance Treasury Approval"))
+                            //        {
+                            //            int timeInterval = 250000;
+                            //            await Task.Delay(timeInterval);
+                            //            if (meetingType != null)
+                            //            {
+                            //                if (meetingType.ToString() == "Other |")
+                            //                {
+
+                            //                    moveAttachments(columnValue, WebHookEvent.rowId);
+                            //                }
+                            //            }
+
+                            //            else
+                            //            {
+                            //                GenerateSummaryPDF(columnValue, WebHookEvent.rowId);
+                            //                moveAttachments(columnValue, WebHookEvent.rowId);
+                            //            }
+
+
+                            //        }
+
+                            //    }
+                            //    else if (status != null && status == "Approved")
+                            //    {
+                            //        int timeInterval = 250000;
+                            //        await Task.Delay(timeInterval);
+                            //        moveAttachments(columnValue, WebHookEvent.rowId);
+                            //    }
+
+
+
+                            //}
+
+
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Serilog.Log.Error($"Error occured on Webhook apicontroller Attachementfile method {ex.Message} at {DateTime.Now}");
+                Serilog.Log.Error(ex.StackTrace);
+            }
+
+        }
 
 
 

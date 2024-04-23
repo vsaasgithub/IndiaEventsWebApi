@@ -128,7 +128,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             {
                 int HM = SheetHelper.NumCheck(formdata.HonarariumAmount);
                 int t = SheetHelper.NumCheck(formdata.Travel) + SheetHelper.NumCheck(formdata.Accomdation);
-                string rowData = $"{addedHcpDataNo}. {formdata.HcpRole} |{formdata.HcpName} | Honr.Amt: {HM} |Trav.&Acc.Amt: {t} ";
+                string rowData = $"{addedHcpDataNo}. {formdata.HcpRole} |{formdata.HcpName} | Honr.Amt: {HM} |Trav.&Acc.Amt: {t} |Rationale :{formdata.Rationale}";
                 addedHcpData.AppendLine(rowData);
                 addedHcpDataNo++;
                 TotalTravelAmount += SheetHelper.NumCheck(formdata.Travel);
@@ -595,7 +595,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 foreach (var formdata in formDataList.PanelistData)
                 {
 
-                    string rowData = $"{addedHcpDataNo}. {formdata.HcpType} |{formdata.HcpName} | Honr.Amt: {formdata.HonorariumAmountincludingTax} |Trav.&Acc.Amt: {formdata.TravelAmountIncludingTax + formdata.AccomodationAmountIncludingTax} ";
+                    string rowData = $"{addedHcpDataNo}. {formdata.HcpType} |{formdata.HcpName} | Honr.Amt: {formdata.HonorariumAmountincludingTax} |Trav.&Acc.Amt: {formdata.TravelAmountIncludingTax + formdata.AccomodationAmountIncludingTax} |Rationale :{formdata.Rationale}";
                     addedHcpData.AppendLine(rowData);
                     addedHcpDataNo++;
 
@@ -1090,7 +1090,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 int HM = SheetHelper.NumCheck(formdata.HonarariumAmount);
                 int t = SheetHelper.NumCheck(formdata.Travel) + SheetHelper.NumCheck(formdata.Accomdation);
 
-                string rowData = $"{addedHcpDataNo}. {formdata.HcpRole} |{formdata.HcpName} | Honr.Amt: {HM} |Trav.&Acc.Amt: {t} ";
+                string rowData = $"{addedHcpDataNo}. {formdata.HcpRole} |{formdata.HcpName} | Honr.Amt: {HM} |Trav.&Acc.Amt: {t} |Rationale : {formdata.Rationale}";
                 addedHcpData.AppendLine(rowData);
                 addedHcpDataNo++;
                 TotalHonorariumAmount = TotalHonorariumAmount + SheetHelper.NumCheck(formdata.HonarariumAmount);
@@ -1122,6 +1122,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Expenses"), Value = Expense });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Panelists"), Value = HCP });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Invitees"), Value = Invitees });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "MIPL Invitees"), Value = MenariniInvitees });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "SlideKits"), Value = slideKit });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "IsAdvanceRequired"), Value = formDataList.Webinar.IsAdvanceRequired });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventOpen30days"), Value = formDataList.Webinar.EventOpen30days });
@@ -1571,7 +1572,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             {
                 int HM = SheetHelper.NumCheck(formdata.RegistrationAmount);
                 int t = SheetHelper.NumCheck(formdata.TravelAmount) + SheetHelper.NumCheck(formdata.AccomAmount);
-                string rowData = $"{addedHcpDataNo}. {formdata.MisCode} |{formdata.HcpName} | Regst.Amt: {HM} |Trav.&Acc.Amt: {t} ";
+                string rowData = $"{addedHcpDataNo}. {formdata.MisCode} |{formdata.HcpName} | Regst.Amt: {HM} |Trav.&Acc.Amt: {t} |Rationale :{formdata.Rationale}";
 
                 addedHcpData.AppendLine(rowData);
                 addedHcpDataNo++;
@@ -2262,7 +2263,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             string brand = addedBrandsData.ToString();
             foreach (var formdata in formDataList.HcpList)
             {
-                string rowData = $"{addedHcpDataNo}. {formdata.MisCode} |{formdata.HcpName} |Speciality: {formdata.Speciality} |Tier: {formdata.Tier} ";
+                string rowData = $"{addedHcpDataNo}. {formdata.MisCode} |{formdata.HcpName} |Speciality: {formdata.Speciality} |Tier: {formdata.Tier} |Rationale :{formdata.Rationale}";
                 addedHcpData.AppendLine(rowData);
                 addedHcpDataNo++;
             }
