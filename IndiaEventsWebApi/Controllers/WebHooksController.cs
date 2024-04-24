@@ -125,11 +125,10 @@ namespace IndiaEventsWebApi.Controllers
                     rawContent = await reader.ReadToEndAsync();
                 }
                 requestHeaders.Add("Body", rawContent);
-                Serilog.Log.Information(string.Join(";", requestHeaders.Select(x => x.Key + "=" + x.Value).ToArray()));
 
 
                 var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                Attachementfile(RequestWebhook);
+                ApprovalCheckBox(RequestWebhook);
 
                 var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 

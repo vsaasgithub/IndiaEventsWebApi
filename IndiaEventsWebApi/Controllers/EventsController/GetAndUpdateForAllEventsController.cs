@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NPOI.HPSF;
 using Serilog;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
+using System.Security.Policy;
 using System.Text;
 using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 
@@ -304,11 +306,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         {
                             long AID = (long)attachment.Id;
                             Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID);
+                           
                             Dictionary<string, object> attachmentInfoData = new()
                             {
                                 { "Name", file.Name },
                                 { "Id", file.Id },
-                                { "Url", file.Url }
+                                { "base64", SheetHelper.UrlToBaseValue(file.Url) }
                             };
                             attachmentInfoFiles.Add(attachmentInfoData);
                         }
@@ -405,7 +408,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 { "Name", file.Name },
                                 { "Id", file.Id },
 
-                                { "Url", file.Url }
+                                { "base64", SheetHelper.UrlToBaseValue(file.Url) }
                             };
                             BrandsattachmentsList.Add(attachmentInfo);
                         }
@@ -446,7 +449,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             {
                                 { "Name", file.Name },
                                 { "Id", file.Id },
-                                { "Url", file.Url }
+                                { "base64" , SheetHelper.UrlToBaseValue(file.Url) }
                             };
                             InviteesattachmentsList.Add(attachmentInfo);
                         }
@@ -493,7 +496,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             {
                                 { "Name", file.Name },
                                 { "Id", file.Id },
-                                { "Url", file.Url }
+                                { "base64" , SheetHelper.UrlToBaseValue(file.Url) }
                             };
                             PanelattachmentsList.Add(attachmentInfo);
                         }
@@ -535,7 +538,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             {
                                 { "Name", file.Name },
                                 { "Id", file.Id },
-                                { "Url", file.Url }
+                                { "base64" , SheetHelper.UrlToBaseValue(file.Url) }
                             };
                             SlideKitattachmentsList.Add(attachmentInfo);
                         }
@@ -590,7 +593,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             {
                                 var AID = (long)attachment.Id;
                                 var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet7.Id.Value, AID);
-                                DeviationsattachmentInfo[val] = file.Url;
+                                DeviationsattachmentInfo[val] = SheetHelper.UrlToBaseValue(file.Url);
                             }
                         }
                     }

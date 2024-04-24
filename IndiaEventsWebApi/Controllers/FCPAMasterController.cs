@@ -120,7 +120,8 @@ namespace IndiaEventsWebApi.Controllers
                                 AggregateHonorariumSpent = AggregateSpendOnMedicalUtilityCell?.Value,
                                 AggregateAccommodationSpent = AggregateSpendasHCPConsultantCell?.Value,
                                 Attachments = attachments,
-                                Url = url
+                                Url = url,
+                                base64 = SheetHelper.UrlToBaseValue(url)
 
                             });
                         }
