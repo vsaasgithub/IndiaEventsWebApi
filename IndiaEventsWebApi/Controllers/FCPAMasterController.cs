@@ -192,7 +192,8 @@ namespace IndiaEventsWebApi.Controllers
                                 AggregateSpendonAccomodation = AggregateSpendOnMedicalUtilityCell?.Value,
                                 AggregateHonorariumSpent = AggregateSpendasHCPConsultantCell?.Value,
                                 Attachments = attachments,
-                                Url = url
+                                Url = url,
+                                base64 = SheetHelper.UrlToBaseValue(url)
 
                             });
                         }
@@ -262,7 +263,8 @@ namespace IndiaEventsWebApi.Controllers
                                     AggregatespendonAccommodation = AggregateSpendOnMedicalUtilityCell?.Value,
                                     AggregateHonorariumSpent = AggregateSpendasHCPConsultantCell?.Value,
                                     Attachments = attachments,
-                                    Url = url
+                                    Url = url,
+                                    base64 = SheetHelper.UrlToBaseValue(url)
 
                                 });
                             }
