@@ -634,7 +634,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
         {
             try
             {
-               
+
                 SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
                 List<EventRequestBenificiaryDetails> benificiaryDetailsList = new List<EventRequestBenificiaryDetails>();
                 string sheetId = configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value;
@@ -646,27 +646,28 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                     List<string> columnNames = sheet.Columns.Select(column => column.Title).ToList();
                     int miscodeColumnIndex = columnNames.IndexOf("MisCode");
 
-                   
+
                     foreach (Row row in sheet.Rows)
                     {
                         Cell miscodeCell = row.Cells.FirstOrDefault(cell => cell.ColumnId == sheet.Columns[miscodeColumnIndex].Id);
 
                         if (miscodeCell != null && miscodeCell.Value != null && miscodeCell.Value.ToString() == MisCode)
                         {
-                            EventRequestBenificiaryDetails rowData = new EventRequestBenificiaryDetails();
-
-                            rowData.Currency = SheetHelper.GetValueByColumnName(row, columnNames, "Currency");
-                            rowData.EnterCurrencyType = SheetHelper.GetValueByColumnName(row, columnNames, "EnterCurrencyType");
-                            rowData.BenificiaryName = SheetHelper.GetValueByColumnName(row, columnNames, "BeneficiaryName");
-                            rowData.BankAccountNumber = SheetHelper.GetValueByColumnName(row, columnNames, "BankAccountNumber");
-                            rowData.BankName = SheetHelper.GetValueByColumnName(row, columnNames, "Bank Name");
-                            rowData.NameasPerPAN = SheetHelper.GetValueByColumnName(row, columnNames, "PanCardName");
-                            rowData.PANCardNumber = SheetHelper.GetValueByColumnName(row, columnNames, "PanNumber");
-                            rowData.IFSCCode = SheetHelper.GetValueByColumnName(row, columnNames, "IfscCode");
-                            rowData.IbnNumber = SheetHelper.GetValueByColumnName(row, columnNames, "IBN Number");
-                            rowData.SwiftCode = SheetHelper.GetValueByColumnName(row, columnNames, "Swift Code");
-                            rowData.TaxResidenceCertificateDate = Convert.ToDateTime(SheetHelper.GetValueByColumnName(row, columnNames, "Tax Residence Certificate Date"));
-                            rowData.EmailID = SheetHelper.GetValueByColumnName(row, columnNames, "Email ");
+                            EventRequestBenificiaryDetails rowData = new()
+                            {
+                                Currency = SheetHelper.GetValueByColumnName(row, columnNames, "Currency"),
+                                EnterCurrencyType = SheetHelper.GetValueByColumnName(row, columnNames, "EnterCurrencyType"),
+                                BenificiaryName = SheetHelper.GetValueByColumnName(row, columnNames, "BeneficiaryName"),
+                                BankAccountNumber = SheetHelper.GetValueByColumnName(row, columnNames, "BankAccountNumber"),
+                                BankName = SheetHelper.GetValueByColumnName(row, columnNames, "Bank Name"),
+                                NameasPerPAN = SheetHelper.GetValueByColumnName(row, columnNames, "PanCardName"),
+                                PANCardNumber = SheetHelper.GetValueByColumnName(row, columnNames, "PanNumber"),
+                                IFSCCode = SheetHelper.GetValueByColumnName(row, columnNames, "IfscCode"),
+                                IbnNumber = SheetHelper.GetValueByColumnName(row, columnNames, "IBN Number"),
+                                SwiftCode = SheetHelper.GetValueByColumnName(row, columnNames, "Swift Code"),
+                                TaxResidenceCertificateDate = Convert.ToDateTime(SheetHelper.GetValueByColumnName(row, columnNames, "Tax Residence Certificate Date")),
+                                EmailID = SheetHelper.GetValueByColumnName(row, columnNames, "Email ")
+                            };
 
                             benificiaryDetailsList.Add(rowData);
                         }
