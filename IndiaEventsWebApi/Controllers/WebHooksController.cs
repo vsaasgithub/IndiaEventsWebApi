@@ -170,7 +170,7 @@ namespace IndiaEventsWebApi.Controllers
                                     var checkboxcell = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == 7539698929979268);
                                     if (checkboxcell != null)
                                     {
-                                        checkboxcell.Value = true;
+                                        checkboxcell.Value = "Yes";
                                         smartsheet.SheetResources.RowResources.UpdateRows(6831673324818308, new Row[] { targetRowId });
                                     }
 
