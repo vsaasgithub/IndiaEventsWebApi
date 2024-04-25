@@ -27,7 +27,11 @@ namespace IndiaEventsWebApi.Helper
             }
             return 0;
         }
-
+        public static string GetValueByColumnName(Row row, List<string> columnNames, string columnName)
+        {
+            int columnIndex = columnNames.IndexOf(columnName);
+            return columnIndex != -1 ? row.Cells[columnIndex].Value?.ToString() : null;
+        }
         //UrlToBase64
         //public static string UrlToBaseValue(string url)
         //{

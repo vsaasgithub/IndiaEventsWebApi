@@ -1,4 +1,5 @@
-﻿using IndiaEventsWebApi.Helper;
+﻿using IndiaEvents.Models.Models.RequestSheets;
+using IndiaEventsWebApi.Helper;
 using IndiaEventsWebApi.Models;
 using IndiaEventsWebApi.Models.MasterSheets.CodeCreation;
 using Microsoft.AspNetCore.Http;
@@ -117,9 +118,9 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                     //var FCPA = !string.IsNullOrEmpty(formDataList.HcpConsultant.FcpaFile) ? "Yes" : "No";
 
 
-                   // var IsPanCardDocument = "";
-                   // var IsChequeDocument = "";
-                   // var IsTaxResidenceCertificate = "";
+                    // var IsPanCardDocument = "";
+                    // var IsChequeDocument = "";
+                    // var IsTaxResidenceCertificate = "";
                     //if (formData.PanCardDocument != "")
                     //{
                     //    IsPanCardDocument = "Yes";
@@ -333,8 +334,8 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                         long Id = (long)a.Id;
                         var Fullname = a.Name.Split(".");
                         var splitName = Fullname[0];
-                      
-                        if(splitName == " ChequeDocument")
+
+                        if (splitName == " ChequeDocument")
                         {
 
                             smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
@@ -379,8 +380,8 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                         long Id = (long)a.Id;
                         var Fullname = a.Name.Split(".");
                         var splitName = Fullname[0];
-                       
-                       
+
+
                         if (splitName == " PanCardDocument")
                         {
 
@@ -426,8 +427,8 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                         long Id = (long)a.Id;
                         var Fullname = a.Name.Split(".");
                         var splitName = Fullname[0];
-                        
-                      
+
+
                         if (splitName == " TaxResidenceCertificate")
                         {
 
@@ -527,7 +528,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                                 var AID = (long)attachment.Id;
                                 var Name = attachment.Name;
                                 var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(p, AID);
-                                url = file.Url;                                
+                                url = file.Url;
                                 using (HttpClient client = new HttpClient())
                                 {
                                     var fileContent = client.GetByteArrayAsync(url).Result;
@@ -553,81 +554,145 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
 
 
 
+
         //[HttpGet("GetRowsDataInHcpMasterByMisCode")]
-        //public IActionResult GetRowsDataInHcpMasterByMisCode(string? searchValue)
+        //public IActionResult GetRowsDataInHcpMasterByMisCode(string? MisCode)
         //{
         //    try
         //    {
-        //        List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
-        //        string sheetId1 = configuration.GetSection("SmartsheetSettings:HcpMaster1").Value;
-        //        string sheetId2 = configuration.GetSection("SmartsheetSettings:HcpMaster2").Value;
-        //        string sheetId3 = configuration.GetSection("SmartsheetSettings:HcpMaster3").Value;
-        //        string sheetId4 = configuration.GetSection("SmartsheetSettings:HcpMaster4").Value;
-        //        List<string> Sheets = new List<string>() { sheetId1, sheetId2, sheetId3, sheetId4 };
-        //        if (searchValue != null)
+        //        if (MisCode != null)
         //        {
-
-
-        //            foreach (var sheetId in Sheets)
+        //            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+        //            if (smartsheet == null)
         //            {
-        //                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
-        //                List<string> columnNames = new List<string>();
-
-        //                foreach (Column column in sheet.Columns)
-        //                {
-        //                    columnNames.Add(column.Title);
-        //                }
-
-        //                int miscodeColumnIndex = columnNames.IndexOf("MisCode");
-
-        //                foreach (Row row in sheet.Rows)
-        //                {
-        //                    Cell miscodeCell = row.Cells.FirstOrDefault(cell => cell.ColumnId == sheet.Columns[miscodeColumnIndex].Id);
-        //                    if (miscodeCell != null && miscodeCell.Value.ToString().Contains(searchValue))
-        //                    {
-        //                        Dictionary<string, object> rowData = new Dictionary<string, object>();
-        //                        for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
-        //                        {
-        //                            rowData[columnNames[i]] = row.Cells[i].Value;
-        //                        }
-        //                        sheetData.Add(rowData);
-        //                    }
-
-        //                }
+        //                // Log error: "SmartsheetClient is null"
+        //                return BadRequest("SmartsheetClient is null");
         //            }
 
-
-        //        }
-        //        else
-        //        {
-        //            foreach (var sheetId in Sheets)
+        //            string sheetId = configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value;
+        //            if (sheetId == null)
         //            {
-        //                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
-        //                List<string> columnNames = new List<string>();
-        //                foreach (Column column in sheet.Columns)
-        //                {
-        //                    columnNames.Add(column.Title);
-        //                }
-        //                foreach (Row row in sheet.Rows)
+        //                // Log error: "SheetId is null"
+        //                return BadRequest("SheetId is null");
+        //            }
+
+        //            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+        //            if (sheet == null)
+        //            {
+        //                // Log error: "Sheet is null"
+        //                return BadRequest("Sheet is null");
+        //            }
+
+        //            List<string> columnNames = new List<string>();
+        //            foreach (Column column in sheet.Columns)
+        //            {
+        //                columnNames.Add(column.Title);
+        //            }
+
+        //            int miscodeColumnIndex = columnNames.IndexOf("MisCode");
+        //            if (miscodeColumnIndex == -1)
+        //            {
+        //                // Log error: "MisCode column not found"
+        //                return BadRequest("MisCode column not found");
+        //            }
+
+        //            List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
+
+        //            foreach (Row row in sheet.Rows)
+        //            {
+        //                Cell miscodeCell = row.Cells.FirstOrDefault(cell => cell.ColumnId == sheet.Columns[miscodeColumnIndex].Id);
+
+        //                if (miscodeCell != null && miscodeCell.Value != null && miscodeCell.Value.ToString().Contains(MisCode))
         //                {
         //                    Dictionary<string, object> rowData = new Dictionary<string, object>();
+
         //                    for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
         //                    {
         //                        rowData[columnNames[i]] = row.Cells[i].Value;
         //                    }
+
         //                    sheetData.Add(rowData);
         //                }
         //            }
+
+        //            return Ok(sheetData);
         //        }
-        //        return Ok(sheetData);
+        //        else
+        //        {
+        //            return Ok(new { Message = "False" });
+        //        }
         //    }
         //    catch (Exception ex)
         //    {
-        //        return BadRequest(ex.Message);
+        //        // Log the exception
+        //        return StatusCode(500, "An error occurred: " + ex.Message);
         //    }
         //}
 
+        [HttpGet("GetRowsDataInVendorMasterByMisCode")]
+        public IActionResult GetRowsDataInVendorMasterByMisCode(string? MisCode)
+        {
+            try
+            {
+               
+                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+                List<EventRequestBenificiaryDetails> benificiaryDetailsList = new List<EventRequestBenificiaryDetails>();
+                string sheetId = configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value;
 
+                if (MisCode != null)
+                {
+
+                    Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                    List<string> columnNames = sheet.Columns.Select(column => column.Title).ToList();
+                    int miscodeColumnIndex = columnNames.IndexOf("MisCode");
+
+                   
+                    foreach (Row row in sheet.Rows)
+                    {
+                        Cell miscodeCell = row.Cells.FirstOrDefault(cell => cell.ColumnId == sheet.Columns[miscodeColumnIndex].Id);
+
+                        if (miscodeCell != null && miscodeCell.Value != null && miscodeCell.Value.ToString() == MisCode)
+                        {
+                            EventRequestBenificiaryDetails rowData = new EventRequestBenificiaryDetails();
+
+                            rowData.Currency = SheetHelper.GetValueByColumnName(row, columnNames, "Currency");
+                            rowData.EnterCurrencyType = SheetHelper.GetValueByColumnName(row, columnNames, "EnterCurrencyType");
+                            rowData.BenificiaryName = SheetHelper.GetValueByColumnName(row, columnNames, "BeneficiaryName");
+                            rowData.BankAccountNumber = SheetHelper.GetValueByColumnName(row, columnNames, "BankAccountNumber");
+                            rowData.BankName = SheetHelper.GetValueByColumnName(row, columnNames, "Bank Name");
+                            rowData.NameasPerPAN = SheetHelper.GetValueByColumnName(row, columnNames, "PanCardName");
+                            rowData.PANCardNumber = SheetHelper.GetValueByColumnName(row, columnNames, "PanNumber");
+                            rowData.IFSCCode = SheetHelper.GetValueByColumnName(row, columnNames, "IfscCode");
+                            rowData.IbnNumber = SheetHelper.GetValueByColumnName(row, columnNames, "IBN Number");
+                            rowData.SwiftCode = SheetHelper.GetValueByColumnName(row, columnNames, "Swift Code");
+                            rowData.TaxResidenceCertificateDate = Convert.ToDateTime(SheetHelper.GetValueByColumnName(row, columnNames, "Tax Residence Certificate Date"));
+                            rowData.EmailID = SheetHelper.GetValueByColumnName(row, columnNames, "Email ");
+
+                            benificiaryDetailsList.Add(rowData);
+                        }
+                    }
+                }
+                else
+                {
+                    return Ok(new { Message = "False" });
+                }
+
+                if (benificiaryDetailsList.Count > 0)
+                {
+
+                    return Ok(benificiaryDetailsList);
+                }
+                else
+                {
+                    return Ok(new { Message = "False" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
 
 
@@ -656,6 +721,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
         }
 
 
-       
+
     }
 }
