@@ -24,7 +24,7 @@ namespace IndiaEvents.Models.Models.Draft
     {
         public string Id { get; set; }
         public string BrandName { get; set; }
-        public int PercentageAllocation { get; set; }
+        public string? PercentageAllocation { get; set; }
         public string ProjectId { get; set; }
     }
 

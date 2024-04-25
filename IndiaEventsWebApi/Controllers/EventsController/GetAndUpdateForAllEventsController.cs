@@ -689,7 +689,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             #endregion
 
             Row? targetRow = sheet1.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formDataList.EventDetails.Id));
-            if (targetRow == null)
+            if (targetRow != null)
             {
                 try
                 {
@@ -764,15 +764,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     foreach (var formdata in formDataList.BrandSelection)
                     {
                         Row? BrandstargetRow = sheet2.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.Id));
-                        if (targetRow == null)
+                        if (BrandstargetRow != null)
                         {
 
-                            Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
-                            updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Brands"), Value = formdata.BrandName });
-                            updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "% Allocation"), Value = formdata.PercentageAllocation });
-                            updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Project ID"), Value = formdata.ProjectId });
+                            Row BrandsupdateRow = new Row { Id = BrandstargetRow.Id, Cells = new List<Cell>() };
+                            BrandsupdateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Brands"), Value = formdata.BrandName });
+                            BrandsupdateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "% Allocation"), Value = formdata.PercentageAllocation });
+                            BrandsupdateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Project ID"), Value = formdata.ProjectId });
 
-                            IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet2.Id.Value, new Row[] { updateRow });
+                            IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet2.Id.Value, new Row[] { BrandsupdateRow });
                         }
 
                     }
@@ -792,11 +792,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 {
                     foreach (var formdata in formDataList.PanelSelection)
                     {
-                        Row? BrandstargetRow = sheet4.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.Id));
-                        if (targetRow == null)
+                        Row? PaneltargetRow = sheet4.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.Id));
+                        if (PaneltargetRow != null)
                         {
 
-                            Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
+                            Row updateRow = new Row { Id = PaneltargetRow.Id, Cells = new List<Cell>() };
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "SpeakerCode"), Value = formdata.SpeakerCode });
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TrainerCode"), Value = formdata.TrainerCode });
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Speciality"), Value = formdata.Speciality });
@@ -883,16 +883,16 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
             if (formDataList.SlideKitSelection.Count > 0)
             {
-                Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+                Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
                 try
                 {
                     foreach (var formdata in formDataList.SlideKitSelection)
                     {
-                        Row? BrandstargetRow = sheet5.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.Id));
-                        if (targetRow == null)
+                        Row? SlideKittargetRow = sheet5.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.Id));
+                        if (SlideKittargetRow != null)
                         {
 
-                            Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
+                            Row updateRow = new Row { Id = SlideKittargetRow.Id, Cells = new List<Cell>() };
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "HCP Name"), Value = formdata.HcpName });
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "MIS"), Value = formdata.MisCode });
                             //updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "EventTopic"), Value = formdata.HcpType });
@@ -943,16 +943,16 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
             if (formDataList.InviteeSelection.Count > 0)
             {
-                Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+                Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
                 try
                 {
                     foreach (var formdata in formDataList.InviteeSelection)
                     {
                         Row? InviteetargetRow = sheet3.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.Id));
-                        if (targetRow == null)
+                        if (InviteetargetRow != null)
                         {
 
-                            Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
+                            Row updateRow = new Row { Id = InviteetargetRow.Id, Cells = new List<Cell>() };
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "StartTime"), Value = formdata.InviteeFrom });
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "HCPName"), Value = formdata.Name });
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "MISCode"), Value = formdata.MisCode });
@@ -983,11 +983,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 {
                     foreach (var formdata in formDataList.ExpenseSelection)
                     {
-                        Row? BrandstargetRow = sheet6.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.Id));
-                        if (targetRow == null)
+                        Row? ExpensetargetRow = sheet6.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.Id));
+                        if (ExpensetargetRow != null)
                         {
 
-                            Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
+                            Row updateRow = new Row { Id = ExpensetargetRow.Id, Cells = new List<Cell>() };
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Expense"), Value = formdata.Expense });
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTC/BTE"), Value = formdata.ExpenseType });
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Amount"), Value = formdata.ExpenseAmountIncludingTax });
@@ -1008,7 +1008,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 }
             }
 
-            return Ok();
+            return Ok(new
+            { Message = "Updated Successfully" });
         }
     }
 
