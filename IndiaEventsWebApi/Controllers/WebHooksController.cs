@@ -142,6 +142,35 @@ namespace IndiaEventsWebApi.Controllers
                 return BadRequest(ex.StackTrace);
             }
         }
+        [HttpPost("WebHookForEventSettlementApprovals")]
+        public async Task<IActionResult> WebHookForEventSettlementApprovals()
+        {
+            try
+            {
+                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                string rawContent = string.Empty;
+                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                {
+                    rawContent = await reader.ReadToEndAsync();
+                }
+                requestHeaders.Add("Body", rawContent);
+
+
+                var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+               // ApprovalCheckBox(RequestWebhook);
+
+                var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+
+                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                //return Ok();
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error($"Error occured on Webhook apicontroller PostData method {ex.Message} at {DateTime.Now}");
+                Serilog.Log.Error(ex.StackTrace);
+                return BadRequest(ex.StackTrace);
+            }
+        }
 
 
         private async void ApprovalCheckBox(Root RequestWebhook)
