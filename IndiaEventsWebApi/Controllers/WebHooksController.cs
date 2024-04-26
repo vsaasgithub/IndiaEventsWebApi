@@ -157,7 +157,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
                 var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-               // ApprovalCheckBox(RequestWebhook);
+                ApprovalCheckBox(RequestWebhook);
 
                 var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
@@ -172,6 +172,12 @@ namespace IndiaEventsWebApi.Controllers
             }
         }
 
+
+
+        private async void EventSettlementApproval(Root RequestWebhook)
+        {
+
+        }
 
         private async void ApprovalCheckBox(Root RequestWebhook)
         {
@@ -189,98 +195,25 @@ namespace IndiaEventsWebApi.Controllers
 
                         if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
                         {
-
-
-
                             Row targetRowId = TestingSheetData.Rows.FirstOrDefault(row => row.Id == WebHookEvent.rowId);
                             if (targetRowId != null)
                             {
                                 string? status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 7933735728009092)?.Value.ToString();
                                 if (status.ToLower() == "approved")
                                 {
-                                    //var checkboxcell = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == 7539698929979268);
-
-                                    //if (checkboxcell != null)
-                                    //{
-                                    //    checkboxcell.Value = "Yes";
-                                    //    smartsheet.SheetResources.RowResources.UpdateRows(6831673324818308, new Row[] { targetRowId });
-                                    //}
                                     long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "5working days");
                                     Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
 
-                                    smartsheet.SheetResources.RowResources.UpdateRows(6831673324818308, new Row[] { updateRow });
-
+                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
-                                
-
-
-
-
-
                             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            //if ()
-                            //{
-                            //    var columnValue = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn1.Id)?.Value.ToString();
-                            //    var status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn2.Id)?.Value.ToString();
-                            //    var meetingType = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn3.Id)?.Value;
-                            //    var EventType = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn4.Id)?.Value.ToString();
-                            //    if (EventType == "Class I" || EventType == "Webinar")
-                            //    {
-                            //        if (status != null && (status == "Approved" || status == "Waiting for Finance Treasury Approval"))
-                            //        {
-                            //            int timeInterval = 250000;
-                            //            await Task.Delay(timeInterval);
-                            //            if (meetingType != null)
-                            //            {
-                            //                if (meetingType.ToString() == "Other |")
-                            //                {
-
-                            //                    moveAttachments(columnValue, WebHookEvent.rowId);
-                            //                }
-                            //            }
-
-                            //            else
-                            //            {
-                            //                GenerateSummaryPDF(columnValue, WebHookEvent.rowId);
-                            //                moveAttachments(columnValue, WebHookEvent.rowId);
-                            //            }
-
-
-                            //        }
-
-                            //    }
-                            //    else if (status != null && status == "Approved")
-                            //    {
-                            //        int timeInterval = 250000;
-                            //        await Task.Delay(timeInterval);
-                            //        moveAttachments(columnValue, WebHookEvent.rowId);
-                            //    }
-
-
-
-                            //}
-
-
-                        }
                         }
                     }
                 }
+            }
 
             catch (Exception ex)
             {
