@@ -113,8 +113,8 @@ namespace IndiaEventsWebApi.Controllers
             }
         }
 
-        [HttpPost("WebHookForApprovals")]
-        public async Task<IActionResult> WebHookForApprovals()
+        [HttpPost("WebHookForHonorariumApprovals")]
+        public async Task<IActionResult> WebHookForHonorariumApprovals()
         {
             try
             {
@@ -148,8 +148,10 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-                var TestingId = "6831673324818308";
-                Sheet TestingSheetData = SheetHelper.GetSheetById(smartsheet, TestingId);
+                string processSheet = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
+
+                //var TestingId = "6831673324818308";
+                Sheet TestingSheetData = SheetHelper.GetSheetById(smartsheet, processSheet);
 
                 if (RequestWebhook != null && RequestWebhook.events != null)
                 {
@@ -164,7 +166,7 @@ namespace IndiaEventsWebApi.Controllers
                             Row targetRowId = TestingSheetData.Rows.FirstOrDefault(row => row.Id == WebHookEvent.rowId);
                             if (targetRowId != null)
                             {
-                                string? status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 1910199395766148)?.Value.ToString();
+                                string? status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 7933735728009092)?.Value.ToString();
                                 if (status.ToLower() == "approved")
                                 {
                                     //var checkboxcell = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == 7539698929979268);
