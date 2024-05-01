@@ -616,10 +616,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         {
             var eventId = formDataList.EventDetails.Id;
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
-            //Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
-            //Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
-            //Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
-            //Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
             Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
             #region
             //StringBuilder addedBrandsData = new();
