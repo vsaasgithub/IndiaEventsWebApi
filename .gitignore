@@ -6,3 +6,5 @@
 /.vs/IndiaEventsWebApi/v17/.suo
 /.gitignore
 /IndiaEventsWebApi/obj/Debug/net6.0/IndiaEventsWebApi.csproj.AssemblyReference.cache
+/IndiaEventsWebApi/obj/Debug/net6.0/ref/IndiaEventsWebApi.dll
+/IndiaEventsWebApi/obj/Debug/net6.0/refint/IndiaEventsWebApi.dll
