@@ -51,7 +51,16 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
 
     }
 
-   
+    public class DeviationData
+    {
+        public int Amount { get; set; }
+        public string? DeviationFile { get; set; }
+    }
+
+
+
+
+
     public class Class11
     {
         public string? EventId { get; set; }

@@ -115,36 +115,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                     var IsPanCardDocument = !string.IsNullOrEmpty(formData.PanCardDocument) ? "Yes" : "No";
                     var IsChequeDocument = !string.IsNullOrEmpty(formData.ChequeDocument) ? "Yes" : "No";
                     var IsTaxResidenceCertificate = !string.IsNullOrEmpty(formData.TaxResidenceCertificate) ? "Yes" : "No";
-                    //var FCPA = !string.IsNullOrEmpty(formDataList.HcpConsultant.FcpaFile) ? "Yes" : "No";
-
-
-                    // var IsPanCardDocument = "";
-                    // var IsChequeDocument = "";
-                    // var IsTaxResidenceCertificate = "";
-                    //if (formData.PanCardDocument != "")
-                    //{
-                    //    IsPanCardDocument = "Yes";
-                    //}
-                    //else
-                    //{
-                    //    IsPanCardDocument = "No";
-                    //}
-                    //if (formData.ChequeDocument != "")
-                    //{
-                    //    IsChequeDocument = "Yes";
-                    //}
-                    //else
-                    //{
-                    //    IsChequeDocument = "No";
-                    //}
-                    //if (formData.TaxResidenceCertificate != "")
-                    //{
-                    //    IsTaxResidenceCertificate = "Yes";
-                    //}
-                    //else
-                    //{
-                    //    IsTaxResidenceCertificate = "No";
-                    //}
+                    
                     var newRow = new Row();
                     newRow.Cells = new List<Cell>();
 
@@ -164,6 +135,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                     newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Swift Code"), Value = formData.SwiftCode });
                     newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "IBN Number"), Value = formData.IbnNumber });
                     newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Email "), Value = formData.Email });
+                    newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Bank Name"), Value = formData.BankName });
 
 
                     newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Cheque Document"), Value = IsChequeDocument });
@@ -300,7 +272,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                 updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "BeneficiaryName"), Value = formData.BenificiaryName });
                 updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "PanCardName"), Value = formData.PanCardName });
                 updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "PanNumber"), Value = formData.PanNumber });
-                updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "BankAccountNumber"), Value = formData.BankAccountNumber });
                 updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "IfscCode"), Value = formData.IfscCode });
                 updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Swift Code"), Value = formData.SwiftCode });
                 updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "IBN Number"), Value = formData.IbnNumber });
@@ -309,6 +280,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                 updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Requestor"), Value = formData.InitiatorEmail });
                 updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Tax Residence Certificate Date"), Value = formData.TaxResidenceCertificateDate });
                 updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Finance Checker"), Value = formData.FinanceChecker });
+                updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Bank Name"), Value = formData.BankName });
 
                 var updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId, new Row[] { updateRow });
 

@@ -443,6 +443,7 @@ namespace IndiaEventsWebApi.Controllers
                                 if (EventType == "Class I" || EventType == "Webinar")
                                 {
                                     if (status != null && (status == "Approved" || status == "Waiting for Finance Treasury Approval"))
+
                                     {
                                         int timeInterval = 250000;
                                         await Task.Delay(timeInterval);
