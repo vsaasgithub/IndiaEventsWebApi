@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using IndiaEvents.Models.Models.RequestSheets;
+using Microsoft.AspNetCore.Http;
 
 namespace IndiaEventsWebApi.Models.EventTypeSheets
 {
@@ -47,15 +48,11 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? IsDeviationUpload { get; set; }
 
         public List<string>? Files { get; set; }
-        public List<string>? DeviationFiles { get; set; }
-
+        //public List<string>? DeviationFiles { get; set; }
+        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }
     }
 
-    public class DeviationData
-    {
-        public int Amount { get; set; }
-        public string? DeviationFile { get; set; }
-    }
+
 
 
 

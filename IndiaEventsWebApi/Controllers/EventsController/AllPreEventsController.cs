@@ -226,99 +226,114 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 if (formDataList.class1.EventOpen30days == "Yes" || formDataList.class1.EventWithin7days == "Yes" || formDataList.class1.FB_Expense_Excluding_Tax == "Yes" || formDataList.class1.IsDeviationUpload == "Yes")
                 {
                     List<string> DeviationNames = new List<string>();
-                    foreach (var p in formDataList.class1.DeviationFiles)
+                    foreach (var p in formDataList.class1.DeviationDetails)
                     {
 
-                        string[] words = p.Split(':')[0].Split("*");
+                        string[] words = p.DeviationFile.Split(':')[0].Split("*");
                         string r = words[1];
                         DeviationNames.Add(r);
                     }
-                    foreach (var deviationname in DeviationNames)
+                    foreach (var pp in formDataList.class1.DeviationDetails)
                     {
-                        string file = deviationname.Split(".")[0];
-                        string eventId = val;
-                        try
+                        foreach (var deviationname in DeviationNames)
                         {
-                            Row newRow7 = new()
+                            string file = deviationname.Split(".")[0];
+                            string eventId = val;
+                            if (pp.DeviationFile.Split(':')[0].Split("*")[1] == deviationname)
                             {
-                                Cells = new List<Cell>()
-                            };
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formDataList.class1.EventTopic });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventType"), Value = formDataList.class1.EventType });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventDate"), Value = formDataList.class1.EventDate });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "StartTime"), Value = formDataList.class1.StartTime });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EndTime"), Value = formDataList.class1.EndTime });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "VenueName"), Value = formDataList.class1.VenueName });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "City"), Value = formDataList.class1.City });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "State"), Value = formDataList.class1.State });
-
-                            if (file == "30DaysDeviationFile")
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = formDataList.class1.EventOpen30days });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = SheetHelper.NumCheck(formDataList.class1.EventOpen30dayscount) });
-                            }
-                            else if (file == "7DaysDeviationFile")
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin5days"), Value = formDataList.class1.EventWithin7days });
-
-                            }
-                            else if (file == "ExpenseExcludingTax")
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"), Value = formDataList.class1.FB_Expense_Excluding_Tax });
-                            }
-                            else if (file.Contains("Travel_Accomodation3LExceededFile"))
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel/Accomodation 3,00,000 Exceeded Trigger"), Value = "Yes" });//formDataList.class1.FB_Expense_Excluding_Tax });
-                            }
-                            else if (file.Contains("TrainerHonorarium12LExceededFile"))
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value/*"Honorarium Aggregate Limit of 12,00,000 is Exceeded"*/ });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Trainer Honorarium 12,00,000 Exceeded Trigger"), Value = "Yes" }); //formDataList.class1.FB_Expense_Excluding_Tax });
-                            }
-                            else if (file.Contains("HCPHonorarium6LExceededFile"))
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value/*"Honorarium Aggregate Limit of 6,00,000 is Exceeded"*/ });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Honorarium 6,00,000 Exceeded Trigger"), Value = "Yes" }); // formDataList.class1.FB_Expense_Excluding_Tax });
-                            }
-
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formDataList.class1.Sales_Head });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.class1.FinanceHead });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "InitiatorName"), Value = formDataList.class1.InitiatorName });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.class1.Initiator_Email });
-
-                            IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
-
-                            int j = 1;
-                            foreach (var p in formDataList.class1.DeviationFiles)
-                            {
-                                string[] nameSplit = p.Split("*");
-                                string[] words = nameSplit[1].Split(':');
-                                string r = words[0];
-                                string q = words[1];
-                                if (deviationname == r)
+                                try
                                 {
-                                    string name = nameSplit[0];
-                                    string filePath = SheetHelper.testingFile(q, name);
-                                    Row addedRow = addeddeviationrow[0];
-                                    Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                    Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword");
-                                    j++;
-                                    if (System.IO.File.Exists(filePath))
+                                    Row newRow7 = new()
                                     {
-                                        SheetHelper.DeleteFile(filePath);
+                                        Cells = new List<Cell>()
+                                    };
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formDataList.class1.EventTopic });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventType"), Value = formDataList.class1.EventType });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventDate"), Value = formDataList.class1.EventDate });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "StartTime"), Value = formDataList.class1.StartTime });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EndTime"), Value = formDataList.class1.EndTime });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "VenueName"), Value = formDataList.class1.VenueName });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "City"), Value = formDataList.class1.City });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "State"), Value = formDataList.class1.State });
+
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "MIS Code"), Value = SheetHelper.MisCodeCheck(pp.MisCode) });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Name"), Value = pp.HcpName });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Honorarium Amount"), Value = pp.HonorariumAmountExcludingTax });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel & Accommodation Amount"), Value = pp.TravelorAccomodationAmountExcludingTax });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Other Expenses"), Value = pp.OtherExpenseAmountExcludingTax });
+
+                                    if (file == "30DaysDeviationFile")
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = formDataList.class1.EventOpen30days });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = SheetHelper.NumCheck(formDataList.class1.EventOpen30dayscount) });
+                                    }
+                                    else if (file == "7DaysDeviationFile")
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin5days"), Value = formDataList.class1.EventWithin7days });
+
+                                    }
+                                    else if (file == "ExpenseExcludingTax")
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"), Value = formDataList.class1.FB_Expense_Excluding_Tax });
+                                    }
+                                    else if (file.Contains("Travel_Accomodation3LExceededFile"))
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel/Accomodation 3,00,000 Exceeded Trigger"), Value = "Yes" });//formDataList.class1.FB_Expense_Excluding_Tax });
+                                    }
+                                    else if (file.Contains("TrainerHonorarium12LExceededFile"))
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value/*"Honorarium Aggregate Limit of 12,00,000 is Exceeded"*/ });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Trainer Honorarium 12,00,000 Exceeded Trigger"), Value = "Yes" }); //formDataList.class1.FB_Expense_Excluding_Tax });
+                                    }
+                                    else if (file.Contains("HCPHonorarium6LExceededFile"))
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value/*"Honorarium Aggregate Limit of 6,00,000 is Exceeded"*/ });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Honorarium 6,00,000 Exceeded Trigger"), Value = "Yes" }); // formDataList.class1.FB_Expense_Excluding_Tax });
+                                    }
+
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formDataList.class1.Sales_Head });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.class1.FinanceHead });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "InitiatorName"), Value = formDataList.class1.InitiatorName });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.class1.Initiator_Email });
+
+                                    IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
+
+                                    int j = 1;
+                                    foreach (var p in formDataList.class1.DeviationDetails)
+                                    {
+                                        string[] nameSplit = p.DeviationFile.Split("*");
+                                        string[] words = nameSplit[1].Split(':');
+                                        string r = words[0];
+                                        string q = words[1];
+                                        if (deviationname == r)
+                                        {
+                                            string name = nameSplit[0];
+                                            string filePath = SheetHelper.testingFile(q, name);
+                                            Row addedRow = addeddeviationrow[0];
+                                            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                                            Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword");
+                                            j++;
+                                            if (System.IO.File.Exists(filePath))
+                                            {
+                                                SheetHelper.DeleteFile(filePath);
+                                            }
+                                        }
                                     }
                                 }
+                                catch (Exception ex)
+                                {
+                                    return BadRequest(ex.Message);
+                                }
+
                             }
+
                         }
-                        catch (Exception ex)
-                        {
-                            return BadRequest(ex.Message);
-                        }
+
                     }
                 }
 
@@ -1218,128 +1233,240 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         SheetHelper.DeleteFile(filePath);
                     }
                 }
+                //if (formDataList.Webinar.EventOpen30days == "Yes" || formDataList.Webinar.EventWithin7days == "Yes" || formDataList.Webinar.FB_Expense_Excluding_Tax == "Yes" || formDataList.Webinar.IsDeviationUpload == "Yes")
+                //{
+                //    List<string> DeviationNames = new List<string>();
+                //    foreach (var p in formDataList.Webinar.DeviationFiles)
+                //    {
+
+                //        string[] words = p.Split(':')[0].Split("*");
+                //        string r = words[1];
+                //        DeviationNames.Add(r);
+                //    }
+                //    foreach (var deviationname in DeviationNames)
+                //    {
+                //        string file = deviationname.Split(".")[0];
+                //        string eventId = val;
+                //        try
+                //        {
+                //            Row newRow7 = new()
+                //            {
+                //                Cells = new List<Cell>()
+                //            };
+                //            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
+                //            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formDataList.Webinar.EventTopic });
+                //            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventType"), Value = formDataList.Webinar.EventType });
+                //            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventDate"), Value = formDataList.Webinar.EventDate });
+                //            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "StartTime"), Value = formDataList.Webinar.StartTime });
+                //            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EndTime"), Value = formDataList.Webinar.EndTime });
+                //            if (file == "30DaysDeviationFile")
+                //            {
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = formDataList.Webinar.EventOpen30days });
+                //                newRow7.Cells.Add(new Cell
+                //                {
+                //                    ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"),
+                //                    Value = configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value/*"Outstanding with initiator for more than 45 days" */
+                //                });
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = SheetHelper.NumCheck(formDataList.Webinar.EventOpen30dayscount) });
+                //            }
+                //            else if (file == "7DaysDeviationFile")
+                //            {
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin5days"), Value = formDataList.Webinar.EventWithin7days });
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value/*"5 days from the Event Date" */});
+                //            }
+                //            else if (file == "ExpenseExcludingTax")
+                //            {
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"), Value = formDataList.Webinar.FB_Expense_Excluding_Tax });
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value /*"Food and Beverages expense exceeds 1500"*/ });
+                //            }
+
+
+                //            else if (file.Contains("Travel_Accomodation3LExceededFile"))
+                //            {
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value/*"Travel/AccomodationAggregate Limit of 3,00,000 is Exceeded"*/ });
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel/Accomodation 3,00,000 Exceeded Trigger"), Value = "Yes" });//formDataList.class1.FB_Expense_Excluding_Tax });
+                //            }
+                //            else if (file.Contains("TrainerHonorarium12LExceededFile"))
+                //            {
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value/*"Honorarium Aggregate Limit of 12,00,000 is Exceeded"*/ });
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Trainer Honorarium 12,00,000 Exceeded Trigger"), Value = "Yes" }); //formDataList.class1.FB_Expense_Excluding_Tax });
+                //            }
+                //            else if (file.Contains("HCPHonorarium6LExceededFile"))
+                //            {
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value/*"Honorarium Aggregate Limit of 6,00,000 is Exceeded"*/ });
+                //                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Honorarium 6,00,000 Exceeded Trigger"), Value = "Yes" }); // formDataList.class1.FB_Expense_Excluding_Tax });
+                //            }
+
+                //            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formDataList.Webinar.Sales_Head });
+                //            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.Webinar.FinanceHead });
+                //            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "InitiatorName"), Value = formDataList.Webinar.InitiatorName });
+                //            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.Webinar.Initiator_Email });
+
+                //            IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
+                //            int j = 1;
+                //            foreach (var p in formDataList.Webinar.DeviationFiles)
+                //            {
+                //                string[] nameSplit = p.Split("*");
+                //                string[] words = nameSplit[1].Split(':');
+                //                string r = words[0];
+                //                string q = words[1];
+                //                if (deviationname == r)
+                //                {
+                //                    string name = nameSplit[0];
+                //                    string filePath = SheetHelper.testingFile(q, name);
+                //                    Row addedRow = addeddeviationrow[0];
+                //                    Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                //                    Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword");
+                //                    j++;
+                //                    if (System.IO.File.Exists(filePath))
+                //                    {
+                //                        SheetHelper.DeleteFile(filePath);
+                //                    }
+                //                }
+                //                //string[] words = p.Split(':');
+                //                //string r = words[0];
+                //                //string q = words[1];
+                //                //if (deviationname == r)
+                //                //{
+                //                //    string name = r.Split(".")[0];
+
+                //                //    string filePath = SheetHelper.testingFile(q, name);
+
+                //                //    Row addedRow = addeddeviationrow[0];
+
+                //                //    Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                //                //            sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                //                //    Attachment attachmentintoMain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                //                //             sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword");
+                //                //    j++;
+                //                //    if (System.IO.File.Exists(filePath))
+                //                //    {
+                //                //        SheetHelper.DeleteFile(filePath);
+                //                //    }
+                //                //}
+                //            }
+                //        }
+                //        catch (Exception ex)
+                //        {
+                //            Log.Error($"Error occured on AllPreEventsController Attachementfile method {ex.Message} at {DateTime.Now}");
+                //            Log.Error(ex.StackTrace);
+                //            return BadRequest(ex.Message);
+                //        }
+                //    }
+                //}
+
                 if (formDataList.Webinar.EventOpen30days == "Yes" || formDataList.Webinar.EventWithin7days == "Yes" || formDataList.Webinar.FB_Expense_Excluding_Tax == "Yes" || formDataList.Webinar.IsDeviationUpload == "Yes")
                 {
                     List<string> DeviationNames = new List<string>();
-                    foreach (var p in formDataList.Webinar.DeviationFiles)
+                    foreach (var p in formDataList.Webinar.DeviationDetails)
                     {
 
-                        string[] words = p.Split(':')[0].Split("*");
+                        string[] words = p.DeviationFile.Split(':')[0].Split("*");
                         string r = words[1];
                         DeviationNames.Add(r);
                     }
-                    foreach (var deviationname in DeviationNames)
+                    foreach (var pp in formDataList.Webinar.DeviationDetails)
                     {
-                        string file = deviationname.Split(".")[0];
-                        string eventId = val;
-                        try
+                        foreach (var deviationname in DeviationNames)
                         {
-                            Row newRow7 = new()
+                            string file = deviationname.Split(".")[0];
+                            string eventId = val;
+                            if (pp.DeviationFile.Split(':')[0].Split("*")[1] == deviationname)
                             {
-                                Cells = new List<Cell>()
-                            };
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formDataList.Webinar.EventTopic });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventType"), Value = formDataList.Webinar.EventType });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventDate"), Value = formDataList.Webinar.EventDate });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "StartTime"), Value = formDataList.Webinar.StartTime });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EndTime"), Value = formDataList.Webinar.EndTime });
-                            if (file == "30DaysDeviationFile")
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = formDataList.Webinar.EventOpen30days });
-                                newRow7.Cells.Add(new Cell
+                                try
                                 {
-                                    ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"),
-                                    Value = configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value/*"Outstanding with initiator for more than 45 days" */
-                                });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = SheetHelper.NumCheck(formDataList.Webinar.EventOpen30dayscount) });
-                            }
-                            else if (file == "7DaysDeviationFile")
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin5days"), Value = formDataList.Webinar.EventWithin7days });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value/*"5 days from the Event Date" */});
-                            }
-                            else if (file == "ExpenseExcludingTax")
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"), Value = formDataList.Webinar.FB_Expense_Excluding_Tax });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value /*"Food and Beverages expense exceeds 1500"*/ });
-                            }
-
-
-                            else if (file.Contains("Travel_Accomodation3LExceededFile"))
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value/*"Travel/AccomodationAggregate Limit of 3,00,000 is Exceeded"*/ });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel/Accomodation 3,00,000 Exceeded Trigger"), Value = "Yes" });//formDataList.class1.FB_Expense_Excluding_Tax });
-                            }
-                            else if (file.Contains("TrainerHonorarium12LExceededFile"))
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value/*"Honorarium Aggregate Limit of 12,00,000 is Exceeded"*/ });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Trainer Honorarium 12,00,000 Exceeded Trigger"), Value = "Yes" }); //formDataList.class1.FB_Expense_Excluding_Tax });
-                            }
-                            else if (file.Contains("HCPHonorarium6LExceededFile"))
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value/*"Honorarium Aggregate Limit of 6,00,000 is Exceeded"*/ });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Honorarium 6,00,000 Exceeded Trigger"), Value = "Yes" }); // formDataList.class1.FB_Expense_Excluding_Tax });
-                            }
-
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formDataList.Webinar.Sales_Head });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.Webinar.FinanceHead });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "InitiatorName"), Value = formDataList.Webinar.InitiatorName });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.Webinar.Initiator_Email });
-
-                            IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
-                            int j = 1;
-                            foreach (var p in formDataList.Webinar.DeviationFiles)
-                            {
-                                string[] nameSplit = p.Split("*");
-                                string[] words = nameSplit[1].Split(':');
-                                string r = words[0];
-                                string q = words[1];
-                                if (deviationname == r)
-                                {
-                                    string name = nameSplit[0];
-                                    string filePath = SheetHelper.testingFile(q, name);
-                                    Row addedRow = addeddeviationrow[0];
-                                    Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                    Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword");
-                                    j++;
-                                    if (System.IO.File.Exists(filePath))
+                                    Row newRow7 = new()
                                     {
-                                        SheetHelper.DeleteFile(filePath);
+                                        Cells = new List<Cell>()
+                                    };
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formDataList.Webinar.EventTopic });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventType"), Value = formDataList.Webinar.EventType });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventDate"), Value = formDataList.Webinar.EventDate });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "StartTime"), Value = formDataList.Webinar.StartTime });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EndTime"), Value = formDataList.Webinar.EndTime });
+                                
+
+
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "MIS Code"), Value = SheetHelper.MisCodeCheck(pp.MisCode) });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Name"), Value = pp.HcpName });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Honorarium Amount"), Value = pp.HonorariumAmountExcludingTax });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel & Accommodation Amount"), Value = pp.TravelorAccomodationAmountExcludingTax });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Other Expenses"), Value = pp.OtherExpenseAmountExcludingTax });
+
+                                    if (file == "30DaysDeviationFile")
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = formDataList.Webinar.EventOpen30days });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = SheetHelper.NumCheck(formDataList.Webinar.EventOpen30dayscount) });
+                                    }
+                                    else if (file == "7DaysDeviationFile")
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin5days"), Value = formDataList.Webinar.EventWithin7days });
+
+                                    }
+                                    else if (file == "ExpenseExcludingTax")
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"), Value = formDataList.Webinar.FB_Expense_Excluding_Tax });
+                                    }
+                                    else if (file.Contains("Travel_Accomodation3LExceededFile"))
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel/Accomodation 3,00,000 Exceeded Trigger"), Value = "Yes" });//formDataList.class1.FB_Expense_Excluding_Tax });
+                                    }
+                                    else if (file.Contains("TrainerHonorarium12LExceededFile"))
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value/*"Honorarium Aggregate Limit of 12,00,000 is Exceeded"*/ });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Trainer Honorarium 12,00,000 Exceeded Trigger"), Value = "Yes" }); //formDataList.class1.FB_Expense_Excluding_Tax });
+                                    }
+                                    else if (file.Contains("HCPHonorarium6LExceededFile"))
+                                    {
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value/*"Honorarium Aggregate Limit of 6,00,000 is Exceeded"*/ });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Honorarium 6,00,000 Exceeded Trigger"), Value = "Yes" }); // formDataList.class1.FB_Expense_Excluding_Tax });
+                                    }
+
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formDataList.Webinar.Sales_Head });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.Webinar.FinanceHead });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "InitiatorName"), Value = formDataList.Webinar.InitiatorName });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.Webinar.Initiator_Email });
+
+                                    IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
+
+                                    int j = 1;
+                                    foreach (var p in formDataList.Webinar.DeviationDetails)
+                                    {
+                                        string[] nameSplit = p.DeviationFile.Split("*");
+                                        string[] words = nameSplit[1].Split(':');
+                                        string r = words[0];
+                                        string q = words[1];
+                                        if (deviationname == r)
+                                        {
+                                            string name = nameSplit[0];
+                                            string filePath = SheetHelper.testingFile(q, name);
+                                            Row addedRow = addeddeviationrow[0];
+                                            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                                            Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword");
+                                            j++;
+                                            if (System.IO.File.Exists(filePath))
+                                            {
+                                                SheetHelper.DeleteFile(filePath);
+                                            }
+                                        }
                                     }
                                 }
-                                //string[] words = p.Split(':');
-                                //string r = words[0];
-                                //string q = words[1];
-                                //if (deviationname == r)
-                                //{
-                                //    string name = r.Split(".")[0];
+                                catch (Exception ex)
+                                {
+                                    return BadRequest(ex.Message);
+                                }
 
-                                //    string filePath = SheetHelper.testingFile(q, name);
-
-                                //    Row addedRow = addeddeviationrow[0];
-
-                                //    Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                //            sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                //    Attachment attachmentintoMain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                //             sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword");
-                                //    j++;
-                                //    if (System.IO.File.Exists(filePath))
-                                //    {
-                                //        SheetHelper.DeleteFile(filePath);
-                                //    }
-                                //}
                             }
+
                         }
-                        catch (Exception ex)
-                        {
-                            Log.Error($"Error occured on AllPreEventsController Attachementfile method {ex.Message} at {DateTime.Now}");
-                            Log.Error(ex.StackTrace);
-                            return BadRequest(ex.Message);
-                        }
+
                     }
                 }
-
 
                 foreach (var formData in formDataList.EventRequestHcpRole)
                 {

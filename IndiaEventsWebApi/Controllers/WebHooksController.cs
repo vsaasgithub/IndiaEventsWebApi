@@ -18,6 +18,7 @@ using static iTextSharp.text.pdf.AcroFields;
 using Microsoft.Extensions.Logging;
 using IndiaEventsWebApi.Models.EventTypeSheets;
 using Microsoft.Extensions.Hosting;
+using System.Globalization;
 
 namespace IndiaEventsWebApi.Controllers
 {
@@ -449,7 +450,7 @@ namespace IndiaEventsWebApi.Controllers
                                         await Task.Delay(timeInterval);
                                         if (meetingType != null)
                                         {
-                                            if (meetingType.ToString() == "Other |")
+                                            if (meetingType.ToString() == "Other | ")
                                             {
 
                                                 moveAttachments(columnValue, WebHookEvent.rowId);
@@ -566,6 +567,7 @@ namespace IndiaEventsWebApi.Controllers
                 var EventName = "";
                 var EventDate = "";
                 var EventVenue = "";
+                DateTime parsedDate;
                 List<string> Speakers = new List<string>();
 
 
@@ -583,11 +585,27 @@ namespace IndiaEventsWebApi.Controllers
 
                     if (targetRow != null)
                     {
+                        string originalDate = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn2.Id)?.Value?.ToString();
+                        if (!string.IsNullOrEmpty(originalDate))
+                        {
+                           
+                            if (DateTime.TryParseExact(originalDate, new string[] { "yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
+                            {
+                                string formattedDate = parsedDate.ToString("dd/MM/yyyy");
+                                EventDate = formattedDate;
+                            }
+                        }
 
                         EventCode = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == SpecialityColumn.Id)?.Value?.ToString();
                         EventName = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn1.Id)?.Value?.ToString();
-                        EventDate = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn2.Id)?.Value?.ToString();
+                        //EventDate = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn2.Id)?.Value?.ToString();
+                        //string formattedDate = EventDate.ToString("dd/MM/yyyy");
                         EventVenue = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn3.Id)?.Value?.ToString();
+
+                       
+
+
+
                     }
                 }
 
