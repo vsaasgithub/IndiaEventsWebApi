@@ -15,3 +15,9 @@
 /IndiaEventsWebApi/obj/Debug/net6.0/IndiaEventsWebApi.csproj.AssemblyReference.cache
 /.vs/IndiaEventsWebApi/DesignTimeBuild/.dtbcache.v2
 /.gitignore
+/.vs/IndiaEventsWebApi/v17/.futdcache.v2
+/.vs/ProjectEvaluation/indiaeventswebapi.metadata.v7.bin
+/.vs/ProjectEvaluation/indiaeventswebapi.projects.v7.bin
+/IndiaEvents.Models/bin/Debug/net6.0/IndiaEvents.Models.dll
+/IndiaEvents.Models/bin/Debug/net6.0/IndiaEvents.Models.pdb
+/IndiaEvents.Models/obj/Debug/net6.0/ref/IndiaEvents.Models.dll
