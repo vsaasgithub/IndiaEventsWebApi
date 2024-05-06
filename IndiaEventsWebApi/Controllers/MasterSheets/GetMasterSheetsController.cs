@@ -893,93 +893,93 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
         }
 
-        //[HttpGet("GetApprovedTrainersSheetData")]
-        //public IActionResult GetApprovedTrainersSheetData()
-        //{
-        //    try
-        //    {
-        //        string sheetId = configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value;
-        //        Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
-        //        List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
-        //        List<ApprovedTrainersGetPayload> eventRequestBrandsList = sheetData
-        //            .Select(row => new ApprovedTrainersGetPayload
-        //            {
+        [HttpGet("GetApprovedVendorSheetData")]
+        public IActionResult GetApprovedVendorSheetData()
+        {
+            try
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+                List<ApprovedTrainersGetPayload> eventRequestBrandsList = sheetData
+                    .Select(row => new ApprovedTrainersGetPayload
+                    {
 
-        //                TrainerId = row.TryGetValue("TrainerId", out var eventTopic) ? eventTopic?.ToString() : null,
-        //                TrainerName = row.TryGetValue("TrainerName", out var eventId) ? eventId?.ToString() : null,
-        //                TrainerCode = row.TryGetValue("TrainerCode", out var eventType) ? eventType?.ToString() : null,
-        //                TrnrCode = row.TryGetValue("TrnrCode", out var eventDate) ? eventDate?.ToString() : null,
-        //                TierType = row.TryGetValue("TierType", out var startTime) ? startTime?.ToString() : null,
-        //                Speciality = row.TryGetValue("Speciality", out var endTime) ? endTime?.ToString() : null,
-        //                Is_NONGO = row.TryGetValue("Is_NONGO", out var venueName) ? venueName?.ToString() : null,
-        //                MisCode = row.TryGetValue("MisCode", out var city) ? city?.ToString() : null,
-        //                NAID = row.TryGetValue("NA ID", out var prefBExpenseExcludingTaxApproval) ? prefBExpenseExcludingTaxApproval?.ToString() : null,
-        //                AggregatespendonHonorariumTrainer = row.TryGetValue("Aggregate spend on Honorarium - Trainer", out var totalAttendees) && int.TryParse(totalAttendees?.ToString(), out var parsedTotalAttendees) ? parsedTotalAttendees : 0,
-        //                AggregateLimitonAccomodation = row.TryGetValue("Aggregate Limit on Accomodation", out var totalHonorariumAmount) && int.TryParse(totalHonorariumAmount?.ToString(), out var parsedTotalHonorariumAmount) ? parsedTotalHonorariumAmount : 0,
-        //                AggregateHonorariumSpent = row.TryGetValue("Aggregate Honorarium Spent ", out var totalTravelAccommodationAmount) && int.TryParse(totalTravelAccommodationAmount?.ToString(), out var parsedTotalTravelAccommodationAmount) ? parsedTotalTravelAccommodationAmount : 0,
-        //                AggregatespendonAccomodation = row.TryGetValue("Aggregate spend on Accomodation", out var totalTravelAmount) && int.TryParse(totalTravelAmount?.ToString(), out var parsedTotalTravelAmount) ? parsedTotalTravelAmount : 0,
-        //                AggregateSpentonMedicalUtility = row.TryGetValue("Aggregate Spent on Medical Utility", out var totalAccommodationAmount) && int.TryParse(totalAccommodationAmount?.ToString(), out var parsedTotalAccommodationAmount) ? parsedTotalAccommodationAmount : 0,
-        //                AggregateSpentasHCPConsultant = row.TryGetValue("Aggregate Spent as HCP Consultant", out var totalLocalConveyance) && int.TryParse(totalLocalConveyance?.ToString(), out var parsedTotalLocalConveyance) ? parsedTotalLocalConveyance : 0,
+                        TrainerId = row.TryGetValue("TrainerId", out var eventTopic) ? eventTopic?.ToString() : null,
+                        TrainerName = row.TryGetValue("TrainerName", out var eventId) ? eventId?.ToString() : null,
+                        TrainerCode = row.TryGetValue("TrainerCode", out var eventType) ? eventType?.ToString() : null,
+                        TrnrCode = row.TryGetValue("TrnrCode", out var eventDate) ? eventDate?.ToString() : null,
+                        TierType = row.TryGetValue("TierType", out var startTime) ? startTime?.ToString() : null,
+                        Speciality = row.TryGetValue("Speciality", out var endTime) ? endTime?.ToString() : null,
+                        Is_NONGO = row.TryGetValue("Is_NONGO", out var venueName) ? venueName?.ToString() : null,
+                        MisCode = row.TryGetValue("MisCode", out var city) ? city?.ToString() : null,
+                        NAID = row.TryGetValue("NA ID", out var prefBExpenseExcludingTaxApproval) ? prefBExpenseExcludingTaxApproval?.ToString() : null,
+                        AggregatespendonHonorariumTrainer = row.TryGetValue("Aggregate spend on Honorarium - Trainer", out var totalAttendees) && int.TryParse(totalAttendees?.ToString(), out var parsedTotalAttendees) ? parsedTotalAttendees : 0,
+                        AggregateLimitonAccomodation = row.TryGetValue("Aggregate Limit on Accomodation", out var totalHonorariumAmount) && int.TryParse(totalHonorariumAmount?.ToString(), out var parsedTotalHonorariumAmount) ? parsedTotalHonorariumAmount : 0,
+                        AggregateHonorariumSpent = row.TryGetValue("Aggregate Honorarium Spent ", out var totalTravelAccommodationAmount) && int.TryParse(totalTravelAccommodationAmount?.ToString(), out var parsedTotalTravelAccommodationAmount) ? parsedTotalTravelAccommodationAmount : 0,
+                        AggregatespendonAccomodation = row.TryGetValue("Aggregate spend on Accomodation", out var totalTravelAmount) && int.TryParse(totalTravelAmount?.ToString(), out var parsedTotalTravelAmount) ? parsedTotalTravelAmount : 0,
+                        AggregateSpentonMedicalUtility = row.TryGetValue("Aggregate Spent on Medical Utility", out var totalAccommodationAmount) && int.TryParse(totalAccommodationAmount?.ToString(), out var parsedTotalAccommodationAmount) ? parsedTotalAccommodationAmount : 0,
+                        AggregateSpentasHCPConsultant = row.TryGetValue("Aggregate Spent as HCP Consultant", out var totalLocalConveyance) && int.TryParse(totalLocalConveyance?.ToString(), out var parsedTotalLocalConveyance) ? parsedTotalLocalConveyance : 0,
 
-        //                // CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var createdDateHelper) ? createdDateHelper?.ToString() : null,
-        //                Qualification = row.TryGetValue("Qualification", out var isAdvanceRequired) ? isAdvanceRequired?.ToString() : null,
-        //                TrainerCategoryId = row.TryGetValue("TrainerCategoryId", out var prerBmBmApproval) ? prerBmBmApproval?.ToString() : null,
-        //                CityId = row.TryGetValue("CityId", out var presalesHeadApprovalDate) ? presalesHeadApprovalDate?.ToString() : null,
-        //                StateId = row.TryGetValue("StateId)", out var premedicalAffairsHeadApprovalDate) ? premedicalAffairsHeadApprovalDate?.ToString() : null,
-        //                Country = row.TryGetValue("Country", out var presalesCoordinatorApproval) ? presalesCoordinatorApproval?.ToString() : null,
-        //                IsActive = row.TryGetValue("IsActive", out var presalesCoordinatorApprovalDate) ? presalesCoordinatorApprovalDate?.ToString() : null,
-        //                FCPASignOffDate = row.TryGetValue("FCPA Sign Off Date", out var eventEndDate) ? eventEndDate?.ToString() : null,
-        //                FCPAExpiryDate = row.TryGetValue("FCPA Expiry Date", out var FCPAExpiryDate) ? FCPAExpiryDate?.ToString() : null,
-        //                FCPAValid = row.TryGetValue("FCPA Valid?", out var state) ? state?.ToString() : null,
+                        // CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var createdDateHelper) ? createdDateHelper?.ToString() : null,
+                        Qualification = row.TryGetValue("Qualification", out var isAdvanceRequired) ? isAdvanceRequired?.ToString() : null,
+                        TrainerCategoryId = row.TryGetValue("TrainerCategoryId", out var prerBmBmApproval) ? prerBmBmApproval?.ToString() : null,
+                        CityId = row.TryGetValue("CityId", out var presalesHeadApprovalDate) ? presalesHeadApprovalDate?.ToString() : null,
+                        StateId = row.TryGetValue("StateId)", out var premedicalAffairsHeadApprovalDate) ? premedicalAffairsHeadApprovalDate?.ToString() : null,
+                        Country = row.TryGetValue("Country", out var presalesCoordinatorApproval) ? presalesCoordinatorApproval?.ToString() : null,
+                        IsActive = row.TryGetValue("IsActive", out var presalesCoordinatorApprovalDate) ? presalesCoordinatorApprovalDate?.ToString() : null,
+                        FCPASignOffDate = row.TryGetValue("FCPA Sign Off Date", out var eventEndDate) ? eventEndDate?.ToString() : null,
+                        FCPAExpiryDate = row.TryGetValue("FCPA Expiry Date", out var FCPAExpiryDate) ? FCPAExpiryDate?.ToString() : null,
+                        FCPAValid = row.TryGetValue("FCPA Valid?", out var state) ? state?.ToString() : null,
 
-        //                //FCPASignOffDate = row.TryGetValue("FCPA Sign Off Date", out var precomplianceApproval) ? precomplianceApproval?.ToString() : null,
-        //                CV_Document = row.TryGetValue("CV_Document", out var precomplianceApprovalDate) ? precomplianceApprovalDate?.ToString() : null,
-        //                AggregateExhausted = row.TryGetValue("Aggregate Exhausted?", out var prerBmBmApprovalDate) ? prerBmBmApprovalDate?.ToString() : null,
+                        //FCPASignOffDate = row.TryGetValue("FCPA Sign Off Date", out var precomplianceApproval) ? precomplianceApproval?.ToString() : null,
+                        CV_Document = row.TryGetValue("CV_Document", out var precomplianceApprovalDate) ? precomplianceApprovalDate?.ToString() : null,
+                        AggregateExhausted = row.TryGetValue("Aggregate Exhausted?", out var prerBmBmApprovalDate) ? prerBmBmApprovalDate?.ToString() : null,
 
-        //                Created = row.TryGetValue("Created", out var eventRequestStatus) ? eventRequestStatus?.ToString() : null,
-        //                CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var eventApprovedDate) ? eventApprovedDate?.ToString() : null,
-        //                SalesAlertTrigger = row.TryGetValue("Sales Alert Trigger", out var honorariumRequestStatus) ? honorariumRequestStatus?.ToString() : null,
-        //                //MedicalAffairsAlertTrigger = row.TryGetValue("Medical Affairs Alert Trigger", out var honorariumApprovedDate) ? honorariumApprovedDate?.ToString() : null,
-        //                SalesHeadApproval = row.TryGetValue("Sales Head Approval", out var postEventRequeststatus) ? postEventRequeststatus?.ToString() : null,
-        //                SalesHeadApprovalDate = row.TryGetValue("Sales Head Approval Date", out var helperFinancetreasurytriggerBTE) ? helperFinancetreasurytriggerBTE?.ToString() : null,
-        //                MedicalAffairsHeadApproval = row.TryGetValue("Medical Affairs Head Approval", out var postEventApprovedDate) ? postEventApprovedDate?.ToString() : null,
-        //                MedicalAffairsHeadApprovalDate = row.TryGetValue("Medical Affairs Head Approval Date", out var eventOpenSalesHeadApproval) ? eventOpenSalesHeadApproval?.ToString() : null,
-        //                //SpeakerCriteriaDetails = row.TryGetValue("Speaker Criteria Details Date", out var eventOpenSalesHeadApprovalDate) ? eventOpenSalesHeadApprovalDate?.ToString() : null,
-        //                SalesHead = row.TryGetValue("Sales Head", out var _7daysSalesHeadApproval) ? _7daysSalesHeadApproval?.ToString() : null,
-        //                MedicalAffairsHead = row.TryGetValue("Medical Affairs Head", out var _7daysSalesHeadApprovaldate) ? _7daysSalesHeadApprovaldate?.ToString() : null,
+                        Created = row.TryGetValue("Created", out var eventRequestStatus) ? eventRequestStatus?.ToString() : null,
+                        CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var eventApprovedDate) ? eventApprovedDate?.ToString() : null,
+                        SalesAlertTrigger = row.TryGetValue("Sales Alert Trigger", out var honorariumRequestStatus) ? honorariumRequestStatus?.ToString() : null,
+                        //MedicalAffairsAlertTrigger = row.TryGetValue("Medical Affairs Alert Trigger", out var honorariumApprovedDate) ? honorariumApprovedDate?.ToString() : null,
+                        SalesHeadApproval = row.TryGetValue("Sales Head Approval", out var postEventRequeststatus) ? postEventRequeststatus?.ToString() : null,
+                        SalesHeadApprovalDate = row.TryGetValue("Sales Head Approval Date", out var helperFinancetreasurytriggerBTE) ? helperFinancetreasurytriggerBTE?.ToString() : null,
+                        MedicalAffairsHeadApproval = row.TryGetValue("Medical Affairs Head Approval", out var postEventApprovedDate) ? postEventApprovedDate?.ToString() : null,
+                        MedicalAffairsHeadApprovalDate = row.TryGetValue("Medical Affairs Head Approval Date", out var eventOpenSalesHeadApproval) ? eventOpenSalesHeadApproval?.ToString() : null,
+                        //SpeakerCriteriaDetails = row.TryGetValue("Speaker Criteria Details Date", out var eventOpenSalesHeadApprovalDate) ? eventOpenSalesHeadApprovalDate?.ToString() : null,
+                        SalesHead = row.TryGetValue("Sales Head", out var _7daysSalesHeadApproval) ? _7daysSalesHeadApproval?.ToString() : null,
+                        MedicalAffairsHead = row.TryGetValue("Medical Affairs Head", out var _7daysSalesHeadApprovaldate) ? _7daysSalesHeadApprovaldate?.ToString() : null,
 
-        //                InitiatorName = row.TryGetValue("InitiatorName", out var initiatorName) ? initiatorName?.ToString() : null,
-        //                InitiatorEmail = row.TryGetValue("Initiator Email", out var initiatorEmail) ? initiatorEmail?.ToString() : null,
-        //                TrainerTybeShortcode = row.TryGetValue("TrainerTybe - Shortcode", out var TrainerTybeShortcode) ? TrainerTybeShortcode?.ToString() : null,
-        //                TrainerCodeNew = row.TryGetValue("Trainer Code", out var TrainerCodeNew) ? TrainerCodeNew?.ToString() : null,
-        //                TrainerBrand = row.TryGetValue("Trainer Brand", out var TrainerBrand) ? TrainerBrand?.ToString() : null,
-        //                TrainerType = row.TryGetValue("Trainer Type", out var TrainerType) ? TrainerType?.ToString() : null,
+                        InitiatorName = row.TryGetValue("InitiatorName", out var initiatorName) ? initiatorName?.ToString() : null,
+                        InitiatorEmail = row.TryGetValue("Initiator Email", out var initiatorEmail) ? initiatorEmail?.ToString() : null,
+                        TrainerTybeShortcode = row.TryGetValue("TrainerTybe - Shortcode", out var TrainerTybeShortcode) ? TrainerTybeShortcode?.ToString() : null,
+                        TrainerCodeNew = row.TryGetValue("Trainer Code", out var TrainerCodeNew) ? TrainerCodeNew?.ToString() : null,
+                        TrainerBrand = row.TryGetValue("Trainer Brand", out var TrainerBrand) ? TrainerBrand?.ToString() : null,
+                        TrainerType = row.TryGetValue("Trainer Type", out var TrainerType) ? TrainerType?.ToString() : null,
 
-        //                Division = row.TryGetValue("Division", out var presalesHeadApproval) ? presalesHeadApproval?.ToString() : null,
-        //                Address = row.TryGetValue("Address", out var premarketingHeadApproval) ? premarketingHeadApproval?.ToString() : null,
-        //                State = row.TryGetValue("State", out var premarketingHeadApprovalDate) ? premarketingHeadApprovalDate?.ToString() : null,
-        //                City = row.TryGetValue("City", out var agreement) ? agreement?.ToString() : null,
-        //                //Country = row.TryGetValue("Country", out var prefFinanceTreasuryApprovalDate) ? prefFinanceTreasuryApprovalDate?.ToString() : null,
-        //                ContactNumber = row.TryGetValue("Contact Number", out var premedicalAffairsHeadApproval) ? premedicalAffairsHeadApproval?.ToString() : null,
-        //                Trainedby = row.TryGetValue("Trained by", out var Trainedby) ? Trainedby?.ToString() : null,
-        //                TrainerCV = row.TryGetValue("Trainer CV", out var TrainerCV) ? TrainerCV?.ToString() : null,
-        //                Trainercertificate = row.TryGetValue("Trainer certificate", out var Trainercertificate) ? Trainercertificate?.ToString() : null,
-        //                Trainedon = row.TryGetValue("Trained on", out var Trainedon) ? Trainedon?.ToString() : null,
-        //                TrainerCategory = row.TryGetValue("Trainer Category", out var TrainerCategory) ? TrainerCategory?.ToString() : null,
-        //                TrainerCriteria = row.TryGetValue("Trainer Criteria", out var TrainerCriteria) ? TrainerCriteria?.ToString() : null,
-        //                TrainerCriteriaDetails = row.TryGetValue("Trainer Criteria Details", out var TrainerCriteriaDetails) ? TrainerCriteriaDetails?.ToString() : null,
-        //                MedicalAffairsAlertTrigger = row.TryGetValue("Medical Affairs Alert Trigger", out var MedicalAffairsAlertTrigger) ? MedicalAffairsAlertTrigger?.ToString() : null,
+                        Division = row.TryGetValue("Division", out var presalesHeadApproval) ? presalesHeadApproval?.ToString() : null,
+                        Address = row.TryGetValue("Address", out var premarketingHeadApproval) ? premarketingHeadApproval?.ToString() : null,
+                        State = row.TryGetValue("State", out var premarketingHeadApprovalDate) ? premarketingHeadApprovalDate?.ToString() : null,
+                        City = row.TryGetValue("City", out var agreement) ? agreement?.ToString() : null,
+                        //Country = row.TryGetValue("Country", out var prefFinanceTreasuryApprovalDate) ? prefFinanceTreasuryApprovalDate?.ToString() : null,
+                        ContactNumber = row.TryGetValue("Contact Number", out var premedicalAffairsHeadApproval) ? premedicalAffairsHeadApproval?.ToString() : null,
+                        Trainedby = row.TryGetValue("Trained by", out var Trainedby) ? Trainedby?.ToString() : null,
+                        TrainerCV = row.TryGetValue("Trainer CV", out var TrainerCV) ? TrainerCV?.ToString() : null,
+                        Trainercertificate = row.TryGetValue("Trainer certificate", out var Trainercertificate) ? Trainercertificate?.ToString() : null,
+                        Trainedon = row.TryGetValue("Trained on", out var Trainedon) ? Trainedon?.ToString() : null,
+                        TrainerCategory = row.TryGetValue("Trainer Category", out var TrainerCategory) ? TrainerCategory?.ToString() : null,
+                        TrainerCriteria = row.TryGetValue("Trainer Criteria", out var TrainerCriteria) ? TrainerCriteria?.ToString() : null,
+                        TrainerCriteriaDetails = row.TryGetValue("Trainer Criteria Details", out var TrainerCriteriaDetails) ? TrainerCriteriaDetails?.ToString() : null,
+                        MedicalAffairsAlertTrigger = row.TryGetValue("Medical Affairs Alert Trigger", out var MedicalAffairsAlertTrigger) ? MedicalAffairsAlertTrigger?.ToString() : null,
 
-        //            }).ToList();
-        //        return Ok(eventRequestBrandsList);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Log.Error($"Error occurred on AllPreEventsController AttachmentFile method {ex.Message} at {DateTime.Now}");
-        //        Log.Error(ex.StackTrace);
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+                    }).ToList();
+                return Ok(eventRequestBrandsList);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occurred on AllPreEventsController AttachmentFile method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.Message);
+            }
+        }
 
 
 

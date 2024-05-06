@@ -180,7 +180,7 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-                //string processSheet = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
+                string processSheet = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
                 string? status1 = "";
                 string? status2 = "";
                 string? status3 = "";
@@ -191,7 +191,7 @@ namespace IndiaEventsWebApi.Controllers
                 string? status8 = "";
                 string? status9 = "";
                 Row existingRow = new();
-                string processSheet = "4745908893732740";
+                //string processSheet = "4745908893732740";
                 Sheet TestingSheetData = SheetHelper.GetSheetById(smartsheet, processSheet);
 
                 if (RequestWebhook != null && RequestWebhook.events != null)
@@ -205,15 +205,15 @@ namespace IndiaEventsWebApi.Controllers
                             if (targetRowId != null)
                             {
                                 existingRow = targetRowId;
-                                status1 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 1794362517180292)?.Value?.ToString();
-                                status2 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 8549761958236036)?.Value?.ToString();
-                                status3 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 4890587260997508)?.Value?.ToString();
-                                status4 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 1512887540469636)?.Value?.ToString();
-                                status5 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 3764687354154884)?.Value?.ToString();
-                                status6 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 949937587048324)?.Value?.ToString();
-                                status7 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 3201737400733572)?.Value?.ToString();
-                                status8 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 2075837493890948)?.Value?.ToString();
-                                status9 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 4327637307576196)?.Value?.ToString();
+                                status1 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 7750583457894276)?.Value?.ToString();
+                                status2 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 7315390601318276)?.Value?.ToString();
+                                status3 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 6624683551051652)?.Value?.ToString();
+                                status4 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 4611785905622916)?.Value?.ToString();
+                                status5 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 2359986091937668)?.Value?.ToString();
+                                status6 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 6863585719308164)?.Value?.ToString();
+                                status7 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 1234086185095044)?.Value?.ToString();
+                                status8 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 5737685812465540)?.Value?.ToString();
+                                status9 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 3485885998780292)?.Value?.ToString();
                             }
                         }
                     }
