@@ -148,7 +148,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 addedHcpData.AppendLine(rowData);
                 addedHcpDataNo++;
                 TotalTravelAmount += SheetHelper.NumCheck(formdata.Travel);
-                TotalTravelAmount += SheetHelper.NumCheck(formdata.Travel);
+                TotalHonorariumAmount += SheetHelper.NumCheck(formdata.HonarariumAmount);
                 TotalAccomodateAmount += SheetHelper.NumCheck(formdata.Accomdation);
                 TotalHCPLcAmount += SheetHelper.NumCheck(formdata.LocalConveyance);
             }

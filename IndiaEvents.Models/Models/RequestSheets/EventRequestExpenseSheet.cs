@@ -12,7 +12,7 @@
         public string? BteAmount { get; set; }
         public string? BudgetAmount { get; set; }
     }
-   
+
     public class AddNewExpense
     {
         public string? EventId { get; set; }
