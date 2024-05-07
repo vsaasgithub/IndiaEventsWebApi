@@ -144,8 +144,8 @@ namespace IndiaEventsWebApi.Controllers
                 return BadRequest(ex.StackTrace);
             }
         }
-        [HttpPost("WebHookForEventSettlementApprovals")]
-        public async Task<IActionResult> WebHookForEventSettlementApprovals()
+        [HttpPost("WebHookForEventSettlementApproval")]
+        public async Task<IActionResult> WebHookForEventSettlementApproval()
         {
             try
             {
