@@ -110,7 +110,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
             foreach (var formdata in formDataList.EventRequestHCPSlideKits)
             {
-                string rowData = $"{addedSlideKitDataNo}. {formdata.HcpName} | {formdata.SlideKitType}";
+                string rowData = $"{addedSlideKitDataNo}. {formdata.HcpName} | {formdata.SlideKitType} | Id :{formdata.SlideKitDocument}";
                 addedSlideKitData.AppendLine(rowData);
                 addedSlideKitDataNo++;
             }
@@ -613,7 +613,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 foreach (var formdata in formDataList.SlideKitSelectionData)
                 {
-                    string rowData = $"{addedSlideKitDataNo}. {formdata.MisCode} | {formdata.SlideKitSelectionType}";
+                    string rowData = $"{addedSlideKitDataNo}. {formdata.MisCode} | {formdata.SlideKitSelectionType} | Id :{formdata.SlideKitDocument}";
                     addedSlideKitData.AppendLine(rowData);
                     addedSlideKitDataNo++;
                 }
@@ -1108,7 +1108,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
             foreach (var formdata in formDataList.EventRequestHCPSlideKits)
             {
-                string rowData = $"{addedSlideKitDataNo}. {formdata.HcpName} | {formdata.SlideKitType}";
+                string rowData = $"{addedSlideKitDataNo}. {formdata.HcpName} | {formdata.SlideKitType} | Id :{formdata.SlideKitDocument}";
                 addedSlideKitData.AppendLine(rowData);
                 addedSlideKitDataNo++;
             }
@@ -2843,7 +2843,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             string SelectedProductData = SelectedProduct.ToString();
             foreach (var formdata in formDataList.SlideKitSelectionData)
             {
-                string rowData = $"{addedSlideKitDataNo}. {formdata.MISCode} | {formdata.SlideKitSelection}";
+                string rowData = $"{addedSlideKitDataNo}. {formdata.MISCode} | {formdata.SlideKitSelection} | Id :{formdata.SlideKitDocument}";
                 addedSlideKitData.AppendLine(rowData);
                 addedSlideKitDataNo++;
             }
@@ -3519,7 +3519,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 string SelectedProductData = SelectedProduct.ToString();
                 foreach (var formdata in formDataList.SlideKitSelectionData)
                 {
-                    string rowData = $"{addedSlideKitDataNo}. {formdata.MISCode} | {formdata.SlideKitSelection}";
+                    string rowData = $"{addedSlideKitDataNo}. {formdata.MISCode} | {formdata.SlideKitSelection} | Id :{formdata.SlideKitDocument}";
                     addedSlideKitData.AppendLine(rowData);
                     addedSlideKitDataNo++;
                 }
