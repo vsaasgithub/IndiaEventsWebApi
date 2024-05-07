@@ -575,6 +575,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 Dictionary<string, object> rowData = new Dictionary<string, object>
                 {
                     { "EventDate", GetValueOrDefault(row, "EventDate") },
+                    { "EventEndDate", GetValueOrDefault(row, "Event End Date") },
                     { "EventTopic", GetValueOrDefault(row, "Event Topic") },
                     { "ClassIIIEventCode", GetValueOrDefault(row, "Class III Event Code") },
                     { "StartTime", GetValueOrDefault(row, "StartTime") },
@@ -1577,6 +1578,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventType"), Value = formDataList.EventDetails.EventType });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventDate"), Value = formDataList.EventDetails.EventStartDate });
+                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event End Date"), Value = formDataList.EventDetails.EventEndDate });
 
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Brands"), Value = formDataList.EventDetails.BrandsData });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTE Expense Details"), Value = formDataList.EventDetails.ExpenseDataBTE });
