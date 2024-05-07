@@ -283,7 +283,7 @@ namespace IndiaEventsWebApi.Controllers
                 int addedExpencesNo = 1;
                 foreach (var formdata in formData.expenseSheets)
                 {
-                    string rowData = $"{addedExpencesNo}. {formdata.Expense} | AmountExcludingTax: {formdata.AmountExcludingTax}| Amount: {formdata.Amount} | {formdata.BtcorBte}";
+                    string rowData = $"{addedExpencesNo}. {formdata.Expense} | Budget Amount: {formdata.AmountExcludingTax}| Actual Amount: {formdata.Amount} | {formdata.BtcorBte}";
                     addedExpences.AppendLine(rowData);
                     addedExpencesNo++;
                 }

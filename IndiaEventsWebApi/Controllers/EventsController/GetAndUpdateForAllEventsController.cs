@@ -149,8 +149,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         //}
 
 
-        //[HttpGet("GetDataFromAllSheetsUsingEventIdInPreEvent")]
-        //public IActionResult GetDataFromAllSheetsUsingEventId(string eventId)
+        //[HttpGet("SampleGetDataFromAllSheetsUsingEventIdInPreEvent")]
+        //public IActionResult SampleGetDataFromAllSheetsUsingEventId(string eventId)
         //{
         //    List<UpdateDataForClassI> formData = new List<UpdateDataForClassI>();
 
@@ -558,6 +558,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             List<Dictionary<string, object>> PaneleventDetails = new();
             List<Dictionary<string, object>> SlideKiteventDetails = new();
             List<Dictionary<string, object>> ExpenseeventDetails = new();
+            List<Dictionary<string, object>> BeneficiarteventDetails = new();
+            List<Dictionary<string, object>> ProductBrandsListeventDetails = new();
             List<Dictionary<string, object>> attachmentsList = new List<Dictionary<string, object>>();
             List<Dictionary<string, object>> DeviationsattachmentsList = new List<Dictionary<string, object>>();
             List<Dictionary<string, object>> attachmentInfoFiles = new();
@@ -568,11 +570,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             {
                 columnNames.Add(column.Title);
             }
-
-
-
-
-
             foreach (var row in sheet1.Rows.Where(row => row.Cells.Any(c => c.DisplayValue == eventId)))
             {
                 Dictionary<string, object> rowData = new Dictionary<string, object>
@@ -607,9 +604,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     { "AnesthetistExcludingTax", GetValueOrDefault(row, "Anesthetist Excluding Tax") },
                     { "AnesthetistincludingTax", GetValueOrDefault(row, "Anesthetist including Tax") }
                 };
-
-
-
                 PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null);
 
                 if (attachments.Data != null && attachments.Data.Count > 0)
@@ -871,6 +865,139 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     DeviationsattachmentsList.Add(DeviationsattachmentInfo);
                 }
             }
+
+
+            Sheet sheet8 = (Sheet)SheetHelper.GetSheetById(smartsheet, sheetId8);
+            List<string> EventRequestBeneficiary = new List<string>();
+            foreach (Column column in sheet8.Columns)
+            {
+                EventRequestBeneficiary.Add(column.Title);
+            }
+            foreach (var row in sheet8.Rows.Where(row => row.Cells.Any(c => c.DisplayValue == eventId)))
+            {
+                Dictionary<string, object> BeneficiaryrowData = new Dictionary<string, object>
+                {
+                    { "BenfId", GetValueOrDefaults(row, "Benf Id") },
+                    { "EventType", GetValueOrDefaults(row, "EventType") },
+                    { "EventDate", GetValueOrDefaults(row, "EventDate") },
+                    { "VenueName", GetValueOrDefaults(row, "VenueName") },
+                    { "State", GetValueOrDefaults(row, "State") },
+                    { "IsFacilityCharges", GetValueOrDefaults(row, "Facility Charges") },
+                    { "IsAnesthetistRequired", GetValueOrDefaults(row, "Anesthetist Required?") },
+                    { "TypeOfBeneficiary", GetValueOrDefaults(row, "Type of Beneficiary") },
+                    { "Currency", GetValueOrDefaults(row, "Currency") },
+                    { "OtherCurrency", GetValueOrDefaults(row, "Other Currency") },
+                    { "BeneficiaryName", GetValueOrDefaults(row, "Beneficiary Name") },
+                    { "BankAccountNumber", GetValueOrDefaults(row, "Bank Account Number") },
+                    { "BankName", GetValueOrDefaults(row, "Bank Name") },
+                    { "PANcardName", GetValueOrDefaults(row, "PAN card name") },
+                    { "PanNumber", GetValueOrDefaults(row, "Pan Number") },
+                    { "IFSCCode", GetValueOrDefaults(row, "IFSC Code") },
+                    { "EmailId", GetValueOrDefaults(row, "Email Id") },
+                    { "SwiftCode", GetValueOrDefaults(row, "City") },
+                    { "IBNNumber", GetValueOrDefaults(row, "IBN Number") },
+                    { "TaxResidenceCertificateDate", GetValueOrDefaults(row, "Tax Residence Certificate Date") }
+
+                };
+                PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet8.Id.Value, row.Id.Value, null);
+
+                List<Dictionary<string, object>> SlideKitattachmentsList = new();
+                if (attachments.Data != null || attachments.Data.Count > 0)
+                {
+                    foreach (var attachment in attachments.Data)
+                    {
+                        long AID = (long)attachment.Id;
+                        Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet8.Id.Value, AID);
+                        Dictionary<string, object> attachmentInfo = new()
+                            {
+                                { "Name", file.Name },
+                                { "Id", file.Id },
+                                { "base64" , SheetHelper.UrlToBaseValue(file.Url) }
+                            };
+                        SlideKitattachmentsList.Add(attachmentInfo);
+                    }
+                    BeneficiaryrowData["Attachments"] = SlideKitattachmentsList;
+                }
+
+
+
+                BeneficiarteventDetails.Add(BeneficiaryrowData);
+            }
+
+
+            string? GetValueOrDefaults(Row row, string columnName)
+            {
+                int columnIndex = EventRequestBeneficiary.IndexOf(columnName);
+                if (columnIndex >= 0 && columnIndex < row.Cells.Count)
+                {
+                    return row.Cells[columnIndex].Value?.ToString();
+                }
+                return null;
+            }
+
+
+            Sheet sheet9 = (Sheet)SheetHelper.GetSheetById(smartsheet, sheetId9);
+            List<string> EventRequestProductBrandsList = new List<string>();
+            foreach (Column column in sheet9.Columns)
+            {
+                EventRequestProductBrandsList.Add(column.Title);
+            }
+            foreach (var row in sheet9.Rows.Where(row => row.Cells.Any(c => c.DisplayValue == eventId)))
+            {
+                Dictionary<string, object> ProductBrandsListrowData = new Dictionary<string, object>
+                {
+                    { "Product ID", GetValuesOrDefaults(row, "Product ID") },
+                    { "EventType", GetValuesOrDefaults(row, "EventType") },
+                    { "EventDate", GetValuesOrDefaults(row, "EventDate") },
+                    { "EventTopic", GetValuesOrDefaults(row, "Event Topic") },
+                    { "ProductBrand", GetValuesOrDefaults(row, "Product Brand") },
+                    { "ProductName", GetValuesOrDefaults(row, "Product Name") },
+                    { "NoOfSamplesRequired", GetValuesOrDefaults(row, "No of Samples Required") },
+
+
+                };
+                PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet9.Id.Value, row.Id.Value, null);
+
+                List<Dictionary<string, object>> ProductBrandsListattachmentsList = new();
+                if (attachments.Data != null || attachments.Data.Count > 0)
+                {
+                    foreach (var attachment in attachments.Data)
+                    {
+                        long AID = (long)attachment.Id;
+                        Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet9.Id.Value, AID);
+                        Dictionary<string, object> attachmentInfo = new()
+                            {
+                                { "Name", file.Name },
+                                { "Id", file.Id },
+                                { "base64" , SheetHelper.UrlToBaseValue(file.Url) }
+                            };
+                        ProductBrandsListattachmentsList.Add(attachmentInfo);
+                    }
+                    ProductBrandsListrowData["Attachments"] = ProductBrandsListattachmentsList;
+                }
+                ProductBrandsListeventDetails.Add(ProductBrandsListrowData);
+            }
+
+            string? GetValuesOrDefaults(Row row, string columnName)
+            {
+                int columnIndex = EventRequestProductBrandsList.IndexOf(columnName);
+                if (columnIndex >= 0 && columnIndex < row.Cells.Count)
+                {
+                    return row.Cells[columnIndex].Value?.ToString();
+                }
+                return null;
+            }
+
+
+
+
+
+
+
+
+
+
+
             resultData["eventDetails"] = eventDetails;
             resultData["Files"] = attachmentInfoFiles;
             resultData["Brands"] = BrandseventDetails;
@@ -879,6 +1006,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             resultData["SlideKitSelection"] = SlideKiteventDetails;
             resultData["ExpenseSelection"] = ExpenseeventDetails;
             resultData["Deviation"] = DeviationsattachmentsList;
+            resultData["EventRequestBeneficiary"] = BeneficiarteventDetails;
+            resultData["EventRequestProductBrandsList"] = ProductBrandsListeventDetails;
+
             return Ok(resultData);
         }
 
