@@ -666,8 +666,7 @@ namespace IndiaEvents.Models.Models.GetData
         [JsonProperty("Finance Checker  approval")]
         public object FinanceCheckerapproval { get; set; }
 
-        //[JsonProperty("Finance Checker")]
-        //public object FinanceChecker { get; set; }
+        [JsonProperty("Finance Checker")]
+        public object FinanceChecker_ { get; set; }
     }
-
 }

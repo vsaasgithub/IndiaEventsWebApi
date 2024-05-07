@@ -163,4 +163,24 @@ namespace IndiaEvents.Models.Models.Draft
         public string? FileBase64 { get; set; }
     }
 
+
+
+    public class GetEventDetails
+    {
+        public string? EventDate { get; set; }
+        public string? EventTopic { get; set; }
+        public string? ClassIIIEventCode { get; set; }
+        public string? StartTime { get; set; }
+        public string? EndTime { get; set; }
+        public string? State { get; set; }
+        public string? VenueName { get; set; }
+        public string? City { get; set; }
+        public string? Brands { get; set; }
+        public string? Panelists { get; set; }
+        public string? SlideKits { get; set; }
+        public string? Invitees { get; set; }
+        public string? MIPLInvitees { get; set; }
+        public string? Expenses { get; set; }
+        public string? MeetingType { get; set; }
+    }
 }
