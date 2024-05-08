@@ -27,7 +27,7 @@ namespace IndiaEvents.Models.Models.Draft
         public List<UpdateBrandSelection> BrandSelection { get; set; }
         public List<UpdateExpenseSelection> ExpenseSelection { get; set; }
         public string IsDeviationUpload { get; set; }
-        public List<string> DeviationFiles { get; set; }
+        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }
     }
     public class UpdateBrandSelection
     {
