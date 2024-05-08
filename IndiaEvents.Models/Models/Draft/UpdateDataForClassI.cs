@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using IndiaEvents.Models.Models.RequestSheets;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,8 @@ namespace IndiaEvents.Models.Models.Draft
         public List<UpdateInviteeSelection> InviteeSelection { get; set; }
         public List<UpdateExpenseSelection> ExpenseSelection { get; set; }
         public string IsDeviationUpload { get; set; }
-        public List<string> DeviationFiles { get; set; }
+        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }
+        //public List<string> DeviationFiles { get; set; }
     }
     public class UpdateDataForStall
     {
