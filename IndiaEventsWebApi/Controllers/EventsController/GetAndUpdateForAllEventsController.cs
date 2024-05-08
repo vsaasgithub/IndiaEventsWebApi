@@ -1260,6 +1260,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 }
             }
 
+
+
             if (formDataList.BrandSelection.Count > 0)
             {
                 Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);

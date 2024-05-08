@@ -50,8 +50,6 @@ namespace IndiaEventsWebApi.Controllers
 
         }
 
-
-
         [HttpPost(Name = "WebHook")]
         public async Task<IActionResult> PostData()
         {
@@ -82,7 +80,6 @@ namespace IndiaEventsWebApi.Controllers
                 return BadRequest(ex.StackTrace);
             }
         }
-
 
         [HttpPost("WebHookForAgreements")]
         public async Task<IActionResult> WebHookPostmethod()
@@ -175,6 +172,77 @@ namespace IndiaEventsWebApi.Controllers
             }
         }
 
+        [HttpPost("WebHookForPreEventApproval")]
+        public async Task<IActionResult> WebHookForPreEventApproval()
+        {
+            try
+            {
+                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                string rawContent = string.Empty;
+                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                {
+                    rawContent = await reader.ReadToEndAsync();
+                }
+                requestHeaders.Add("Body", rawContent);
+
+
+                var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                PreEventApproval(RequestWebhook);
+
+                var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+
+                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                //return Ok();
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occured on Webhook apicontroller PostData method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.StackTrace);
+            }
+        }
+        private async void PreEventApproval(Root RequestWebhook)
+        {
+            try
+            {
+                string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
+
+                //var TestingId = "6831673324818308";
+                Sheet TestingSheetData = SheetHelper.GetSheetById(smartsheet, processSheet);
+
+                if (RequestWebhook != null && RequestWebhook.events != null)
+                {
+                    foreach (var WebHookEvent in RequestWebhook.events)
+                    {
+                        if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
+                        {
+                            Row targetRowId = TestingSheetData.Rows.FirstOrDefault(row => row.Id == WebHookEvent.rowId);
+                            if (targetRowId != null)
+                            {
+                                string? status = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == 6770461806382980)?.Value?.ToString();
+                                if (status.ToLower() == "approved")
+                                {
+                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "Is All Deviations Approved?");
+                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
+                                    Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
+                                    Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                                    if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
+
+                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Log.Error($"Error occured on Webhook apicontroller Attachementfile method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+            }
+        }
+
         private async void EventSettlementApproval(Root RequestWebhook)
         {
             try
@@ -188,7 +256,6 @@ namespace IndiaEventsWebApi.Controllers
                 {
                     foreach (var WebHookEvent in RequestWebhook.events)
                     {
-
                         if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
                         {
                             Row targetRowId = TestingSheetData.Rows.FirstOrDefault(row => row.Id == WebHookEvent.rowId);
@@ -261,12 +328,6 @@ namespace IndiaEventsWebApi.Controllers
             }
 
         }
-
-
-
-
-
-
 
         private async void AgreementsTrigger(Root RequestWebhook)
         {
