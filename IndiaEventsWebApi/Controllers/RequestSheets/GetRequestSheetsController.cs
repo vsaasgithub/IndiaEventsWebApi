@@ -8,6 +8,8 @@ using IndiaEventsWebApi.Helper;
 using IndiaEventsWebApi.Models.RequestSheets;
 using IndiaEvents.Models.Models.GetData;
 using Serilog;
+using Aspose.Pdf.Operators;
+using Aspose.Pdf.Plugins;
 
 namespace IndiaEventsWebApi.Controllers.RequestSheets
 {
@@ -26,7 +28,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
             this.configuration = configuration;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
             smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-                    }
+        }
 
         [HttpGet("GetEventRequestWebData")]
         public IActionResult GetEventRequestWebData()
@@ -103,7 +105,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 return BadRequest(ex.Message);
             }
         }
-                [HttpGet("GetExpenseData")]
+        [HttpGet("GetExpenseData")]
         public IActionResult GetExpenseData()
         {
             try
@@ -199,7 +201,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
             return Ok(hcpRoleData);
 
         }
-                [HttpGet("GetEventRequestsHcpDetailsTotalSpendValue")]
+        [HttpGet("GetEventRequestsHcpDetailsTotalSpendValue")]
         public IActionResult GetcgtColumnValue(string EventID)
         {
             string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
@@ -457,6 +459,46 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 Log.Error(ex.StackTrace);
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet("GetAmountsFromAdvanceProvidedColumnUsingEventId")]
+        public IActionResult GetAmountsFromAdvanceProvidedColumnUsingEventId(string eventId)
+        {
+            string sheetId = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+            Column targetColumn = sheet.Columns.FirstOrDefault(column => string.Equals(column.Title, "AdvanceDetails", StringComparison.OrdinalIgnoreCase));
+            if (targetColumn != null)
+            {
+                Row targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == eventId));
+                if (targetRow != null)
+                {
+                    object? columnValue = targetRow.Cells.FirstOrDefault(cell => cell.ColumnId == targetColumn.Id)?.Value;
+                    if (columnValue != null)
+                    {
+                        string? ColumnValueString = columnValue.ToString();
+                        string[] lines = ColumnValueString.Split('\n');
+                        string? advanceAmount = lines.FirstOrDefault(line => line.Contains("Advance Amount"))?.Split(':')[1]?.Trim();
+                        string? totalBudget = lines.FirstOrDefault(line => line.Contains("Total Budget"))?.Split(':')[1]?.Trim();
+                        string? actualExpense = lines.FirstOrDefault(line => line.Contains("Actual Expense"))?.Split(':')[1]?.Trim();
+                        string? paybackToCompany = lines.FirstOrDefault(line => line.Contains("Payback Amount To Company"))?.Split(':')[1]?.Trim();
+                        string? paybackToInitiator = lines.FirstOrDefault(line => line.Contains("Payback Amount to Initiator"))?.Split(':')[1]?.Trim();
+                        var jsonResponse = new
+                        {
+                            AdvanceAmount = advanceAmount,
+                            TotalBudget = totalBudget,
+                            ActualExpense = actualExpense,
+                            PaybackAmountToCompany = paybackToCompany,
+                            PaybackAmountToInitiator = paybackToInitiator
+                        };
+                        return Ok(jsonResponse);
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { Message = "Target Row Not Found" });
+                }
+            }
+            return Ok();
         }
 
         public class getIds
