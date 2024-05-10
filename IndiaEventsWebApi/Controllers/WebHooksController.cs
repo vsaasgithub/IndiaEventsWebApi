@@ -157,38 +157,8 @@ namespace IndiaEventsWebApi.Controllers
 
 
                 var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                EventSettlementApproval(RequestWebhook);
-
-                var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
-
-                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
-                //return Ok();
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Error occured on Webhook apicontroller PostData method {ex.Message} at {DateTime.Now}");
-                Log.Error(ex.StackTrace);
-                return BadRequest(ex.StackTrace);
-            }
-        }
-
-        [HttpPost("WebHookForEventSettlementDeviationApprovalCheck")]
-        public async Task<IActionResult> WebHookForEventSettlementDeviationApprovalCheck()
-        {
-            try
-            {
-                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
-                string rawContent = string.Empty;
-                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
-                {
-                    rawContent = await reader.ReadToEndAsync();
-                }
-                requestHeaders.Add("Body", rawContent);
-
-
-                var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                //EventSettlementApproval(RequestWebhook);
                 EventSettlementDeviationApproval(RequestWebhook);
-
                 var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
                 return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
@@ -201,6 +171,36 @@ namespace IndiaEventsWebApi.Controllers
                 return BadRequest(ex.StackTrace);
             }
         }
+
+        //[HttpPost("WebHookForEventSettlementDeviationApprovalCheck")]
+        //public async Task<IActionResult> WebHookForEventSettlementDeviationApprovalCheck()
+        //{
+        //    try
+        //    {
+        //        Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+        //        string rawContent = string.Empty;
+        //        using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+        //        {
+        //            rawContent = await reader.ReadToEndAsync();
+        //        }
+        //        requestHeaders.Add("Body", rawContent);
+
+
+        //        var RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+        //        EventSettlementDeviationApproval(RequestWebhook);
+
+        //        var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+
+        //        return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+        //        //return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error($"Error occured on Webhook apicontroller PostData method {ex.Message} at {DateTime.Now}");
+        //        Log.Error(ex.StackTrace);
+        //        return BadRequest(ex.StackTrace);
+        //    }
+        //}
 
         [HttpPost("WebHookForPreEventApproval")]
         public async Task<IActionResult> WebHookForPreEventApproval()
