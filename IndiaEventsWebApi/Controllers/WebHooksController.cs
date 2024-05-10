@@ -328,7 +328,7 @@ namespace IndiaEventsWebApi.Controllers
                 //Column Updatecolumn = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "Is All Deviations Approved?", StringComparison.OrdinalIgnoreCase));
                 Column? Column1 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "POST- Beyond30Days Deviation Approval", StringComparison.OrdinalIgnoreCase));
                 Column? Column2 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "POST-LessThan5Invitees Deviation Approval", StringComparison.OrdinalIgnoreCase));
-                Column? Column3 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "POST-Deviation Costperpaxabove1500 Approval", StringComparison.OrdinalIgnoreCase));
+                Column? Column3 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "POST-Deviation Costperpaxabove1500 Approval ", StringComparison.OrdinalIgnoreCase));
                 Column? Column4 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "POST-Deviation Change in venue Approval", StringComparison.OrdinalIgnoreCase));
                 Column? Column5 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "POST-Deviation Change in topic Approval", StringComparison.OrdinalIgnoreCase));
                 Column? Column6 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "POST-Deviation Change in speaker Approval", StringComparison.OrdinalIgnoreCase));
@@ -349,23 +349,23 @@ namespace IndiaEventsWebApi.Controllers
                             if (targetRowId != null)
                             {
                                 //string? TriggerStatus = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Trigger.Id)?.Value.ToString();
-                                string? status1 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column1.Id)?.Value.ToString();
-                                string? status2 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column2.Id)?.Value.ToString();
-                                string? status3 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column3.Id)?.Value.ToString();
-                                string? status4 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column4.Id)?.Value.ToString();
-                                string? status5 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column5.Id)?.Value.ToString();
-                                string? status6 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column6.Id)?.Value.ToString();
-                                string? status7 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column7.Id)?.Value.ToString();
-                                string? status8 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column8.Id)?.Value.ToString();
-                                string? status9 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column9.Id)?.Value.ToString();
-                                if ((status1.ToLower() == "approved" || status1.ToLower() == null) &&
-                                    (status2.ToLower() == "approved" || status2.ToLower() == null) &&
-                                    (status4.ToLower() == "approved" || status4.ToLower() == null) &&
-                                    (status5.ToLower() == "approved" || status5.ToLower() == null) &&
-                                    (status6.ToLower() == "approved" || status6.ToLower() == null) &&
-                                    (status7.ToLower() == "approved" || status7.ToLower() == null) &&
-                                    (status8.ToLower() == "approved" || status8.ToLower() == null) &&
-                                    (status9.ToLower() == "approved" || status9.ToLower() == null))
+                                string? status1 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column1.Id)?.Value?.ToString() ?? "Null";
+                                string? status2 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column2.Id)?.Value?.ToString() ?? "Null";
+                                string? status3 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column3.Id)?.Value?.ToString() ?? "Null";
+                                string? status4 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column4.Id)?.Value?.ToString() ?? "Null";
+                                string? status5 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column5.Id)?.Value?.ToString() ?? "Null";
+                                string? status6 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column6.Id)?.Value?.ToString() ?? "Null";
+                                string? status7 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column7.Id)?.Value?.ToString() ?? "Null";
+                                string? status8 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column8.Id)?.Value?.ToString() ?? "Null";
+                                string? status9 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column9.Id)?.Value?.ToString() ?? "Null";
+                                if ((status1.ToLower() == "approved" || status1.ToLower() == "null") &&
+                                    (status2.ToLower() == "approved" || status2.ToLower() == "null") &&
+                                    (status4.ToLower() == "approved" || status4.ToLower() == "null") &&
+                                    (status5.ToLower() == "approved" || status5.ToLower() == "null") &&
+                                    (status6.ToLower() == "approved" || status6.ToLower() == "null") &&
+                                    (status7.ToLower() == "approved" || status7.ToLower() == "null") &&
+                                    (status8.ToLower() == "approved" || status8.ToLower() == "null") &&
+                                    (status9.ToLower() == "approved" || status9.ToLower() == "null"))
                                 {
                                     long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "Is All Deviations Approved?");
                                     Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Sales Deviations Approved" };
