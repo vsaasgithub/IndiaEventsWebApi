@@ -134,17 +134,17 @@ namespace IndiaEvents.Models.Models.Draft
         public string InitiatorName { get; set; }
         public string Initiator_Email { get; set; }
 
-        public int? AdvanceAmount { get; set; }
-        public int? TotalExpenseBTC { get; set; }
-        public int? TotalExpenseBTE { get; set; }
-        public int? TotalHonorariumAmount { get; set; }
-        public int? TotalTravelAccommodationAmount { get; set; }
-        public int? TotalAccomodationAmount { get; set; }
-        public int? TotalBudget { get; set; }
-        public int? TotalLocalConveyance { get; set; }
-        public int? TotalTravelAmount { get; set; }
-        public int? TotalExpense { get; set; }
-        public int? EventOpen30dayscount { get; set; }
+        public double? AdvanceAmount { get; set; }
+        public double? TotalExpenseBTC { get; set; }
+        public double? TotalExpenseBTE { get; set; }
+        public double? TotalHonorariumAmount { get; set; }
+        public double? TotalTravelAccommodationAmount { get; set; }
+        public double? TotalAccomodationAmount { get; set; }
+        public double? TotalBudget { get; set; }
+        public double? TotalLocalConveyance { get; set; }
+        public double? TotalTravelAmount { get; set; }
+        public double? TotalExpense { get; set; }
+        public double? EventOpen30dayscount { get; set; }
 
         public string IsFilesUpload { get; set; }
         public List<UpdateFiles> Files { get; set; }
@@ -171,13 +171,13 @@ namespace IndiaEvents.Models.Models.Draft
         public string FinanceHead { get; set; }
         public string InitiatorName { get; set; }
         public string Initiator_Email { get; set; }
-        public int? TotalExpenseBTC { get; set; }
-        public int? TotalExpenseBTE { get; set; }
-        public int? TotalBudget { get; set; }
-        public int? TotalExpense { get; set; }
+        public double? TotalExpenseBTC { get; set; }
+        public double? TotalExpenseBTE { get; set; }
+        public double? TotalBudget { get; set; }
+        public double? TotalExpense { get; set; }
         public string? IsAdvanceRequired { get; set; }
-        public int? AdvanceAmount { get; set; }
-        public int? EventOpen30dayscount { get; set; }
+        public double? AdvanceAmount { get; set; }
+        public double? EventOpen30dayscount { get; set; }
         public string? IsFilesUpload { get; set; }
         public List<UpdateFiles>? Files { get; set; }
 
@@ -190,8 +190,8 @@ namespace IndiaEvents.Models.Models.Draft
         public string Id { get; set; }
         public string Expense { get; set; }
         public string ExpenseType { get; set; }
-        public int ExpenseAmountIncludingTax { get; set; }
-        public int ExpenseAmountExcludingTax { get; set; }
+        public double ExpenseAmountIncludingTax { get; set; }
+        public double ExpenseAmountExcludingTax { get; set; }
     }
 
     public class UpdateInviteeSelection
