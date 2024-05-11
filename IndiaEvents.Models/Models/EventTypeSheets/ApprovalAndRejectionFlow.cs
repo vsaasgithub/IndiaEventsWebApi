@@ -44,7 +44,6 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? RBMStatus { get; set; }
         public string? SalesHeadStatus { get; set; }
         public string? MarketingHeadStatus { get; set; }
-        public string? FinanceTreasuryStatus { get; set; }
         public string? MedicalAffairsHeadStatus { get; set; }
         public string? ComplianceStatus { get; set; }
         public string? Comments { get; set; }

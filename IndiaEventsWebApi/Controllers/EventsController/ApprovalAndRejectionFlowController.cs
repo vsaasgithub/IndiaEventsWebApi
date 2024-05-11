@@ -33,7 +33,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
             sheetId1 = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
             sheetId2 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
-            sheetId3 = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
+            sheetId3 = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
             sheetId4 = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
             sheetId5 = configuration.GetSection("SmartsheetSettings:EventRequestsHcpSlideKit").Value;
             sheetId6 = configuration.GetSection("SmartsheetSettings:EventRequestsExpensesSheet").Value;
@@ -179,6 +179,81 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             //return Ok();
 
         }
+
+        [HttpPut("ApprovalAndRejectionFlowInHonorarium")]
+        public IActionResult ApprovalAndRejectionFlowInHonorarium(ApprovalAndRejectionFlowInHonorarium formDataList)
+        {
+            Discussion discussionSpecification = new Discussion
+            {
+                Comment = new Comment
+                {
+                    Text = formDataList.Comments
+                },
+                Comments = null
+            };
+            Comment commentSpecification = new Comment
+            {
+                Text = formDataList.Comments
+            };
+
+            var EventId = formDataList.EventId;
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId3);
+            Row? targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == EventId));
+
+            if (targetRow != null)
+            {
+                try
+                {
+                    Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
+                    if (!string.IsNullOrEmpty(formDataList.RBMStatus))
+                    {
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HON-RBM/BM Approval"), Value = formDataList.RBMStatus });
+                    }
+                    else if (!string.IsNullOrEmpty(formDataList.SalesHeadStatus))
+                    {
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HON-Sales Head Approval"), Value = formDataList.SalesHeadStatus });
+                    }
+                    else if (!string.IsNullOrEmpty(formDataList.MarketingHeadStatus))
+                    {
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HON-Marketing Head Approval"), Value = formDataList.MarketingHeadStatus });
+                    }
+
+                    else if (!string.IsNullOrEmpty(formDataList.MedicalAffairsHeadStatus))
+                    {
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HON-Medical Affairs Head Approval"), Value = formDataList.MedicalAffairsHeadStatus });
+                    }
+                    else if (!string.IsNullOrEmpty(formDataList.ComplianceStatus))
+                    {
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "HON-Compliance Approval"), Value = formDataList.ComplianceStatus });
+                    }
+
+                    IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
+                    if (targetRow.Discussions != null)
+                    {
+                        Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddComment(sheet.Id.Value, targetRow.Discussions[0].Id.Value, commentSpecification);
+                    }
+                    else
+                    {
+                        Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussion(sheet.Id.Value, targetRow.Id.Value, discussionSpecification);
+                    }
+
+
+                    return Ok(new { Message = "Updated Successfully" });
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+            else
+            {
+                return BadRequest(new { Message = "Row data not found" });
+            }
+
+            //return Ok();
+
+        }
+
 
 
     }
