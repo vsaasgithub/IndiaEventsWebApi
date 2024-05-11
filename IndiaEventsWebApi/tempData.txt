@@ -1,4 +1,34 @@
-﻿
+﻿EventOpenSalesHeadApproval
+7daysSalesHeadApproval 
+PRE-F&B Expense Excluding Tax Approval
+HCP exceeds 1,00,000 FH Approval
+HCP exceeds 5,00,000 Trigger FH Approval
+HCP Honorarium 6,00,000 Exceeded Approval
+Trainer Honorarium 12,00,000 Exceeded Approval
+Travel/Accomodation 3,00,000 Exceeded Approval
+
+
+30 days deviation pending
+Less than 5 invitees pending
+cost per pax pending
+cin pending
+cit pending
+cis pending
+anc pending
+snc is pending
+od pending
+
+
+
+
+
+
+
+
+
+
+
+
             StringBuilder addedExpencesBTE = new();
             int addedExpencesNoBTE = 1;
             foreach (var formdata in formDataList.EventRequestExpenseSheet)
