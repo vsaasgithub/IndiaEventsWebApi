@@ -458,15 +458,15 @@ namespace IndiaEventsWebApi.Controllers
                                 string? status8 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column8.Id)?.Value?.ToString() ?? "Null";
                                 string? status9 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column9.Id)?.Value?.ToString() ?? "Null";
 
-                                if ((status1.ToLower() == "approved" || status1.ToLower() == "null") &&
-                                 (status2.ToLower() == "approved" || status2.ToLower() == "null") &&
-                                 (status3.ToLower() == "submitted" || status3.ToLower() == "null") &&
-                                 (status4.ToLower() == "approved" || status4.ToLower() == "null") &&
-                                 (status5.ToLower() == "approved" || status5.ToLower() == "null") &&
-                                 (status6.ToLower() == "approved" || status6.ToLower() == "null") &&
-                                 (status7.ToLower() == "approved" || status7.ToLower() == "null") &&
-                                 (status8.ToLower() == "approved" || status8.ToLower() == "null") &&
-                                 (status9.ToLower() == "approved" || status9.ToLower() == "null"))
+                                if ((status1.ToLower() == "approved" || status1.ToLower() == null) &&
+                                 (status2.ToLower() == "approved" || status2.ToLower() == null) &&
+                                 (status3.ToLower() == "submitted" || status3.ToLower() == null) &&
+                                 (status4.ToLower() == "approved" || status4.ToLower() == null) &&
+                                 (status5.ToLower() == "approved" || status5.ToLower() == null) &&
+                                 (status6.ToLower() == "approved" || status6.ToLower() == null) &&
+                                 (status7.ToLower() == "approved" || status7.ToLower() == null) &&
+                                 (status8.ToLower() == "approved" || status8.ToLower() == null) &&
+                                 (status9.ToLower() == "approved" || status9.ToLower() == null))
                                 {
 
                                     long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "Is All Deviations Approved?");
@@ -477,15 +477,15 @@ namespace IndiaEventsWebApi.Controllers
 
                                     smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
-                                else if ((status1.ToLower() == "submitted" || status1.ToLower() == "null") &&
-                                 (status2.ToLower() == "submitted" || status2.ToLower() == "null") &&
-                                 (status3.ToLower() == "approved" || status3.ToLower() == "null") &&
-                                 (status4.ToLower() == "submitted" || status4.ToLower() == "null") &&
-                                 (status5.ToLower() == "submitted" || status5.ToLower() == "null") &&
-                                 (status6.ToLower() == "submitted" || status6.ToLower() == "null") &&
-                                 (status7.ToLower() == "submitted" || status7.ToLower() == "null") &&
-                                 (status8.ToLower() == "submitted" || status8.ToLower() == "null") &&
-                                 (status9.ToLower() == "submitted" || status9.ToLower() == "null"))
+                                else if ((status1.ToLower() == "submitted" || status1.ToLower() == null) &&
+                                 (status2.ToLower() == "submitted" || status2.ToLower() == null) &&
+                                 (status3.ToLower() == "approved" || status3.ToLower() == null) &&
+                                 (status4.ToLower() == "submitted" || status4.ToLower() == null) &&
+                                 (status5.ToLower() == "submitted" || status5.ToLower() == null) &&
+                                 (status6.ToLower() == "submitted" || status6.ToLower() == null) &&
+                                 (status7.ToLower() == "submitted" || status7.ToLower() == null) &&
+                                 (status8.ToLower() == "submitted" || status8.ToLower() == null) &&
+                                 (status9.ToLower() == "submitted" || status9.ToLower() == null))
                                 //TriggerStatus.ToLower() != "30 days deviation pending" ||
                                 //TriggerStatus.ToLower() != "Less than 5 invitees pending" ||
 
@@ -676,8 +676,6 @@ namespace IndiaEventsWebApi.Controllers
                                     await Task.Delay(timeInterval);
                                     moveAttachments(columnValue, WebHookEvent.rowId);
                                 }
-
-
 
                             }
 
