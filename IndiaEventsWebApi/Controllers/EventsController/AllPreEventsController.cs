@@ -2925,7 +2925,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist BTC/BTE"), Value = formDataList.HandsOnTraining.AnesthetistRequiredBtc_Bte });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist Excluding Tax"), Value = formDataList.HandsOnTraining.AnesthetistChargesExcludingTax });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist including Tax"), Value = formDataList.HandsOnTraining.AnesthetistChargesIncludingTax });
-
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "InitiatorName"), Value = formDataList.HandsOnTraining.InitiatorName });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = formDataList.HandsOnTraining.AdvanceAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.HandsOnTraining.TotalExpenseBTC });
@@ -3090,26 +3089,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
                 }
 
-                //List<Row> newRows = new();
-                //foreach (var formdata in formDataList.RequestBrandsList)
-                //{
-                //    Row newRow2 = new()
-                //    {
-                //        Cells = new List<Cell>()
-                //        {
-                //            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "% Allocation"), Value = formdata.PercentAllocation },
-                //            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Brands"), Value = formdata.BrandName },
-                //            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Project ID"), Value = formdata.ProjectId },
-                //            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "EventId/EventRequestId"), Value = val }
-                //        }
-                //    };
-
-                //    newRows.Add(newRow2);
-                //}
-
-                //smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows.ToArray());
-
-
                 foreach (var formData in formDataList.TrainerDetails)
                 {
                     Row newRow1 = new()
@@ -3224,18 +3203,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray());
 
 
-                //foreach (var formdata in formDataList.EventBrandsList)
-                //{
-                //    Row newRow2 = new()
-                //    {
-                //        Cells = new List<Cell>()
-                //    };
-                //    newRow2.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "% Allocation"), Value = formdata.PercentAllocation });
-                //    newRow2.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Brands"), Value = formdata.BrandName });
-                //    newRow2.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Project ID"), Value = formdata.ProjectId });
-                //    newRow2.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "EventId/EventRequestId"), Value = val });
-                //    smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, new Row[] { newRow2 });
-                //}
                 foreach (var formdata in formDataList.AttenderSelections)
                 {
                     Row newRow3 = new()
@@ -3282,6 +3249,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         }
                     }
                 }
+
                 foreach (var formdata in formDataList.SlideKitSelectionData)
                 {
                     Row newRow5 = new()
@@ -3316,6 +3284,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         }
                     }
                 }
+
                 foreach (var formdata in formDataList.ExpenseData)
                 {
                     Row newRow6 = new()

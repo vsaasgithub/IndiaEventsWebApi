@@ -209,6 +209,7 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
 
     public class Expense
     {
+        //public string? Expense { get; set; }
         public string? ExpenseType { get; set; }
         public string? IsBtcorBte { get; set; }
         public int? ExpenseAmountExcludingTax { get; set; }
