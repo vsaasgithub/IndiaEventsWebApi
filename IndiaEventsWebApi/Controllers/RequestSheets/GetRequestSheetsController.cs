@@ -988,7 +988,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         string? totalBudget = lines.FirstOrDefault(line => line.Contains("Total Budget"))?.Split(':')[1]?.Trim();
                         string? actualExpense = lines.FirstOrDefault(line => line.Contains("Actual Expense"))?.Split(':')[1]?.Trim();
                         string? paybackToCompany = lines.FirstOrDefault(line => line.Contains("Payback Amount To Company"))?.Split(':')[1]?.Trim();
-                        string? paybackToInitiator = lines.FirstOrDefault(line => line.Contains("Payback Amount to Initiator"))?.Split(':')[1]?.Trim();
+                        string? paybackToInitiator = lines.FirstOrDefault(line => line.Contains("Payback Amount To Initiator"))?.Split(':')[1]?.Trim();
                         var jsonResponse = new
                         {
                             AdvanceAmount = advanceAmount,
