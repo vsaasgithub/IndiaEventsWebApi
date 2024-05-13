@@ -477,15 +477,7 @@ namespace IndiaEventsWebApi.Controllers
 
                                     smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
-                                else if ((status1.ToLower() == "submitted" || status1.ToLower() == "null") &&
-                                 (status2.ToLower() == "submitted" || status2.ToLower() == "null") &&
-                                 (status3.ToLower() == "approved" || status3.ToLower() == "null") &&
-                                 (status4.ToLower() == "submitted" || status4.ToLower() == "null") &&
-                                 (status5.ToLower() == "submitted" || status5.ToLower() == "null") &&
-                                 (status6.ToLower() == "submitted" || status6.ToLower() == "null") &&
-                                 (status7.ToLower() == "submitted" || status7.ToLower() == "null") &&
-                                 (status8.ToLower() == "submitted" || status8.ToLower() == "null") &&
-                                 (status9.ToLower() == "submitted" || status9.ToLower() == "null"))
+                                else if (status3.ToLower() == "approved" || status3.ToLower() == "null")
                                 //TriggerStatus.ToLower() != "30 days deviation pending" ||
                                 //TriggerStatus.ToLower() != "Less than 5 invitees pending" ||
 
