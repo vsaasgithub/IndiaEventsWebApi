@@ -2573,7 +2573,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         string filePath = SheetHelper.testingFile(q, name);
                                         Row addedRow = addeddeviationrow[0];
                                         Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                         Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword");
+                                        Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword");
                                         j++;
                                         if (System.IO.File.Exists(filePath))
                                         {
@@ -2727,7 +2727,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             string name = r.Split(".")[0];
                             string filePath = SheetHelper.testingFile(q, name);
                             Row addedRow = updatedRow[0];
-                            if (p.Id != null && p.Id!=0)
+                            if (p.Id != null && p.Id != 0)
                             {
                                 Attachment Updateattachment = smartsheet.SheetResources.AttachmentResources.VersioningResources.AttachNewVersion(
                                     sheet10.Id.Value, (long)p.Id, filePath, "application/msword");
@@ -2842,7 +2842,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         string filePath = SheetHelper.testingFile(q, name);
                                         Row addedRow = addeddeviationrow[0];
                                         Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                        // Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword");
+                                        Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(targetRow.Id.Value, targetRow.Id.Value, filePath, "application/msword");
                                         j++;
                                         if (System.IO.File.Exists(filePath))
                                         {

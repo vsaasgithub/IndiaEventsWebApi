@@ -282,7 +282,7 @@ namespace IndiaEventsWebApi.Controllers
                 Column? Column6 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "HCP Honorarium 6,00,000 Exceeded Approval", StringComparison.OrdinalIgnoreCase));
                 Column? Column7 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "Trainer Honorarium 12,00,000 Exceeded Approval", StringComparison.OrdinalIgnoreCase));
                 Column? Column8 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "Travel/Accomodation 3,00,000 Exceeded Approval", StringComparison.OrdinalIgnoreCase));
-                //Column? Column9 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "POval", StringComparison.OrdinalIgnoreCase));
+                Column? Column9 = TestingSheetData.Columns.FirstOrDefault(column => string.Equals(column.Title, "Vendor Status", StringComparison.OrdinalIgnoreCase));
 
                 if (RequestWebhook != null && RequestWebhook.events != null)
                 {
@@ -305,58 +305,95 @@ namespace IndiaEventsWebApi.Controllers
                                 string? status6 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column6.Id)?.Value?.ToString() ?? "Null";
                                 string? status7 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column7.Id)?.Value?.ToString() ?? "Null";
                                 string? status8 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column8.Id)?.Value?.ToString() ?? "Null";
-                                //string? status9 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column9.Id)?.Value?.ToString() ?? "Null";
-                                if ((status1.ToLower() == "approved" || status1.ToLower() == "null") &&
-                                    (status2.ToLower() == "approved" || status2.ToLower() == "null") &&
-                                    (status4.ToLower() == "submitted" || status4.ToLower() == "null") &&
-                                    (status5.ToLower() == "submitted" || status5.ToLower() == "null") &&
-                                    (status6.ToLower() == "submitted" || status6.ToLower() == "null") &&
-                                    (status7.ToLower() == "submitted" || status7.ToLower() == "null") &&
-                                    (status8.ToLower() == "submitted" || status8.ToLower() == "null") &&
-                                        //(status9.ToLower() == "approved" || status9.ToLower() == "null") &&
-                                        (status3.ToLower() == "submitted" || status3.ToLower() == null))
+                                string? status9 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column9.Id)?.Value?.ToString() ?? "Null";
+
+                                if (status1.ToLower() == "approved")
                                 {
-                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "Is All Deviations Approved?");
-                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Sales Deviations Approved" };
+                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "pre-45 days Approval");
+                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
-                                    if (cellToUpdate != null) { cellToUpdate.Value = "Sales Deviations Approved"; }
+                                    if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
 
                                     smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
-                                else if ((status1.ToLower() == "submitted" || status1.ToLower() == "null") &&
-                                    (status2.ToLower() == "submitted" || status2.ToLower() == "null") &&
-                                    (status4.ToLower() == "approved" || status4.ToLower() == "null") &&
-                                    (status5.ToLower() == "approved" || status5.ToLower() == "null") &&
-                                    (status6.ToLower() == "approved" || status6.ToLower() == "null") &&
-                                    (status7.ToLower() == "approved" || status7.ToLower() == "null") &&
-                                    (status8.ToLower() == "approved" || status8.ToLower() == "null") &&
-                                    // (status9.ToLower() == "submitted" || status9.ToLower() == "null") &&
-                                    (status3.ToLower() == "approved" || status3.ToLower() == null))
+                                if (status2.ToLower() == "approved")
                                 {
-                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "Is All Deviations Approved?");
-                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Finance Deviations Approved" };
+                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "pre 5 days approval");
+                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
-                                    if (cellToUpdate != null) { cellToUpdate.Value = "Finance Deviations Approved"; }
+                                    if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
 
                                     smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
-                                else if ((status1.ToLower() == "submitted" || status1.ToLower() == "null") &&
-                                    (status2.ToLower() == "submitted" || status2.ToLower() == "null") &&
-                                    (status4.ToLower() == "approved" || status4.ToLower() == "null") &&
-                                    (status5.ToLower() == "approved" || status5.ToLower() == "null") &&
-                                    (status6.ToLower() == "approved" || status6.ToLower() == "null") &&
-                                    (status7.ToLower() == "approved" || status7.ToLower() == "null") &&
-                                    (status8.ToLower() == "approved" || status8.ToLower() == "null") &&
-                                    // (status9.ToLower() == "submitted" || status9.ToLower() == "null") &&
-                                    (status3.ToLower() == "approved" || status3.ToLower() == null))
+                                if (status3.ToLower() == "approved")
                                 {
-                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "Is All Deviations Approved?");
-                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Finance Deviations Approved" };
+                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "f&b approved");
+                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
-                                    if (cellToUpdate != null) { cellToUpdate.Value = "Finance Deviations Approved"; }
+                                    if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
+
+                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                }
+                                if (status4.ToLower() == "approved")
+                                {
+                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "HCP 1L Approved");
+                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
+                                    Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
+                                    Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                                    if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
+
+                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                }
+                                if (status5.ToLower() == "approved")
+                                {
+                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "HCP 5L Approval");
+                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
+                                    Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
+                                    Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                                    if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
+
+                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                }
+                                if (status6.ToLower() == "approved")
+                                {
+                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "HCP 6L Approval");
+                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
+                                    Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
+                                    Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                                    if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
+
+                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                }
+                                if (status7.ToLower() == "approved")
+                                {
+                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "Trainer 12L Approval");
+                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
+                                    Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
+                                    Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                                    if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
+
+                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                }
+                                if (status8.ToLower() == "approved")
+                                {
+                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "T/A Approval");
+                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
+                                    Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
+                                    Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                                    if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
+
+                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                }
+                                if (status9.ToLower() == "approved")
+                                {
+                                    long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "Vendor Update Approved?");
+                                    Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
+                                    Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
+                                    Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+                                    if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
 
                                     smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
@@ -457,8 +494,8 @@ namespace IndiaEventsWebApi.Controllers
                                 string? status7 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column7.Id)?.Value?.ToString() ?? "Null";
                                 string? status8 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column8.Id)?.Value?.ToString() ?? "Null";
                                 string? status9 = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == Column9.Id)?.Value?.ToString() ?? "Null";
-                                
-                                if(status1.ToLower() == "approved")
+
+                                if (status1.ToLower() == "approved")
                                 {
                                     long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(TestingSheetData, "post 45 days approved");
                                     Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = "Yes" };
