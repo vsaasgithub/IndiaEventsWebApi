@@ -2727,7 +2727,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             string name = r.Split(".")[0];
                             string filePath = SheetHelper.testingFile(q, name);
                             Row addedRow = updatedRow[0];
-                            if (p.Id != null)
+                            if (p.Id != null && p.Id!=0)
                             {
                                 Attachment Updateattachment = smartsheet.SheetResources.AttachmentResources.VersioningResources.AttachNewVersion(
                                     sheet10.Id.Value, (long)p.Id, filePath, "application/msword");
@@ -2793,7 +2793,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 {
                                     newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value });
                                     newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = "Yes" });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = formDataList.EventOpen30dayscount });
+                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = SheetHelper.NumCheck(formDataList.EventOpen30dayscount) });
                                 }
                                 else if (file == "7DaysDeviationFile")
                                 {
