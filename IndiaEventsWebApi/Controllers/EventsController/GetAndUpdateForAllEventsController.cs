@@ -1,4 +1,5 @@
 ﻿using IndiaEvents.Models.Models.Draft;
+using IndiaEvents.Models.Models.EventTypeSheets;
 using IndiaEventsWebApi.Helper;
 using IndiaEventsWebApi.Models;
 using IndiaEventsWebApi.Models.EventTypeSheets;
@@ -33,6 +34,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         private readonly string sheetId8;
         private readonly string sheetId9;
         private readonly string sheetId10;
+        private readonly string sheetId11;
         public GetAndUpdateForAllEventsController(IConfiguration configuration)
         {
             this.configuration = configuration;
@@ -48,6 +50,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             sheetId8 = configuration.GetSection("SmartsheetSettings:EventRequestBeneficiary").Value;
             sheetId9 = configuration.GetSection("SmartsheetSettings:EventRequestProductBrandsList").Value;
             sheetId10 = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
+            sheetId11 = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
         }
         #region
         //[HttpGet("GetDataFromAllSheetsUsingEventId")]
@@ -2700,7 +2703,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet10, "Pay Back Amount To Company"), Value = formDataList.PayBackAmountToCompany });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet10, "Total Expense"), Value = formDataList.TotalExpenses });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet10, "Additional Amount Needed To Pay For Initiator"), Value = formDataList.AdditionalAmountNeededToPayForInitiator });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet10, "Advance Amount"), Value =    formDataList.AdvanceProvided });
+                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet10, "Advance Amount"), Value = formDataList.AdvanceProvided });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet10, "Total Expense BTC"), Value = formDataList.TotalBtcAmount });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet10, "Total Expense BTE"), Value = formDataList.TotalBteAmount });
 
@@ -2862,13 +2865,106 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             return Ok(new
             { Message = "Updated Successfully" });
         }
+
+
+        [HttpPut("UpdateRegectionHonorariumData")]
+        public IActionResult UpdateRegectionHonorariumData(UpdateHonorariumPaymentListPh2 formData)
+        {
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId11);
+            var eventId = formData.EventId;
+            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+            Row? targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == eventId));
+            if (targetRow != null)
+            {
+                if (formData.IsFilesUpload == "Yes")
+                {
+                    foreach (var p in formData.Files)
+                    {
+
+                        string[] words = p.FileBase64.Split(':');
+                        string r = words[0];
+                        string q = words[1];
+                        string name = r.Split(".")[0];
+                        string filePath = SheetHelper.testingFile(q, name);
+                        //Row addedRow = updatedRow[0];
+                        if (p.Id != null)
+                        {
+                            Attachment Updateattachment = smartsheet.SheetResources.AttachmentResources.VersioningResources.AttachNewVersion(
+                                sheet.Id.Value, (long)p.Id, filePath, "application/msword");
+                        }
+                        else
+                        {
+                            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                               sheet.Id.Value, targetRow.Id.Value, filePath, "application/msword");
+                        }
+
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            SheetHelper.DeleteFile(filePath);
+                        }
+                    }
+                }
+            }
+            if (formData.IsDeviationUpload == "Yes")
+            {
+                try
+                {
+                    Row newRow7 = new()
+                    {
+                        Cells = new List<Cell>()
+                    };
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formData.EventTopic });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventType"), Value = formData.EventType });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventDate"), Value = formData.EventDate });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "StartTime"), Value = formData.StartTime });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EndTime"), Value = formData.EndTime });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "VenueName"), Value = formData.VenueName });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "City"), Value = formData.City });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "State"), Value = formData.State });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInHonorarium:5WorkingdaysDeviationDateTrigger").Value });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HON-5Workingdays Deviation Date Trigger"), Value = formData.IsDeviationUpload });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formData.SalesHeadEmail });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formData.FinanceHead });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "InitiatorName"), Value = formData.InitiatorName });
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formData.InitiatorEmail });
+
+                    IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
+
+                    foreach (string p in formData.DeviationFiles)
+                    {
+                        string[] words = p.Split(':');
+                        string r = words[0];
+                        string q = words[1];
+                        string name = r.Split("*")[0];
+                        string filePath = SheetHelper.testingFile(q, name);
+                        Row addedRow = addeddeviationrow[0];
+                        Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+
+
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            SheetHelper.DeleteFile(filePath);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+            return Ok(new
+            { Message = "Updated Successfully" });
+        }
     }
-
-
-
-
-
 }
+
+
+
+
+
+
+
 
 
 

@@ -99,6 +99,7 @@ namespace IndiaEventsWebApi.Controllers
 
                 IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet.Id.Value, new Row[] { newRow });
                 string? eventId = formData.RequestHonorariumList.EventId;
+
                 foreach (string p in formData.RequestHonorariumList.Files)
                 {
                     string[] words = p.Split(':');
@@ -135,7 +136,7 @@ namespace IndiaEventsWebApi.Controllers
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "State"), Value = formData.RequestHonorariumList.State });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInHonorarium:5WorkingdaysDeviationDateTrigger").Value });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HON-5Workingdays Deviation Date Trigger"), Value = formData.RequestHonorariumList.IsDeviationUpload });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formData.RequestHonorariumList.Compliance });
+                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formData.RequestHonorariumList.SalesHeadEmail });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formData.RequestHonorariumList.FinanceHead });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "InitiatorName"), Value = formData.RequestHonorariumList.InitiatorName });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formData.RequestHonorariumList.InitiatorEmail });
@@ -209,7 +210,27 @@ namespace IndiaEventsWebApi.Controllers
                         updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Annual Trainer Agreement Valid?"), Value = formdata.IsAnnualTrainerAgreementValid });
                         updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Including GST?"), Value = formdata.IsInclidingGst });
                         IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet4.Id.Value, new Row[] { updateRow });
+                        if (formdata.FilesToUpload.Count > 0)
+                        {
+                            PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet4.Id.Value, targetRow.Id.Value, null);
+                            if (attachments.Data != null || attachments.Data.Count > 0)
+                            {
 
+                                foreach (var attachment in attachments.Data)
+                                {
+                                    var name = attachment.Name;
+                                    if (name.ToLower().Contains("speakeragreement") || name.ToLower().Contains("honorariumInvoice"))
+                                    {
+                                        long Id = attachment.Id.Value;
+                                        smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
+                                          sheet4.Id.Value,           // sheetId
+                                          Id            // attachmentId
+                                        );
+                                    }
+                                }
+
+                            }
+                        }
                         foreach (var p in formdata.FilesToUpload)
                         {
                             string[] words = p.Split(':');
