@@ -2383,7 +2383,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     return BadRequest(ex.Message);
                 }
             }
-
+            #region
             //if (formDataList.IsDeviationUpload == "Yes")
             //{
             //    List<string> DeviationNames = new List<string>();
@@ -2483,6 +2483,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             //        }
             //    }
             //}
+            #endregion
             if (formDataList.IsDeviationUpload == "Yes")
             {
                 List<string> DeviationNames = new List<string>();
@@ -2572,7 +2573,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         string filePath = SheetHelper.testingFile(q, name);
                                         Row addedRow = addeddeviationrow[0];
                                         Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                        // Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword");
+                                         Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword");
                                         j++;
                                         if (System.IO.File.Exists(filePath))
                                         {
