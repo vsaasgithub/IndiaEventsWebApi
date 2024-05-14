@@ -150,7 +150,9 @@ namespace IndiaEventsWebApi.Controllers
                             string name = r.Split("*")[0];
                             string filePath = SheetHelper.testingFile(q, name);
                             Row addedRow = addeddeviationrow[0];
+                            Row addedRowInHonr = addedRows[0];
                             Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                            Attachment Deviationattachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet.Id.Value, addedRowInHonr.Id.Value, filePath, "application/msword");
 
 
                             if (System.IO.File.Exists(filePath))

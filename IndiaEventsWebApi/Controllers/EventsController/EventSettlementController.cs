@@ -599,13 +599,15 @@ namespace IndiaEventsWebApi.Controllers
 
                                     foreach (var attachment in attachments.Data)
                                     {
-                                        long Id = attachment.Id.Value;
-                                        smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
-                                          sheet1.Id.Value,           // sheetId
-                                          Id            // attachmentId
-                                        );
-
-
+                                        var name = attachment.Name;
+                                        if (name.ToLower().Contains("invoice"))
+                                        {
+                                            long Id = attachment.Id.Value;
+                                            smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
+                                              sheet1.Id.Value,           // sheetId
+                                              Id            // attachmentId
+                                            );
+                                        }
                                     }
 
                                 }
