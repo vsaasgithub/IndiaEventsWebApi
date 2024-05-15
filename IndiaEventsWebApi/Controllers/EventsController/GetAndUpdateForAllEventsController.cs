@@ -1019,8 +1019,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             return Ok(resultData);
         }
 
-
-
         [HttpPut("UpdateClassIPreEvent")]
         public IActionResult UpdateClassIPreEvent(UpdateDataForClassI formDataList)
         {
@@ -2299,9 +2297,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             { Message = "Updated Successfully" });
         }
 
-
-
-
         [HttpPut("UpdateStallFabricationPreEvent")]
         public IActionResult UpdateStallFabricationPreEvent(UpdateDataForStall formDataList)
         {
@@ -2915,7 +2910,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             return Ok(new
             { Message = "Updated Successfully" });
         }
-
 
         [HttpPut("UpdateRegectionHonorariumData")]
         public IActionResult UpdateRegectionHonorariumData(UpdateHonorariumPaymentListPh2 formData)

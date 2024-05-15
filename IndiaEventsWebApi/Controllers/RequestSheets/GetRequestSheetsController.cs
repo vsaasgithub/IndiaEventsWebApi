@@ -748,8 +748,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
             }
             return Ok();
         }
-
-
         [HttpGet("GetEventSettlementDataUsingEventId")]
         public IActionResult GetEventSettlementDataUsingEventId(string eventId)
         {
@@ -939,7 +937,6 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
             }
             return Ok(ProductBrandsListrowData);
         }
-
         [HttpGet("GetAttachmentsFromHonorariumSheetBasedOnEventId")]
         public IActionResult GetAttachmentsFromHonorariumSheetBasedOnEventId(string eventId)
         {

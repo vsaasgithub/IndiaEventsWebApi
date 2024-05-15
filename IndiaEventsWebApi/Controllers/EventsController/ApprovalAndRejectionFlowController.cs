@@ -92,14 +92,18 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
 
                     IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
-                    if (targetRow.Discussions != null)
+                    if(!string.IsNullOrEmpty(formDataList.Comments))
                     {
-                        Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddComment(sheet.Id.Value, targetRow.Discussions[0].Id.Value, commentSpecification);
+                        if (targetRow.Discussions != null)
+                        {
+                            Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddComment(sheet.Id.Value, targetRow.Discussions[0].Id.Value, commentSpecification);
+                        }
+                        else
+                        {
+                            Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussion(sheet.Id.Value, targetRow.Id.Value, discussionSpecification);
+                        }
                     }
-                    else
-                    {
-                        Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussion(sheet.Id.Value, targetRow.Id.Value, discussionSpecification);
-                    }
+                    
 
 
                     return Ok(new { Message = "Updated Successfully" });
@@ -154,14 +158,18 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
 
                     IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
-                    if (targetRow.Discussions != null)
+                    if (!string.IsNullOrEmpty(formDataList.Comments))
                     {
-                        Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddComment(sheet.Id.Value, targetRow.Discussions[0].Id.Value, commentSpecification);
+                        if (targetRow.Discussions != null)
+                        {
+                            Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddComment(sheet.Id.Value, targetRow.Discussions[0].Id.Value, commentSpecification);
+                        }
+                        else
+                        {
+                            Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussion(sheet.Id.Value, targetRow.Id.Value, discussionSpecification);
+                        }
                     }
-                    else
-                    {
-                        Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussion(sheet.Id.Value, targetRow.Id.Value, discussionSpecification);
-                    }
+                   
 
 
                     return Ok(new { Message = "Updated Successfully" });
@@ -228,14 +236,18 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
 
                     IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
-                    if (targetRow.Discussions != null)
+                    if (!string.IsNullOrEmpty(formDataList.Comments))
                     {
-                        Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddComment(sheet.Id.Value, targetRow.Discussions[0].Id.Value, commentSpecification);
+                        if (targetRow.Discussions != null)
+                        {
+                            Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddComment(sheet.Id.Value, targetRow.Discussions[0].Id.Value, commentSpecification);
+                        }
+                        else
+                        {
+                            Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussion(sheet.Id.Value, targetRow.Id.Value, discussionSpecification);
+                        }
                     }
-                    else
-                    {
-                        Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussion(sheet.Id.Value, targetRow.Id.Value, discussionSpecification);
-                    }
+                    
 
 
                     return Ok(new { Message = "Updated Successfully" });
@@ -302,14 +314,18 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
 
                     IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
-                    if (targetRow.Discussions != null)
+                    if (!string.IsNullOrEmpty(formDataList.Comments))
                     {
-                        Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddComment(sheet.Id.Value, targetRow.Discussions[0].Id.Value, commentSpecification);
+                        if (targetRow.Discussions != null)
+                        {
+                            Comment newComment = smartsheet.SheetResources.DiscussionResources.CommentResources.AddComment(sheet.Id.Value, targetRow.Discussions[0].Id.Value, commentSpecification);
+                        }
+                        else
+                        {
+                            Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussion(sheet.Id.Value, targetRow.Id.Value, discussionSpecification);
+                        }
                     }
-                    else
-                    {
-                        Discussion newDiscussion = smartsheet.SheetResources.RowResources.DiscussionResources.CreateDiscussion(sheet.Id.Value, targetRow.Id.Value, discussionSpecification);
-                    }
+                   
 
 
                     return Ok(new { Message = "Updated Successfully" });
