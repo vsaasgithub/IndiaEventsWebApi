@@ -909,6 +909,167 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
             }
             return Ok();
         }
+        [HttpGet("GetDataFromEventSettlementSheet")]
+        public IActionResult GetDataFromEventSettlementSheet()
+        {
+            string sheetId = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+            Dictionary<string, object> ProductBrandsListrowData = new Dictionary<string, object>();
+            //Row ExistingRow = sheet.Rows.FirstOrDefault(row => row.)
+            //Row? targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == eventId));
+            // if (targetRow != null)
+            //  {
+            //long Id = targetRow.Id.Value;
+            List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+
+            List<EventSettlementPayload> eventRequestBrandsList = sheetData
+                // .Where(row => row.TryGetValue("EventId/EventRequestId", out var eventIdValue) && eventIdValue?.ToString() == eventId)
+                .Select(row => new EventSettlementPayload
+                {
+                    EventType = row.TryGetValue("EventType", out var eventType) ? eventType?.ToString() : null,
+                    EventIdEventRequestId = row.TryGetValue("EventId/EventRequestId", out var eventId) ? eventId?.ToString() : null,
+                    EventTopic = row.TryGetValue("Event Topic", out var eventTopic) ? eventTopic?.ToString() : null,
+                    EventDate = row.TryGetValue("EventDate", out var eventDate) ? eventDate?.ToString() : null,
+                    EventEndDate = row.TryGetValue("Event End Date", out var eventEndDate) ? eventEndDate?.ToString() : null,
+                    StartTime = row.TryGetValue("StartTime", out var startTime) ? startTime?.ToString() : null,
+                    EndTime = row.TryGetValue("EndTime", out var endTime) ? endTime?.ToString() : null,
+                    VenueName = row.TryGetValue("VenueName", out var venueName) ? venueName?.ToString() : null,
+                    State = row.TryGetValue("State", out var state) ? state?.ToString() : null,
+                    City = row.TryGetValue("City", out var city) ? city?.ToString() : null,
+                    Attended = row.TryGetValue("Attended", out var totalInvitees) && double.TryParse(totalInvitees?.ToString(), out var parsedValue) ? parsedValue : 0,
+                    InviteesParticipated = row.TryGetValue("InviteesParticipated", out var honorariumApprovedDate) ? honorariumApprovedDate?.ToString() : null,
+                    ExpenseDetails = row.TryGetValue("ExpenseDetails", out var ExpenseDetails) ? ExpenseDetails?.ToString() : null,
+                    TotalExpenseDetails = row.TryGetValue("TotalExpenseDetails", out var TotalExpenseDetails) ? TotalExpenseDetails?.ToString() : null,
+                    AdvanceDetails = row.TryGetValue("AdvanceDetails", out var AdvanceDetails) ? AdvanceDetails?.ToString() : null,
+                    AdvanceUtilizedForEvent = row.TryGetValue("Advance Utilized For Event", out var AdvanceUtilizedForEvent) ? AdvanceUtilizedForEvent?.ToString() : null,
+                    PayBackAmountToCompany = row.TryGetValue("Pay Back Amount To Company", out var PayBackAmountToCompany) ? PayBackAmountToCompany?.ToString() : null,
+                    AdditionalAmountNeededToPayForInitiator = row.TryGetValue("Additional Amount Needed To Pay For Initiator", out var AdditionalAmountNeededToPayForInitiator) ? AdditionalAmountNeededToPayForInitiator?.ToString() : null,
+                    CreatedOn = row.TryGetValue("CreatedOn", out var premarketingHeadApproval) ? premarketingHeadApproval?.ToString() : null,
+                    CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var createdDateHelper) ? createdDateHelper?.ToString() : null,
+                    Modified = row.TryGetValue("Modified", out var premarketingHeadApprovalDate) ? premarketingHeadApprovalDate?.ToString() : null,
+                    InitiatorName = row.TryGetValue("InitiatorName", out var initiatorName) ? initiatorName?.ToString() : null,
+                    InitiatorEmail = row.TryGetValue("Initiator Email", out var initiatorEmail) ? initiatorEmail?.ToString() : null,
+                    IsAdvanceRequired = row.TryGetValue("IsAdvanceRequired", out var isAdvanceRequired) ? isAdvanceRequired?.ToString() : null,
+                    EventRequestStatus = row.TryGetValue("Event Request Status", out var prerBmBmApprovalDate) ? prerBmBmApprovalDate?.ToString() : null,
+                    HonorariumRequestStatus = row.TryGetValue("Honorarium Request Status", out var honorariumRequestStatus) ? honorariumRequestStatus?.ToString() : null,
+                    PostEventRequeststatus = row.TryGetValue("Post Event Request status", out var PostEventRequeststatus) ? PostEventRequeststatus?.ToString() : null,
+                    PostEventApprovedDate = row.TryGetValue("Post Event Approved Date", out var PostEventApprovedDate) ? PostEventApprovedDate?.ToString() : null,
+                    EventSettlementRBMBMApproval = row.TryGetValue("EventSettlement-RBM/BM Approval", out var agreement) ? agreement?.ToString() : null,
+                    EventSettlementRBMBMApprovalDate = row.TryGetValue("EventSettlement-RBM/BM Approval Date", out var HONRBMBMApprovalDate) ? HONRBMBMApprovalDate?.ToString() : null,
+                    EventSettlementSalesHeadApproval = row.TryGetValue("EventSettlement-SalesHead Approval", out var HONSalesHeadApproval) ? HONSalesHeadApproval?.ToString() : null,
+                    EventSettlementSalesHeadApprovalDate = row.TryGetValue("EventSettlementSalesHeadApprovalDate", out var HONSalesHeadApprovalDate) ? HONSalesHeadApprovalDate?.ToString() : null,
+                    EventSettlementComplianceApproval = row.TryGetValue("EventSettlement-Compliance Approval", out var EventSettlementComplianceApproval) ? EventSettlementComplianceApproval?.ToString() : null,
+                    EventSettlementComplianceApprovalDate = row.TryGetValue("EventSettlement-Compliance Approval Date", out var EventSettlementComplianceApprovalDate) ? EventSettlementComplianceApprovalDate?.ToString() : null,
+                    EventSettlementFinanceAccountApproval = row.TryGetValue("EventSettlement-Finance Account Approval", out var EventSettlementFinanceAccountApproval) ? EventSettlementFinanceAccountApproval?.ToString() : null,
+                    EventSettlementFinanceAccountComments = row.TryGetValue("EventSettlement-Finance Account Comments", out var EventSettlementFinanceAccountComments) ? EventSettlementFinanceAccountComments?.ToString() : null,
+                    EventSettlementFinanceAccountApprovalDate = row.TryGetValue("EventSettlement-Finance Account Approval Date", out var EventSettlementFinanceAccountApprovalDate) ? EventSettlementFinanceAccountApprovalDate?.ToString() : null,
+                    EventSettlementFinanceTreasuryApproval = row.TryGetValue("EventSettlement-Finance Treasury Approval Date", out var EventSettlementFinanceTreasuryApproval) ? EventSettlementFinanceTreasuryApproval?.ToString() : null,
+                    EventSettlementMarketingHeadApproval = row.TryGetValue("EventSettlement-Marketing Head Approval Date", out var EventSettlementMarketingHeadApproval) ? EventSettlementMarketingHeadApproval?.ToString() : null,
+                    EventSettlementMedicalAffairsHeadApproval = row.TryGetValue("EventSettlement-Medical Affairs Head Approval", out var EventSettlementMedicalAffairsHeadApproval) ? EventSettlementMedicalAffairsHeadApproval?.ToString() : null,
+                    EventSettlementMedicalAffairsHeadApprovalDate = row.TryGetValue("EventSettlement-Medical Affairs Head Approval Date", out var EventSettlementMedicalAffairsHeadApprovalDate) ? EventSettlementMedicalAffairsHeadApprovalDate?.ToString() : null,
+                    DeviationStatus = row.TryGetValue("Deviation Status", out var DeviationStatus) ? DeviationStatus?.ToString() : null,
+                    IsAllDeviationsApproved = row.TryGetValue("Is All Deviations Approved?", out var IsAllDeviationsApproved) ? IsAllDeviationsApproved?.ToString() : null,
+                    POSTBeyond30DaysDeviationApproval = row.TryGetValue("POST- Beyond30Days Deviation Approval", out var POSTBeyond30DaysDeviationApproval) ? POSTBeyond30DaysDeviationApproval?.ToString() : null,
+                    post45daysapproved = row.TryGetValue("post 45 days approved", out var post45daysapproved) ? post45daysapproved?.ToString() : null,
+                    POSTBeyond30DaysDeviationApprovalDate = row.TryGetValue("POST- Beyond30Days Deviation Approval Date", out var POSTBeyond30DaysDeviationApprovalDate) ? POSTBeyond30DaysDeviationApprovalDate?.ToString() : null,
+                    POSTLessThan5InviteesDeviationApproval = row.TryGetValue("POST-LessThan5Invitees Deviation Approval", out var POSTLessThan5InviteesDeviationApproval) ? POSTLessThan5InviteesDeviationApproval?.ToString() : null,
+                    Post5InviteesApproved = row.TryGetValue("Post <5 Invitees Approved", out var Post5InviteesApproved) ? Post5InviteesApproved?.ToString() : null,
+                    POSTDeviationCostperpaxabove1500Approval = row.TryGetValue("POST-Deviation Costperpaxabove1500 Approval ", out var POSTDeviationCostperpaxabove1500Approval) ? POSTDeviationCostperpaxabove1500Approval?.ToString() : null,
+                    PostCostperPaxApproved = row.TryGetValue("Post CostperPax Approved", out var PostCostperPaxApproved) ? PostCostperPaxApproved?.ToString() : null,
+                    POSTDeviationCostperpaxabove1500ApprovalDate = row.TryGetValue("POST-Deviation Costperpaxabove1500 Approval Date", out var POSTDeviationCostperpaxabove1500ApprovalDate) ? POSTDeviationCostperpaxabove1500ApprovalDate?.ToString() : null,
+                    POSTDeviationChangeinvenueApproval = row.TryGetValue("POST-Deviation Change in venue Approval", out var POSTDeviationChangeinvenueApproval) ? POSTDeviationChangeinvenueApproval?.ToString() : null,
+                    PostChangeInVenueApproved = row.TryGetValue("Post ChangeInVenue Approved", out var PostChangeInVenueApproved) ? PostChangeInVenueApproved?.ToString() : null,
+                    POSTDeviationChangeintopicApproval = row.TryGetValue("POST-Deviation Change in topic Approval", out var POSTDeviationChangeintopicApproval) ? POSTDeviationChangeintopicApproval?.ToString() : null,
+                    PostChangeInTopicApproved = row.TryGetValue("Post ChangeInTopic Approved", out var PostChangeInTopicApproved) ? PostChangeInTopicApproved?.ToString() : null,
+                    POSTDeviationChangeinspeakerApproval = row.TryGetValue("POST-Deviation Change in speaker Approval", out var POSTDeviationChangeinspeakerApproval) ? POSTDeviationChangeinspeakerApproval?.ToString() : null,
+                    PostChangeInSpeakerApproved = row.TryGetValue("Post ChangeInSpeaker Approved", out var PostChangeInSpeakerApproved) ? PostChangeInSpeakerApproved?.ToString() : null,
+                    POSTDeviationAttendeesnotcapturedApproval = row.TryGetValue("POST-Deviation Attendees not captured Approval", out var POSTDeviationAttendeesnotcapturedApproval) ? POSTDeviationAttendeesnotcapturedApproval?.ToString() : null,
+                    PostAttendeesNotCapturedApproved = row.TryGetValue("Post AttendeesNotCaptured Approved", out var PostAttendeesNotCapturedApproved) ? PostAttendeesNotCapturedApproved?.ToString() : null,
+                    POSTDeviationSpeakernotcapturedApproval = row.TryGetValue("POST-Deviation Speaker not captured  Approval", out var POSTDeviationSpeakernotcapturedApproval) ? POSTDeviationSpeakernotcapturedApproval?.ToString() : null,
+                    PostSpeakerNotCapturedApproved = row.TryGetValue("Post SpeakerNotCaptured Approved", out var PostSpeakerNotCapturedApproved) ? PostSpeakerNotCapturedApproved?.ToString() : null,
+                    POSTDeviationOtherDeviationApproval = row.TryGetValue("POST-Deviation Other Deviation Approval", out var POSTDeviationOtherDeviationApproval) ? POSTDeviationOtherDeviationApproval?.ToString() : null,
+                    PostOtherDeviationApproved = row.TryGetValue("Post OtherDeviation Approved", out var PostOtherDeviationApproved) ? PostOtherDeviationApproved?.ToString() : null,
+                    EventSettlementDeviationDate = row.TryGetValue("EventSettlement - Deviation Date", out var EventSettlementDeviationDate) ? EventSettlementDeviationDate?.ToString() : null,
+                    EventSettlementDeviationApproval = row.TryGetValue("EventSettlement - Deviation Approval", out var EventSettlementDeviationApproval) ? EventSettlementDeviationApproval?.ToString() : null,
+                    EventSettlementDeviationApprovalDate = row.TryGetValue("EventSettlement - Deviation Approval Date", out var EventSettlementDeviationApprovalDate) ? EventSettlementDeviationApprovalDate?.ToString() : null,
+                    FinanceDeviationPending = row.TryGetValue("Finance Deviation Pending", out var FinanceDeviationPending) ? FinanceDeviationPending?.ToString() : null,
+                    SalesDeviationPending = row.TryGetValue("Sales Deviation Pending", out var SalesDeviationPending) ? SalesDeviationPending?.ToString() : null,
+                    HonorariumSubmitted = row.TryGetValue("Honorarium Submitted?", out var HonorariumSubmitted) ? HonorariumSubmitted?.ToString() : null,
+                    Honorariumamount = row.TryGetValue("Honorariumamount", out var Honorariumamount) ? Honorariumamount?.ToString() : null,
+                    IsItincludingGST = row.TryGetValue("IsItincludingGST?", out var IsItincludingGST) ? IsItincludingGST?.ToString() : null,
+                    AgreementAmount = row.TryGetValue("EvvalDate", out var AgreementAmount) ? AgreementAmount?.ToString() : null,
+                    JVNo = row.TryGetValue("JV No", out var eventRequestStatus) ? eventRequestStatus?.ToString() : null,
+                    JVDate = row.TryGetValue("JV Date", out var eventApprovedDate) ? eventApprovedDate?.ToString() : null,
+                    PVNo = row.TryGetValue("PV No", out var miplInvitees) ? miplInvitees?.ToString() : null,
+                    PVDate = row.TryGetValue("PV Date", out var postEventRequeststatus) ? postEventRequeststatus?.ToString() : null,
+                    PostEventSubmitted = row.TryGetValue("PostEventSubmitted?", out var PostEventSubmitted) ? PostEventSubmitted?.ToString() : null,
+                    PostEventBTCExpense = row.TryGetValue("PostEventBTCExpense", out var PostEventBTCExpense) ? PostEventBTCExpense?.ToString() : null,
+                    PostEventBTEExpense = row.TryGetValue("PostEventBTEExpense", out var PostEventBTEExpense) ? PostEventBTEExpense?.ToString() : null,
+                    ActualAmountGreaterThan50Per = row.TryGetValue("ActualAmountGreaterThan50%", out var ActualAmountGreaterThan50) ? ActualAmountGreaterThan50?.ToString() : null,
+                    ReportingManager = row.TryGetValue("Reporting Manager", out var ReportingManager) ? ReportingManager?.ToString() : null,
+                    _1UpManager = row.TryGetValue("1 Up Manager", out var _1UpManager) ? _1UpManager?.ToString() : null,
+                    Brands = row.TryGetValue("Brands", out var brands) ? brands?.ToString() : null,
+                    Panelists = row.TryGetValue("Panelists", out var panelists) ? panelists?.ToString() : null,
+                    HCP = row.TryGetValue("HCP", out var HCP) ? HCP?.ToString() : null,
+                    SlideKits = row.TryGetValue("SlideKits", out var slideKits) ? slideKits?.ToString() : null,
+                    Invitees = row.TryGetValue("Invitees", out var invitees) ? invitees?.ToString() : null,
+                    Expenses = row.TryGetValue("Expenses", out var expenses) ? expenses?.ToString() : null,
+                    IndicationsDone = row.TryGetValue("Indications Done", out var IndicationsDone) ? IndicationsDone?.ToString() : null,
+                    TotalInvitees = row.TryGetValue("Total Invitees", out var ctotalInvitees) && double.TryParse(ctotalInvitees?.ToString(), out var vtotalInvitees) ? vtotalInvitees : 0,
+                    TotalAttendees = row.TryGetValue("Total Attendees", out var totalAttendees) && double.TryParse(totalAttendees?.ToString(), out var parsedTotalAttendees) ? parsedTotalAttendees : 0,
+                    ApprovalStatus = row.TryGetValue("Approval Status", out var eventOpenSalesHeadApprovalDate) ? eventOpenSalesHeadApprovalDate?.ToString() : null,
+                    NextApprover = row.TryGetValue("Next Approver", out var _7daysSalesHeadApproval) ? _7daysSalesHeadApproval?.ToString() : null,
+                    RBMBM = row.TryGetValue("RBM/BM", out var rbmbm) ? rbmbm?.ToString() : null,
+                    SalesHead = row.TryGetValue("Sales Head", out var salesHead) ? salesHead?.ToString() : null,
+                    MarketingHead = row.TryGetValue("Marketing Head", out var marketingHead) ? marketingHead?.ToString() : null,
+                    Finance = row.TryGetValue("Finance", out var finance) ? finance?.ToString() : null,
+                    Compliance = row.TryGetValue("Compliance", out var compliance) ? compliance?.ToString() : null,
+                    FinanceTreasury = row.TryGetValue("Finance Treasury", out var financeTreasury) ? financeTreasury?.ToString() : null,
+                    FinanceAccounts = row.TryGetValue("Finance Accounts", out var financeAccounts) ? financeAccounts?.ToString() : null,
+                    MedicalAffairsHead = row.TryGetValue("Medical Affairs Head", out var medicalAffairsHead) ? medicalAffairsHead?.ToString() : null,
+                    SalesCoordinator = row.TryGetValue("Sales Coordinator", out var salesCoordinator) ? salesCoordinator?.ToString() : null,
+                    FinanceHead = row.TryGetValue("Finance Head", out var financeHead) ? financeHead?.ToString() : null,
+                    TotalHonorariumAmount = row.TryGetValue("Total Honorarium Amount", out var totalHonorariumAmount) && double.TryParse(totalHonorariumAmount?.ToString(), out var parsedTotalHonorariumAmount) ? parsedTotalHonorariumAmount : 0,
+                    TotalTravelAccommodationAmount = row.TryGetValue("Total Travel & Accommodation Amount", out var totalTravelAccommodationAmount) && double.TryParse(totalTravelAccommodationAmount?.ToString(), out var parsedTotalTravelAccommodationAmount) ? parsedTotalTravelAccommodationAmount : 0,
+                    TotalTravelAmount = row.TryGetValue("Total Travel Amount", out var totalTravelAmount) && double.TryParse(totalTravelAmount?.ToString(), out var parsedTotalTravelAmount) ? parsedTotalTravelAmount : 0,
+                    TotalAccommodationAmount = row.TryGetValue("Total Accommodation Amount", out var totalAccommodationAmount) && double.TryParse(totalAccommodationAmount?.ToString(), out var parsedTotalAccommodationAmount) ? parsedTotalAccommodationAmount : 0,
+                    TotalLocalConveyance = row.TryGetValue("Total Local Conveyance", out var totalLocalConveyance) && double.TryParse(totalLocalConveyance?.ToString(), out var parsedTotalLocalConveyance) ? parsedTotalLocalConveyance : 0,
+                    TotalExpense = row.TryGetValue("Total Expense", out var totalExpense) && double.TryParse(totalExpense?.ToString(), out var parsedTotalExpense) ? parsedTotalExpense : 0,
+                    TotalBudget = row.TryGetValue("Total Budget", out var totalBudget) && double.TryParse(totalBudget?.ToString(), out var parsedTotalBudget) ? parsedTotalBudget : 0,
+                    TotalActual = row.TryGetValue("Total Budget", out var TotalActual) && double.TryParse(TotalActual?.ToString(), out var parsedTotalActual) ? parsedTotalActual : 0,
+                    _50Helper = row.TryGetValue("50% Helper", out var _50Helper) ? _50Helper?.ToString() : null,
+                    CostperparticipantHelper = row.TryGetValue("Cost per participant - Helper", out var _7daysSalesHeadApprovaldate) ? _7daysSalesHeadApprovaldate?.ToString() : null,
+                    BTCexceeds50ofbudget = row.TryGetValue("BTC exceeds 50% of budget", out var BTCexceeds50ofbudget) ? BTCexceeds50ofbudget?.ToString() : null,
+                    FinanceAccountsGivenDetails = row.TryGetValue("Finance Accounts Given Details", out var FinanceAccountsGivenDetails) ? FinanceAccountsGivenDetails?.ToString() : null,
+                    FinanceTreasuryGivenDetails = row.TryGetValue("Finance Treasury Given Details", out var FinanceTreasuryGivenDetails) ? FinanceTreasuryGivenDetails?.ToString() : null,
+                    Role = row.TryGetValue("Role", out var Role) ? Role?.ToString() : null,
+                    AdvanceAmount = row.TryGetValue("Advance Amount", out var advanceAmount) && double.TryParse(advanceAmount?.ToString(), out var parsedAdvanceAmount) ? parsedAdvanceAmount : 0,
+                    TotalExpenseBTC = row.TryGetValue(" Total Expense BTC", out var totalExpenseBTC) && double.TryParse(totalExpenseBTC?.ToString(), out var parsedTotalExpenseBTC) ? parsedTotalExpenseBTC : 0,
+                    TotalExpenseBTE = row.TryGetValue("Total Expense BTE", out var totalExpenseBTE) && double.TryParse(totalExpenseBTE?.ToString(), out var parsedTotalExpenseBTE) ? parsedTotalExpenseBTE : 0,
+                    HelperFinancetreasurytriggerBTE = row.TryGetValue("Helper Finance treasury trigger(BTE)", out var HelperFinancetreasurytriggerBTE) ? HelperFinancetreasurytriggerBTE?.ToString() : null,
+                    ClassIIIEventCode = row.TryGetValue("Class III Event Code", out var ClassIIIEventCode) ? ClassIIIEventCode?.ToString() : null,
+                    MeetingType = row.TryGetValue("Meeting Type", out var MeetingType) ? MeetingType?.ToString() : null,
+                    SponsorshipSocietyName = row.TryGetValue("Sponsorship Society Name", out var SponsorshipSocietyName) ? SponsorshipSocietyName?.ToString() : null,
+                    VenueCountry = row.TryGetValue("Venue Country", out var VenueCountry) ? VenueCountry?.ToString() : null,
+                    TotalHCPRegistrationAmount = row.TryGetValue("Total HCP Registration Amount", out var TotalHCPRegistrationAmount) ? TotalHCPRegistrationAmount?.ToString() : null,
+                    MedicalUtilityType = row.TryGetValue("Medical Utility Type", out var MedicalUtilityType) ? MedicalUtilityType?.ToString() : null,
+                    MedicalUtilityDescription = row.TryGetValue("Medical Utility Description", out var MedicalUtilityDescription) ? MedicalUtilityDescription?.ToString() : null,
+                    ValidTo = row.TryGetValue("Valid To", out var ValidTo) ? ValidTo?.ToString() : null,
+                    ValidFrom = row.TryGetValue("Valid From", out var ValidFrom) ? ValidFrom?.ToString() : null,
+
+                }).ToList();
+
+            return Ok(eventRequestBrandsList);
+            //}
+            //else
+            //{
+            //    return BadRequest(new
+            //    {
+            //        Message = "Row not found"
+            //    });
+            //}
+            //return Ok();
+        }
         [HttpGet("GetAttachmentsFromProcessSheetBasedOnEventId")]
         public IActionResult GetAttachmentsFromProcessSheetBasedOnEventId(string eventId)
         {
