@@ -37,6 +37,7 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? ReportingManagerEmail { get; set; }
         public string? FirstLevelEmail { get; set; }
         public string? SalesCoordinatorEmail { get; set; }
+        public string? MarketingCoordinatorEmail { get; set; }
         public string? MarketingHeadEmail { get; set; }
         public string? SalesHeadEmail { get; set; }
         public string? Role { get; set; }
