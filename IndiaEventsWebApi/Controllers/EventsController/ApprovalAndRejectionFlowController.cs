@@ -297,7 +297,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
                     else if (!string.IsNullOrEmpty(formDataList.SalesHeadStatus))
                     {
-                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "EventSettlement-Sales Head Approval"), Value = formDataList.SalesHeadStatus });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "EventSettlement-SalesHead Approval"), Value = formDataList.SalesHeadStatus });
                     }
                     else if (!string.IsNullOrEmpty(formDataList.MarketingHeadStatus))
                     {
