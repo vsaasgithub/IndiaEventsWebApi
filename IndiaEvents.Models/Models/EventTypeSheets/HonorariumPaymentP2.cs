@@ -102,4 +102,10 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public List<string>? FilesToUpload { get; set; }
         public string? IsAnnualTrainerAgreementValid { get; set; }
     }
+    public class DeleteFilesArray
+    {
+        public string? EventId { get; set; }
+        public List<string>? AttachmentIds { get; set; }
+    }
+
 }

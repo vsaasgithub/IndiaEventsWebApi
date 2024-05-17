@@ -3003,6 +3003,38 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             return Ok(new
             { Message = "Updated Successfully" });
         }
+
+        [HttpDelete("DeleteFilesFromPostSettlementSheet")]
+        public IActionResult DeleteFilesFromPostSettlementSheet(DeleteFilesArray formDataList)
+        {
+            var eventId = formDataList.EventId;
+            Sheet sheet10 = SheetHelper.GetSheetById(smartsheet, sheetId10);
+
+            Row? targetRow = sheet10.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == eventId));
+            if (targetRow != null)
+            {
+                PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet10.Id.Value, targetRow.Id.Value, null);
+                if (attachments.Data != null || attachments.Data.Count > 0)
+                {
+                    foreach (var attachment in attachments.Data)
+                    {
+                        long Id = attachment.Id.Value;
+                        if (formDataList.AttachmentIds.Contains(Id.ToString()))
+                        {
+                            smartsheet.SheetResources.AttachmentResources.DeleteAttachment(sheet10.Id.Value, Id);
+                        }
+                    }
+                    return Ok(new
+                    { Message = "Deleted Successfully" });
+                }
+            }
+            else
+            {
+                return Ok(new
+                { Message = "Row not found" });
+            }
+            return Ok();
+        }
     }
 }
 
