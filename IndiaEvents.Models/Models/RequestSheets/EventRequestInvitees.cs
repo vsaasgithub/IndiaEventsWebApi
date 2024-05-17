@@ -8,7 +8,7 @@
         public string? LocalConveyance { get; set; }
         public string? BtcorBte { get; set; }
         public string? LcAmount { get; set; }
-        public int? LcAmountExcludingTax { get; set; }
+        public double? LcAmountExcludingTax { get; set; }
         public string? InviteedFrom { get; set; }
         public string? InviteeName { get; set; }
         public string? Speciality { get; set; }
@@ -28,8 +28,8 @@
         public string? MISCode { get; set; }
         public string? LocalConveyance { get; set; }
         public string? BtcorBte { get; set; }
-        public int? LcAmount { get; set; }
-        public int? LcAmountExcludingTax { get; set; }
+        public double? LcAmount { get; set; }
+        public double? LcAmountExcludingTax { get; set; }
         public string? InviteedFrom { get; set; }
         public string? Addedinpostevent { get; set; }
         public string? InviteeName { get; set; }
