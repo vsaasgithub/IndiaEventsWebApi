@@ -15,12 +15,8 @@
         public string? HCPType { get; set; }
         public string? Designation { get; set; }
         public string? EmployeeCode { get; set; }
+    }
 
-
-
-
-    } 
-  
 
     public class AddNewInvitee
     {
