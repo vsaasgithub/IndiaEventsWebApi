@@ -278,8 +278,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 if (row.Cells.Any(c => c.DisplayValue == eventId))
                 {
                     List<string> columnsToInclude = new List<string> { "Event Date", "Event Topic", "Class III Event Code", "Start Time",
-                                                                        "End Time", "State", "Venue Name", 
-                                                                        "City", "Brands", "Panelists", "SlideKits", "Invitees", 
+                                                                        "End Time", "State", "Venue Name",
+                                                                        "City", "Brands", "Panelists", "SlideKits", "Invitees",
                                                                         "MIPL Invitees", "Expenses", "Meeting Type" };
 
                     Dictionary<string, object> rowData = new Dictionary<string, object>();
@@ -1119,6 +1119,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Invitees"), Value = formDataList.EventDetails.Invitees });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "MIPL Invitees"), Value = formDataList.EventDetails.MIPLInvitees });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Expenses"), Value = formDataList.EventDetails.Expenses });
+                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTE Expense Details"), Value = formDataList.EventDetails.ExpenseDataBTE });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.EventDetails.TotalExpenseBTC });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.EventDetails.TotalExpenseBTE });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Honorarium Amount"), Value = formDataList.EventDetails.TotalHonorariumAmount });
@@ -1169,7 +1170,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     return BadRequest(ex.Message);
                 }
             }
-           
+
 
             if (formDataList.IsDeviationUpload == "Yes")
             {
@@ -1248,6 +1249,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.EventDetails.FinanceHead });
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formDataList.EventDetails.InitiatorName });
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.EventDetails.Initiator_Email });
+                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formDataList.EventDetails.SalesCoordinator });
 
                                 IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
 
@@ -1734,7 +1736,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.EventDetails.FinanceHead });
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formDataList.EventDetails.InitiatorName });
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.EventDetails.Initiator_Email });
-
+                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formDataList.EventDetails.SalesCoordinator });
                                 IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
 
                                 int j = 1;
@@ -2358,7 +2360,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.EventDetails.FinanceHead });
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formDataList.EventDetails.InitiatorName });
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.EventDetails.Initiator_Email });
-
+                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formDataList.EventDetails.SalesCoordinator });
                                 IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
 
                                 int j = 1;
@@ -2678,7 +2680,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.FinanceHead });
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formDataList.InitiatorName });
                                 newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.Initiator_Email });
-
+                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formDataList.SalesCoordinator });
                                 IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
 
                                 int j = 1;
@@ -2780,7 +2782,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formData.FinanceHead });
                     newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formData.InitiatorName });
                     newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formData.InitiatorEmail });
-
+                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formData.SalesCoordinator });
                     IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
 
                     foreach (string p in formData.DeviationFiles)
@@ -2815,9 +2817,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         {
             var eventId = formDataList.EventId;
             Sheet sheet10 = SheetHelper.GetSheetById(smartsheet, sheetId10);
+            var a = 0;
 
             Row? targetRow = sheet10.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == eventId));
             if (targetRow != null)
+
             {
                 PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet10.Id.Value, targetRow.Id.Value, null);
                 if (attachments.Data != null || attachments.Data.Count > 0)
@@ -2828,10 +2832,19 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         if (formDataList.AttachmentIds.Contains(Id.ToString()))
                         {
                             smartsheet.SheetResources.AttachmentResources.DeleteAttachment(sheet10.Id.Value, Id);
+                            a++;
                         }
                     }
-                    return Ok(new
-                    { Message = "Deleted Successfully" });
+                    if (a > 0)
+                    {
+                        return Ok(new
+                        { Message = $"Deleted {a} Attachments Successfully" });
+                    }
+                    else
+                    {
+                        return Ok(new
+                        { Message = $"No Attachments Found" });
+                    }
                 }
             }
             else
