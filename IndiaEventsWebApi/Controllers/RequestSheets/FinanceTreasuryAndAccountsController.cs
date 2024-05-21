@@ -52,7 +52,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         FTNo++;
                     }
                 }
-                
+
                 string FinanceAccounts = FinanceAccountsHonorDetails.ToString();
                 foreach (var f in updatedFormData.FinanceAccounts)
                 {
@@ -124,7 +124,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         FTNo++;
                     }
                 }
-               
+
                 string FinanceAccounts = FinanceAccountsPostDetails.ToString();
                 foreach (var f in updatedFormData.FinanceAccounts)
                 {
@@ -188,13 +188,16 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
                 StringBuilder FinanceTreasuryHonorDetails = new StringBuilder();
                 int FTNo = 1;
-                if(updatedFormData.Status.ToLower()=="approved")
-                foreach (var formdata in updatedFormData.FinanceTreasury)
+                if (updatedFormData.Status.ToLower() == "approved")
                 {
-                    string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| PV Number: {formdata.PVNumber} | PV Date: {formdata.PVDate.Value.ToShortDateString()} | Bank Reference Number: {formdata.BankReferenceNumber} | Bank Reference Date: {formdata.BankReferenceDate.Value.ToShortDateString()}";
-                    FinanceTreasuryHonorDetails.AppendLine(rowData);
-                    FTNo++;
+                    foreach (var formdata in updatedFormData.FinanceTreasury)
+                    {
+                        string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| PV Number: {formdata.PVNumber} | PV Date: {formdata.PVDate.Value.ToShortDateString()} | Bank Reference Number: {formdata.BankReferenceNumber} | Bank Reference Date: {formdata.BankReferenceDate.Value.ToShortDateString()}";
+                        FinanceTreasuryHonorDetails.AppendLine(rowData);
+                        FTNo++;
+                    }
                 }
+
                 string FinanceTreasury = FinanceTreasuryHonorDetails.ToString();
 
                 foreach (var f in updatedFormData.FinanceTreasury)
@@ -284,9 +287,9 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
 
                     }
-                     FinanceTreasury = FinanceTreasuryHonorDetails.ToString();
+                    FinanceTreasury = FinanceTreasuryHonorDetails.ToString();
                 }
-               
+
 
                 foreach (var f in updatedFormData.FinanceTreasury)
                 {
@@ -295,7 +298,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
                         if (existingRow != null)
                         {
-                            if(updatedFormData.Status.ToLower() == "approved")
+                            if (updatedFormData.Status.ToLower() == "approved")
                             {
                                 Row updateRow = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
                                 updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "PV Number"), Value = f.PVNumber });
