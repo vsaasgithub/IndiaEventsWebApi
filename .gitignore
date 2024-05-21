@@ -13,3 +13,5 @@
 /IndiaEventsWebApi/obj/Debug/net6.0/IndiaEventsWebApi.pdb
 /IndiaEventsWebApi/obj/Debug/net6.0/IndiaEventsWebApi.dll
 /IndiaEventsWebApi/obj/Debug/net6.0/IndiaEventsWebApi.csproj.AssemblyReference.cache
+/.vs/IndiaEventsWebApi/DesignTimeBuild/.dtbcache.v2
+/.gitignore
