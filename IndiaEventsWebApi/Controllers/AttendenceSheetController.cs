@@ -47,14 +47,14 @@ namespace IndiaEventsWebApi.Controllers
             try
             {
 
-                var EventCode = "";
-                var EventName = "";
-                var EventDate = "";
-                var EventVenue = "";
+                string? EventCode = "";
+                string? EventName = "";
+                string? EventDate = "";
+                string? EventVenue = "";
                 DateTime parsedDate;
                 List<string> Speakers = new List<string>();
 
-                
+
                 long rowId = 0;
                 Column IdColumn = sheet1.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
                 if (IdColumn != null)
@@ -147,7 +147,7 @@ namespace IndiaEventsWebApi.Controllers
                             {
                                 if (columnName == "HCPName")
                                 {
-                                    var val = cell.DisplayValue;
+                                    string? val = cell.DisplayValue;
                                     Speakers.Add(val);
                                 }
                                 newRow[columnName] = cell.DisplayValue;
@@ -167,8 +167,7 @@ namespace IndiaEventsWebApi.Controllers
                         newRow["S.No"] = Sr_No;
                         foreach (Cell cell in row.Cells)
                         {
-                            string columnName = sheet.Columns
-                                .FirstOrDefault(c => c.Id == cell.ColumnId)?.Title;
+                            string? columnName = sheet.Columns.FirstOrDefault(c => c.Id == cell.ColumnId)?.Title;
                             if (requiredColumns.Contains(columnName, StringComparer.OrdinalIgnoreCase))
                             {
                                 newRow[columnName] = cell.DisplayValue;
@@ -200,12 +199,12 @@ namespace IndiaEventsWebApi.Controllers
 
 
                 }
-                var url = "";
+                string? url = "";
                 foreach (var x in a.Data)
                 {
                     long Id = (long)x.Id;
                     var Fullname = x.Name.Split("-");
-                    var splitName = Fullname[0];
+                    string? splitName = Fullname[0];
 
                     if (splitName == "AttendanceSheet")
                     {
@@ -229,8 +228,8 @@ namespace IndiaEventsWebApi.Controllers
                     string resultString = string.Join(", ", Speakers);
                     byte[] fileBytes = SheetHelper.exportAttendencepdfnew(dtMai, MenariniTable, EventCode, EventName, EventDate, EventVenue, resultString);
                     string filename = "AttendanceSheet-" + EventID + ".pdf";
-                    var folderName = Path.Combine("Resources", "Images");
-                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    string? folderName = Path.Combine("Resources", "Images");
+                    string? pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                     if (!Directory.Exists(pathToSave))
                     {
                         Directory.CreateDirectory(pathToSave);
@@ -276,20 +275,20 @@ namespace IndiaEventsWebApi.Controllers
                 Column SpecialityColumn = sheetAs.Columns.FirstOrDefault(column => string.Equals(column.Title, "EventId/EventRequestId", StringComparison.OrdinalIgnoreCase));
 
                 Row existingRow = sheetAs.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == EventID));
-                var data = "";
+                string? data = "";
                 if (existingRow != null)
                 {
                     var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheetAs.Id.Value, existingRow.Id.Value, null);
-                    var url = "";
-                    var FileName = "";
+                    string? url = "";
+                    string? FileName = "";
                     foreach (var attachment in attachments.Data)
                     {
                         if (attachment != null)
                         {
-                            var name = attachment.Name;
-                            var s = name.Split(".")[0];
+                            string? name = attachment.Name;
+                            string? s = name.Split(".")[0];
                             //if (s == (EventID + "-AttendanceSheet")) //RQID757-AttendenceSheet
-                            if(name.ToLower().Contains("attendancesheet"))
+                            if (name.ToLower().Contains("attendancesheet"))
                             {
                                 var AID = (long)attachment.Id;
                                 var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheetAs.Id.Value, AID);
@@ -303,7 +302,7 @@ namespace IndiaEventsWebApi.Controllers
                     using (HttpClient client = new HttpClient())
                     {
                         var fileContent = client.GetByteArrayAsync(url).Result;
-                        var base64String = Convert.ToBase64String(fileContent);
+                        string? base64String = Convert.ToBase64String(fileContent);
 
 
                         data = $"{FileName}:{base64String}";
