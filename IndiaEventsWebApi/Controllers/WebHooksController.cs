@@ -778,7 +778,7 @@ namespace IndiaEventsWebApi.Controllers
                                     if (status != null && (status == "Approved" || status == "Waiting for Finance Treasury Approval"))
 
                                     {
-                                        int timeInterval = 250000;
+                                        int timeInterval = 60000;
                                         await Task.Delay(timeInterval);
                                         if (meetingType != null)
                                         {
@@ -801,7 +801,7 @@ namespace IndiaEventsWebApi.Controllers
                                 }
                                 else if (status != null && status == "Approved" || status == "Waiting for Finance Treasury Approval")
                                 {
-                                    int timeInterval = 250000;
+                                    int timeInterval = 60000;
                                     await Task.Delay(timeInterval);
                                     moveAttachments(columnValue, WebHookEvent.rowId);
                                 }
