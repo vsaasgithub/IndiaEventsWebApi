@@ -266,12 +266,19 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             List<Dictionary<string, object>> attachmentInfoFiles = new();
 
             Sheet sheet1 = (Sheet)SheetHelper.GetSheetById(smartsheet, sheetId1);
+            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+            Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+            Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+
+
             List<string> columnNames = new List<string>();
             foreach (Column column in sheet1.Columns)
             {
                 columnNames.Add(column.Title);
             }
-
             foreach (var row in sheet1.Rows)
             {
 
@@ -316,13 +323,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 }
             }
 
-            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+           
             List<string> BrandsColumnNames = new List<string>();
             foreach (Column column in sheet2.Columns)
             {
                 BrandsColumnNames.Add(column.Title);
             }
-
             foreach (var row in sheet2.Rows)
             {
 
@@ -361,7 +367,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     BrandseventDetails.Add(BrandsrowData);
                 }
             }
-            Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+
+            
             List<string> InviteesColumnNames = new List<string>();
             foreach (Column column in sheet3.Columns)
             {
@@ -402,7 +409,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     InviteeseventDetails.Add(InviteesrowData);
                 }
             }
-            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+
+           
             List<string> PanelColumnNames = new List<string>();
             foreach (Column column in sheet4.Columns)
             {
@@ -449,7 +457,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     PaneleventDetails.Add(PanelrowData);
                 }
             }
-            Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+
+            
             List<string> SlideKitColumnNames = new List<string>();
             foreach (Column column in sheet5.Columns)
             {
@@ -491,7 +500,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     SlideKiteventDetails.Add(SlideKitrowData);
                 }
             }
-            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+
+            
             List<string> ExpenseColumnNames = new List<string>();
             foreach (Column column in sheet6.Columns)
             {
@@ -514,7 +524,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     ExpenseeventDetails.Add(ExpenserowData);
                 }
             }
-            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+
+            
             List<string> DeviationscolumnNames = new List<string>();
             foreach (Column column in sheet7.Columns)
             {
@@ -544,6 +555,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     DeviationsattachmentsList.Add(DeviationsattachmentInfo);
                 }
             }
+
             resultData["eventDetails"] = eventDetails;
             resultData["Files"] = attachmentInfoFiles;
             resultData["Brands"] = BrandseventDetails;
@@ -574,12 +586,23 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             List<Dictionary<string, object>> DeviationsattachmentsList = new List<Dictionary<string, object>>();
             List<Dictionary<string, object>> attachmentInfoFiles = new();
 
-            Sheet sheet1 = (Sheet)SheetHelper.GetSheetById(smartsheet, sheetId1);
-            List<string> columnNames = new List<string>();
-            foreach (Column column in sheet1.Columns)
-            {
-                columnNames.Add(column.Title);
-            }
+            Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);//.Rows.Where(row => row.Cells.Any(c =>c.DisplayValue ==eventId));
+            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+            Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+            Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+            Sheet sheet8 = SheetHelper.GetSheetById(smartsheet, sheetId8);
+            Sheet sheet9 = SheetHelper.GetSheetById(smartsheet, sheetId9);
+
+            List<string> columnNames = sheet1.Columns.Select(col => col.Title).ToList();
+
+            //List<string> columnNames = new List<string>();
+            //foreach (Column column in sheet1.Columns)
+            //{
+            //    columnNames.Add(column.Title);
+            //}
             foreach (var row in sheet1.Rows.Where(row => row.Cells.Any(c => c.DisplayValue == eventId)))
             {
                 Dictionary<string, object> rowData = new Dictionary<string, object>
@@ -635,8 +658,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 eventDetails.Add(rowData);
             }
-
-
             string? GetValueOrDefault(Row row, string columnName)
             {
                 int columnIndex = columnNames.IndexOf(columnName);
@@ -647,15 +668,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 return null;
             }
 
-
-
-            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
-            List<string> BrandsColumnNames = new List<string>();
-            foreach (Column column in sheet2.Columns)
-            {
-                BrandsColumnNames.Add(column.Title);
-            }
-
+            List<string> BrandsColumnNames = sheet2.Columns.Select(col => col.Title).ToList(); //new List<string>();
+            //foreach (Column column in sheet2.Columns)
+            //{
+            //    BrandsColumnNames.Add(column.Title);
+            //}
             foreach (var row in sheet2.Rows)
             {
 
@@ -693,12 +710,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     BrandseventDetails.Add(BrandsrowData);
                 }
             }
-            Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
-            List<string> InviteesColumnNames = new List<string>();
-            foreach (Column column in sheet3.Columns)
-            {
-                InviteesColumnNames.Add(column.Title);
-            }
+
+            List<string> InviteesColumnNames = sheet3.Columns.Select(col => col.Title).ToList(); //new List<string>();
+            //foreach (Column column in sheet3.Columns)
+            //{
+            //    InviteesColumnNames.Add(column.Title);
+            //}
             foreach (var row in sheet3.Rows)
             {
                 if (row.Cells.Any(c => c.DisplayValue == eventId))
@@ -734,12 +751,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     InviteeseventDetails.Add(InviteesrowData);
                 }
             }
-            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
-            List<string> PanelColumnNames = new List<string>();
-            foreach (Column column in sheet4.Columns)
-            {
-                PanelColumnNames.Add(column.Title);
-            }
+
+            List<string> PanelColumnNames = sheet4.Columns.Select(col => col.Title).ToList(); //new List<string>();
+            //foreach (Column column in sheet4.Columns)
+            //{
+            //    PanelColumnNames.Add(column.Title);
+            //}
             foreach (var row in sheet4.Rows)
             {
                 if (row.Cells.Any(c => c.DisplayValue == eventId))
@@ -781,12 +798,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     PaneleventDetails.Add(PanelrowData);
                 }
             }
-            Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
-            List<string> SlideKitColumnNames = new List<string>();
-            foreach (Column column in sheet5.Columns)
-            {
-                SlideKitColumnNames.Add(column.Title);
-            }
+
+            List<string> SlideKitColumnNames = sheet5.Columns.Select(col => col.Title).ToList(); //new List<string>();
+            //foreach (Column column in sheet5.Columns)
+            //{
+            //    SlideKitColumnNames.Add(column.Title);
+            //}
             foreach (var row in sheet5.Rows)
             {
                 if (row.Cells.Any(c => c.DisplayValue == eventId))
@@ -823,12 +840,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     SlideKiteventDetails.Add(SlideKitrowData);
                 }
             }
-            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
-            List<string> ExpenseColumnNames = new List<string>();
-            foreach (Column column in sheet6.Columns)
-            {
-                ExpenseColumnNames.Add(column.Title);
-            }
+
+            List<string> ExpenseColumnNames = sheet6.Columns.Select(col => col.Title).ToList(); //new List<string>();
+            //foreach (Column column in sheet6.Columns)
+            //{
+            //    ExpenseColumnNames.Add(column.Title);
+            //}
             foreach (var row in sheet6.Rows)
             {
                 if (row.Cells.Any(c => c.DisplayValue == eventId))
@@ -846,12 +863,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     ExpenseeventDetails.Add(ExpenserowData);
                 }
             }
-            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
-            List<string> DeviationscolumnNames = new List<string>();
-            foreach (Column column in sheet7.Columns)
-            {
-                DeviationscolumnNames.Add(column.Title);
-            }
+
+            List<string> DeviationscolumnNames = sheet7.Columns.Select(col => col.Title).ToList(); //new List<string>();
+            //foreach (Column column in sheet7.Columns)
+            //{
+            //    DeviationscolumnNames.Add(column.Title);
+            //}
             foreach (var row in sheet7.Rows)
             {
                 if (row.Cells.Any(c => c.DisplayValue == eventId))
@@ -877,13 +894,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 }
             }
 
-
-            Sheet sheet8 = (Sheet)SheetHelper.GetSheetById(smartsheet, sheetId8);
-            List<string> EventRequestBeneficiary = new List<string>();
-            foreach (Column column in sheet8.Columns)
-            {
-                EventRequestBeneficiary.Add(column.Title);
-            }
+            List<string> EventRequestBeneficiary = sheet8.Columns.Select(col => col.Title).ToList();// new List<string>();
+            //foreach (Column column in sheet8.Columns)
+            //{
+            //    EventRequestBeneficiary.Add(column.Title);
+            //}
             foreach (var row in sheet8.Rows.Where(row => row.Cells.Any(c => c.DisplayValue == eventId)))
             {
                 Dictionary<string, object> BeneficiaryrowData = new Dictionary<string, object>
@@ -934,8 +949,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 BeneficiarteventDetails.Add(BeneficiaryrowData);
             }
-
-
             string? GetValueOrDefaults(Row row, string columnName)
             {
                 int columnIndex = EventRequestBeneficiary.IndexOf(columnName);
@@ -947,12 +960,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             }
 
 
-            Sheet sheet9 = (Sheet)SheetHelper.GetSheetById(smartsheet, sheetId9);
-            List<string> EventRequestProductBrandsList = new List<string>();
-            foreach (Column column in sheet9.Columns)
-            {
-                EventRequestProductBrandsList.Add(column.Title);
-            }
+            List<string> EventRequestProductBrandsList = sheet9.Columns.Select(col => col.Title).ToList(); //new List<string>();
+            //foreach (Column column in sheet9.Columns)
+            //{
+            //    EventRequestProductBrandsList.Add(column.Title);
+            //}
             foreach (var row in sheet9.Rows.Where(row => row.Cells.Any(c => c.DisplayValue == eventId)))
             {
                 Dictionary<string, object> ProductBrandsListrowData = new Dictionary<string, object>
@@ -998,16 +1010,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 }
                 return null;
             }
-
-
-
-
-
-
-
-
-
-
 
             resultData["eventDetails"] = eventDetails;
             resultData["Files"] = attachmentInfoFiles;
@@ -1122,6 +1124,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTE Expense Details"), Value = formDataList.EventDetails.ExpenseDataBTE });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.EventDetails.TotalExpenseBTC });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.EventDetails.TotalExpenseBTE });
+                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = formDataList.EventDetails.TotalExpenseBTE });
+
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Honorarium Amount"), Value = formDataList.EventDetails.TotalHonorariumAmount });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel & Accommodation Amount"), Value = formDataList.EventDetails.TotalTravelAccommodationAmount });
                     updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Accommodation Amount"), Value = formDataList.EventDetails.TotalAccomodationAmount });
@@ -1266,7 +1270,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         string filePath = SheetHelper.testingFile(q, name);
                                         Row addedRow = addeddeviationrow[0];
                                         Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                        // Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword");
+                                        Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword");
                                         j++;
                                         if (System.IO.File.Exists(filePath))
                                         {
@@ -2885,6 +2889,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             }
             return Ok();
         }
+
 
     }
 }
