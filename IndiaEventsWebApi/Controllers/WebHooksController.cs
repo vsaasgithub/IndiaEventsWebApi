@@ -746,7 +746,7 @@ namespace IndiaEventsWebApi.Controllers
 
         }
 
-        private void moveAttachments(string EventID, long rowId)
+        private async void moveAttachments(string EventID, long rowId)
         {
             List<Attachment> attachments = new List<Attachment>();
 
@@ -812,7 +812,7 @@ namespace IndiaEventsWebApi.Controllers
             }
         }
 
-        private void GenerateSummaryPDF(string EventID, long rowId)
+        private async void GenerateSummaryPDF(string EventID, long rowId)
         {
             try
             {
