@@ -781,7 +781,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                         SalesHeadApprovalDate = row.TryGetValue("Sales Head Approval Date", out var helperFinancetreasurytriggerBTE) ? helperFinancetreasurytriggerBTE?.ToString() : null,
                         MedicalAffairsHeadApproval = row.TryGetValue("Medical Affairs Head Approval", out var postEventApprovedDate) ? postEventApprovedDate?.ToString() : null,
                         MedicalAffairsHeadApprovalDate = row.TryGetValue("Medical Affairs Head Approval Date", out var eventOpenSalesHeadApproval) ? eventOpenSalesHeadApproval?.ToString() : null,
-                        SpeakerCriteriaDetails = row.TryGetValue("Speaker Criteria Details Date", out var eventOpenSalesHeadApprovalDate) ? eventOpenSalesHeadApprovalDate?.ToString() : null,
+                        SpeakerCriteriaDetails = row.TryGetValue("Speaker Criteria Details", out var eventOpenSalesHeadApprovalDate) ? eventOpenSalesHeadApprovalDate?.ToString() : null,
                         SalesHead = row.TryGetValue("Sales Head", out var _7daysSalesHeadApproval) ? _7daysSalesHeadApproval?.ToString() : null,
                         MedicalAffairsHead = row.TryGetValue("Medical Affairs Head", out var _7daysSalesHeadApprovaldate) ? _7daysSalesHeadApprovaldate?.ToString() : null,
                         NAID = row.TryGetValue("NA ID", out var prefBExpenseExcludingTaxApproval) ? prefBExpenseExcludingTaxApproval?.ToString() : null,
