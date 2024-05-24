@@ -160,7 +160,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpGet("GetBrandNameData")]
         public IActionResult GetBrandNameData()
         {
