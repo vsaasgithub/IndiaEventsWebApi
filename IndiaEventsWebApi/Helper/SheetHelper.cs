@@ -59,12 +59,6 @@ namespace IndiaEventsWebApi.Helper
         }
 
 
-
-
-
-
-
-
         //UrlToBase64
 
         public static string UrlToBaseValue(string url)
