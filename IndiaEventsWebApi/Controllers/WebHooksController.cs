@@ -968,6 +968,27 @@ namespace IndiaEventsWebApi.Controllers
                 string fileType = SheetHelper.GetFileType(fileBytes);
                 string filePath = Path.Combine(pathToSave, filename);
                 System.IO.File.WriteAllBytes(filePath, fileBytes);
+
+                var a = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments((long)processSheetData.Id, rowId, null);
+                foreach (var x in a.Data)
+                {
+                    long Id = (long)x.Id;
+                    var Fullname = x.Name.Split("-");
+                    string? splitName = Fullname[0];
+
+                    if (splitName.ToLower().Contains("attendance sheet") )
+                    {
+
+                        //var ExistingFile = smartsheet.SheetResources.AttachmentResources.GetAttachment((long)processSheetData.Id, Id);
+                        //url = ExistingFile.Url;
+
+                        smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
+                          (long)processSheetData.Id,           // sheetId
+                          Id            // attachmentId
+                        );
+
+                    }
+                }
                 Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile((long)processSheetData.Id, rowId, filePath, "application/msword");
                 if (System.IO.File.Exists(filePath))
                 {
