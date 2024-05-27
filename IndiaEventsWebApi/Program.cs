@@ -53,7 +53,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("UseCors", builder =>
     {
-        builder.WithOrigins("https://ambitious-rock-0757ea510.4.azurestaticapps.net")
+        builder.WithOrigins("https://ambitious-rock-0757ea510.4.azurestaticapps.net", "http://localhost:4200")
                .AllowAnyMethod()
                .AllowAnyHeader();
     });
