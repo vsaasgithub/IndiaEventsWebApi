@@ -83,7 +83,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
-app.UseCors("MyPolicy");
+app.UseCors();
 //app.UseSerilogRequestLogging();
 app.UseAuthentication();
 app.UseAuthorization();
