@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IndiaEventsWebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+adc7652dce3ee83526502fcde746d464e2a54173")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d54cd70ae18f1d56fdfac5ceda8b8509f1f5e3d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("IndiaEventsWebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IndiaEventsWebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
