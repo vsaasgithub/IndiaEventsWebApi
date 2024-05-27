@@ -408,6 +408,32 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
 
                 foreach (var sheetId in Sheets)
                 {
+                    ////Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                    ////List<string> columnNames = new List<string>();
+
+                    ////foreach (Column column in sheet.Columns)
+                    ////{
+                    ////    columnNames.Add(column.Title);
+                    ////}
+
+
+                    ////int isActiveColumnIndex = columnNames.IndexOf("Is Active");
+
+                    ////foreach (Row row in sheet.Rows)
+                    ////{
+
+                    ////    if (isActiveColumnIndex != -1 && row.Cells.Count > isActiveColumnIndex &&
+                    ////        row.Cells[isActiveColumnIndex].Value != null &&
+                    ////        row.Cells[isActiveColumnIndex].Value.ToString().Equals("yes", StringComparison.OrdinalIgnoreCase))
+                    ////    {
+                    ////        Dictionary<string, object> rowData = new Dictionary<string, object>();
+                    ////        for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
+                    ////        {
+                    ////            rowData[columnNames[i]] = row.Cells[i].Value;
+                    ////        }
+                    ////        sheetData.Add(rowData);
+                    ////    }
+                    ////}
                     Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
                     List<string> columnNames = new List<string>();
                     foreach (Column column in sheet.Columns)
