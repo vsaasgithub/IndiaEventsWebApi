@@ -51,7 +51,7 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(builder =>
+    options.AddPolicy("UseCors", builder =>
     {
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
@@ -83,7 +83,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors("UseCors");
 //app.UseSerilogRequestLogging();
 app.UseAuthentication();
 app.UseAuthorization();
