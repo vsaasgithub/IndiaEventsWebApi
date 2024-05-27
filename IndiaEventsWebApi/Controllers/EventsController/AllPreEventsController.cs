@@ -557,7 +557,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
 
-                
+
 
 
                 return Ok(new
@@ -1591,9 +1591,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             catch (Exception ex)
             {
                 //return BadRequest($"Could not find {ex.Message}");
-                Log.Error($"Error occured on AllPreEventsController Attachementfile method {ex.Message} at {DateTime.Now}");
-                Log.Error(ex.StackTrace);
-                return BadRequest(ex.Message);
+                //Log.Error($"Error occured on AllPreEventsController Attachementfile method {ex.Message} at {DateTime.Now}");
+                //Log.Error(ex.StackTrace);
+                //return BadRequest(ex.Message);
+                return Ok(new
+                { Message = ex.Message + "------" + ex.StackTrace });
             }
         }
 
