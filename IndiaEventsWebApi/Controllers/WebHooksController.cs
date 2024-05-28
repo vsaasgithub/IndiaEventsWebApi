@@ -19,6 +19,7 @@ using IndiaEventsWebApi.Models.EventTypeSheets;
 using Microsoft.Extensions.Hosting;
 using System.Globalization;
 using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
+using Aspose.Cells.Rendering;
 
 namespace IndiaEventsWebApi.Controllers
 {
@@ -30,28 +31,25 @@ namespace IndiaEventsWebApi.Controllers
         private readonly string accessToken;
         private readonly IConfiguration configuration;
         private readonly SmartsheetClient smartsheet;
-        private readonly Sheet processSheetData;
-        private readonly Sheet sheet1;
-        private readonly Sheet sheet;
-        private readonly Sheet sheet_SpeakerCode;
+        private readonly string processSheet;
+        private readonly string sheetId_SpeakerCode;
+        private readonly string sheetId;
+        private readonly string sheetId1;
         public WebHooksController(IConfiguration configuration)
         {
             this.configuration = configuration;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
             smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-            string processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
-            string sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
-            string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
-            string sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
-            processSheetData = SheetHelper.GetSheetById(smartsheet, processSheet);
-            sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
-            sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
-            sheet_SpeakerCode = SheetHelper.GetSheetById(smartsheet, sheetId_SpeakerCode);
+            processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
+            sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
+            sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
+            sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
+
 
         }
 
-        [HttpPost(Name = "WebHook")]
-        public async Task<IActionResult> PostData()
+        [HttpPost("WebHookData")]
+        public async Task<IActionResult> WebHookData()
         {
             try
             {
@@ -617,6 +615,10 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
+                //Sheet processSheetData = SheetHelper.GetSheetById(smartsheet, processSheet);
+                //Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+                //Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                Sheet sheet_SpeakerCode = SheetHelper.GetSheetById(smartsheet, sheetId_SpeakerCode);
 
                 if (RequestWebhook != null && RequestWebhook.events != null)
                 {
@@ -665,7 +667,10 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-
+                Sheet processSheetData = SheetHelper.GetSheetById(smartsheet, processSheet);
+                //Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+                //Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                //Sheet sheet_SpeakerCode = SheetHelper.GetSheetById(smartsheet, sheetId_SpeakerCode);
                 if (RequestWebhook != null && RequestWebhook.events != null)
                 {
                     foreach (var WebHookEvent in RequestWebhook.events)
@@ -723,9 +728,10 @@ namespace IndiaEventsWebApi.Controllers
                                     }
 
                                 }
+
                                 else if (status != null && status == "Approved" || status == "Waiting for Finance Treasury Approval")
                                 {
-                                    int timeInterval = 0000;
+                                    int timeInterval = 60000;
                                     await Task.Delay(timeInterval);
                                     moveAttachments(columnValue, WebHookEvent.rowId);
                                 }
@@ -749,7 +755,10 @@ namespace IndiaEventsWebApi.Controllers
         private async void moveAttachments(string EventID, long rowId)
         {
             List<Attachment> attachments = new List<Attachment>();
-
+            Sheet processSheetData = SheetHelper.GetSheetById(smartsheet, processSheet);
+            //Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+            //Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+            Sheet sheet_SpeakerCode = SheetHelper.GetSheetById(smartsheet, sheetId_SpeakerCode);
 
             foreach (Row row in sheet_SpeakerCode.Rows)
             {
@@ -816,6 +825,10 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
+                Sheet processSheetData = SheetHelper.GetSheetById(smartsheet, processSheet);
+                Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                Sheet sheet_SpeakerCode = SheetHelper.GetSheetById(smartsheet, sheetId_SpeakerCode);
 
                 string? EventCode = "";
                 string? EventName = "";
@@ -976,7 +989,7 @@ namespace IndiaEventsWebApi.Controllers
                     var Fullname = x.Name.Split("-");
                     string? splitName = Fullname[0];
 
-                    if (splitName.ToLower().Contains("attendance sheet") )
+                    if (splitName.ToLower().Contains("attendance sheet"))
                     {
 
                         //var ExistingFile = smartsheet.SheetResources.AttachmentResources.GetAttachment((long)processSheetData.Id, Id);
