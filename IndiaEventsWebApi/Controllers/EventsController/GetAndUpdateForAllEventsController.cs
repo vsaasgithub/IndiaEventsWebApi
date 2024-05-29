@@ -1143,7 +1143,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
 
                     }
-
+                    Task.Delay(4000);
                     if (formDataList.PanelSelection.Count > 0)
                     {
 
@@ -1250,7 +1250,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
 
                     }
-
+                    Task.Delay(4000);
                     if (formDataList.SlideKitSelection.Count > 0)
                     {
                         Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
@@ -1303,7 +1303,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             }
                         }
                     }
-
+                    Task.Delay(4000);
                     if (formDataList.InviteeSelection.Count > 0)
                     {
                         Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
@@ -1353,7 +1353,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
 
                     }
-
+                    Task.Delay(4000);
                     if (formDataList.ExpenseSelection.Count > 0)
                     {
                         Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
@@ -1395,7 +1395,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
 
                     }
-
+                    Task.Delay(4000);
                     if (formDataList.IsDeviationUpload == "Yes")
                     {
                         Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
@@ -1511,7 +1511,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                         }
                     }
-
+                    Task.Delay(4000);
                     try
                     {
                         Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
@@ -1578,17 +1578,21 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
                     catch (Exception ex)
                     {
-                        Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
-                        Log.Error(ex.StackTrace);
-                        return BadRequest(ex.Message);
+                        //Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
+                        //Log.Error(ex.StackTrace);
+                        //return BadRequest(ex.Message);
+                        return Ok(new
+                        { Message = ex.Message + "------" + ex.StackTrace });
                     }
                 }
                 catch(Exception ex)
                 {
 
-                    Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
-                    Log.Error(ex.StackTrace);
-                    return BadRequest(ex.Message);
+                    //Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
+                    //Log.Error(ex.StackTrace);
+                    //return BadRequest(ex.Message);
+                    return Ok(new
+                    { Message = ex.Message + "------" + ex.StackTrace });
                 }
             }
 
