@@ -1078,7 +1078,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
 
-            Thread.Sleep(5000);
+            await Task.Delay(5000);
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
             Thread.Sleep(5000);
             Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
@@ -1249,7 +1249,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.Webinar.MedicalAffairsEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTE Expense Details"), Value = formDataList.Webinar.BTEExpenseDetails });
 
-                IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet1.Id.Value, new Row[] { newRow });
+                IList<Row> addedRows = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet1.Id.Value, new Row[] { newRow }));
+
                 long eventIdColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
                 Cell? eventIdCell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == eventIdColumnId);
                 string val = eventIdCell.DisplayValue;
@@ -1264,8 +1265,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     string filePath = SheetHelper.testingFile(q, name);
                     Row addedRow = addedRows[0];
 
-                    Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                            sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                    Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                            sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
                     x++;
                     if (System.IO.File.Exists(filePath))
                     {
@@ -1338,7 +1339,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "EventId/EventRequestId"), Value = val });
 
 
-                    IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet4.Id.Value, new Row[] { newRow1 });
+                    IList<Row> row = await Task.Run(() => smartsheet.SheetResources.
+                    RowResources.AddRows(sheet4.Id.Value, new Row[] { newRow1 }));
                     if (formData.IsUpload == "Yes")
                     {
                         foreach (string p in formData.FilesToUpload)
@@ -1349,8 +1351,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             string name = r.Split(".")[0];
                             string filePath = SheetHelper.testingFile(q, name);
                             Row addedRow = row[0];
-                            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                   sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                            Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                   sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
 
 
                             if (System.IO.File.Exists(filePath))
@@ -1378,7 +1380,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                     newRows2.Add(newRow2);
                 }
-                smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray());
+                await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray()));
                 List<Row> newRows3 = new();
                 foreach (var formdata in formDataList.EventRequestInvitees)
                 {
@@ -1407,7 +1409,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     };
                     newRows3.Add(newRow3);
                 }
-                smartsheet.SheetResources.RowResources.AddRows(sheet3.Id.Value, newRows3.ToArray());
+                await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet3.Id.Value, newRows3.ToArray()));
                 foreach (var formdata in formDataList.EventRequestHCPSlideKits)
                 {
                     Row newRow5 = new()
@@ -1421,7 +1423,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "EventId/EventRequestId"), Value = val });
 
 
-                    IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet5.Id.Value, new Row[] { newRow5 });
+                    IList<Row> row = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet5.Id.Value, new Row[] { newRow5 }));
                     if (formdata.IsUpload == "Yes")
                     {
                         foreach (string p in formdata.FilesToUpload)
@@ -1432,8 +1434,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             string name = r.Split(".")[0];
                             string filePath = SheetHelper.testingFile(q, name);
                             Row addedRow = row[0];
-                            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                   sheet5.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                            Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                   sheet5.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
 
 
                             if (System.IO.File.Exists(filePath))
@@ -1467,7 +1469,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     };
                     newRows6.Add(newRow6);
                 }
-                smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, newRows6.ToArray());
+                await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, newRows6.ToArray()));
 
                 if (formDataList.Webinar.EventOpen30days == "Yes" || formDataList.Webinar.EventWithin7days == "Yes" || formDataList.Webinar.FB_Expense_Excluding_Tax == "Yes" || formDataList.Webinar.IsDeviationUpload == "Yes")
                 {
@@ -1547,7 +1549,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.Webinar.Initiator_Email });
                                     newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formDataList.Webinar.SalesCoordinatorEmail });
 
-                                    IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
+                                    IList<Row> addeddeviationrow = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 }));
 
                                     int j = 1;
                                     foreach (var p in formDataList.Webinar.DeviationDetails)
@@ -1561,8 +1563,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                             string name = nameSplit[0];
                                             string filePath = SheetHelper.testingFile(q, name);
                                             Row addedRow = addeddeviationrow[0];
-                                            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                            Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword");
+                                            Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+                                            Attachment attachmentinmain = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword"));
                                             j++;
                                             if (System.IO.File.Exists(filePath))
                                             {
@@ -1583,7 +1585,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
                 }
 
-
                 Row addedrow = addedRows[0];
                 long ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
                 Cell UpdateB = new Cell { ColumnId = ColumnId, Value = formDataList.Webinar.Role };
@@ -1591,7 +1592,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 Cell? cellsToUpdate = addedrow.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
                 if (cellsToUpdate != null) { cellsToUpdate.Value = formDataList.Webinar.Role; }
 
-                smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRows });
+                await Task.Run(() => smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRows }));
 
 
                 return Ok(new

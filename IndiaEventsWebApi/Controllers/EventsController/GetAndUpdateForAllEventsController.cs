@@ -249,7 +249,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         #endregion
 
         [HttpGet("GetDataFromAllSheetsUsingEventIdInPreEvent")]
-        public IActionResult GetDataFromAllSheetsUsingEventId(string eventId)
+        public async Task<IActionResult> GetDataFromAllSheetsUsingEventId(string eventId)
         {
             Dictionary<string, object> resultData = new();
 
@@ -265,7 +265,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             List<Dictionary<string, object>> DeviationsattachmentsList = new List<Dictionary<string, object>>();
             List<Dictionary<string, object>> attachmentInfoFiles = new();
 
-            Sheet sheet1 = (Sheet)SheetHelper.GetSheetById(smartsheet, sheetId1);
+            Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
             Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
             Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
@@ -297,7 +297,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             rowData[columnNames[i]] = row.Cells[i].Value;
                         }
                     }
-                    PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null);
+                    PaginatedResult<Attachment> attachments =await Task.Run(()=> smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null));
 
 
                     if (attachments.Data != null || attachments.Data.Count > 0)
@@ -305,7 +305,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         foreach (var attachment in attachments.Data)
                         {
                             long AID = (long)attachment.Id;
-                            Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID);
+                            Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID));
 
                             Dictionary<string, object> attachmentInfoData = new()
                             {
@@ -344,7 +344,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             BrandsrowData[BrandsColumnNames[i]] = row.Cells[i].Value;
                         }
                     }
-                    PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet2.Id.Value, row.Id.Value, null);
+                    PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.
+                    RowResources.AttachmentResources.ListAttachments(sheet2.Id.Value, row.Id.Value, null));
 
                     List<Dictionary<string, object>> BrandsattachmentsList = new();
                     if (attachments.Data != null || attachments.Data.Count > 0)
@@ -352,7 +353,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         foreach (var attachment in attachments.Data)
                         {
                             long AID = (long)attachment.Id;
-                            Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet2.Id.Value, AID);
+                            Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet2.Id.Value, AID));
                             Dictionary<string, object> attachmentInfo = new()
                             {
                                 { "Name", file.Name },
@@ -387,7 +388,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             InviteesrowData[InviteesColumnNames[i]] = row.Cells[i].Value;
                         }
                     }
-                    PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet3.Id.Value, row.Id.Value, null);
+                    PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet3.Id.Value, row.Id.Value, null));
 
                     List<Dictionary<string, object>> InviteesattachmentsList = new();
                     if (attachments.Data != null || attachments.Data.Count > 0)
@@ -395,7 +396,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         foreach (var attachment in attachments.Data)
                         {
                             long AID = (long)attachment.Id;
-                            Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet3.Id.Value, AID);
+                            Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet3.Id.Value, AID));
                             Dictionary<string, object> attachmentInfo = new()
                             {
                                 { "Name", file.Name },
@@ -435,7 +436,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             PanelrowData[PanelColumnNames[i]] = row.Cells[i].Value;
                         }
                     }
-                    PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet4.Id.Value, row.Id.Value, null);
+                    PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet4.Id.Value, row.Id.Value, null));
 
                     List<Dictionary<string, object>> PanelattachmentsList = new();
                     if (attachments.Data != null || attachments.Data.Count > 0)
@@ -443,7 +444,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         foreach (var attachment in attachments.Data)
                         {
                             long AID = (long)attachment.Id;
-                            Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet4.Id.Value, AID);
+                            Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet4.Id.Value, AID));
                             Dictionary<string, object> attachmentInfo = new()
                             {
                                 { "Name", file.Name },
@@ -478,7 +479,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             SlideKitrowData[SlideKitColumnNames[i]] = row.Cells[i].Value;
                         }
                     }
-                    PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet5.Id.Value, row.Id.Value, null);
+                    PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet5.Id.Value, row.Id.Value, null));
 
                     List<Dictionary<string, object>> SlideKitattachmentsList = new();
                     if (attachments.Data != null || attachments.Data.Count > 0)
@@ -486,7 +487,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         foreach (var attachment in attachments.Data)
                         {
                             long AID = (long)attachment.Id;
-                            Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet5.Id.Value, AID);
+                            Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet5.Id.Value, AID));
                             Dictionary<string, object> attachmentInfo = new()
                             {
                                 { "Name", file.Name },
@@ -543,11 +544,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         if (DeviationscolumnsToInclude.Contains(DeviationscolumnNames[i]))
                         {
                             var val = row.Cells[i].Value.ToString();
-                            var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet7.Id.Value, row.Id.Value, null);
+                            var attachments = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet7.Id.Value, row.Id.Value, null));
                             foreach (var attachment in attachments.Data)
                             {
                                 var AID = (long)attachment.Id;
-                                var file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet7.Id.Value, AID);
+                                var file =await Task.Run(()=> smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet7.Id.Value, AID));
                                 DeviationsattachmentInfo[val] = SheetHelper.UrlToBaseValue(file.Url);
                             }
                         }
