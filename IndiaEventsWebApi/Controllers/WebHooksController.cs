@@ -54,22 +54,22 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
-                string rawContent = string.Empty;
-                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
-                {
-                    rawContent = await reader.ReadToEndAsync();
-                }
-                requestHeaders.Add("Body", rawContent);
-                Log.Information(string.Join(";", requestHeaders.Select(x => x.Key + "=" + x.Value).ToArray()));
+                //Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                //string rawContent = string.Empty;
+                //using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                //{
+                //    rawContent = await reader.ReadToEndAsync();
+                //}
+                //requestHeaders.Add("Body", rawContent);
+                //Log.Information(string.Join(";", requestHeaders.Select(x => x.Key + "=" + x.Value).ToArray()));
 
 
-                Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                Attachementfile(RequestWebhook);
+                //Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                //Attachementfile(RequestWebhook);
 
-                string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+                //string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
-                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                return Ok(/*new Webhook { smartsheetHookResponse = RequestWebhook.challenge }*/);
                 //return Ok();
             }
             catch (Exception ex)
@@ -85,22 +85,22 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
-                string rawContent = string.Empty;
-                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
-                {
-                    rawContent = await reader.ReadToEndAsync();
-                }
-                requestHeaders.Add("Body", rawContent);
+                //Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                //string rawContent = string.Empty;
+                //using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                //{
+                //    rawContent = await reader.ReadToEndAsync();
+                //}
+                //requestHeaders.Add("Body", rawContent);
 
 
 
-                Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                AgreementsTrigger(RequestWebhook);
+                //Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                //AgreementsTrigger(RequestWebhook);
 
-                var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+                //var challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
-                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                return Ok(/*new Webhook { smartsheetHookResponse = RequestWebhook.challenge }*/);
                 //return Ok();
             }
             catch (Exception ex)
@@ -116,21 +116,21 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
-                string rawContent = string.Empty;
-                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
-                {
-                    rawContent = await reader.ReadToEndAsync();
-                }
-                requestHeaders.Add("Body", rawContent);
+                //Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                //string rawContent = string.Empty;
+                //using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                //{
+                //    rawContent = await reader.ReadToEndAsync();
+                //}
+                //requestHeaders.Add("Body", rawContent);
 
 
-                Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                ApprovalCheckBox(RequestWebhook);
+                //Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                //ApprovalCheckBox(RequestWebhook);
 
-                string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+                //string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
-                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                return Ok(/*new Webhook { smartsheetHookResponse = RequestWebhook.challenge }*/);
                 //return Ok();
             }
             catch (Exception ex)
@@ -146,21 +146,21 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
-                string rawContent = string.Empty;
-                using (StreamReader reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
-                {
-                    rawContent = await reader.ReadToEndAsync();
-                }
-                requestHeaders.Add("Body", rawContent);
+                //Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                //string rawContent = string.Empty;
+                //using (StreamReader reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                //{
+                //    rawContent = await reader.ReadToEndAsync();
+                //}
+                //requestHeaders.Add("Body", rawContent);
 
 
-                Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                //EventSettlementApproval(RequestWebhook);
-                EventSettlementDeviationApproval(RequestWebhook);
-                string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+                //Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                ////EventSettlementApproval(RequestWebhook);
+                //EventSettlementDeviationApproval(RequestWebhook);
+                //string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
-                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                return Ok(/*new Webhook { smartsheetHookResponse = RequestWebhook.challenge }*/);
                 //return Ok();
             }
             catch (Exception ex)
@@ -206,21 +206,21 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-                Dictionary<string, string> requestHeaders = [];
-                string rawContent = string.Empty;
-                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
-                {
-                    rawContent = await reader.ReadToEndAsync();
-                }
-                requestHeaders.Add("Body", rawContent);
+                //Dictionary<string, string> requestHeaders = [];
+                //string rawContent = string.Empty;
+                //using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                //{
+                //    rawContent = await reader.ReadToEndAsync();
+                //}
+                //requestHeaders.Add("Body", rawContent);
 
 
-                Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                PreEventApproval(RequestWebhook);
+                //Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                //PreEventApproval(RequestWebhook);
 
-                string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+                //string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
-                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                return Ok(/*new Webhook { smartsheetHookResponse = RequestWebhook.challenge }*/);
                 //return Ok();
             }
             catch (Exception ex)

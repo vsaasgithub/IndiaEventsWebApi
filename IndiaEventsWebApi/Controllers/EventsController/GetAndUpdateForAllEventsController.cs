@@ -1123,6 +1123,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             await Task.Run(() => smartsheet.SheetResources.RowResources
                             .DeleteRows(sheet2.Id.Value, rowIdsToDelete.ToArray(), true));
                         }
+                        Sheet sheet_2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
                         List<Row> newRows2 = new();
                         foreach (var formdata in formDataList.BrandSelection)
                         {
@@ -1130,16 +1131,16 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             {
                                 Cells = new List<Cell>()
                         {
-                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "% Allocation"), Value = formdata.PercentageAllocation },
-                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Brands"), Value = formdata.BrandName },
-                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Project ID"), Value = formdata.ProjectId },
-                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "EventId/EventRequestId"), Value =  formDataList.EventDetails.Id }
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet_2, "% Allocation"), Value = formdata.PercentageAllocation },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet_2, "Brands"), Value = formdata.BrandName },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet_2, "Project ID"), Value = formdata.ProjectId },
+                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet_2, "EventId/EventRequestId"), Value =  formDataList.EventDetails.Id }
                         }
                             };
 
                             newRows2.Add(newRow2);
                         }
-                        await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray()));
+                        await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet_2.Id.Value, newRows2.ToArray()));
 
 
 
@@ -1161,6 +1162,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         {
                             await Task.Run(() => smartsheet.SheetResources.RowResources.DeleteRows(sheet4.Id.Value, rowIdsToDelete.ToArray(), true));
                         }
+                        sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
                         foreach (var formData in formDataList.PanelSelection)
                         {
                             Row newRow1 = new()
