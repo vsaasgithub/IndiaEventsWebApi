@@ -297,7 +297,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             rowData[columnNames[i]] = row.Cells[i].Value;
                         }
                     }
-                    PaginatedResult<Attachment> attachments =await Task.Run(()=> smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null));
+                    PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null));
 
 
                     if (attachments.Data != null || attachments.Data.Count > 0)
@@ -548,7 +548,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             foreach (var attachment in attachments.Data)
                             {
                                 var AID = (long)attachment.Id;
-                                var file =await Task.Run(()=> smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet7.Id.Value, AID));
+                                var file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet7.Id.Value, AID));
                                 DeviationsattachmentInfo[val] = SheetHelper.UrlToBaseValue(file.Url);
                             }
                         }
@@ -1027,7 +1027,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         }
 
         [HttpPut("UpdateClassIPreEvent")]
-        public IActionResult UpdateClassIPreEvent(UpdateDataForClassI formDataList)
+        public async Task<IActionResult> UpdateClassIPreEvent(UpdateDataForClassI formDataList)
         {
             var eventId = formDataList.EventDetails.Id;
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
@@ -1104,224 +1104,227 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             long UpdatedId = 0;
             if (targetRow != null)
             {
-                if (formDataList.BrandSelection.Count > 0)
+                try
                 {
-                    Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
-                    List<long> rowIdsToDelete = new List<long>();
-                    foreach (Row row in sheet2.Rows)
+                    if (formDataList.BrandSelection.Count > 0)
                     {
-                        if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
+                        Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+                        List<long> rowIdsToDelete = new List<long>();
+                        foreach (Row row in sheet2.Rows)
                         {
-                            rowIdsToDelete.Add((long)row.Id);
+                            if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
+                            {
+                                rowIdsToDelete.Add((long)row.Id);
+                            }
                         }
-                    }
-                    if (rowIdsToDelete.Count > 0)
-                    {
-                        smartsheet.SheetResources.RowResources.DeleteRows(sheet2.Id.Value, rowIdsToDelete.ToArray(), true);
-                    }
-                    List<Row> newRows2 = new();
-                    foreach (var formdata in formDataList.BrandSelection)
-                    {
-                        Row newRow2 = new()
+                        if (rowIdsToDelete.Count > 0)
                         {
-                            Cells = new List<Cell>()
+                            await Task.Run(() => smartsheet.SheetResources.RowResources
+                            .DeleteRows(sheet2.Id.Value, rowIdsToDelete.ToArray(), true));
+                        }
+                        List<Row> newRows2 = new();
+                        foreach (var formdata in formDataList.BrandSelection)
+                        {
+                            Row newRow2 = new()
+                            {
+                                Cells = new List<Cell>()
                         {
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "% Allocation"), Value = formdata.PercentageAllocation },
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Brands"), Value = formdata.BrandName },
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Project ID"), Value = formdata.ProjectId },
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "EventId/EventRequestId"), Value =  formDataList.EventDetails.Id }
                         }
-                        };
+                            };
 
-                        newRows2.Add(newRow2);
-                    }
-                    smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray());
-
-
-
-                }
-
-                if (formDataList.PanelSelection.Count > 0)
-                {
-
-                    Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
-                    List<long> rowIdsToDelete = new List<long>();
-                    foreach (Row row in sheet4.Rows)
-                    {
-                        if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
-                        {
-                            rowIdsToDelete.Add((long)row.Id);
+                            newRows2.Add(newRow2);
                         }
+                        await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray()));
+
+
+
                     }
-                    if (rowIdsToDelete.Count > 0)
+
+                    if (formDataList.PanelSelection.Count > 0)
                     {
-                        smartsheet.SheetResources.RowResources.DeleteRows(sheet4.Id.Value, rowIdsToDelete.ToArray(), true);
-                    }
-                    foreach (var formData in formDataList.PanelSelection)
-                    {
-                        Row newRow1 = new()
+
+                        Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+                        List<long> rowIdsToDelete = new List<long>();
+                        foreach (Row row in sheet4.Rows)
                         {
-                            Cells = new List<Cell>()
-                        };
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HcpRole"), Value = formData.HcpRole });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "MISCode"), Value = SheetHelper.MisCodeCheck(formData.MisCode) });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel"), Value = formData.TravelAmountIncludingTax });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TotalSpend"), Value = formData.FinalAmount });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation"), Value = formData.AccomdationIncludingTax });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "LocalConveyance"), Value = formData.LocalConveyanceIncludingTax });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "SpeakerCode"), Value = formData.SpeakerCode });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TrainerCode"), Value = formData.TrainerCode });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HonorariumRequired"), Value = formData.HonorariumRequired });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "AgreementAmount"), Value = formData.AgreementAmount });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HonorariumAmount"), Value = formData.HonarariumAmountIncludingTax });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Speciality"), Value = formData.Speciality });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.EventDetails.EventTopic });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.EventDetails.EventType });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Venue name"), Value = formDataList.EventDetails.VenueName });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.EventDetails.EventDate });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HCPName"), Value = formData.HcpName });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PAN card name"), Value = formData.PanCardName });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "ExpenseType"), Value = formData.ExpenseType });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Bank Account Number"), Value = formData.BankAccountNumber });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Bank Name"), Value = formData.BankName });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "IFSC Code"), Value = formData.IFSCCode });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "FCPA Date"), Value = formData.FcpaIssueDate });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Currency"), Value = formData.Currency });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Honorarium Amount Excluding Tax"), Value = formData.HonarariumAmountExcludingTax });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel Excluding Tax"), Value = formData.TravelExcludingTax });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation Excluding Tax"), Value = formData.AccomdationExcludingTax });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Local Conveyance Excluding Tax"), Value = formData.LocalConveyanceExcludingTax });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "LC BTC/BTE"), Value = formData.LcBtcorBte });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel BTC/BTE"), Value = formData.TravelBtcorBte });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation BTC/BTE"), Value = formData.AccomodationBtcorBte });
-
-                        if (formData.Currency == "Others")
-                        {
-                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Other Currency"), Value = formData.OtherCurrencyType });
-                        }
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Beneficiary Name"), Value = formData.BeneficiaryName });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Pan Number"), Value = formData.PanNumber });
-
-                        if (formData.HcpRole == "Others")
-                        {
-
-                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Other Type"), Value = formData.OthersType });
-                        }
-
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Tier"), Value = formData.Tier });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HCP Type"), Value = formData.GOorNGO });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PresentationDuration"), Value = formData.PresentationDuration });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PanelSessionPreparationDuration"), Value = formData.PanelSessionPreperationDuration });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PanelDiscussionDuration"), Value = formData.PanelDisscussionDuration });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "QASessionDuration"), Value = formData.QaSessionDuration });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "BriefingSession"), Value = formData.BriefingSession });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TotalSessionHours"), Value = formData.TotalSessionHours });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Rationale"), Value = formData.Rationale });
-                        newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "EventId/EventRequestId"), Value = eventId });
-
-
-                        IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet4.Id.Value, new Row[] { newRow1 });
-                        if (formData.IsFilesUpload == "Yes")
-                        {
-                            foreach (string p in formData.Files)
+                            if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
                             {
-                                string[] words = p.Split(':');
-                                string r = words[0];
-                                string q = words[1];
-                                string name = r.Split(".")[0];
-                                string filePath = SheetHelper.testingFile(q, name);
-                                Row addedRow = row[0];
-                                Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                       sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                                rowIdsToDelete.Add((long)row.Id);
+                            }
+                        }
+                        if (rowIdsToDelete.Count > 0)
+                        {
+                            await Task.Run(() => smartsheet.SheetResources.RowResources.DeleteRows(sheet4.Id.Value, rowIdsToDelete.ToArray(), true));
+                        }
+                        foreach (var formData in formDataList.PanelSelection)
+                        {
+                            Row newRow1 = new()
+                            {
+                                Cells = new List<Cell>()
+                            };
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HcpRole"), Value = formData.HcpRole });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "MISCode"), Value = SheetHelper.MisCodeCheck(formData.MisCode) });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel"), Value = formData.TravelAmountIncludingTax });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TotalSpend"), Value = formData.FinalAmount });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation"), Value = formData.AccomdationIncludingTax });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "LocalConveyance"), Value = formData.LocalConveyanceIncludingTax });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "SpeakerCode"), Value = formData.SpeakerCode });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TrainerCode"), Value = formData.TrainerCode });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HonorariumRequired"), Value = formData.HonorariumRequired });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "AgreementAmount"), Value = formData.AgreementAmount });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HonorariumAmount"), Value = formData.HonarariumAmountIncludingTax });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Speciality"), Value = formData.Speciality });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.EventDetails.EventTopic });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.EventDetails.EventType });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Venue name"), Value = formDataList.EventDetails.VenueName });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.EventDetails.EventDate });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HCPName"), Value = formData.HcpName });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PAN card name"), Value = formData.PanCardName });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "ExpenseType"), Value = formData.ExpenseType });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Bank Account Number"), Value = formData.BankAccountNumber });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Bank Name"), Value = formData.BankName });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "IFSC Code"), Value = formData.IFSCCode });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "FCPA Date"), Value = formData.FcpaIssueDate });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Currency"), Value = formData.Currency });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Honorarium Amount Excluding Tax"), Value = formData.HonarariumAmountExcludingTax });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel Excluding Tax"), Value = formData.TravelExcludingTax });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation Excluding Tax"), Value = formData.AccomdationExcludingTax });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Local Conveyance Excluding Tax"), Value = formData.LocalConveyanceExcludingTax });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "LC BTC/BTE"), Value = formData.LcBtcorBte });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel BTC/BTE"), Value = formData.TravelBtcorBte });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation BTC/BTE"), Value = formData.AccomodationBtcorBte });
+
+                            if (formData.Currency == "Others")
+                            {
+                                newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Other Currency"), Value = formData.OtherCurrencyType });
+                            }
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Beneficiary Name"), Value = formData.BeneficiaryName });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Pan Number"), Value = formData.PanNumber });
+
+                            if (formData.HcpRole == "Others")
+                            {
+
+                                newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Other Type"), Value = formData.OthersType });
+                            }
+
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Tier"), Value = formData.Tier });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HCP Type"), Value = formData.GOorNGO });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PresentationDuration"), Value = formData.PresentationDuration });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PanelSessionPreparationDuration"), Value = formData.PanelSessionPreperationDuration });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PanelDiscussionDuration"), Value = formData.PanelDisscussionDuration });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "QASessionDuration"), Value = formData.QaSessionDuration });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "BriefingSession"), Value = formData.BriefingSession });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TotalSessionHours"), Value = formData.TotalSessionHours });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Rationale"), Value = formData.Rationale });
+                            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "EventId/EventRequestId"), Value = eventId });
 
 
-                                if (System.IO.File.Exists(filePath))
+                            IList<Row> row = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet4.Id.Value, new Row[] { newRow1 }));
+                            if (formData.IsFilesUpload == "Yes")
+                            {
+                                foreach (string p in formData.Files)
                                 {
-                                    SheetHelper.DeleteFile(filePath);
+                                    string[] words = p.Split(':');
+                                    string r = words[0];
+                                    string q = words[1];
+                                    string name = r.Split(".")[0];
+                                    string filePath = SheetHelper.testingFile(q, name);
+                                    Row addedRow = row[0];
+                                    Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                           sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+
+
+                                    if (System.IO.File.Exists(filePath))
+                                    {
+                                        SheetHelper.DeleteFile(filePath);
+                                    }
+                                }
+                            }
+
+
+                        }
+
+
+                    }
+
+                    if (formDataList.SlideKitSelection.Count > 0)
+                    {
+                        Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+                        List<long> rowIdsToDelete = new List<long>();
+                        foreach (Row row in sheet5.Rows)
+                        {
+                            if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
+                            {
+                                rowIdsToDelete.Add((long)row.Id);
+                            }
+                        }
+                        if (rowIdsToDelete.Count > 0)
+                        {
+                            await Task.Run(() => smartsheet.SheetResources.RowResources.DeleteRows(sheet5.Id.Value, rowIdsToDelete.ToArray(), true));
+                        }
+
+                        foreach (var formdata in formDataList.SlideKitSelection)
+                        {
+                            Row newRow5 = new()
+                            {
+                                Cells = new List<Cell>()
+                            };
+
+                            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "MIS"), Value = SheetHelper.MisCodeCheck(formdata.MisCode) });
+                            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "Slide Kit Type"), Value = formdata.SlideKitType });
+                            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "SlideKit Document"), Value = formdata.SlideKitOption });
+                            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "EventId/EventRequestId"), Value = eventId });
+
+
+                            IList<Row> row = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet5.Id.Value, new Row[] { newRow5 }));
+                            if (formdata.IsFilesUpload == "Yes")
+                            {
+                                foreach (string p in formdata.Files)
+                                {
+                                    string[] words = p.Split(':');
+                                    string r = words[0];
+                                    string q = words[1];
+                                    string name = r.Split(".")[0];
+                                    string filePath = SheetHelper.testingFile(q, name);
+                                    Row addedRow = row[0];
+                                    Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                           sheet5.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+
+
+                                    if (System.IO.File.Exists(filePath))
+                                    {
+                                        SheetHelper.DeleteFile(filePath);
+                                    }
                                 }
                             }
                         }
-
-
                     }
 
-
-                }
-
-                if (formDataList.SlideKitSelection.Count > 0)
-                {
-                    Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
-                    List<long> rowIdsToDelete = new List<long>();
-                    foreach (Row row in sheet5.Rows)
+                    if (formDataList.InviteeSelection.Count > 0)
                     {
-                        if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
+                        Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+                        List<long> rowIdsToDelete = new List<long>();
+                        foreach (Row row in sheet3.Rows)
                         {
-                            rowIdsToDelete.Add((long)row.Id);
-                        }
-                    }
-                    if (rowIdsToDelete.Count > 0)
-                    {
-                        smartsheet.SheetResources.RowResources.DeleteRows(sheet5.Id.Value, rowIdsToDelete.ToArray(), true);
-                    }
-
-                    foreach (var formdata in formDataList.SlideKitSelection)
-                    {
-                        Row newRow5 = new()
-                        {
-                            Cells = new List<Cell>()
-                        };
-
-                        newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "MIS"), Value = SheetHelper.MisCodeCheck(formdata.MisCode) });
-                        newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "Slide Kit Type"), Value = formdata.SlideKitType });
-                        newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "SlideKit Document"), Value = formdata.SlideKitOption });
-                        newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "EventId/EventRequestId"), Value = eventId });
-
-
-                        IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet5.Id.Value, new Row[] { newRow5 });
-                        if (formdata.IsFilesUpload == "Yes")
-                        {
-                            foreach (string p in formdata.Files)
+                            if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
                             {
-                                string[] words = p.Split(':');
-                                string r = words[0];
-                                string q = words[1];
-                                string name = r.Split(".")[0];
-                                string filePath = SheetHelper.testingFile(q, name);
-                                Row addedRow = row[0];
-                                Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                       sheet5.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-
-
-                                if (System.IO.File.Exists(filePath))
-                                {
-                                    SheetHelper.DeleteFile(filePath);
-                                }
+                                rowIdsToDelete.Add((long)row.Id);
                             }
                         }
-                    }
-                }
-
-                if (formDataList.InviteeSelection.Count > 0)
-                {
-                    Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
-                    List<long> rowIdsToDelete = new List<long>();
-                    foreach (Row row in sheet3.Rows)
-                    {
-                        if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
+                        if (rowIdsToDelete.Count > 0)
                         {
-                            rowIdsToDelete.Add((long)row.Id);
+                            await Task.Run(() => smartsheet.SheetResources.RowResources.DeleteRows(sheet3.Id.Value, rowIdsToDelete.ToArray(), true));
                         }
-                    }
-                    if (rowIdsToDelete.Count > 0)
-                    {
-                        smartsheet.SheetResources.RowResources.DeleteRows(sheet3.Id.Value, rowIdsToDelete.ToArray(), true);
-                    }
-                    List<Row> newRows3 = new();
-                    foreach (var formdata in formDataList.InviteeSelection)
-                    {
-                        Row newRow3 = new()
+                        List<Row> newRows3 = new();
+                        foreach (var formdata in formDataList.InviteeSelection)
                         {
-                            Cells = new List<Cell>()
+                            Row newRow3 = new()
+                            {
+                                Cells = new List<Cell>()
                         {
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "HCPName"), Value = formdata.Name },
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Designation"), Value = formdata.Designation },
@@ -1342,36 +1345,36 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event End Date"), Value = formDataList.EventDetails.EventDate }
 
                         }
-                        };
-                        newRows3.Add(newRow3);
-                    }
-                    smartsheet.SheetResources.RowResources.AddRows(sheet3.Id.Value, newRows3.ToArray());
-
-
-
-                }
-
-                if (formDataList.ExpenseSelection.Count > 0)
-                {
-                    Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
-                    List<long> rowIdsToDelete = new List<long>();
-                    foreach (Row row in sheet6.Rows)
-                    {
-                        if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
-                        {
-                            rowIdsToDelete.Add((long)row.Id);
+                            };
+                            newRows3.Add(newRow3);
                         }
+                        await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet3.Id.Value, newRows3.ToArray()));
+
+
+
                     }
-                    if (rowIdsToDelete.Count > 0)
+
+                    if (formDataList.ExpenseSelection.Count > 0)
                     {
-                        smartsheet.SheetResources.RowResources.DeleteRows(sheet6.Id.Value, rowIdsToDelete.ToArray(), true);
-                    }
-                    List<Row> newRows6 = new();
-                    foreach (var formdata in formDataList.ExpenseSelection)
-                    {
-                        Row newRow6 = new()
+                        Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+                        List<long> rowIdsToDelete = new List<long>();
+                        foreach (Row row in sheet6.Rows)
                         {
-                            Cells = new List<Cell>()
+                            if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
+                            {
+                                rowIdsToDelete.Add((long)row.Id);
+                            }
+                        }
+                        if (rowIdsToDelete.Count > 0)
+                        {
+                            await Task.Run(() => smartsheet.SheetResources.RowResources.DeleteRows(sheet6.Id.Value, rowIdsToDelete.ToArray(), true));
+                        }
+                        List<Row> newRows6 = new();
+                        foreach (var formdata in formDataList.ExpenseSelection)
+                        {
+                            Row newRow6 = new()
+                            {
+                                Cells = new List<Cell>()
                         {
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Expense"), Value = formdata.Expense },
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "EventId/EventRequestID"), Value = eventId },
@@ -1384,197 +1387,205 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.EventDetails.EventDate },
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event End Date"), Value = formDataList.EventDetails.EventDate }
                         }
-                        };
-                        newRows6.Add(newRow6);
+                            };
+                            newRows6.Add(newRow6);
+                        }
+                        await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, newRows6.ToArray()));
+
+
+
                     }
-                    smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, newRows6.ToArray());
 
-
-
-                }
-
-                if (formDataList.IsDeviationUpload == "Yes")
-                {
-                    Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
-                    List<string> DeviationNames = new List<string>();
-                    foreach (var p in formDataList.DeviationDetails)
+                    if (formDataList.IsDeviationUpload == "Yes")
                     {
-
-                        string[] words = p.DeviationFile.Split(':')[0].Split("*");
-                        string r = words[1];
-                        DeviationNames.Add(r);
-                    }
-                    foreach (var pp in formDataList.DeviationDetails)
-                    {
-                        foreach (var deviationname in DeviationNames)
+                        Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+                        List<string> DeviationNames = new List<string>();
+                        foreach (var p in formDataList.DeviationDetails)
                         {
-                            string file = deviationname.Split(".")[0];
 
-                            if (pp.DeviationFile.Split(':')[0].Split("*")[1] == deviationname)
+                            string[] words = p.DeviationFile.Split(':')[0].Split("*");
+                            string r = words[1];
+                            DeviationNames.Add(r);
+                        }
+                        foreach (var pp in formDataList.DeviationDetails)
+                        {
+                            foreach (var deviationname in DeviationNames)
                             {
-                                try
+                                string file = deviationname.Split(".")[0];
+
+                                if (pp.DeviationFile.Split(':')[0].Split("*")[1] == deviationname)
                                 {
-                                    Row newRow7 = new()
+                                    try
                                     {
-                                        Cells = new List<Cell>()
-                                    };
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formDataList.EventDetails.EventTopic });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Type"), Value = formDataList.EventDetails.EventType });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Date"), Value = formDataList.EventDetails.EventDate });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Start Time"), Value = formDataList.EventDetails.StartTime });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "End Time"), Value = formDataList.EventDetails.EndTime });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Venue Name"), Value = formDataList.EventDetails.VenueName });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "City"), Value = formDataList.EventDetails.City });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "State"), Value = formDataList.EventDetails.State });
-
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "MIS Code"), Value = SheetHelper.MisCodeCheck(pp.MisCode) });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Name"), Value = pp.HcpName });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Honorarium Amount"), Value = pp.HonorariumAmountExcludingTax });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel & Accommodation Amount"), Value = pp.TravelorAccomodationAmountExcludingTax });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Other Expenses"), Value = pp.OtherExpenseAmountExcludingTax });
-
-                                    if (file == "30DaysDeviationFile")
-                                    {
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value });
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = "Yes" });
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = formDataList.EventDetails.EventOpen30dayscount });
-                                    }
-                                    else if (file == "7DaysDeviationFile")
-                                    {
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value });
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin5days"), Value = "Yes" });
-
-                                    }
-                                    else if (file == "ExpenseExcludingTax")
-                                    {
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value });
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"), Value = "Yes" });
-                                    }
-                                    else if (file.Contains("Travel_Accomodation3LExceededFile"))
-                                    {
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value });
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel/Accomodation 3,00,000 Exceeded Trigger"), Value = "Yes" });//formDataList.class1.FB_Expense_Excluding_Tax });
-                                    }
-                                    else if (file.Contains("TrainerHonorarium12LExceededFile"))
-                                    {
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value/*"Honorarium Aggregate Limit of 12,00,000 is Exceeded"*/ });
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Trainer Honorarium 12,00,000 Exceeded Trigger"), Value = "Yes" }); //formDataList.class1.FB_Expense_Excluding_Tax });
-                                    }
-                                    else if (file.Contains("HCPHonorarium6LExceededFile"))
-                                    {
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value/*"Honorarium Aggregate Limit of 6,00,000 is Exceeded"*/ });
-                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Honorarium 6,00,000 Exceeded Trigger"), Value = "Yes" }); // formDataList.class1.FB_Expense_Excluding_Tax });
-                                    }
-
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formDataList.EventDetails.Sales_Head });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.EventDetails.FinanceHead });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formDataList.EventDetails.InitiatorName });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.EventDetails.Initiator_Email });
-                                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formDataList.EventDetails.SalesCoordinator });
-
-                                    IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
-
-                                    int j = 1;
-                                    foreach (var p in formDataList.DeviationDetails)
-                                    {
-                                        string[] nameSplit = p.DeviationFile.Split("*");
-                                        string[] words = nameSplit[1].Split(':');
-                                        string r = words[0];
-                                        string q = words[1];
-                                        if (deviationname == r)
+                                        Row newRow7 = new()
                                         {
-                                            string name = nameSplit[0];
-                                            string filePath = SheetHelper.testingFile(q, name);
-                                            Row addedRow = addeddeviationrow[0];
-                                            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                            Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword");
-                                            j++;
-                                            if (System.IO.File.Exists(filePath))
+                                            Cells = new List<Cell>()
+                                        };
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formDataList.EventDetails.EventTopic });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Type"), Value = formDataList.EventDetails.EventType });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Date"), Value = formDataList.EventDetails.EventDate });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Start Time"), Value = formDataList.EventDetails.StartTime });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "End Time"), Value = formDataList.EventDetails.EndTime });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Venue Name"), Value = formDataList.EventDetails.VenueName });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "City"), Value = formDataList.EventDetails.City });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "State"), Value = formDataList.EventDetails.State });
+
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "MIS Code"), Value = SheetHelper.MisCodeCheck(pp.MisCode) });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Name"), Value = pp.HcpName });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Honorarium Amount"), Value = pp.HonorariumAmountExcludingTax });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel & Accommodation Amount"), Value = pp.TravelorAccomodationAmountExcludingTax });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Other Expenses"), Value = pp.OtherExpenseAmountExcludingTax });
+
+                                        if (file == "30DaysDeviationFile")
+                                        {
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value });
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = "Yes" });
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = formDataList.EventDetails.EventOpen30dayscount });
+                                        }
+                                        else if (file == "7DaysDeviationFile")
+                                        {
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value });
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin5days"), Value = "Yes" });
+
+                                        }
+                                        else if (file == "ExpenseExcludingTax")
+                                        {
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value });
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"), Value = "Yes" });
+                                        }
+                                        else if (file.Contains("Travel_Accomodation3LExceededFile"))
+                                        {
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value });
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel/Accomodation 3,00,000 Exceeded Trigger"), Value = "Yes" });//formDataList.class1.FB_Expense_Excluding_Tax });
+                                        }
+                                        else if (file.Contains("TrainerHonorarium12LExceededFile"))
+                                        {
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value/*"Honorarium Aggregate Limit of 12,00,000 is Exceeded"*/ });
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Trainer Honorarium 12,00,000 Exceeded Trigger"), Value = "Yes" }); //formDataList.class1.FB_Expense_Excluding_Tax });
+                                        }
+                                        else if (file.Contains("HCPHonorarium6LExceededFile"))
+                                        {
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value/*"Honorarium Aggregate Limit of 6,00,000 is Exceeded"*/ });
+                                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Honorarium 6,00,000 Exceeded Trigger"), Value = "Yes" }); // formDataList.class1.FB_Expense_Excluding_Tax });
+                                        }
+
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formDataList.EventDetails.Sales_Head });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.EventDetails.FinanceHead });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formDataList.EventDetails.InitiatorName });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.EventDetails.Initiator_Email });
+                                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formDataList.EventDetails.SalesCoordinator });
+
+                                        IList<Row> addeddeviationrow = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 }));
+
+                                        int j = 1;
+                                        foreach (var p in formDataList.DeviationDetails)
+                                        {
+                                            string[] nameSplit = p.DeviationFile.Split("*");
+                                            string[] words = nameSplit[1].Split(':');
+                                            string r = words[0];
+                                            string q = words[1];
+                                            if (deviationname == r)
                                             {
-                                                SheetHelper.DeleteFile(filePath);
+                                                string name = nameSplit[0];
+                                                string filePath = SheetHelper.testingFile(q, name);
+                                                Row addedRow = addeddeviationrow[0];
+                                                Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+                                                Attachment attachmentinmain = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword"));
+                                                j++;
+                                                if (System.IO.File.Exists(filePath))
+                                                {
+                                                    SheetHelper.DeleteFile(filePath);
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                catch (Exception ex)
-                                {
-                                    return BadRequest(ex.Message);
+                                    catch (Exception ex)
+                                    {
+                                        return BadRequest(ex.Message);
+                                    }
+
                                 }
 
                             }
 
                         }
-
                     }
-                }
 
-                try
-                {
-                    Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Topic"), Value = formDataList.EventDetails.EventTopic });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Start Time"), Value = formDataList.EventDetails.StartTime });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "End Time"), Value = formDataList.EventDetails.EndTime });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Venue Name"), Value = formDataList.EventDetails.VenueName });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Type"), Value = formDataList.EventDetails.EventType });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Date"), Value = formDataList.EventDetails.EventDate });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "State"), Value = formDataList.EventDetails.State });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "City"), Value = formDataList.EventDetails.City });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Meeting Type"), Value = formDataList.EventDetails.MeetingType });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Brands"), Value = formDataList.EventDetails.Brands });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Panelists"), Value = formDataList.EventDetails.Panelists });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "SlideKits"), Value = formDataList.EventDetails.SlideKits });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Invitees"), Value = formDataList.EventDetails.Invitees });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "MIPL Invitees"), Value = formDataList.EventDetails.MIPLInvitees });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Expenses"), Value = formDataList.EventDetails.Expenses });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTE Expense Details"), Value = formDataList.EventDetails.ExpenseDataBTE });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.EventDetails.TotalExpenseBTC });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.EventDetails.TotalExpenseBTE });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = formDataList.EventDetails.TotalExpenseBTE });
-
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Honorarium Amount"), Value = formDataList.EventDetails.TotalHonorariumAmount });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel & Accommodation Amount"), Value = formDataList.EventDetails.TotalTravelAccommodationAmount });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Accommodation Amount"), Value = formDataList.EventDetails.TotalAccomodationAmount });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Budget Amount"), Value = formDataList.EventDetails.TotalBudget });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Local Conveyance"), Value = formDataList.EventDetails.TotalLocalConveyance });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel Amount"), Value = formDataList.EventDetails.TotalTravelAmount });
-                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense"), Value = formDataList.EventDetails.TotalExpense });
-
-                    IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
-                    long uId = updatedRow[0].Id.Value;
-                    UpdatedId = uId;
-                    if (formDataList.EventDetails.IsFilesUpload == "Yes")
+                    try
                     {
-                        foreach (var p in formDataList.EventDetails.Files)
+                        Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Topic"), Value = formDataList.EventDetails.EventTopic });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Start Time"), Value = formDataList.EventDetails.StartTime });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "End Time"), Value = formDataList.EventDetails.EndTime });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Venue Name"), Value = formDataList.EventDetails.VenueName });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Type"), Value = formDataList.EventDetails.EventType });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Date"), Value = formDataList.EventDetails.EventDate });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "State"), Value = formDataList.EventDetails.State });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "City"), Value = formDataList.EventDetails.City });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Meeting Type"), Value = formDataList.EventDetails.MeetingType });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Brands"), Value = formDataList.EventDetails.Brands });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Panelists"), Value = formDataList.EventDetails.Panelists });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "SlideKits"), Value = formDataList.EventDetails.SlideKits });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Invitees"), Value = formDataList.EventDetails.Invitees });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "MIPL Invitees"), Value = formDataList.EventDetails.MIPLInvitees });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Expenses"), Value = formDataList.EventDetails.Expenses });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTE Expense Details"), Value = formDataList.EventDetails.ExpenseDataBTE });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.EventDetails.TotalExpenseBTC });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.EventDetails.TotalExpenseBTE });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = formDataList.EventDetails.TotalExpenseBTE });
+
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Honorarium Amount"), Value = formDataList.EventDetails.TotalHonorariumAmount });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel & Accommodation Amount"), Value = formDataList.EventDetails.TotalTravelAccommodationAmount });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Accommodation Amount"), Value = formDataList.EventDetails.TotalAccomodationAmount });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Budget Amount"), Value = formDataList.EventDetails.TotalBudget });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Local Conveyance"), Value = formDataList.EventDetails.TotalLocalConveyance });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel Amount"), Value = formDataList.EventDetails.TotalTravelAmount });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense"), Value = formDataList.EventDetails.TotalExpense });
+
+                        IList<Row> updatedRow = await Task.Run(() => smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow }));
+                        long uId = updatedRow[0].Id.Value;
+                        UpdatedId = uId;
+                        if (formDataList.EventDetails.IsFilesUpload == "Yes")
                         {
+                            foreach (var p in formDataList.EventDetails.Files)
+                            {
 
-                            string[] words = p.FileBase64.Split(':');
-                            string r = words[0];
-                            string q = words[1];
-                            string name = r.Split(".")[0];
-                            string filePath = SheetHelper.testingFile(q, name);
-                            Row addedRow = updatedRow[0];
-                            if (p.Id != null)
-                            {
-                                Attachment Updateattachment = smartsheet.SheetResources.AttachmentResources.VersioningResources.AttachNewVersion(
-                                    sheet1.Id.Value, (long)p.Id, filePath, "application/msword");
-                            }
-                            else
-                            {
-                                Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                   sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                                string[] words = p.FileBase64.Split(':');
+                                string r = words[0];
+                                string q = words[1];
+                                string name = r.Split(".")[0];
+                                string filePath = SheetHelper.testingFile(q, name);
+                                Row addedRow = updatedRow[0];
+                                if (p.Id != null)
+                                {
+                                    Attachment Updateattachment = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.VersioningResources.AttachNewVersion(
+                                        sheet1.Id.Value, (long)p.Id, filePath, "application/msword"));
+                                }
+                                else
+                                {
+                                    Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                                       sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+                                }
+
+                                if (System.IO.File.Exists(filePath))
+                                {
+                                    SheetHelper.DeleteFile(filePath);
+                                }
                             }
 
-                            if (System.IO.File.Exists(filePath))
-                            {
-                                SheetHelper.DeleteFile(filePath);
-                            }
                         }
-
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
+                        Log.Error(ex.StackTrace);
+                        return BadRequest(ex.Message);
                     }
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
+
                     Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
                     Log.Error(ex.StackTrace);
                     return BadRequest(ex.Message);

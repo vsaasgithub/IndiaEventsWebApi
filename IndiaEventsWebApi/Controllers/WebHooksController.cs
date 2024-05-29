@@ -38,8 +38,9 @@ namespace IndiaEventsWebApi.Controllers
         public WebHooksController(IConfiguration configuration)
         {
             this.configuration = configuration;
-            accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
+            accessToken = configuration.GetSection("SmartsheetSettings:AccessTokenForWebHooks").Value;
             smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+
             processSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
             sheetId_SpeakerCode = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
             sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
