@@ -1029,7 +1029,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         [HttpPut("UpdateClassIPreEvent")]
         public async Task<IActionResult> UpdateClassIPreEvent(UpdateDataForClassI formDataList)
         {
-            var eventId = formDataList.EventDetails.Id;
+            try
+            {
+                var eventId = formDataList.EventDetails.Id;
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
 
             #region
@@ -1104,8 +1106,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             long UpdatedId = 0;
             if (targetRow != null)
             {
-                try
-                {
+                
                     if (formDataList.BrandSelection.Count > 0)
                     {
                         Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
@@ -1585,15 +1586,16 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         { Message = ex.Message + "------" + ex.StackTrace });
                     }
                 }
-                catch(Exception ex)
-                {
+               
+            }
+            catch (Exception ex)
+            {
 
-                    //Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
-                    //Log.Error(ex.StackTrace);
-                    //return BadRequest(ex.Message);
-                    return Ok(new
-                    { Message = ex.Message + "------" + ex.StackTrace });
-                }
+                //Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
+                //Log.Error(ex.StackTrace);
+                //return BadRequest(ex.Message);
+                return Ok(new
+                { Message = ex.Message + "------" + ex.StackTrace });
             }
 
 
