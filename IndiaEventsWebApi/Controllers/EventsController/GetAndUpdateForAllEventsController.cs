@@ -3138,6 +3138,14 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             if (targetRow != null)
 
             {
+                long ColumnId = SheetHelper.GetColumnIdByName(sheet11, "Attachments Change");
+                Cell UpdateB = new Cell { ColumnId = ColumnId, Value = formDataList.AttachmentIds[0] };
+                Row updateRows = new Row { Id = targetRow.Id, Cells = new Cell[] { UpdateB } };
+                Cell? cellsToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
+                if (cellsToUpdate != null) { cellsToUpdate.Value = formDataList.AttachmentIds[0]; }
+
+                smartsheet.SheetResources.RowResources.UpdateRows(sheet11.Id.Value, new Row[] { updateRows });
+
                 PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet11.Id.Value, targetRow.Id.Value, null);
                 if (attachments.Data != null || attachments.Data.Count > 0)
                 {
@@ -3161,7 +3169,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         { Message = $"No Attachments Found" });
                     }
                 }
+               // Row addedrow = addedRows[0];
+                
+
             }
+
             else
             {
                 return Ok(new

@@ -23,7 +23,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
         private readonly string accessToken;
         private readonly IConfiguration configuration;
-        private readonly SmartsheetClient smartsheet;
+        private readonly SemaphoreSlim _externalApiSemaphore;
+        //private readonly SmartsheetClient smartsheet;
         private readonly string sheetId1;
         private readonly string sheetId2;
         private readonly string sheetId3;
@@ -34,11 +35,13 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         private readonly string sheetId8;
         private readonly string sheetId9;
 
-        public AllPreEventsController(IConfiguration configuration)
+        public AllPreEventsController(IConfiguration configuration, SemaphoreSlim externalApiSemaphore)
         {
+            
             this.configuration = configuration;
+            this._externalApiSemaphore = externalApiSemaphore;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
-            smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+
 
             sheetId1 = configuration.GetSection("SmartsheetSettings:Class1").Value;
             sheetId2 = configuration.GetSection("SmartsheetSettings:EventRequestBrandsList").Value;
@@ -50,10 +53,13 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             sheetId8 = configuration.GetSection("SmartsheetSettings:EventRequestBeneficiary").Value;
             sheetId9 = configuration.GetSection("SmartsheetSettings:EventRequestProductBrandsList").Value;
         }
+        //private static SemaphoreSlim semaphore;
+
 
         [HttpPost("Class1PreEvent"), DisableRequestSizeLimit]
         public IActionResult Class1PreEvent(AllObjModels formDataList)
         {
+            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
             Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
@@ -578,6 +584,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         {
             try
             {
+                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
                 Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
                 Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
                 Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
@@ -1069,141 +1076,140 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             return Ok(formDataList);
         }
 
+
+        
+
         [HttpPost("WebinarPreEvent"), DisableRequestSizeLimit]
         public async Task<IActionResult> WebinarPreEvent(WebinarPayload formDataList)
         {
+
+
+
             //int timeInterval = 4000;
             //await Task.Delay(timeInterval);
-
-
-            Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
-
-            await Task.Delay(5000);
-            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
-            Thread.Sleep(5000);
-            Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
-            Thread.Sleep(5000);
-            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
-            Thread.Sleep(5000);
-            Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
-            Thread.Sleep(5000);
-            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
-            Thread.Sleep(5000);
-            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
-
-            StringBuilder addedBrandsData = new();
-            StringBuilder addedInviteesData = new();
-            StringBuilder addedMEnariniInviteesData = new();
-            StringBuilder addedHcpData = new();
-            StringBuilder addedSlideKitData = new();
-            StringBuilder addedExpences = new();
-            int addedSlideKitDataNo = 1;
-            int addedHcpDataNo = 1;
-            int addedInviteesDataNo = 1;
-            int addedInviteesDataNoforMenarini = 1;
-            int addedBrandsDataNo = 1;
-            int addedExpencesNo = 1;
-            double TotalHonorariumAmount = 0;
-            double TotalTravelAmount = 0;
-            double TotalAccomodateAmount = 0;
-            double TotalHCPLcAmount = 0;
-            double TotalInviteesLcAmount = 0;
-            double TotalExpenseAmount = 0;
-            foreach (var formdata in formDataList.EventRequestExpenseSheet)
-            {
-                string rowData = $"{addedExpencesNo}. {formdata.Expense} | AmountExcludingTax: {formdata.AmountExcludingTax}| Amount: {formdata.Amount} | {formdata.BtcorBte}";
-                addedExpences.AppendLine(rowData);
-                addedExpencesNo++;
-                var amount = SheetHelper.NumCheck(formdata.Amount);
-                TotalExpenseAmount = TotalExpenseAmount + amount;
-            }
-            string Expense = addedExpences.ToString();
-
-            StringBuilder addedExpencesBTE = new();
-            int addedExpencesNoBTE = 1;
-            foreach (var formdata in formDataList.EventRequestExpenseSheet)
-            {
-                if (formdata.BtcorBte.ToLower() == "bte")
-                {
-                    string rowData = $"{addedExpencesNoBTE}. {formdata.Expense} | Amount: {formdata.Amount}";
-                    addedExpencesBTE.AppendLine(rowData);
-                    addedExpencesNoBTE++;
-                }
-            }
-            string BTEExpense = addedExpencesBTE.ToString();
-
-            foreach (var formdata in formDataList.EventRequestHCPSlideKits)
-            {
-                string rowData = $"{addedSlideKitDataNo}. {formdata.HcpName} | {formdata.SlideKitType} | Id :{formdata.SlideKitDocument}";
-                addedSlideKitData.AppendLine(rowData);
-                addedSlideKitDataNo++;
-            }
-            string slideKit = addedSlideKitData.ToString();
-
-            foreach (var formdata in formDataList.RequestBrandsList)
-            {
-                string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
-                addedBrandsData.AppendLine(rowData);
-                addedBrandsDataNo++;
-            }
-            string brand = addedBrandsData.ToString();
-
-            foreach (var formdata in formDataList.EventRequestInvitees)
-            {
-
-                if (formdata.InviteedFrom == "Menarini Employees")
-                {
-                    string row = $"{addedInviteesDataNoforMenarini}. {formdata.InviteeName}";
-                    addedMEnariniInviteesData.AppendLine(row);
-                    addedInviteesDataNoforMenarini++;
-                }
-                else
-                {
-                    string rowData = $"{addedInviteesDataNo}. {formdata.InviteeName}";
-                    addedInviteesData.AppendLine(rowData);
-                    addedInviteesDataNo++;
-                }
-
-                TotalInviteesLcAmount = TotalInviteesLcAmount + SheetHelper.NumCheck(formdata.LcAmount);
-            }
-            string Invitees = addedInviteesData.ToString();
-            string MenariniInvitees = addedMEnariniInviteesData.ToString();
-
-            foreach (var formdata in formDataList.EventRequestHcpRole)
-            {
-                double HM = SheetHelper.NumCheck(formdata.HonarariumAmount);
-                double t = SheetHelper.NumCheck(formdata.Travel) + SheetHelper.NumCheck(formdata.Accomdation);
-
-                double roundedValue = Math.Round(t, 2);
-
-                string rowData = $"{addedHcpDataNo}. {formdata.HcpRole} |{formdata.HcpName} | Honr.Amt: {HM} |Trav.&Acc.Amt: {roundedValue} |Rationale : {formdata.Rationale}";
-                addedHcpData.AppendLine(rowData);
-                addedHcpDataNo++;
-                TotalHonorariumAmount = TotalHonorariumAmount + SheetHelper.NumCheck(formdata.HonarariumAmount);
-                TotalTravelAmount = TotalTravelAmount + SheetHelper.NumCheck(formdata.Travel);
-                TotalAccomodateAmount = TotalAccomodateAmount + SheetHelper.NumCheck(formdata.Accomdation);
-                TotalHCPLcAmount = TotalHCPLcAmount + SheetHelper.NumCheck(formdata.LocalConveyance);
-            }
-            string HCP = addedHcpData.ToString();
-
-            //double c = TotalHCPLcAmount + TotalInviteesLcAmount;
-
-
-            //double total = TotalHonorariumAmount + TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount;
-
-            //double s = (TotalTravelAmount + TotalAccomodateAmount);
-
-            double cc = TotalHCPLcAmount + TotalInviteesLcAmount;
-
-            double totalAmount = TotalHonorariumAmount + TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount;
-
-            double ss = TotalTravelAmount + TotalAccomodateAmount;
-
-            double c = Math.Round(cc, 2);
-            double total = Math.Round(totalAmount, 2);
-            double s = Math.Round(ss, 2);
             try
             {
+                //semaphore = new SemaphoreSlim(0, 1);
+
+                //SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+
+                Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+                Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+                Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+                Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+                Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+                Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+                Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+
+                /////////////////////
+
+                StringBuilder addedBrandsData = new();
+                StringBuilder addedInviteesData = new();
+                StringBuilder addedMEnariniInviteesData = new();
+                StringBuilder addedHcpData = new();
+                StringBuilder addedSlideKitData = new();
+                StringBuilder addedExpences = new();
+                int addedSlideKitDataNo = 1;
+                int addedHcpDataNo = 1;
+                int addedInviteesDataNo = 1;
+                int addedInviteesDataNoforMenarini = 1;
+                int addedBrandsDataNo = 1;
+                int addedExpencesNo = 1;
+                double TotalHonorariumAmount = 0;
+                double TotalTravelAmount = 0;
+                double TotalAccomodateAmount = 0;
+                double TotalHCPLcAmount = 0;
+                double TotalInviteesLcAmount = 0;
+                double TotalExpenseAmount = 0;
+                foreach (var formdata in formDataList.EventRequestExpenseSheet)
+                {
+                    string rowData = $"{addedExpencesNo}. {formdata.Expense} | AmountExcludingTax: {formdata.AmountExcludingTax}| Amount: {formdata.Amount} | {formdata.BtcorBte}";
+                    addedExpences.AppendLine(rowData);
+                    addedExpencesNo++;
+                    var amount = SheetHelper.NumCheck(formdata.Amount);
+                    TotalExpenseAmount = TotalExpenseAmount + amount;
+                }
+                string Expense = addedExpences.ToString();
+
+                StringBuilder addedExpencesBTE = new();
+                int addedExpencesNoBTE = 1;
+                foreach (var formdata in formDataList.EventRequestExpenseSheet)
+                {
+                    if (formdata.BtcorBte.ToLower() == "bte")
+                    {
+                        string rowData = $"{addedExpencesNoBTE}. {formdata.Expense} | Amount: {formdata.Amount}";
+                        addedExpencesBTE.AppendLine(rowData);
+                        addedExpencesNoBTE++;
+                    }
+                }
+                string BTEExpense = addedExpencesBTE.ToString();
+
+                foreach (var formdata in formDataList.EventRequestHCPSlideKits)
+                {
+                    string rowData = $"{addedSlideKitDataNo}. {formdata.HcpName} | {formdata.SlideKitType} | Id :{formdata.SlideKitDocument}";
+                    addedSlideKitData.AppendLine(rowData);
+                    addedSlideKitDataNo++;
+                }
+                string slideKit = addedSlideKitData.ToString();
+
+                foreach (var formdata in formDataList.RequestBrandsList)
+                {
+                    string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
+                    addedBrandsData.AppendLine(rowData);
+                    addedBrandsDataNo++;
+                }
+                string brand = addedBrandsData.ToString();
+
+                foreach (var formdata in formDataList.EventRequestInvitees)
+                {
+
+                    if (formdata.InviteedFrom == "Menarini Employees")
+                    {
+                        string row = $"{addedInviteesDataNoforMenarini}. {formdata.InviteeName}";
+                        addedMEnariniInviteesData.AppendLine(row);
+                        addedInviteesDataNoforMenarini++;
+                    }
+                    else
+                    {
+                        string rowData = $"{addedInviteesDataNo}. {formdata.InviteeName}";
+                        addedInviteesData.AppendLine(rowData);
+                        addedInviteesDataNo++;
+                    }
+
+                    TotalInviteesLcAmount = TotalInviteesLcAmount + SheetHelper.NumCheck(formdata.LcAmount);
+                }
+                string Invitees = addedInviteesData.ToString();
+                string MenariniInvitees = addedMEnariniInviteesData.ToString();
+
+                foreach (var formdata in formDataList.EventRequestHcpRole)
+                {
+                    double HM = SheetHelper.NumCheck(formdata.HonarariumAmount);
+                    double t = SheetHelper.NumCheck(formdata.Travel) + SheetHelper.NumCheck(formdata.Accomdation);
+
+                    double roundedValue = Math.Round(t, 2);
+
+                    string rowData = $"{addedHcpDataNo}. {formdata.HcpRole} |{formdata.HcpName} | Honr.Amt: {HM} |Trav.&Acc.Amt: {roundedValue} |Rationale : {formdata.Rationale}";
+                    addedHcpData.AppendLine(rowData);
+                    addedHcpDataNo++;
+                    TotalHonorariumAmount = TotalHonorariumAmount + SheetHelper.NumCheck(formdata.HonarariumAmount);
+                    TotalTravelAmount = TotalTravelAmount + SheetHelper.NumCheck(formdata.Travel);
+                    TotalAccomodateAmount = TotalAccomodateAmount + SheetHelper.NumCheck(formdata.Accomdation);
+                    TotalHCPLcAmount = TotalHCPLcAmount + SheetHelper.NumCheck(formdata.LocalConveyance);
+                }
+                string HCP = addedHcpData.ToString();
+
+
+                double cc = TotalHCPLcAmount + TotalInviteesLcAmount;
+
+                double totalAmount = TotalHonorariumAmount + TotalTravelAmount + TotalAccomodateAmount + TotalHCPLcAmount + TotalInviteesLcAmount + TotalExpenseAmount;
+
+                double ss = TotalTravelAmount + TotalAccomodateAmount;
+
+                double c = Math.Round(cc, 2);
+                double total = Math.Round(totalAmount, 2);
+                double s = Math.Round(ss, 2);
+
                 Row newRow = new()
                 {
                     Cells = new List<Cell>()
@@ -1249,12 +1255,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.Webinar.MedicalAffairsEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTE Expense Details"), Value = formDataList.Webinar.BTEExpenseDetails });
 
-                IList<Row> addedRows = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet1.Id.Value, new Row[] { newRow }));
+                IList<Row> addedRows = ApiCalls.WebDetails(smartsheet, sheet1, newRow);
+                //IList<Row> addedRows = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet1.Id.Value, new Row[] { newRow }));
+                ///////
+                //IList<Row> addedRows = (IList<Row>)ApiCalls.AddWebinarData(smartsheet, sheet1, formDataList);
 
                 long eventIdColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
                 Cell? eventIdCell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == eventIdColumnId);
                 string val = eventIdCell.DisplayValue;
-                int x = 1;
+
 
                 foreach (var p in formDataList.Webinar.Files)
                 {
@@ -1264,10 +1273,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     string name = r.Split(".")[0];
                     string filePath = SheetHelper.testingFile(q, name);
                     Row addedRow = addedRows[0];
+                    Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, addedRow, filePath);
 
-                    Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                            sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
-                    x++;
+                    //Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                    //        sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+
                     if (System.IO.File.Exists(filePath))
                     {
                         SheetHelper.DeleteFile(filePath);
@@ -1338,9 +1348,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Rationale"), Value = formData.Rationale });
                     newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "EventId/EventRequestId"), Value = val });
 
-
-                    IList<Row> row = await Task.Run(() => smartsheet.SheetResources.
-                    RowResources.AddRows(sheet4.Id.Value, new Row[] { newRow1 }));
+                    IList<Row> row = await Task.Run(() => ApiCalls.PanelDetails(smartsheet, sheet4, newRow1));
+                    //IList<Row> row = await Task.Run(() => smartsheet.SheetResources.
+                    //RowResources.AddRows(sheet4.Id.Value, new Row[] { newRow1 }));
                     if (formData.IsUpload == "Yes")
                     {
                         foreach (string p in formData.FilesToUpload)
@@ -1351,8 +1361,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             string name = r.Split(".")[0];
                             string filePath = SheetHelper.testingFile(q, name);
                             Row addedRow = row[0];
-                            Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                   sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+                            //Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                            //       sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+                            Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet4, addedRow, filePath);
 
 
                             if (System.IO.File.Exists(filePath))
@@ -1380,7 +1391,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                     newRows2.Add(newRow2);
                 }
-                await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray()));
+                await Task.Run(() => /*smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray())*/
+                ApiCalls.BrandsDetails(smartsheet, sheet2, newRows2));
                 List<Row> newRows3 = new();
                 foreach (var formdata in formDataList.EventRequestInvitees)
                 {
@@ -1409,7 +1421,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     };
                     newRows3.Add(newRow3);
                 }
-                await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet3.Id.Value, newRows3.ToArray()));
+                await Task.Run(() => /*smartsheet.SheetResources.RowResources.AddRows(sheet3.Id.Value, newRows3.ToArray()));*/
+                ApiCalls.InviteesDetails(smartsheet, sheet3, newRows3));
+
                 foreach (var formdata in formDataList.EventRequestHCPSlideKits)
                 {
                     Row newRow5 = new()
@@ -1423,7 +1437,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "EventId/EventRequestId"), Value = val });
 
 
-                    IList<Row> row = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet5.Id.Value, new Row[] { newRow5 }));
+                    IList<Row> row = await Task.Run(() => ApiCalls.PanelDetails(smartsheet, sheet5, newRow5));/*smartsheet.SheetResources.RowResources.AddRows(sheet5.Id.Value, new Row[] { newRow5 }));*/
                     if (formdata.IsUpload == "Yes")
                     {
                         foreach (string p in formdata.FilesToUpload)
@@ -1434,9 +1448,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             string name = r.Split(".")[0];
                             string filePath = SheetHelper.testingFile(q, name);
                             Row addedRow = row[0];
-                            Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                   sheet5.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
-
+                            //Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                            //       sheet5.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+                            Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet5, addedRow, filePath);
 
                             if (System.IO.File.Exists(filePath))
                             {
@@ -1469,7 +1483,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     };
                     newRows6.Add(newRow6);
                 }
-                await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, newRows6.ToArray()));
+                await Task.Run(() => ApiCalls.ExpenseDetails(smartsheet, sheet6, newRows6));/* smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, newRows6.ToArray()));*/
 
                 if (formDataList.Webinar.EventOpen30days == "Yes" || formDataList.Webinar.EventWithin7days == "Yes" || formDataList.Webinar.FB_Expense_Excluding_Tax == "Yes" || formDataList.Webinar.IsDeviationUpload == "Yes")
                 {
@@ -1549,7 +1563,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.Webinar.Initiator_Email });
                                     newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formDataList.Webinar.SalesCoordinatorEmail });
 
-                                    IList<Row> addeddeviationrow = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 }));
+                                    IList<Row> addeddeviationrow = ApiCalls.DeviationData(smartsheet, sheet7, newRow7);//await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 }));
 
                                     int j = 1;
                                     foreach (var p in formDataList.Webinar.DeviationDetails)
@@ -1563,8 +1577,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                             string name = nameSplit[0];
                                             string filePath = SheetHelper.testingFile(q, name);
                                             Row addedRow = addeddeviationrow[0];
-                                            Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
-                                            Attachment attachmentinmain = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword"));
+                                            Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet7, addedRow, filePath);
+                                            Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, addedRows[0], filePath);
+                                            //Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+                                            //Attachment attachmentinmain = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, addedRows[0].Id.Value, filePath, "application/msword"));
                                             j++;
                                             if (System.IO.File.Exists(filePath))
                                             {
@@ -1592,7 +1608,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 Cell? cellsToUpdate = addedrow.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
                 if (cellsToUpdate != null) { cellsToUpdate.Value = formDataList.Webinar.Role; }
 
-                await Task.Run(() => smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRows }));
+                await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet1, updateRows)); //smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRows }));
 
 
                 return Ok(new
@@ -1607,12 +1623,16 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 return Ok(new
                 { Message = ex.Message + "------" + ex.StackTrace });
             }
+            //finally
+            //{
+            //    semaphore.Release();
+            //}
         }
 
         [HttpPost("HCPConsultantPreEvent"), DisableRequestSizeLimit]
         public IActionResult HCPConsultantPreEvent(HCPConsultantPayload formDataList)
         {
-
+            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
             Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
@@ -2022,6 +2042,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         [HttpPost("StallFabricationPreEvent"), DisableRequestSizeLimit]
         public IActionResult StallFabricationPreEvent(AllStallFabrication formDataList)
         {
+            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
             Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
@@ -2348,7 +2369,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         public IActionResult MedicalUtilityPreEvent(MedicalUtilityPreEventPayload formDataList)
         {
 
-
+            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
             Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
@@ -2711,7 +2732,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         [HttpPost("HandsOnPreEvent"), DisableRequestSizeLimit]
         public IActionResult HandsOnPreEvent(HandsOnTrainingPreEvet formDataList)
         {
-
+            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
             Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
@@ -3360,7 +3381,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         {
             try
             {
-
+                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
                 Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
                 Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);

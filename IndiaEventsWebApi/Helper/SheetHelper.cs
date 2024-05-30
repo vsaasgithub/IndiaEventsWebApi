@@ -114,8 +114,17 @@ namespace IndiaEventsWebApi.Helper
         // get sheet using sheetId
         internal static Sheet GetSheetById(SmartsheetClient smartsheet, string sheetId)
         {
-            long.TryParse(sheetId, out long parsedSheetId);
-            return smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
+            try
+            {
+                long.TryParse(sheetId, out long parsedSheetId);
+                return smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
+
+            }
+            catch (Exception ex)
+            {
+                return GetSheetById(smartsheet, sheetId);
+            }
+
         }
 
         // get sheet data using sheet access
@@ -272,7 +281,7 @@ namespace IndiaEventsWebApi.Helper
             }
             else if (bytes.Length >= 8 && bytes[0] == 0x89 &&
                 bytes[1] == 0x50 && bytes[2] == 0x4E && bytes[3] == 0x47 && bytes[4] == 0x0D &&
-                bytes[5] == 0x0A && bytes[6] == 0x1A && bytes[7] == 0x0A 
+                bytes[5] == 0x0A && bytes[6] == 0x1A && bytes[7] == 0x0A
                 /*Encoding.UTF8.GetString(bytes, 0, 8) == "PNG"*/)
             {
                 return "png";
