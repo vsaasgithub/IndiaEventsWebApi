@@ -10,8 +10,8 @@ namespace IndiaEventsWebApi.Helper
         {
             try
             {
-                semaphore = new SemaphoreSlim(1);
-                semaphore.Wait();
+                //semaphore = new SemaphoreSlim(1);
+                //semaphore.Wait();
                 SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
                 return smartsheet;
             }
@@ -21,10 +21,10 @@ namespace IndiaEventsWebApi.Helper
                 Log.Error(ex.StackTrace);
                 return (SmartsheetClient)ex;
             }
-            finally
-            {
-                semaphore.Release();
-            }
+            //finally
+            //{
+            //    semaphore.Release();
+            //}
         }
     }
 }

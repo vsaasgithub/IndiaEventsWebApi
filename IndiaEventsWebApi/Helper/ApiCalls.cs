@@ -191,10 +191,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                if (count >= 8)
-                {
-                    throw  ex;
-                }
+                //if (count >= 8)
+                //{
+                //    throw  ex;
+                //}
 
                 return await AddAttachmentsToSheet(smartsheet, sheet1, addedRow, filePath, count + 1);
             }
@@ -209,10 +209,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                if (count >= 5)
-                {
-                    throw ex;
-                }
+                //if (count >= 5)
+                //{
+                //    throw ex;
+                //}
                 return WebDetails(smartsheet, sheet4, newRow1, count + 1);
 
             }
@@ -227,10 +227,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                if (count >= 5)
-                {
-                    throw ex;
-                }
+                //if (count >= 5)
+                //{
+                //    throw ex;
+                //}
                 return PanelDetails(smartsheet, sheet4, newRow1, count + 1);
 
             }
@@ -245,10 +245,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                if (count >= 5)
-                {
-                    throw ex;
-                }
+                //if (count >= 5)
+                //{
+                //    throw ex;
+                //}
                 return SlideKitDetails(smartsheet, sheet4, newRow1, count + 1);
 
             }
@@ -263,10 +263,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                if (count >= 5)
-                {
-                    throw ex;
-                }
+                //if (count >= 5)
+                //{
+                //    throw ex;
+                //}
                 return BrandsDetails(smartsheet, sheet2, newRows2, count + 1);
 
             }
@@ -281,10 +281,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                if (count >= 5)
-                {
-                    throw ex; 
-                }
+                //if (count >= 5)
+                //{
+                //    throw ex; 
+                //}
                 return InviteesDetails(smartsheet, sheet, newRows2, count + 1);
 
             }
@@ -299,10 +299,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                if (count >= 5)
-                {
-                    throw ex;
-                }
+                //if (count >= 5)
+                //{
+                //    throw ex;
+                //}
                 return ExpenseDetails(smartsheet, sheet, newRows2, count + 1);
 
             }
@@ -317,10 +317,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                if (count >= 5)
-                {
-                    throw ex;
-                }
+                //if (count >= 5)
+                //{
+                //    throw ex;
+                //}
                 return UpdateRole(smartsheet, sheet4, updateRows, count + 1);
 
             }
@@ -335,10 +335,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                if (count >= 5)
-                {
-                    throw ex;
-                }
+                //if (count >= 5)
+                //{
+                //    throw ex;
+                //}
                 return DeviationData(smartsheet, sheet4, newRow1, count + 1);
 
             }
