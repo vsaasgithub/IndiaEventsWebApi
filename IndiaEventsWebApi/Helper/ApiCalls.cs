@@ -201,6 +201,30 @@ namespace IndiaEventsWebApi.Helper
 
         }
 
+        public static async Task<Attachment> UpdateAttachmentsToSheet(SmartsheetClient smartsheet, Sheet sheet1, long Id, string filePath, int count = 0)
+        {
+
+            try
+            {
+
+                Attachment attachment = smartsheet.SheetResources.AttachmentResources.VersioningResources.AttachNewVersion(
+                                    sheet1.Id.Value, Id, filePath, "application/msword");
+                return attachment;
+
+            }
+            catch (Exception ex)
+            {
+                if (count >= 8)
+                {
+                    throw ex;
+                }
+
+                return await UpdateAttachmentsToSheet(smartsheet, sheet1, Id, filePath, count + 1);
+            }
+
+        }
+
+
         public static async Task<PaginatedResult<Attachment>> GetAttachmantsFromSheet(SmartsheetClient smartsheet, Sheet sheet1, Row row, int count = 0)
         {
 
@@ -371,7 +395,7 @@ namespace IndiaEventsWebApi.Helper
             }
 
         }
-        public static IList<Row> HonorariumDetails(SmartsheetClient smartsheet, Sheet sheet,Row newRows2, int count = 0)
+        public static IList<Row> HonorariumDetails(SmartsheetClient smartsheet, Sheet sheet, Row newRows2, int count = 0)
         {
             try
             {

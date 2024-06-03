@@ -183,12 +183,21 @@ namespace IndiaEventsWebApi.Controllers
                                 SheetHelper.DeleteFile(filePath);
                             }
                         }
+                        //}
+                        //catch (Exception ex)
+                        //{
+                        //    Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
+                        //    Log.Error(ex.StackTrace);
+                        //    return BadRequest(ex.Message);
+                        //}
                     }
                     catch (Exception ex)
                     {
-                        Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
-                        Log.Error(ex.StackTrace);
-                        return BadRequest(ex.Message);
+
+                        return BadRequest(new
+                        {
+                            Message = ex.Message + "------" + ex.StackTrace
+                        });
                     }
                 }
 
@@ -208,12 +217,21 @@ namespace IndiaEventsWebApi.Controllers
                 }
                 return Ok(new
                 { Message = "Data added successfully." });
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
+                //    Log.Error(ex.StackTrace);
+                //    return BadRequest(ex.Message);
+                //}
             }
             catch (Exception ex)
             {
-                Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
-                Log.Error(ex.StackTrace);
-                return BadRequest(ex.Message);
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
             }
         }
 
@@ -283,12 +301,21 @@ namespace IndiaEventsWebApi.Controllers
                     }
                 }
                 return Ok(new { Message = " Updated Successfully" });
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
+                //    Log.Error(ex.StackTrace);
+                //    return BadRequest(ex.Message);
+                //}
             }
             catch (Exception ex)
             {
-                Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
-                Log.Error(ex.StackTrace);
-                return BadRequest(ex.Message);
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
             }
 
         }

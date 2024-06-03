@@ -19,7 +19,7 @@ namespace IndiaEventsWebApi.Controllers
 
         private readonly string accessToken;
         private readonly IConfiguration configuration;
-       // private readonly SmartsheetClient smartsheet;
+        // private readonly SmartsheetClient smartsheet;
 
         private readonly string panelSheet;
         private readonly string InviteeSheet;
@@ -361,7 +361,7 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Local Conveyance"), Value = SheetHelper.NumCheck(formData.TotalLocalConveyance) });
 
 
-               // IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet.Id.Value, new Row[] { newRow });
+                // IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet.Id.Value, new Row[] { newRow });
 
                 IList<Row> addedRows = ApiCalls.DeviationData(smartsheet, sheet, newRow);
 
@@ -379,7 +379,7 @@ namespace IndiaEventsWebApi.Controllers
                     Row addedRow = addedRows[0];
                     Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet, addedRow, filePath);
 
-                   // Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                    // Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet.Id.Value, addedRow.Id.Value, filePath, "application/msword");
                     x++;
                     if (System.IO.File.Exists(filePath))
                     {
@@ -506,13 +506,22 @@ namespace IndiaEventsWebApi.Controllers
                                     }
                                 }
                             }
+                            //}
+                            //catch (Exception ex)
+                            //{
+                            //    //return BadRequest(ex.Message);
+                            //    Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
+                            //    Log.Error(ex.StackTrace);
+                            //    return BadRequest(ex.Message);
+                            //}
                         }
                         catch (Exception ex)
                         {
-                            //return BadRequest(ex.Message);
-                            Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
-                            Log.Error(ex.StackTrace);
-                            return BadRequest(ex.Message);
+
+                            return BadRequest(new
+                            {
+                                Message = ex.Message + "------" + ex.StackTrace
+                            });
                         }
                     }
                 }
@@ -528,17 +537,26 @@ namespace IndiaEventsWebApi.Controllers
                 return Ok(new
                 { Message = "Data added successfully." });
 
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
+                //    Log.Error(ex.StackTrace);
+                //    return BadRequest(ex.Message);
+                //}
             }
             catch (Exception ex)
             {
-                Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
-                Log.Error(ex.StackTrace);
-                return BadRequest(ex.Message);
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
             }
         }
 
         [HttpPut("EventSettlementUpdate")]
-        public async Task< IActionResult> EventSettlementUpdate(UpdateAttendees formData)
+        public async Task<IActionResult> EventSettlementUpdate(UpdateAttendees formData)
         {
             try
             {
@@ -558,14 +576,14 @@ namespace IndiaEventsWebApi.Controllers
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Actual Local Conveyance Amount"), Value = formdata.ActualAmount });
 
                             IList<Row> updatedRow = await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet2, updateRow));
-                           // IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet2.Id.Value, new Row[] { updateRow });
+                            // IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet2.Id.Value, new Row[] { updateRow });
                             if (formdata.IsUploadDocument == "Yes")
                             {
                                 PaginatedResult<Attachment> attachments = await Task.Run(() => ApiCalls.GetAttachmantsFromSheet(smartsheet, sheet2, targetRow));
 
 
                                 //PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet2.Id.Value, targetRow.Id.Value, null);
-                                
+
                                 if (attachments.Data != null || attachments.Data.Count > 0)
                                 {
 
@@ -627,7 +645,7 @@ namespace IndiaEventsWebApi.Controllers
                                 PaginatedResult<Attachment> attachments = await Task.Run(() => ApiCalls.GetAttachmantsFromSheet(smartsheet, sheet1, targetRow));
 
 
-                               // PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, targetRow.Id.Value, null);
+                                // PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, targetRow.Id.Value, null);
                                 if (attachments.Data != null || attachments.Data.Count > 0)
                                 {
 
@@ -679,7 +697,7 @@ namespace IndiaEventsWebApi.Controllers
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Actual Amount"), Value = formdata.ActualAmount });
                             IList<Row> updatedRow = await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet3, updateRow));
 
-                           // IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet3.Id.Value, new Row[] { updateRow });
+                            // IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet3.Id.Value, new Row[] { updateRow });
                             if (formdata.IsUploadDocument == "Yes")
                             {
                                 PaginatedResult<Attachment> attachments = await Task.Run(() => ApiCalls.GetAttachmantsFromSheet(smartsheet, sheet3, targetRow));
@@ -765,12 +783,21 @@ namespace IndiaEventsWebApi.Controllers
                 //}
 
                 return Ok(new { Message = "Attendees Updated Successfully" });
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
+                //    Log.Error(ex.StackTrace);
+                //    return BadRequest(ex.Message);
+                //}
             }
             catch (Exception ex)
             {
-                Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
-                Log.Error(ex.StackTrace);
-                return BadRequest(ex.Message);
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
             }
 
         }

@@ -454,7 +454,11 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
             }
         }
         [HttpGet("GetRowsDataInHcpMasterByMisCode")]
@@ -527,7 +531,11 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
             }
         }
         [HttpGet("GetHCPRoleData")]
@@ -955,7 +963,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
                 List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
                 List<ApprovedVendorsGetPayload> eventRequestBrandsList = sheetData
-                    .Where(row => row.TryGetValue("IsActive?",out var isActive)&&isActive?.ToString().ToLower().Equals("yes",StringComparison.OrdinalIgnoreCase) == true)
+                    .Where(row => row.TryGetValue("IsActive?", out var isActive) && isActive?.ToString().ToLower().Equals("yes", StringComparison.OrdinalIgnoreCase) == true)
                     .Select(row => new ApprovedVendorsGetPayload
                     {
                         VendorId = row.TryGetValue("VendorId", out var eventTopic) ? eventTopic?.ToString() : null,
@@ -1035,7 +1043,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                         SpeakerCategory = row.TryGetValue("Speaker Category", out var eventDate) ? eventDate?.ToString() : null,
                         SpeakerType = row.TryGetValue("Speaker Type", out var endTime) ? endTime?.ToString() : null,
                         SpeakerCriteria = row.TryGetValue("Speaker Criteria", out var SpeakerCriteria) ? SpeakerCriteria?.ToString() : null,
-                        
+
                         SpeakerCriteriaDetails = row.TryGetValue("Speaker Criteria Details", out var eventOpenSalesHeadApprovalDate) ? eventOpenSalesHeadApprovalDate?.ToString() : null,
                         CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var eventApprovedDate) ? eventApprovedDate?.ToString() : null,
                         SalesAlertTrigger = row.TryGetValue("Sales Alert Trigger", out var eventEndDate) ? eventEndDate?.ToString() : null,

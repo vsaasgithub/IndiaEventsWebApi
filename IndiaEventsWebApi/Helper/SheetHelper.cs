@@ -167,8 +167,6 @@ namespace IndiaEventsWebApi.Helper
             return filePath;
         }
 
-
-
         // delete local file if file exists
         internal static string DeleteFile(string filePath)
         {
