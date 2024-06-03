@@ -177,7 +177,7 @@ namespace IndiaEventsWebApi.Helper
                 return (IList<Row>)AddWebinarData(smartsheet, sheet1, formDataList);
             }
         }
-       
+
         public static async Task<Attachment> AddAttachmentsToSheet(SmartsheetClient smartsheet, Sheet sheet1, Row addedRow, string filePath, int count = 0)
         {
 
@@ -191,15 +191,78 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                //if (count >= 8)
-                //{
-                //    throw  ex;
-                //}
+                if (count >= 8)
+                {
+                    throw ex;
+                }
 
                 return await AddAttachmentsToSheet(smartsheet, sheet1, addedRow, filePath, count + 1);
             }
 
         }
+
+        public static async Task<PaginatedResult<Attachment>> GetAttachmantsFromSheet(SmartsheetClient smartsheet, Sheet sheet1, Row row, int count = 0)
+        {
+
+            try
+            {
+                PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null));
+                return attachments;
+            }
+            catch (Exception ex)
+            {
+
+
+                if (count >= 8)
+                {
+                    throw ex;
+                }
+
+                return await GetAttachmantsFromSheet(smartsheet, sheet1, row, count + 1);
+            }
+
+        }
+
+        //public static async Task<PaginatedResult<Attachment>> DeleteAttachment(SmartsheetClient smartsheet, Sheet sheet4, long Id, int count = 0)
+        //{
+        //    try
+        //    {
+        //        PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.DeleteAttachment(sheet4.Id.Value, Id));
+        //        return attachments;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Handle the exception as needed
+        //        if (count >= 8)
+        //        {
+        //            throw ex;
+        //        }
+
+        //        return await DeleteAttachment(smartsheet, sheet4, Id, count + 1);
+        //    }
+        //}
+        //public static PaginatedResult<Attachment> DeleteAttachment(SmartsheetClient smartsheet, Sheet sheet4, long Id, int count = 0)
+        //{
+
+        //    try
+        //    {
+        //        var attachments = smartsheet.SheetResources.AttachmentResources.DeleteAttachment(sheet4.Id.Value, Id));
+
+        //        return attachments;
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+
+        //        if (count >= 8)
+        //        {
+        //            throw ex;
+        //        }
+
+        //        return await DeleteAttachment(smartsheet, sheet4, Id, count + 1);
+        //    }
+        //}
+
         public static IList<Row> WebDetails(SmartsheetClient smartsheet, Sheet sheet4, Row newRow1, int count = 0)
         {
             try
@@ -209,10 +272,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                //if (count >= 5)
-                //{
-                //    throw ex;
-                //}
+                if (count >= 5)
+                {
+                    throw ex;
+                }
                 return WebDetails(smartsheet, sheet4, newRow1, count + 1);
 
             }
@@ -227,10 +290,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                //if (count >= 5)
-                //{
-                //    throw ex;
-                //}
+                if (count >= 5)
+                {
+                    throw ex;
+                }
                 return PanelDetails(smartsheet, sheet4, newRow1, count + 1);
 
             }
@@ -245,10 +308,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                //if (count >= 5)
-                //{
-                //    throw ex;
-                //}
+                if (count >= 5)
+                {
+                    throw ex;
+                }
                 return SlideKitDetails(smartsheet, sheet4, newRow1, count + 1);
 
             }
@@ -263,10 +326,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                //if (count >= 5)
-                //{
-                //    throw ex;
-                //}
+                if (count >= 5)
+                {
+                    throw ex;
+                }
                 return BrandsDetails(smartsheet, sheet2, newRows2, count + 1);
 
             }
@@ -281,10 +344,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                //if (count >= 5)
-                //{
-                //    throw ex; 
-                //}
+                if (count >= 5)
+                {
+                    throw ex;
+                }
                 return InviteesDetails(smartsheet, sheet, newRows2, count + 1);
 
             }
@@ -299,15 +362,52 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                //if (count >= 5)
-                //{
-                //    throw ex;
-                //}
+                if (count >= 5)
+                {
+                    throw ex;
+                }
                 return ExpenseDetails(smartsheet, sheet, newRows2, count + 1);
 
             }
 
         }
+        public static IList<Row> HonorariumDetails(SmartsheetClient smartsheet, Sheet sheet,Row newRows2, int count = 0)
+        {
+            try
+            {
+                IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet.Id.Value, new Row[] { newRows2 });
+                return row;
+            }
+            catch (Exception ex)
+            {
+                if (count >= 5)
+                {
+                    throw ex;
+                }
+                return HonorariumDetails(smartsheet, sheet, newRows2, count + 1);
+
+            }
+
+        }
+        public static IList<Row> EventSettlementDetails(SmartsheetClient smartsheet, Sheet sheet, Row newRows2, int count = 0)
+        {
+            try
+            {
+                IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet.Id.Value, new Row[] { newRows2 });
+                return row;
+            }
+            catch (Exception ex)
+            {
+                if (count >= 5)
+                {
+                    throw ex;
+                }
+                return HonorariumDetails(smartsheet, sheet, newRows2, count + 1);
+
+            }
+
+        }
+
         public static IList<Row> UpdateRole(SmartsheetClient smartsheet, Sheet sheet4, Row updateRows, int count = 0)
         {
             try
@@ -317,10 +417,10 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                //if (count >= 5)
-                //{
-                //    throw ex;
-                //}
+                if (count >= 5)
+                {
+                    throw ex;
+                }
                 return UpdateRole(smartsheet, sheet4, updateRows, count + 1);
 
             }
@@ -335,14 +435,16 @@ namespace IndiaEventsWebApi.Helper
             }
             catch (Exception ex)
             {
-                //if (count >= 5)
-                //{
-                //    throw ex;
-                //}
+                if (count >= 5)
+                {
+                    throw ex;
+                }
                 return DeviationData(smartsheet, sheet4, newRow1, count + 1);
 
             }
 
         }
+
+
     }
 }
