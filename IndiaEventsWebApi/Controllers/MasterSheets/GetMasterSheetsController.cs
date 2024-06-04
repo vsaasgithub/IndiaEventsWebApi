@@ -394,72 +394,88 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
         }
         [HttpGet("HcpMaster")]
-        public IActionResult HcpMaster()
+        public IActionResult HcpMaster(int count = 5)
         {
-            try
+            int loopCount = 0;
+            while (loopCount < count)
             {
-                List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
-                string sheetId1 = configuration.GetSection("SmartsheetSettings:HcpMaster1").Value;
-                string sheetId2 = configuration.GetSection("SmartsheetSettings:HcpMaster2").Value;
-                string sheetId3 = configuration.GetSection("SmartsheetSettings:HcpMaster3").Value;
-                string sheetId4 = configuration.GetSection("SmartsheetSettings:HcpMaster4").Value;
-
-                List<string> Sheets = new List<string>() { sheetId1, sheetId2, sheetId3, sheetId4 };
-
-                foreach (var sheetId in Sheets)
+                try
                 {
-                    ////Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
-                    ////List<string> columnNames = new List<string>();
+                    List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
+                    string sheetId1 = configuration.GetSection("SmartsheetSettings:HcpMaster1").Value;
+                    string sheetId2 = configuration.GetSection("SmartsheetSettings:HcpMaster2").Value;
+                    string sheetId3 = configuration.GetSection("SmartsheetSettings:HcpMaster3").Value;
+                    string sheetId4 = configuration.GetSection("SmartsheetSettings:HcpMaster4").Value;
 
-                    ////foreach (Column column in sheet.Columns)
-                    ////{
-                    ////    columnNames.Add(column.Title);
-                    ////}
+                    List<string> Sheets = new List<string>() { sheetId1, sheetId2, sheetId3, sheetId4 };
 
-
-                    ////int isActiveColumnIndex = columnNames.IndexOf("Is Active");
-
-                    ////foreach (Row row in sheet.Rows)
-                    ////{
-
-                    ////    if (isActiveColumnIndex != -1 && row.Cells.Count > isActiveColumnIndex &&
-                    ////        row.Cells[isActiveColumnIndex].Value != null &&
-                    ////        row.Cells[isActiveColumnIndex].Value.ToString().Equals("yes", StringComparison.OrdinalIgnoreCase))
-                    ////    {
-                    ////        Dictionary<string, object> rowData = new Dictionary<string, object>();
-                    ////        for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
-                    ////        {
-                    ////            rowData[columnNames[i]] = row.Cells[i].Value;
-                    ////        }
-                    ////        sheetData.Add(rowData);
-                    ////    }
-                    ////}
-                    Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
-                    List<string> columnNames = new List<string>();
-                    foreach (Column column in sheet.Columns)
+                    foreach (var sheetId in Sheets)
                     {
-                        columnNames.Add(column.Title);
-                    }
-                    foreach (Row row in sheet.Rows)
-                    {
-                        Dictionary<string, object> rowData = new Dictionary<string, object>();
-                        for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
+                       
+                        Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                        List<string> columnNames = new List<string>();
+                        foreach (Column column in sheet.Columns)
                         {
-                            rowData[columnNames[i]] = row.Cells[i].Value;
+                            columnNames.Add(column.Title);
                         }
-                        sheetData.Add(rowData);
+                        foreach (Row row in sheet.Rows)
+                        {
+                            Dictionary<string, object> rowData = new Dictionary<string, object>();
+                            for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
+                            {
+                                rowData[columnNames[i]] = row.Cells[i].Value;
+                            }
+                            sheetData.Add(rowData);
+                        }
                     }
+                    return Ok(sheetData);
                 }
-                return Ok(sheetData);
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(new
+                catch (SmartsheetException ex)
                 {
-                    Message = ex.Message + "------" + ex.StackTrace
-                });
+                    Log.Error($"Error occured on SmartsheetException method {ex.Message} at {DateTime.Now}");
+                    Log.Error(ex.StackTrace);
+                    if (loopCount < count)
+                    {
+                        loopCount++;
+                    }
+                    else
+                    {
+                        return BadRequest(new
+                        {
+                            Message = ex.Message + "------" + ex.StackTrace
+                        });
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Log.Error($"Error occured on GetData method {ex.Message} at {DateTime.Now}");
+                    Log.Error(ex.StackTrace);
+                    if (loopCount < count)
+                    {
+                        loopCount++;
+                        //await Task.Delay(2000);
+                    }
+                    else
+                    {
+                        return BadRequest(new
+                        {
+                            Message = ex.Message + "------" + ex.StackTrace
+                        });
+                    }
+
+                }
+                //catch (Exception ex)
+                //{
+
+                //    return BadRequest(new
+                //    {
+                //        Message = ex.Message + "------" + ex.StackTrace
+                //    });
+                //}
+                
             }
+            return Ok();
         }
         [HttpGet("GetRowsDataInHcpMasterByMisCode")]
         public IActionResult GetRowsDataInHcpMasterByMisCode(string? searchValue)
