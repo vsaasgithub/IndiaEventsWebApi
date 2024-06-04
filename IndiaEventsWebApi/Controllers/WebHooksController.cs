@@ -700,7 +700,7 @@ namespace IndiaEventsWebApi.Controllers
                                 string? EventType = targetRowId.Cells.FirstOrDefault(cell => cell.ColumnId == processIdColumn4.Id)?.Value.ToString();
                                 if (EventType == "Class I" || EventType == "Webinar")
                                 {
-                                    if (status != null && (status == "Approved" || status == "Waiting for Finance Treasury Approval"))
+                                    if (status != null && (status == "Marketing Head Approved" || status == "Waiting for Finance Treasury Approval"))
 
                                     {
                                         int timeInterval = 60000;
@@ -730,7 +730,7 @@ namespace IndiaEventsWebApi.Controllers
 
                                 }
 
-                                else if (status != null && status == "Approved" || status == "Waiting for Finance Treasury Approval")
+                                else if (status != null && status == "Marketing Head Approved" || status == "Waiting for Finance Treasury Approval")
                                 {
                                     int timeInterval = 60000;
                                     await Task.Delay(timeInterval);
