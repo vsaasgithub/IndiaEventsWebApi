@@ -591,21 +591,21 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     resultData["Deviation"] = DeviationsattachmentsList;
                     return Ok(resultData);
                 }
-                //catch (SmartsheetException ex)
-                //{
-                //    if (loopCount < count)
-                //    {
-                //        loopCount++;
-                //    }
-                //    else
-                //    {
-                //        return BadRequest(new
-                //        {
-                //            Message = ex.Message + "------" + ex.StackTrace
-                //        });
-                //    }
+                catch (SmartsheetException ex)
+                {
+                    if (loopCount < count)
+                    {
+                        loopCount++;
+                    }
+                    else
+                    {
+                        return BadRequest(new
+                        {
+                            Message = ex.Message + "------" + ex.StackTrace
+                        });
+                    }
 
-                //}
+                }
                 catch (Exception ex)
                 {
                     if (loopCount < count)
