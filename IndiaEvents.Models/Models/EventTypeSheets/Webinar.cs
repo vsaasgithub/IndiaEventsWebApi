@@ -13,6 +13,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? StartTime { get; set; }
         public string? EndTime { get; set; }
         public string? Meeting_Type { get; set; }
+        public string? BTEExpenseDetails { get; set; }
         //public string? VenueName { get; set; }
         //public string? City { get; set; }
         //public string? State { get; set; }
@@ -40,6 +41,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         //public string? FinanceTreasuryEmail { get; set; }
         public string? FinanceAccountsEmail { get; set; }
         public string? SalesCoordinatorEmail { get; set; }
+        public string? MarketingCoordinatorEmail { get; set; }
         public string? Role { get; set; }
 
 

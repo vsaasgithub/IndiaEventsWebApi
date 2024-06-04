@@ -17,7 +17,7 @@ namespace IndiaEventsWebApi.Controllers
     {
         private readonly string accessToken;
         private readonly IConfiguration configuration;
-        private readonly SmartsheetClient smartsheet;
+        //private readonly SmartsheetClient smartsheet;
         //private readonly Sheet sheet1;
         //private readonly Sheet sheet2;
         //private readonly Sheet sheet3;
@@ -25,19 +25,23 @@ namespace IndiaEventsWebApi.Controllers
         //private readonly Sheet sheet5;
         //private readonly Sheet sheet6;
         //private readonly Sheet sheet7;
-
-        public HonorariumController(IConfiguration configuration)
+        private readonly SemaphoreSlim _externalApiSemaphore;
+        public HonorariumController(IConfiguration configuration, SemaphoreSlim externalApiSemaphore)
         {
             this.configuration = configuration;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
-            smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+            _externalApiSemaphore = externalApiSemaphore;
+            //smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
         }
 
         [HttpPost("AddHonorariumData")]
-        public IActionResult AddHonorariumData(HonorariumPaymentListPh2 formData)
+        public async Task<IActionResult> AddHonorariumData(HonorariumPaymentListPh2 formData)
         {
+
             try
             {
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+
                 string sheetId = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
                 string sheetId1 = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
                 string sheetId7 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
@@ -72,7 +76,7 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Venue Name"), Value = formData.RequestHonorariumList.VenueName });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Travel & Accommodation Amount"), Value = formData.RequestHonorariumList.TotalTravelAndAccomodationSpend });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Honorarium Amount"), Value = formData.RequestHonorariumList.TotalHonorariumSpend });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Budget"), Value = formData.RequestHonorariumList.TotalSpend });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Budget Amount"), Value = formData.RequestHonorariumList.TotalSpend });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Expenses"), Value = formData.RequestHonorariumList.Expenses });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Travel Amount"), Value = formData.RequestHonorariumList.TotalTravelSpend });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Accommodation Amount"), Value = formData.RequestHonorariumList.TotalAccomodationSpend });
@@ -88,7 +92,7 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "RBM/BM"), Value = formData.RequestHonorariumList.RBMorBM });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Sales Head"), Value = formData.RequestHonorariumList.SalesHeadEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Sales Coordinator"), Value = formData.RequestHonorariumList.SalesCoordinatorEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Marketing Head"), Value = formData.RequestHonorariumList.MarketingHeadEmail });
+                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Marketing Coordinator"), Value = formData.RequestHonorariumList.MarketingCoordinatorEmail }); newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Marketing Head"), Value = formData.RequestHonorariumList.MarketingHeadEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Compliance"), Value = formData.RequestHonorariumList.Compliance });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Finance Accounts"), Value = formData.RequestHonorariumList.FinanceAccounts });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Finance Treasury"), Value = formData.RequestHonorariumList.FinanceTreasury });
@@ -97,8 +101,15 @@ namespace IndiaEventsWebApi.Controllers
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Medical Affairs Head"), Value = formData.RequestHonorariumList.MedicalAffairsEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Role"), Value = formData.RequestHonorariumList.Role });
 
-                IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet.Id.Value, new Row[] { newRow });
+                //IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet.Id.Value, new Row[] { newRow });
+
+
+                IList<Row> addedRows = ApiCalls.HonorariumDetails(smartsheet, sheet, newRow);
+
+
+
                 string? eventId = formData.RequestHonorariumList.EventId;
+
                 foreach (string p in formData.RequestHonorariumList.Files)
                 {
                     string[] words = p.Split(':');
@@ -107,8 +118,13 @@ namespace IndiaEventsWebApi.Controllers
                     string name = r.Split(".")[0];
                     string filePath = SheetHelper.testingFile(q, name);
                     Row addedRow = addedRows[0];
-                    Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                           sheet.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                    //Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                    //       sheet.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+
+                    Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet, addedRow, filePath);
+
+
+
 
                     if (System.IO.File.Exists(filePath))
                     {
@@ -126,21 +142,23 @@ namespace IndiaEventsWebApi.Controllers
                         };
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formData.RequestHonorariumList.EventTopic });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventType"), Value = formData.RequestHonorariumList.EventType });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventDate"), Value = formData.RequestHonorariumList.EventDate });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "StartTime"), Value = formData.RequestHonorariumList.StartTime });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EndTime"), Value = formData.RequestHonorariumList.EndTime });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "VenueName"), Value = formData.RequestHonorariumList.VenueName });
+                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Type"), Value = formData.RequestHonorariumList.EventType });
+                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Date"), Value = formData.RequestHonorariumList.EventDate });
+                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Start Time"), Value = formData.RequestHonorariumList.StartTime });
+                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "End Time"), Value = formData.RequestHonorariumList.EndTime });
+                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Venue Name"), Value = formData.RequestHonorariumList.VenueName });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "City"), Value = formData.RequestHonorariumList.City });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "State"), Value = formData.RequestHonorariumList.State });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInHonorarium:5WorkingdaysDeviationDateTrigger").Value });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HON-5Workingdays Deviation Date Trigger"), Value = formData.RequestHonorariumList.IsDeviationUpload });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formData.RequestHonorariumList.Compliance });
+                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formData.RequestHonorariumList.SalesHeadEmail });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formData.RequestHonorariumList.FinanceHead });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "InitiatorName"), Value = formData.RequestHonorariumList.InitiatorName });
+                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formData.RequestHonorariumList.InitiatorName });
                         newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formData.RequestHonorariumList.InitiatorEmail });
+                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formData.RequestHonorariumList.SalesCoordinatorEmail });
 
-                        IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
+                        // IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
+                        IList<Row> addeddeviationrow = ApiCalls.DeviationData(smartsheet, sheet7, newRow7);
 
                         foreach (string p in formData.RequestHonorariumList.DeviationFiles)
                         {
@@ -150,7 +168,14 @@ namespace IndiaEventsWebApi.Controllers
                             string name = r.Split("*")[0];
                             string filePath = SheetHelper.testingFile(q, name);
                             Row addedRow = addeddeviationrow[0];
-                            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                            Row addedRowInHonr = addedRows[0];
+
+                            Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet7, addedRow, filePath);
+                            Attachment Deviationattachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet, addedRows[0], filePath);
+
+
+                            //Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                            //Attachment Deviationattachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet.Id.Value, addedRowInHonr.Id.Value, filePath, "application/msword");
 
 
                             if (System.IO.File.Exists(filePath))
@@ -158,12 +183,21 @@ namespace IndiaEventsWebApi.Controllers
                                 SheetHelper.DeleteFile(filePath);
                             }
                         }
+                        //}
+                        //catch (Exception ex)
+                        //{
+                        //    Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
+                        //    Log.Error(ex.StackTrace);
+                        //    return BadRequest(ex.Message);
+                        //}
                     }
                     catch (Exception ex)
                     {
-                        Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
-                        Log.Error(ex.StackTrace);
-                        return BadRequest(ex.Message);
+
+                        return BadRequest(new
+                        {
+                            Message = ex.Message + "------" + ex.StackTrace
+                        });
                     }
                 }
 
@@ -176,25 +210,39 @@ namespace IndiaEventsWebApi.Controllers
                     Row updateRow = new Row { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
                     Cell? cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-                    smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
+
+                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet1, updateRow));
+
+                    //smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
                 }
                 return Ok(new
                 { Message = "Data added successfully." });
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
+                //    Log.Error(ex.StackTrace);
+                //    return BadRequest(ex.Message);
+                //}
             }
             catch (Exception ex)
             {
-                Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
-                Log.Error(ex.StackTrace);
-                return BadRequest(ex.Message);
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
             }
         }
 
 
         [HttpPut("HonorariumUpdate")]
-        public IActionResult HonorariumUpdate(List<HonorariumUpdate> formDataArray)
+        public async Task<IActionResult> HonorariumUpdate(List<HonorariumUpdate> formDataArray)
         {
             try
             {
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+
                 string sheetId4 = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
 
                 Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
@@ -206,8 +254,32 @@ namespace IndiaEventsWebApi.Controllers
                         Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
                         updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Annual Trainer Agreement Valid?"), Value = formdata.IsAnnualTrainerAgreementValid });
                         updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Including GST?"), Value = formdata.IsInclidingGst });
-                        IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet4.Id.Value, new Row[] { updateRow });
 
+                        IList<Row> updatedRow = await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet4, updateRow));
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet4.Id.Value, new Row[] { updateRow });
+
+                        if (formdata.FilesToUpload.Count > 0)
+                        {
+                            // PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet4.Id.Value, targetRow.Id.Value, null);
+
+                            PaginatedResult<Attachment> attachments = await Task.Run(() => ApiCalls.GetAttachmantsFromSheet(smartsheet, sheet4, targetRow));
+
+
+                            if (attachments.Data != null || attachments.Data.Count > 0)
+                            {
+
+                                foreach (var attachment in attachments.Data)
+                                {
+                                    var name = attachment.Name;
+                                    if (name.ToLower().Contains("speakeragreement") || name.ToLower().Contains("honorariumInvoice"))
+                                    {
+                                        long Id = attachment.Id.Value;
+                                        smartsheet.SheetResources.AttachmentResources.DeleteAttachment(sheet4.Id.Value, Id);
+                                    }
+                                }
+
+                            }
+                        }
                         foreach (var p in formdata.FilesToUpload)
                         {
                             string[] words = p.Split(':');
@@ -217,7 +289,9 @@ namespace IndiaEventsWebApi.Controllers
                             string name = r.Split(".")[0];
                             string filePath = SheetHelper.testingFile(q, name);
                             Row addedRow = targetRow;
-                            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                            //Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                            Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet4, addedRow, filePath);
+
                             if (System.IO.File.Exists(filePath))
                             {
                                 SheetHelper.DeleteFile(filePath);
@@ -227,14 +301,24 @@ namespace IndiaEventsWebApi.Controllers
                     }
                 }
                 return Ok(new { Message = " Updated Successfully" });
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
+                //    Log.Error(ex.StackTrace);
+                //    return BadRequest(ex.Message);
+                //}
             }
             catch (Exception ex)
             {
-                Log.Error($"Error occured on HonorariumController method {ex.Message} at {DateTime.Now}");
-                Log.Error(ex.StackTrace);
-                return BadRequest(ex.Message);
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
             }
 
         }
+
     }
 }

@@ -32,17 +32,35 @@ namespace IndiaEventsWebApi.Helper
             int columnIndex = columnNames.IndexOf(columnName);
             return columnIndex != -1 ? row.Cells[columnIndex].Value?.ToString() : null;
         }
+
+
+        internal static List<Dictionary<string, object>> GetAttachmentsForRow(SmartsheetClient smartsheet, long sheetId, long row)
+        {
+            List<Dictionary<string, object>> attachmentsList = new List<Dictionary<string, object>>();
+            var attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheetId, row, null);
+
+            if (attachments.Data != null && attachments.Data.Count > 0)
+            {
+                foreach (var attachment in attachments.Data)
+                {
+                    long AID = (long)attachment.Id;
+                    Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheetId, AID);
+                    Dictionary<string, object> attachmentInfo = new Dictionary<string, object>
+                    {
+                        { "Name", file.Name },
+                        { "Id", file.Id },
+                        { "Url", file.Url },
+                        { "base64", UrlToBaseValue(file.Url) }
+                    };
+                    attachmentsList.Add(attachmentInfo);
+                }
+            }
+            return attachmentsList;
+        }
+
+
         //UrlToBase64
-        //public static string UrlToBaseValue(string url)
-        //{
 
-        //    using HttpClient client = new();
-        //    byte[] fileContent = client.GetByteArrayAsync(url).Result;
-        //    string base64String = Convert.ToBase64String(fileContent);
-
-
-        //    return base64String;
-        //}
         public static string UrlToBaseValue(string url)
         {
             using HttpClient client = new();
@@ -63,16 +81,17 @@ namespace IndiaEventsWebApi.Helper
 
 
         // number check 
-        public static int NumCheck(string val)
+        public static double NumCheck(string val)
         {
             if (string.IsNullOrEmpty(val))
             {
                 return 0;
             }
             //return Convert.ToInt32(val);
-            int result;
-            return int.TryParse(val, out result) ? result : 0;
+            double result;
+            return double.TryParse(val, out result) ? result : 0;
         }
+
         public static object MisCodeCheck(string val)
         {
             if (string.IsNullOrEmpty(val))
@@ -95,8 +114,17 @@ namespace IndiaEventsWebApi.Helper
         // get sheet using sheetId
         internal static Sheet GetSheetById(SmartsheetClient smartsheet, string sheetId)
         {
-            long.TryParse(sheetId, out long parsedSheetId);
-            return smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
+            try
+            {
+                long.TryParse(sheetId, out long parsedSheetId);
+                return smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
+
+            }
+            catch (Exception ex)
+            {
+                return GetSheetById(smartsheet, sheetId);
+            }
+
         }
 
         // get sheet data using sheet access
@@ -138,8 +166,6 @@ namespace IndiaEventsWebApi.Helper
             File.WriteAllBytes(filePath, fileBytes);
             return filePath;
         }
-
-
 
         // delete local file if file exists
         internal static string DeleteFile(string filePath)
@@ -251,7 +277,10 @@ namespace IndiaEventsWebApi.Helper
             {
                 return "gif";
             }
-            else if (bytes.Length >= 8 && Encoding.UTF8.GetString(bytes, 0, 8) == "PNG\r\n\x1A\n")
+            else if (bytes.Length >= 8 && bytes[0] == 0x89 &&
+                bytes[1] == 0x50 && bytes[2] == 0x4E && bytes[3] == 0x47 && bytes[4] == 0x0D &&
+                bytes[5] == 0x0A && bytes[6] == 0x1A && bytes[7] == 0x0A
+                /*Encoding.UTF8.GetString(bytes, 0, 8) == "PNG"*/)
             {
                 return "png";
             }

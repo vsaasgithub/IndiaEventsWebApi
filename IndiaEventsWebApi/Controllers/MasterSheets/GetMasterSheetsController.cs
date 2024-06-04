@@ -1,8 +1,12 @@
-﻿using IndiaEventsWebApi.Helper;
+﻿using Aspose.Pdf.Plugins;
+using IndiaEvents.Models.Models.GetData;
+using IndiaEventsWebApi.Helper;
 using IndiaEventsWebApi.Models.RequestSheets;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
+using Serilog;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 
@@ -157,7 +161,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpGet("GetBrandNameData")]
         public IActionResult GetBrandNameData()
         {
@@ -174,10 +177,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
-
-
-
-
         [HttpGet("TestVenueSelectionChecklistMaster")]
         public IActionResult TestVenueSelectionChecklistMaster()
         {
@@ -202,31 +201,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         [HttpGet("GetIndicationsMasterData")]
         public IActionResult GetIndicationsMasterData()
         {
@@ -324,7 +298,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
         }
         [HttpGet("GetSheetData")]
-
         public IActionResult GetSheetData()
         {
             try
@@ -421,48 +394,148 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("HcpMaster")]
+        //[HttpGet("HcpMaster")]
+        //public IActionResult HcpMaster(int count = 5)
+        //{
+        //    int loopCount = 0;
+        //    while (loopCount < count)
+        //    {
+        //        try
+        //        {
+        //            List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
+        //            string sheetId1 = configuration.GetSection("SmartsheetSettings:HcpMaster1").Value;
+        //            string sheetId2 = configuration.GetSection("SmartsheetSettings:HcpMaster2").Value;
+        //            string sheetId3 = configuration.GetSection("SmartsheetSettings:HcpMaster3").Value;
+        //            string sheetId4 = configuration.GetSection("SmartsheetSettings:HcpMaster4").Value;
 
-        public IActionResult HcpMaster()
+        //            List<string> Sheets = new List<string>() { sheetId1, sheetId2, sheetId3, sheetId4 };
+
+        //            foreach (var sheetId in Sheets)
+        //            {
+
+        //                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+        //                Log.Information("executed the data in sheet"+sheetId+"---"+DateTime.Now);
+        //                List<string> columnNames = new List<string>();
+        //                foreach (Column column in sheet.Columns)
+        //                {
+        //                    columnNames.Add(column.Title);
+        //                }
+        //                foreach (Row row in sheet.Rows)
+        //                {
+        //                    Dictionary<string, object> rowData = new Dictionary<string, object>();
+        //                    for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
+        //                    {
+        //                        rowData[columnNames[i]] = row.Cells[i].Value;
+        //                    }
+        //                    sheetData.Add(rowData);
+        //                }
+        //            }
+        //            return Ok(sheetData);
+        //        }
+        //        catch (SmartsheetException ex)
+        //        {
+        //            Log.Error($"Error occured on SmartsheetException method {ex.Message} at {DateTime.Now}");
+        //            Log.Error(ex.StackTrace);
+        //            if (loopCount < count)
+        //            {
+        //                loopCount++;
+        //            }
+        //            else
+        //            {
+        //                return BadRequest(new
+        //                {
+        //                    Message = ex.Message + "------" + ex.StackTrace
+        //                });
+        //            }
+
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Log.Error($"Error occured on GetData method {ex.Message} at {DateTime.Now}");
+        //            Log.Error(ex.StackTrace);
+        //            if (loopCount < count)
+        //            {
+        //                loopCount++;
+        //                //await Task.Delay(2000);
+        //            }
+        //            else
+        //            {
+        //                return BadRequest(new
+        //                {
+        //                    Message = ex.Message + "------" + ex.StackTrace
+        //                });
+        //            }
+
+        //        }
+        //        //catch (Exception ex)
+        //        //{
+
+        //        //    return BadRequest(new
+        //        //    {
+        //        //        Message = ex.Message + "------" + ex.StackTrace
+        //        //    });
+        //        //}
+
+        //    }
+        //    return Ok();
+        //}
+        [HttpGet("HcpMaster")]
+        public IActionResult HcpMaster(int count = 5)
         {
             try
             {
                 List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
-                string sheetId1 = configuration.GetSection("SmartsheetSettings:HcpMaster1").Value;
-                string sheetId2 = configuration.GetSection("SmartsheetSettings:HcpMaster2").Value;
-                string sheetId3 = configuration.GetSection("SmartsheetSettings:HcpMaster3").Value;
-                string sheetId4 = configuration.GetSection("SmartsheetSettings:HcpMaster4").Value;
 
-                List<string> Sheets = new List<string>() { sheetId1, sheetId2, sheetId3, sheetId4 };
-
-                foreach (var sheetId in Sheets)
+                for (int loopCount = 0; loopCount < count; loopCount++)
                 {
-                    Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
-                    List<string> columnNames = new List<string>();
-                    foreach (Column column in sheet.Columns)
+                    try
                     {
-                        columnNames.Add(column.Title);
-                    }
-                    foreach (Row row in sheet.Rows)
-                    {
-                        Dictionary<string, object> rowData = new Dictionary<string, object>();
-                        for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
+                        string[] sheetIds = {
+                            configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
+                            configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
+                            configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
+                            configuration.GetSection("SmartsheetSettings:HcpMaster4").Value
+                        };
+
+                        foreach (string sheetId in sheetIds)
                         {
-                            rowData[columnNames[i]] = row.Cells[i].Value;
+                            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                            Log.Information($"Executed the data in sheet {sheetId} --- {DateTime.Now}");
+
+                            List<string> columnNames = sheet.Columns.Select(column => column.Title).ToList();
+
+                            foreach (Row row in sheet.Rows)
+                            {
+                                Dictionary<string, object> rowData = new Dictionary<string, object>();
+                                for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
+                                {
+                                    rowData[columnNames[i]] = row.Cells[i].Value;
+                                }
+                                sheetData.Add(rowData);
+                            }
                         }
-                        sheetData.Add(rowData);
+                        return Ok(sheetData);
+                    }
+                    catch (SmartsheetException ex)
+                    {
+                        Log.Error($"Error occurred on SmartsheetException method {ex.Message} at {DateTime.Now}");
+                        Log.Error(ex.StackTrace);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error($"Error occurred on GetData method {ex.Message} at {DateTime.Now}");
+                        Log.Error(ex.StackTrace);
                     }
                 }
-                return Ok(sheetData);
+
+                return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                Log.Error($"Unexpected error occurred: {ex.Message}");
+                return BadRequest(new { Message = ex.Message });
             }
         }
-
-
-
         [HttpGet("GetRowsDataInHcpMasterByMisCode")]
         public IActionResult GetRowsDataInHcpMasterByMisCode(string? searchValue)
         {
@@ -474,7 +547,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 string sheetId3 = configuration.GetSection("SmartsheetSettings:HcpMaster3").Value;
                 string sheetId4 = configuration.GetSection("SmartsheetSettings:HcpMaster4").Value;
                 List<string> Sheets = new List<string>() { sheetId1, sheetId2, sheetId3, sheetId4 };
-                if(searchValue != null)
+                if (searchValue != null)
                 {
 
 
@@ -533,35 +606,13 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         [HttpGet("GetHCPRoleData")]
         public IActionResult GetHCPRoleData()
         {
@@ -596,7 +647,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
         }
         [HttpGet("GetInitiatorMasterData")]
-
         public IActionResult GetInitiatorMasterData()
         {
             try
@@ -612,9 +662,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpGet("GetMedicalUtilityData")]
-
         public IActionResult GetMedicalUtilityData()
         {
             try
@@ -663,7 +711,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
         }
         [HttpGet("SlideKitMaster")]
-
         public IActionResult SlideKitMaster()
         {
             try
@@ -679,9 +726,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpGet("GetSpeakerCategoriesData")]
-
         public IActionResult GetSpeakerCategoriesData()
         {
             try
@@ -729,9 +774,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpGet("GetTrainerCategoriesData")]
-
         public IActionResult GetTrainerCategoriesData()
         {
             try
@@ -747,9 +790,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpGet("VendorMasterSheetData")]
-
         public IActionResult VendorMasterSheetData()
         {
             try
@@ -798,6 +839,456 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("GetApprovedSpeakerSheetData")]
+        public IActionResult GetApprovedSpeakerSheetData()
+        {
+            try
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+                List<ApprovedSpeakersGetPayload> eventRequestBrandsList = sheetData
+                    .Where(row => row.TryGetValue("Is Active", out var isActive) && isActive?.ToString().ToLower().Equals("yes", StringComparison.OrdinalIgnoreCase) == true)
+                    .Select(row => new ApprovedSpeakersGetPayload
+                    {
+
+                        SpeakerId = row.TryGetValue("SpeakerId", out var eventTopic) ? eventTopic?.ToString() : null,
+                        SpeakerName = row.TryGetValue("SpeakerName", out var eventId) ? eventId?.ToString() : null,
+                        SpeakerCode = row.TryGetValue("Speaker Code", out var eventType) ? eventType?.ToString() : null,
+                        SpeakerCategory = row.TryGetValue("Speaker Category", out var eventDate) ? eventDate?.ToString() : null,
+                        Speciality = row.TryGetValue("Speciality", out var startTime) ? startTime?.ToString() : null,
+                        SpeakerType = row.TryGetValue("Speaker Type", out var endTime) ? endTime?.ToString() : null,
+                        MisCode = row.TryGetValue("MisCode", out var venueName) ? venueName?.ToString() : null,
+                        FCPASignOffDate = row.TryGetValue("FCPA Sign Off Date", out var eventEndDate) ? eventEndDate?.ToString() : null,
+                        FCPAExpiryDate = row.TryGetValue("FCPA Expiry Date", out var FCPAExpiryDate) ? FCPAExpiryDate?.ToString() : null,
+                        FCPAValid = row.TryGetValue("FCPA Valid?", out var state) ? state?.ToString() : null,
+                        TRCDate = row.TryGetValue("TRC Date", out var city) ? city?.ToString() : null,
+                        InitiatorName = row.TryGetValue("InitiatorName", out var initiatorName) ? initiatorName?.ToString() : null,
+                        InitiatorEmail = row.TryGetValue("Initiator Email", out var initiatorEmail) ? initiatorEmail?.ToString() : null,
+                        // CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var createdDateHelper) ? createdDateHelper?.ToString() : null,
+                        TRCValid = row.TryGetValue("TRC Valid?", out var isAdvanceRequired) ? isAdvanceRequired?.ToString() : null,
+                        TotalSpendonSpeaker = row.TryGetValue("Total Spend on Speaker", out var prerBmBmApproval) ? prerBmBmApproval?.ToString() : null,
+                        AggregateExhausted = row.TryGetValue("Aggregate Exhausted?", out var prerBmBmApprovalDate) ? prerBmBmApprovalDate?.ToString() : null,
+                        Division = row.TryGetValue("Division", out var presalesHeadApproval) ? presalesHeadApproval?.ToString() : null,
+                        Qualification = row.TryGetValue("Qualification", out var presalesHeadApprovalDate) ? presalesHeadApprovalDate?.ToString() : null,
+                        Address = row.TryGetValue("Address", out var premarketingHeadApproval) ? premarketingHeadApproval?.ToString() : null,
+                        State = row.TryGetValue("State", out var premarketingHeadApprovalDate) ? premarketingHeadApprovalDate?.ToString() : null,
+                        City = row.TryGetValue("City", out var agreement) ? agreement?.ToString() : null,
+                        Country = row.TryGetValue("Country", out var prefFinanceTreasuryApprovalDate) ? prefFinanceTreasuryApprovalDate?.ToString() : null,
+                        ContactNumber = row.TryGetValue("Contact Number", out var premedicalAffairsHeadApproval) ? premedicalAffairsHeadApproval?.ToString() : null,
+                        ABMNameRequestor = row.TryGetValue("ABM Name (Requestor)", out var premedicalAffairsHeadApprovalDate) ? premedicalAffairsHeadApprovalDate?.ToString() : null,
+                        SpeakerCategoryId = row.TryGetValue("SpeakerCategoryId", out var presalesCoordinatorApproval) ? presalesCoordinatorApproval?.ToString() : null,
+                        SpeakerCriteria = row.TryGetValue("Speaker Criteria", out var presalesCoordinatorApprovalDate) ? presalesCoordinatorApprovalDate?.ToString() : null,
+                        IsActive = row.TryGetValue("Is Active", out var precomplianceApproval) ? precomplianceApproval?.ToString() : null,
+                        CVdocument = row.TryGetValue("CVdocument", out var precomplianceApprovalDate) ? precomplianceApprovalDate?.ToString() : null,
+                        Created = row.TryGetValue("Created", out var eventRequestStatus) ? eventRequestStatus?.ToString() : null,
+                        CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var eventApprovedDate) ? eventApprovedDate?.ToString() : null,
+                        SalesAlertTrigger = row.TryGetValue("Sales Alert Trigger", out var honorariumRequestStatus) ? honorariumRequestStatus?.ToString() : null,
+                        MedicalAffairsAlertTrigger = row.TryGetValue("Medical Affairs Alert Trigger", out var honorariumApprovedDate) ? honorariumApprovedDate?.ToString() : null,
+                        SalesHeadApproval = row.TryGetValue("Sales Head Approval", out var postEventRequeststatus) ? postEventRequeststatus?.ToString() : null,
+                        SalesHeadApprovalDate = row.TryGetValue("Sales Head Approval Date", out var helperFinancetreasurytriggerBTE) ? helperFinancetreasurytriggerBTE?.ToString() : null,
+                        MedicalAffairsHeadApproval = row.TryGetValue("Medical Affairs Head Approval", out var postEventApprovedDate) ? postEventApprovedDate?.ToString() : null,
+                        MedicalAffairsHeadApprovalDate = row.TryGetValue("Medical Affairs Head Approval Date", out var eventOpenSalesHeadApproval) ? eventOpenSalesHeadApproval?.ToString() : null,
+                        SpeakerCriteriaDetails = row.TryGetValue("Speaker Criteria Details", out var eventOpenSalesHeadApprovalDate) ? eventOpenSalesHeadApprovalDate?.ToString() : null,
+                        SalesHead = row.TryGetValue("Sales Head", out var _7daysSalesHeadApproval) ? _7daysSalesHeadApproval?.ToString() : null,
+                        MedicalAffairsHead = row.TryGetValue("Medical Affairs Head", out var _7daysSalesHeadApprovaldate) ? _7daysSalesHeadApprovaldate?.ToString() : null,
+                        NAID = row.TryGetValue("NA ID", out var prefBExpenseExcludingTaxApproval) ? prefBExpenseExcludingTaxApproval?.ToString() : null,
+
+
+                        AggregateHonorariumLimit = row.TryGetValue("Aggregate Honorarium Limit", out var totalAttendees) && int.TryParse(totalAttendees?.ToString(), out var parsedTotalAttendees) ? parsedTotalAttendees : 0,
+
+                        AggregateAccommodataionLimit = row.TryGetValue("Aggregate Accommodataion Limit", out var totalHonorariumAmount) && int.TryParse(totalHonorariumAmount?.ToString(), out var parsedTotalHonorariumAmount) ? parsedTotalHonorariumAmount : 0,
+                        AggregateHonorariumSpent = row.TryGetValue("Aggregate Honorarium Spent", out var totalTravelAccommodationAmount) && int.TryParse(totalTravelAccommodationAmount?.ToString(), out var parsedTotalTravelAccommodationAmount) ? parsedTotalTravelAccommodationAmount : 0,
+                        AggregateAccommodationSpent = row.TryGetValue("Aggregate Accommodation Spent", out var totalTravelAmount) && int.TryParse(totalTravelAmount?.ToString(), out var parsedTotalTravelAmount) ? parsedTotalTravelAmount : 0,
+                        AggregateSpentonMedicalUtility = row.TryGetValue("Aggregate Spent on Medical Utility", out var totalAccommodationAmount) && int.TryParse(totalAccommodationAmount?.ToString(), out var parsedTotalAccommodationAmount) ? parsedTotalAccommodationAmount : 0,
+                        AggregateSpentasHCPConsultant = row.TryGetValue("Aggregate Spent as HCP Consultant", out var totalLocalConveyance) && int.TryParse(totalLocalConveyance?.ToString(), out var parsedTotalLocalConveyance) ? parsedTotalLocalConveyance : 0,
+
+                    }).ToList();
+                return Ok(eventRequestBrandsList);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occurred on AllPreEventsController AttachmentFile method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAttachmentsFromApprovedSpeakerSheetBasedOnId")]
+        public IActionResult GetAttachmentsFromApprovedSpeakerSheetBasedOnId(string Id)
+        {
+            string sheetId = configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value;
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+            Dictionary<string, object> ProductBrandsListrowData = new Dictionary<string, object>();
+            Row? targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == Id));
+            if (targetRow != null)
+            {
+                var attachments = SheetHelper.GetAttachmentsForRow(smartsheet, sheet.Id.Value, targetRow.Id.Value);
+                ProductBrandsListrowData["Attachments"] = attachments;
+            }
+            return Ok(ProductBrandsListrowData);
+        }
+        [HttpGet("GetApprovedTrainersSheetData")]
+        public IActionResult GetApprovedTrainersSheetData()
+        {
+            try
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+                List<ApprovedTrainersGetPayload> eventRequestBrandsList = sheetData
+                     .Where(row => row.TryGetValue("IsActive", out var isActive) && isActive?.ToString().ToLower().Equals("yes", StringComparison.OrdinalIgnoreCase) == true)
+                    .Select(row => new ApprovedTrainersGetPayload
+                    {
+
+                        TrainerId = row.TryGetValue("TrainerId", out var eventTopic) ? eventTopic?.ToString() : null,
+                        TrainerName = row.TryGetValue("TrainerName", out var eventId) ? eventId?.ToString() : null,
+                        TrainerCode = row.TryGetValue("TrainerCode", out var eventType) ? eventType?.ToString() : null,
+                        TrnrCode = row.TryGetValue("TrnrCode", out var eventDate) ? eventDate?.ToString() : null,
+                        TierType = row.TryGetValue("TierType", out var startTime) ? startTime?.ToString() : null,
+                        Speciality = row.TryGetValue("Speciality", out var endTime) ? endTime?.ToString() : null,
+                        Is_NONGO = row.TryGetValue("Is_NONGO", out var venueName) ? venueName?.ToString() : null,
+                        MisCode = row.TryGetValue("MisCode", out var city) ? city?.ToString() : null,
+                        NAID = row.TryGetValue("NA ID", out var prefBExpenseExcludingTaxApproval) ? prefBExpenseExcludingTaxApproval?.ToString() : null,
+                        AggregatespendonHonorariumTrainer = row.TryGetValue("Aggregate spend on Honorarium - Trainer", out var totalAttendees) && int.TryParse(totalAttendees?.ToString(), out var parsedTotalAttendees) ? parsedTotalAttendees : 0,
+                        AggregateLimitonAccomodation = row.TryGetValue("Aggregate Limit on Accomodation", out var totalHonorariumAmount) && int.TryParse(totalHonorariumAmount?.ToString(), out var parsedTotalHonorariumAmount) ? parsedTotalHonorariumAmount : 0,
+                        AggregateHonorariumSpent = row.TryGetValue("Aggregate Honorarium Spent ", out var totalTravelAccommodationAmount) && int.TryParse(totalTravelAccommodationAmount?.ToString(), out var parsedTotalTravelAccommodationAmount) ? parsedTotalTravelAccommodationAmount : 0,
+                        AggregatespendonAccomodation = row.TryGetValue("Aggregate spend on Accomodation", out var totalTravelAmount) && int.TryParse(totalTravelAmount?.ToString(), out var parsedTotalTravelAmount) ? parsedTotalTravelAmount : 0,
+                        AggregateSpentonMedicalUtility = row.TryGetValue("Aggregate Spent on Medical Utility", out var totalAccommodationAmount) && int.TryParse(totalAccommodationAmount?.ToString(), out var parsedTotalAccommodationAmount) ? parsedTotalAccommodationAmount : 0,
+                        AggregateSpentasHCPConsultant = row.TryGetValue("Aggregate Spent as HCP Consultant", out var totalLocalConveyance) && int.TryParse(totalLocalConveyance?.ToString(), out var parsedTotalLocalConveyance) ? parsedTotalLocalConveyance : 0,
+
+                        // CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var createdDateHelper) ? createdDateHelper?.ToString() : null,
+                        Qualification = row.TryGetValue("Qualification", out var isAdvanceRequired) ? isAdvanceRequired?.ToString() : null,
+                        TrainerCategoryId = row.TryGetValue("TrainerCategoryId", out var prerBmBmApproval) ? prerBmBmApproval?.ToString() : null,
+                        CityId = row.TryGetValue("CityId", out var presalesHeadApprovalDate) ? presalesHeadApprovalDate?.ToString() : null,
+                        StateId = row.TryGetValue("StateId)", out var premedicalAffairsHeadApprovalDate) ? premedicalAffairsHeadApprovalDate?.ToString() : null,
+                        Country = row.TryGetValue("Country", out var presalesCoordinatorApproval) ? presalesCoordinatorApproval?.ToString() : null,
+                        IsActive = row.TryGetValue("IsActive", out var presalesCoordinatorApprovalDate) ? presalesCoordinatorApprovalDate?.ToString() : null,
+                        FCPASignOffDate = row.TryGetValue("FCPA Sign Off Date", out var eventEndDate) ? eventEndDate?.ToString() : null,
+                        FCPAExpiryDate = row.TryGetValue("FCPA Expiry Date", out var FCPAExpiryDate) ? FCPAExpiryDate?.ToString() : null,
+                        FCPAValid = row.TryGetValue("FCPA Valid?", out var state) ? state?.ToString() : null,
+
+                        //FCPASignOffDate = row.TryGetValue("FCPA Sign Off Date", out var precomplianceApproval) ? precomplianceApproval?.ToString() : null,
+                        CV_Document = row.TryGetValue("CV_Document", out var precomplianceApprovalDate) ? precomplianceApprovalDate?.ToString() : null,
+                        AggregateExhausted = row.TryGetValue("Aggregate Exhausted?", out var prerBmBmApprovalDate) ? prerBmBmApprovalDate?.ToString() : null,
+
+                        Created = row.TryGetValue("Created", out var eventRequestStatus) ? eventRequestStatus?.ToString() : null,
+                        CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var eventApprovedDate) ? eventApprovedDate?.ToString() : null,
+                        SalesAlertTrigger = row.TryGetValue("Sales Alert Trigger", out var honorariumRequestStatus) ? honorariumRequestStatus?.ToString() : null,
+                        //MedicalAffairsAlertTrigger = row.TryGetValue("Medical Affairs Alert Trigger", out var honorariumApprovedDate) ? honorariumApprovedDate?.ToString() : null,
+                        SalesHeadApproval = row.TryGetValue("Sales Head Approval", out var postEventRequeststatus) ? postEventRequeststatus?.ToString() : null,
+                        SalesHeadApprovalDate = row.TryGetValue("Sales Head Approval Date", out var helperFinancetreasurytriggerBTE) ? helperFinancetreasurytriggerBTE?.ToString() : null,
+                        MedicalAffairsHeadApproval = row.TryGetValue("Medical Affairs Head Approval", out var postEventApprovedDate) ? postEventApprovedDate?.ToString() : null,
+                        MedicalAffairsHeadApprovalDate = row.TryGetValue("Medical Affairs Head Approval Date", out var eventOpenSalesHeadApproval) ? eventOpenSalesHeadApproval?.ToString() : null,
+                        //SpeakerCriteriaDetails = row.TryGetValue("Speaker Criteria Details Date", out var eventOpenSalesHeadApprovalDate) ? eventOpenSalesHeadApprovalDate?.ToString() : null,
+                        SalesHead = row.TryGetValue("Sales Head", out var _7daysSalesHeadApproval) ? _7daysSalesHeadApproval?.ToString() : null,
+                        MedicalAffairsHead = row.TryGetValue("Medical Affairs Head", out var _7daysSalesHeadApprovaldate) ? _7daysSalesHeadApprovaldate?.ToString() : null,
+
+                        InitiatorName = row.TryGetValue("InitiatorName", out var initiatorName) ? initiatorName?.ToString() : null,
+                        InitiatorEmail = row.TryGetValue("Initiator Email", out var initiatorEmail) ? initiatorEmail?.ToString() : null,
+                        TrainerTybeShortcode = row.TryGetValue("TrainerTybe - Shortcode", out var TrainerTybeShortcode) ? TrainerTybeShortcode?.ToString() : null,
+                        TrainerCodeNew = row.TryGetValue("Trainer Code", out var TrainerCodeNew) ? TrainerCodeNew?.ToString() : null,
+                        TrainerBrand = row.TryGetValue("Trainer Brand", out var TrainerBrand) ? TrainerBrand?.ToString() : null,
+                        TrainerType = row.TryGetValue("Trainer Type", out var TrainerType) ? TrainerType?.ToString() : null,
+
+                        Division = row.TryGetValue("Division", out var presalesHeadApproval) ? presalesHeadApproval?.ToString() : null,
+                        Address = row.TryGetValue("Address", out var premarketingHeadApproval) ? premarketingHeadApproval?.ToString() : null,
+                        State = row.TryGetValue("State", out var premarketingHeadApprovalDate) ? premarketingHeadApprovalDate?.ToString() : null,
+                        City = row.TryGetValue("City", out var agreement) ? agreement?.ToString() : null,
+                        //Country = row.TryGetValue("Country", out var prefFinanceTreasuryApprovalDate) ? prefFinanceTreasuryApprovalDate?.ToString() : null,
+                        ContactNumber = row.TryGetValue("Contact Number", out var premedicalAffairsHeadApproval) ? premedicalAffairsHeadApproval?.ToString() : null,
+                        Trainedby = row.TryGetValue("Trained by", out var Trainedby) ? Trainedby?.ToString() : null,
+                        TrainerCV = row.TryGetValue("Trainer CV", out var TrainerCV) ? TrainerCV?.ToString() : null,
+                        Trainercertificate = row.TryGetValue("Trainer certificate", out var Trainercertificate) ? Trainercertificate?.ToString() : null,
+                        Trainedon = row.TryGetValue("Trained on", out var Trainedon) ? Trainedon?.ToString() : null,
+                        TrainerCategory = row.TryGetValue("Trainer Category", out var TrainerCategory) ? TrainerCategory?.ToString() : null,
+                        TrainerCriteria = row.TryGetValue("Trainer Criteria", out var TrainerCriteria) ? TrainerCriteria?.ToString() : null,
+                        TrainerCriteriaDetails = row.TryGetValue("Trainer Criteria Details", out var TrainerCriteriaDetails) ? TrainerCriteriaDetails?.ToString() : null,
+                        MedicalAffairsAlertTrigger = row.TryGetValue("Medical Affairs Alert Trigger", out var MedicalAffairsAlertTrigger) ? MedicalAffairsAlertTrigger?.ToString() : null,
+
+                    }).ToList();
+                return Ok(eventRequestBrandsList);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occurred on AllPreEventsController AttachmentFile method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAttachmentsFromApprovedTrainersSheetBasedOnId")]
+        public IActionResult GetAttachmentsFromApprovedTrainersSheetBasedOnId(string Id)
+        {
+            string sheetId = configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value;
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+            Dictionary<string, object> ProductBrandsListrowData = new Dictionary<string, object>();
+            Row? targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == Id));
+            if (targetRow != null)
+            {
+                var attachments = SheetHelper.GetAttachmentsForRow(smartsheet, sheet.Id.Value, targetRow.Id.Value);
+                ProductBrandsListrowData["Attachments"] = attachments;
+            }
+            return Ok(ProductBrandsListrowData);
+        }
+        [HttpGet("GetApprovedVendorSheetData")]
+        public IActionResult GetApprovedVendorSheetData()
+        {
+            try
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+                List<ApprovedVendorsGetPayload> eventRequestBrandsList = sheetData
+                    .Where(row => row.TryGetValue("IsActive?", out var isActive) && isActive?.ToString().ToLower().Equals("yes", StringComparison.OrdinalIgnoreCase) == true)
+                    .Select(row => new ApprovedVendorsGetPayload
+                    {
+                        VendorId = row.TryGetValue("VendorId", out var eventTopic) ? eventTopic?.ToString() : null,
+                        VendorAccount = row.TryGetValue("VendorAccount", out var eventId) ? eventId?.ToString() : null,
+                        MisCode = row.TryGetValue("MisCode", out var city) ? city?.ToString() : null,
+                        RequestorName = row.TryGetValue("Requestor Name", out var eventType) ? eventType?.ToString() : null,
+                        BankName = row.TryGetValue("Bank Name", out var eventDate) ? eventDate?.ToString() : null,
+                        BeneficiaryName = row.TryGetValue("BeneficiaryName", out var startTime) ? startTime?.ToString() : null,
+                        PanCardName = row.TryGetValue("PanCardName", out var endTime) ? endTime?.ToString() : null,
+                        PanNumber = row.TryGetValue("PanNumber", out var venueName) ? venueName?.ToString() : null,
+                        BankAccountNumber = row.TryGetValue("BankAccountNumber", out var prefBExpenseExcludingTaxApproval) ? prefBExpenseExcludingTaxApproval?.ToString() : null,
+                        PancardDocument = row.TryGetValue("Pancard Document", out var isAdvanceRequired) ? isAdvanceRequired?.ToString() : null,
+                        Email = row.TryGetValue("Email ", out var prerBmBmApproval) ? prerBmBmApproval?.ToString() : null,
+                        IBNNumber = row.TryGetValue("IBN Number", out var presalesHeadApprovalDate) ? presalesHeadApprovalDate?.ToString() : null,
+                        //IfscCode = row.TryGetValue("IfscCode)", out var premedicalAffairsHeadApprovalDate) ? premedicalAffairsHeadApprovalDate?.ToString() : null,
+                        IfscCode = row.TryGetValue("IfscCode", out var IfscCode) ? IfscCode?.ToString() : null,
+                        SwiftCode = row.TryGetValue("Swift Code", out var presalesCoordinatorApproval) ? presalesCoordinatorApproval?.ToString() : null,
+                        IsActive = row.TryGetValue("IsActive?", out var presalesCoordinatorApprovalDate) ? presalesCoordinatorApprovalDate?.ToString() : null,
+                        ChequeDocument = row.TryGetValue("Cheque Document", out var eventEndDate) ? eventEndDate?.ToString() : null,
+                        TaxResidenceCertificate = row.TryGetValue("Tax Residence Certificate", out var FCPAExpiryDate) ? FCPAExpiryDate?.ToString() : null,
+                        TaxResidenceCertificateDate = row.TryGetValue("Tax Residence Certificate Date", out var state) ? state?.ToString() : null,
+                        //FinanceChecker1 = row.TryGetValue("Finance Checker-1", out var precomplianceApprovalDate) ? precomplianceApprovalDate?.ToString() : null,
+                        FinanceCheckerApproval = row.TryGetValue("Finance Checker Approval", out var prerBmBmApprovalDate) ? prerBmBmApprovalDate?.ToString() : null,
+                        FinanceCheckerApprovalDate = row.TryGetValue("Finance Checker Approval Date", out var eventRequestStatus) ? eventRequestStatus?.ToString() : null,
+                        Requestor = row.TryGetValue("Requestor", out var Requestor) ? Requestor?.ToString() : null,
+                        InitiatorName = row.TryGetValue("Initiator Name", out var initiatorName) ? initiatorName?.ToString() : null,
+                        InitiatorEmail = row.TryGetValue("Initiator Email", out var initiatorEmail) ? initiatorEmail?.ToString() : null,
+                        FinanceChecker = row.TryGetValue("Finance Checker", out var eventApprovedDate) ? eventApprovedDate?.ToString() : null,
+
+                    }).ToList();
+                return Ok(eventRequestBrandsList);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occurred on AllPreEventsController AttachmentFile method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAttachmentsFromApprovedVendorSheetBasedOnId")]
+        public IActionResult GetAttachmentsFromApprovedVendorSheetBasedOnId(string Id)
+        {
+            string sheetId = configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value;
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+            Dictionary<string, object> ProductBrandsListrowData = new Dictionary<string, object>();
+            Row? targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == Id));
+            if (targetRow != null)
+            {
+                var attachments = SheetHelper.GetAttachmentsForRow(smartsheet, sheet.Id.Value, targetRow.Id.Value);
+                ProductBrandsListrowData["Attachments"] = attachments;
+            }
+            return Ok(ProductBrandsListrowData);
+        }
+        [HttpGet("GetSpeakerCodeCreationSheetData")]
+        public IActionResult GetSpeakerCodeCreationSheetData()
+        {
+            try
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:SpeakerCodeCreation").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+                List<SpeakerCodeCreationGetPayload> eventRequestBrandsList = sheetData
+                    .Select(row => new SpeakerCodeCreationGetPayload
+                    {
+                        SpeakerName = row.TryGetValue("SpeakerName", out var eventTopic) ? eventTopic?.ToString() : null,
+                        Speaker_Code = row.TryGetValue("SpeakerCode", out var eventId) ? eventId?.ToString() : null,
+                        SpeakerCode = row.TryGetValue("Speaker Code", out var eventType) ? eventType?.ToString() : null,
+                        MisCode = row.TryGetValue("MisCode", out var venueName) ? venueName?.ToString() : null,
+                        Division = row.TryGetValue("Division", out var presalesHeadApproval) ? presalesHeadApproval?.ToString() : null,
+                        Speciality = row.TryGetValue("Speciality", out var startTime) ? startTime?.ToString() : null,
+                        Qualification = row.TryGetValue("Qualification", out var presalesHeadApprovalDate) ? presalesHeadApprovalDate?.ToString() : null,
+                        Address = row.TryGetValue("Address", out var premarketingHeadApproval) ? premarketingHeadApproval?.ToString() : null,
+                        City = row.TryGetValue("City", out var agreement) ? agreement?.ToString() : null,
+                        State = row.TryGetValue("State", out var premarketingHeadApprovalDate) ? premarketingHeadApprovalDate?.ToString() : null,
+                        Country = row.TryGetValue("Country", out var prefFinanceTreasuryApprovalDate) ? prefFinanceTreasuryApprovalDate?.ToString() : null,
+                        ContactNumber = row.TryGetValue("Contact Number", out var premedicalAffairsHeadApproval) ? premedicalAffairsHeadApproval?.ToString() : null,
+                        SpeakerCategory = row.TryGetValue("Speaker Category", out var eventDate) ? eventDate?.ToString() : null,
+                        SpeakerType = row.TryGetValue("Speaker Type", out var endTime) ? endTime?.ToString() : null,
+                        SpeakerCriteria = row.TryGetValue("Speaker Criteria", out var SpeakerCriteria) ? SpeakerCriteria?.ToString() : null,
+
+                        SpeakerCriteriaDetails = row.TryGetValue("Speaker Criteria Details", out var eventOpenSalesHeadApprovalDate) ? eventOpenSalesHeadApprovalDate?.ToString() : null,
+                        CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var eventApprovedDate) ? eventApprovedDate?.ToString() : null,
+                        SalesAlertTrigger = row.TryGetValue("Sales Alert Trigger", out var eventEndDate) ? eventEndDate?.ToString() : null,
+                        SalesHeadApproval = row.TryGetValue("Sales Head Approval", out var FCPAExpiryDate) ? FCPAExpiryDate?.ToString() : null,
+                        SalesHeadApprovalDate = row.TryGetValue("Sales Head Approval Date", out var state) ? state?.ToString() : null,
+                        MedicalAffairsAlertTrigger = row.TryGetValue("Medical Affairs Alert Trigger", out var city) ? city?.ToString() : null,
+                        MedicalAffairsHeadApproval = row.TryGetValue("Medical Affairs Head Approval", out var isAdvanceRequired) ? isAdvanceRequired?.ToString() : null,
+                        MedicalAffairsHeadApprovalDate = row.TryGetValue("Medical Affairs Head Approval Date", out var prerBmBmApproval) ? prerBmBmApproval?.ToString() : null,
+                        SalesHead = row.TryGetValue("Sales Head", out var _7daysSalesHeadApproval) ? _7daysSalesHeadApproval?.ToString() : null,
+                        MedicalAffairsHead = row.TryGetValue("Medical Affairs Head", out var _7daysSalesHeadApprovaldate) ? _7daysSalesHeadApprovaldate?.ToString() : null,
+                        InitiatorName = row.TryGetValue("Initiator Name", out var initiatorName) ? initiatorName?.ToString() : null,
+                        InitiatorEmail = row.TryGetValue("Initiator Email", out var initiatorEmail) ? initiatorEmail?.ToString() : null,
+                        Created = row.TryGetValue("Created", out var eventRequestStatus) ? eventRequestStatus?.ToString() : null,
+
+                    }).ToList();
+                return Ok(eventRequestBrandsList);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occurred on AllPreEventsController AttachmentFile method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAttachmentsFromSpeakerCodeCreationCreationSheetBasedOnId")]
+        public IActionResult GetAttachmentsFromSpeakerCodeCreationCreationSheetBasedOnId(string Id)
+        {
+            string sheetId = configuration.GetSection("SmartsheetSettings:SpeakerCodeCreation").Value;
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+            Dictionary<string, object> ProductBrandsListrowData = new Dictionary<string, object>();
+            Row? targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == Id));
+            if (targetRow != null)
+            {
+                var attachments = SheetHelper.GetAttachmentsForRow(smartsheet, sheet.Id.Value, targetRow.Id.Value);
+                ProductBrandsListrowData["Attachments"] = attachments;
+            }
+            return Ok(ProductBrandsListrowData);
+        }
+        [HttpGet("GetTrainersCodeCreationSheetData")]
+        public IActionResult GetTrainersCodeCreationSheetData()
+        {
+            try
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:TrainerCodeCreation").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+                List<TrainerCodeCreationGetPayload> eventRequestBrandsList = sheetData
+                    .Select(row => new TrainerCodeCreationGetPayload
+                    {
+                        TrainerName = row.TryGetValue("TrainerName", out var eventId) ? eventId?.ToString() : null,
+
+                        Number = row.TryGetValue("Number", out var eventTopic) ? eventTopic?.ToString() : null,
+                        TrainerTybeShortcode = row.TryGetValue("TrainerTybe - Shortcode", out var TrainerTybe) ? TrainerTybe?.ToString() : null,
+
+                        TrainerCode = row.TryGetValue("Trainer Code", out var eventType) ? eventType?.ToString() : null,
+
+                        TrainerBrand = row.TryGetValue("Trainer Brand", out var eventDate) ? eventDate?.ToString() : null,
+                        TrainerType = row.TryGetValue("Trainer Type", out var startTime) ? startTime?.ToString() : null,
+                        MisCode = row.TryGetValue("MisCode", out var city) ? city?.ToString() : null,
+                        Division = row.TryGetValue("Division", out var presalesHeadApproval) ? presalesHeadApproval?.ToString() : null,
+                        Speciality = row.TryGetValue("Speciality", out var endTime) ? endTime?.ToString() : null,
+                        Qualification = row.TryGetValue("Qualification", out var isAdvanceRequired) ? isAdvanceRequired?.ToString() : null,
+                        Address = row.TryGetValue("Address", out var premarketingHeadApproval) ? premarketingHeadApproval?.ToString() : null,
+                        City = row.TryGetValue("City", out var agreement) ? agreement?.ToString() : null,
+                        State = row.TryGetValue("State", out var premarketingHeadApprovalDate) ? premarketingHeadApprovalDate?.ToString() : null,
+                        Country = row.TryGetValue("Country", out var presalesCoordinatorApproval) ? presalesCoordinatorApproval?.ToString() : null,
+                        ContactNumber = row.TryGetValue("Contact Number", out var premedicalAffairsHeadApproval) ? premedicalAffairsHeadApproval?.ToString() : null,
+                        Trainedby = row.TryGetValue("Trained by", out var Trainedby) ? Trainedby?.ToString() : null,
+                        TrainerCV = row.TryGetValue("Trainer CV", out var TrainerCV) ? TrainerCV?.ToString() : null,
+                        Trainercertificate = row.TryGetValue("Trainer certificate", out var Trainercertificate) ? Trainercertificate?.ToString() : null,
+                        Trainedon = row.TryGetValue("Trained on", out var Trainedon) ? Trainedon?.ToString() : null,
+                        TrainerCategory = row.TryGetValue("Trainer Category", out var TrainerCategory) ? TrainerCategory?.ToString() : null,
+                        TrainerCriteria = row.TryGetValue("Trainer Criteria", out var TrainerCriteria) ? TrainerCriteria?.ToString() : null,
+                        TrainerCriteriaDetails = row.TryGetValue("Trainer Criteria Details", out var TrainerCriteriaDetails) ? TrainerCriteriaDetails?.ToString() : null,
+                        Created = row.TryGetValue("Created", out var eventRequestStatus) ? eventRequestStatus?.ToString() : null,
+                        CreatedDateHelper = row.TryGetValue("Created Date - Helper", out var eventApprovedDate) ? eventApprovedDate?.ToString() : null,
+                        SalesAlertTrigger = row.TryGetValue("Sales Alert Trigger", out var honorariumRequestStatus) ? honorariumRequestStatus?.ToString() : null,
+                        MedicalAffairsAlertTrigger = row.TryGetValue("Medical Affairs Alert Trigger", out var MedicalAffairsAlertTrigger) ? MedicalAffairsAlertTrigger?.ToString() : null,
+                        SalesHead = row.TryGetValue("Sales Head", out var _7daysSalesHeadApproval) ? _7daysSalesHeadApproval?.ToString() : null,
+                        SalesHeadApproval = row.TryGetValue("Sales Head Approval", out var postEventRequeststatus) ? postEventRequeststatus?.ToString() : null,
+                        SalesHeadApprovalDate = row.TryGetValue("Sales Head Approval Date", out var helperFinancetreasurytriggerBTE) ? helperFinancetreasurytriggerBTE?.ToString() : null,
+                        MedicalAffairsHead = row.TryGetValue("Medical Affairs Head", out var _7daysSalesHeadApprovaldate) ? _7daysSalesHeadApprovaldate?.ToString() : null,
+                        MedicalAffairsHeadApproval = row.TryGetValue("Medical Affairs Head Approval", out var postEventApprovedDate) ? postEventApprovedDate?.ToString() : null,
+                        MedicalAffairsHeadApprovalDate = row.TryGetValue("Medical Affairs Head Approval Date", out var eventOpenSalesHeadApproval) ? eventOpenSalesHeadApproval?.ToString() : null,
+                        InitiatorName = row.TryGetValue("Initiator Name", out var initiatorName) ? initiatorName?.ToString() : null,
+                        InitiatorEmail = row.TryGetValue("Initiator Email", out var initiatorEmail) ? initiatorEmail?.ToString() : null,
+
+                    }).ToList();
+                return Ok(eventRequestBrandsList);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occurred on AllPreEventsController AttachmentFile method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAttachmentsFromTrainerCodeCreationSheetBasedOnId")]
+        public IActionResult GetAttachmentsFromTrainerCodeCreationSheetBasedOnId(string Id)
+        {
+            string sheetId = configuration.GetSection("SmartsheetSettings:TrainerCodeCreation").Value;
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+            Dictionary<string, object> ProductBrandsListrowData = new Dictionary<string, object>();
+            Row? targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == Id));
+            if (targetRow != null)
+            {
+                var attachments = SheetHelper.GetAttachmentsForRow(smartsheet, sheet.Id.Value, targetRow.Id.Value);
+                ProductBrandsListrowData["Attachments"] = attachments;
+            }
+            return Ok(ProductBrandsListrowData);
+        }
+        [HttpGet("GetVendorCodeCreationSheetData")]
+        public IActionResult GetVendorCodeCreationSheetData()
+        {
+            try
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:VendorCodeCreation").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+                List<VendorCodeCreationGetPayload> eventRequestBrandsList = sheetData
+                    .Select(row => new VendorCodeCreationGetPayload
+                    {
+                        VendorId = row.TryGetValue("V Id", out var VendorId) ? VendorId?.ToString() : null,
+                        VendorAccount = row.TryGetValue("VendorAccount", out var eventId) ? eventId?.ToString() : null,
+                        MisCode = row.TryGetValue("MisCode", out var city) ? city?.ToString() : null,
+                        BeneficiaryName = row.TryGetValue("BeneficiaryName", out var startTime) ? startTime?.ToString() : null,
+                        PanCardName = row.TryGetValue("PanCardName", out var endTime) ? endTime?.ToString() : null,
+                        PanNumber = row.TryGetValue("PanNumber", out var venueName) ? venueName?.ToString() : null,
+                        BankAccountNumber = row.TryGetValue("BankAccountNumber", out var prefBExpenseExcludingTaxApproval) ? prefBExpenseExcludingTaxApproval?.ToString() : null,
+                        BankName = row.TryGetValue("Bank Name", out var eventDate) ? eventDate?.ToString() : null,
+                        IfscCode = row.TryGetValue("IfscCode", out var IfscCode) ? IfscCode?.ToString() : null,
+                        SwiftCode = row.TryGetValue("Swift Code", out var presalesCoordinatorApproval) ? presalesCoordinatorApproval?.ToString() : null,
+                        IBNNumber = row.TryGetValue("IBN Number", out var presalesHeadApprovalDate) ? presalesHeadApprovalDate?.ToString() : null,
+                        Email = row.TryGetValue("Email ", out var prerBmBmApproval) ? prerBmBmApproval?.ToString() : null,
+                        PancardDocument = row.TryGetValue("Pancard Document", out var isAdvanceRequired) ? isAdvanceRequired?.ToString() : null,
+                        ChequeDocument = row.TryGetValue("Cheque Document", out var eventEndDate) ? eventEndDate?.ToString() : null,
+                        TaxResidenceCertificate = row.TryGetValue("Tax Residence Certificate", out var FCPAExpiryDate) ? FCPAExpiryDate?.ToString() : null,
+                        InitiatorName = row.TryGetValue("Initiator Name", out var initiatorName) ? initiatorName?.ToString() : null,
+                        InitiatorEmail = row.TryGetValue("Initiator Email", out var initiatorEmail) ? initiatorEmail?.ToString() : null,
+                        TaxResidenceCertificateDate = row.TryGetValue("Tax Residence Certificate Date", out var state) ? state?.ToString() : null,
+                        FinanceChecker = row.TryGetValue("Finance Checker", out var eventApprovedDate) ? eventApprovedDate?.ToString() : null,
+                        FinanceCheckerapproval = row.TryGetValue("Finance Checker  approval", out var prerBmBmApprovalDate) ? prerBmBmApprovalDate?.ToString() : null,
+                        FinanceCheckerApprovalDate = row.TryGetValue("Finance Checker Approval Date", out var eventRequestStatus) ? eventRequestStatus?.ToString() : null,
+
+                    }).ToList();
+                return Ok(eventRequestBrandsList);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occurred on AllPreEventsController AttachmentFile method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAttachmentsFromVendorCodeCreationSheetBasedOnId")]
+        public IActionResult GetAttachmentsFromVendorCodeCreationSheetBasedOnId(string Id)
+        {
+            string sheetId = configuration.GetSection("SmartsheetSettings:VendorCodeCreation").Value;
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+            Dictionary<string, object> ProductBrandsListrowData = new Dictionary<string, object>();
+            Row? targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == Id));
+            if (targetRow != null)
+            {
+                var attachments = SheetHelper.GetAttachmentsForRow(smartsheet, sheet.Id.Value, targetRow.Id.Value);
+                ProductBrandsListrowData["Attachments"] = attachments;
+            }
+            return Ok(ProductBrandsListrowData);
+        }
+
+
 
 
 

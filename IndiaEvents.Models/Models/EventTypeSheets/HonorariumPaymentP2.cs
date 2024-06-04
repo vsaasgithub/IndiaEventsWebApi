@@ -1,4 +1,6 @@
-﻿using IndiaEventsWebApi.Models.EventTypeSheets;
+﻿using IndiaEvents.Models.Models.Draft;
+using IndiaEvents.Models.Models.RequestSheets;
+using IndiaEventsWebApi.Models.EventTypeSheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +21,10 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? StartTime { get; set; }
         public string? EndTime { get; set; }
         public string? VenueName { get; set; }
-        public int? TotalTravelAndAccomodationSpend { get; set; }
-        public int? TotalHonorariumSpend { get; set; }
-        public int? TotalSpend { get; set; }
-        public int? TotalLocalConveyance { get; set; }
+        public double? TotalTravelAndAccomodationSpend { get; set; }
+        public double? TotalHonorariumSpend { get; set; }
+        public double? TotalSpend { get; set; }
+        public double? TotalLocalConveyance { get; set; }
         public string? Brands { get; set; }
         public string? Invitees { get; set; }
         public string? Panelists { get; set; }
@@ -35,6 +37,7 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? ReportingManagerEmail { get; set; }
         public string? FirstLevelEmail { get; set; }
         public string? SalesCoordinatorEmail { get; set; }
+        public string? MarketingCoordinatorEmail { get; set; }
         public string? MarketingHeadEmail { get; set; }
         public string? SalesHeadEmail { get; set; }
         public string? Role { get; set; }
@@ -42,9 +45,9 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? FinanceTreasury { get; set; }
         public string? SlideKits { get; set; }
         public string? Expenses { get; set; }
-        public int? TotalTravelSpend { get; set; }
-        public int? TotalAccomodationSpend { get; set; }
-        public int? TotalExpenses { get; set; }
+        public double? TotalTravelSpend { get; set; }
+        public double? TotalAccomodationSpend { get; set; }
+        public double? TotalExpenses { get; set; }
         public string? IsDeviationUpload { get; set; }
 
 
@@ -60,7 +63,7 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? MisCode { get; set; }
         public string? GOorNGO { get; set; }
         public string? IsInclidingGst { get; set; }
-        public int? AgreementAmount { get; set; }
+        public double? AgreementAmount { get; set; }
         public string? IsAnnualTrainerAgreementValid { get; set; }
 
     }
@@ -70,6 +73,28 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public HonorariumPaymentP2? RequestHonorariumList { get; set; }
         public List<HCPDetailsP2>? HcpRoles { get; set; }
     }
+    public class UpdateHonorariumPaymentListPh2
+    {
+        public string? EventId { get; set; }
+        public string? EventTopic { get; set; }
+        public string? EventType { get; set; }
+        public string? EventDate { get; set; }
+        public string? StartTime { get; set; }
+        public string? EndTime { get; set; }
+        public string? VenueName { get; set; }
+        public string? City { get; set; }
+        public string? State { get; set; }
+        public string? SalesHeadEmail { get; set; }
+        public string? FinanceHead { get; set; }
+        public string SalesCoordinator { get; set; }
+        public string? InitiatorName { get; set; }
+        public string? InitiatorEmail { get; set; }
+        public string? IsFilesUpload { get; set; }
+        public string? IsDeviationUpload { get; set; }
+        public List<UpdateFiles> Files { get; set; }
+        public List<string>? DeviationFiles { get; set; }
+
+    }
     public class HonorariumUpdate
     {
         public string? PanelId { get; set; }
@@ -78,4 +103,10 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public List<string>? FilesToUpload { get; set; }
         public string? IsAnnualTrainerAgreementValid { get; set; }
     }
+    public class DeleteFilesArray
+    {
+        public string? EventId { get; set; }
+        public List<string>? AttachmentIds { get; set; }
+    }
+
 }

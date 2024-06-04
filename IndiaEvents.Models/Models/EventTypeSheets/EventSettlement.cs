@@ -1,4 +1,7 @@
-﻿namespace IndiaEventsWebApi.Models.EventTypeSheets
+﻿using IndiaEvents.Models.Models.Draft;
+using IndiaEvents.Models.Models.RequestSheets;
+
+namespace IndiaEventsWebApi.Models.EventTypeSheets
 {
     public class EventSettlement
     {
@@ -29,6 +32,7 @@
         public string? ReportingManagerEmail { get; set; }
         public string? FirstLevelEmail { get; set; }
         public string? FinanceTreasuryEmail { get; set; }
+        public string? MarketingCoordinatorEmail { get; set; }
         public string? SalesCoordinatorEmail { get; set; }
         public string? Role { get; set; }
 
@@ -42,23 +46,28 @@
         public string? IsAdvanceRequired { get; set; }
         public string? totalInvitees { get; set; }
         public string? TotalAttendees { get; set; }
-        public string? TotalTravelSpend { get; set; }
-        public string? TotalAccomodationSpend { get; set; }
+     
         public string? TotalExpenses { get; set; }
-        public string? TotalTravelAndAccomodationSpend { get; set; }
+        
         public string? TotalHonorariumSpend { get; set; }
         public string? TotalSpend { get; set; }
         public string? TotalActuals { get; set; }
         public string? AdvanceUtilizedForEvents { get; set; }
         public string? PayBackAmountToCompany { get; set; }
         public string? AdditionalAmountNeededToPayForInitiator { get; set; }
-        public string? TotalLocalConveyance { get; set; }
+       
         public string? IsDeviationUpload { get; set; }
-        public int? TotalBudgetAmount { get; set; }
-        public int? ActualExpenseAmount { get; set; }
-        public int? AdvanceProvided { get; set; }
-        public int? TotalBtcAmount { get; set; }
-        public int? TotalBteAmount { get; set; }
+        public double? TotalBudgetAmount { get; set; }
+        public double? ActualExpenseAmount { get; set; }
+        public double? AdvanceProvided { get; set; }
+        public double? TotalBtcAmount { get; set; }
+        public double? TotalBteAmount { get; set; }
+
+
+        public string? TotalTravelAndAccomodationSpend { get; set; }
+        public string? TotalLocalConveyance { get; set; }
+        public string? TotalTravelSpend { get; set; }
+        public string? TotalAccomodationSpend { get; set; }
 
 
         public List<string>? Files { get; set; }
@@ -67,6 +76,86 @@
 
 
     }
+
+
+
+
+    public class UpdateEventSettlementData
+    {
+        public string EventId { get; set; }
+        public string EventTopic { get; set; }
+        public string EventType { get; set; }
+        public string EventStartDate { get; set; }
+        public string EventEndDate { get; set; }
+        public string Sales_Head { get; set; }
+        public string FinanceHead { get; set; }
+        public string SalesCoordinator { get; set; }
+        public string InitiatorName { get; set; }
+        public string Initiator_Email { get; set; }
+        public string EventOpen30dayscount { get; set; }
+        public string ExpenseDetails { get; set; }
+        public string TotalExpenseDetails { get; set; }
+        public string AdvanceDetails { get; set; }
+        public string IsFilesUpload { get; set; }
+        public string IsDeviationUpload { get; set; }
+        public List<UpdateFiles> Files { get; set; }
+        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }
+
+        public double TotalBudgetAmount { get; set; }
+        public double TotalActuals { get; set; }
+        public double AdvanceUtilizedForEvents { get; set; }
+        public double PayBackAmountToCompany { get; set; }
+        public double TotalExpenses { get; set; }
+        public double AdditionalAmountNeededToPayForInitiator { get; set; }
+        public double AdvanceProvided { get; set; }
+        public double TotalBtcAmount { get; set; }
+        public double TotalBteAmount { get; set; }
+
+
+
+    }
+    public class UpdateEventSettlementDataInClassIAndWebinar
+    {
+        public string EventId { get; set; }
+        public string EventTopic { get; set; }
+        public string EventType { get; set; }
+        public string EventStartDate { get; set; }
+        public string EventEndDate { get; set; }
+        public string Sales_Head { get; set; }
+        public string FinanceHead { get; set; }
+        public string SalesCoordinator { get; set; }
+        public string InitiatorName { get; set; }
+        public string Initiator_Email { get; set; }
+        public string EventOpen30dayscount { get; set; }
+        public string ExpenseDetails { get; set; }
+        public string TotalExpenseDetails { get; set; }
+        public string AdvanceDetails { get; set; }
+        public string IsFilesUpload { get; set; }
+        public string IsDeviationUpload { get; set; }
+        public List<UpdateFiles> Files { get; set; }
+        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }
+
+        public double TotalBudgetAmount { get; set; }
+        public double TotalActuals { get; set; }
+        public double AdvanceUtilizedForEvents { get; set; }
+        public double PayBackAmountToCompany { get; set; }
+        public double TotalExpenses { get; set; }
+        public double AdditionalAmountNeededToPayForInitiator { get; set; }
+        public double AdvanceProvided { get; set; }
+        public double TotalBtcAmount { get; set; }
+        public double TotalBteAmount { get; set; }
+        public double TotalInvitees { get; set; }
+        public double TotalAttendees { get; set; }
+        public string AttendeesLineItem { get; set; }
+
+        public double? TotalTravelAndAccomodationSpend { get; set; }
+        public double? TotalLocalConveyance { get; set; }
+        public double? TotalTravelSpend { get; set; }
+        public double? TotalAccomodationSpend { get; set; }
+
+    }
+
+
 
     public class Invitee
     {
@@ -84,6 +173,8 @@
         public string? Amount { get; set; }
         public string? AmountExcludingTax { get; set; }
         public string? BtcorBte { get; set; }
+        public double? BudgetAmount { get; set; }
+        public double? ActualAmount { get; set; }
 
     }
 

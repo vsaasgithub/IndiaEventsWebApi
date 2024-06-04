@@ -1,0 +1,15 @@
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\bin\Debug\net8.0\IndiaEvents.Models.deps.json
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\bin\Debug\net8.0\IndiaEvents.Models.runtimeconfig.json
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\bin\Debug\net8.0\IndiaEvents.Models.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\bin\Debug\net8.0\IndiaEvents.Models.pdb
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\IndiaEvents.Models.csproj.AssemblyReference.cache
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\IndiaEvents.Models.GeneratedMSBuildEditorConfig.editorconfig
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\IndiaEvents.Models.AssemblyInfoInputs.cache
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\IndiaEvents.Models.AssemblyInfo.cs
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\IndiaEvents.Models.csproj.CoreCompileInputs.cache
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\IndiaEvents.Models.sourcelink.json
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\IndiaEvents.Models.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\refint\IndiaEvents.Models.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\IndiaEvents.Models.pdb
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\IndiaEvents.Models.genruntimeconfig.cache
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEvents.Models\obj\Debug\net8.0\ref\IndiaEvents.Models.dll
