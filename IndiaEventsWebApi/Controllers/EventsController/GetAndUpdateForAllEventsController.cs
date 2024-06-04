@@ -252,6 +252,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         [HttpGet("GetDataFromAllSheetsUsingEventIdInPreEvent")]
         public async Task<IActionResult> GetDataFromAllSheetsUsingEventId(string eventId, int count = 5)
         {
+            Log.Information("starting of api " + DateTime.Now);
             int loopCount = 0;
             while (loopCount < count)
             {
@@ -316,7 +317,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 foreach (var attachment in attachments.Data)
                                 {
                                     long AID = (long)attachment.Id;
-                                    Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID));
+                                    Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet1, AID));
+                                    //Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID));
 
                                     Dictionary<string, object> attachmentInfoData = new()
                             {
@@ -367,14 +369,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 foreach (var attachment in attachments.Data)
                                 {
                                     long AID = (long)attachment.Id;
-                                    Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet2.Id.Value, AID));
+                                    Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet2, AID));
+                                    //Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet2.Id.Value, AID));
                                     Dictionary<string, object> attachmentInfo = new()
-                            {
-                                { "Name", file.Name },
-                                { "Id", file.Id },
+                                    {
+                                        { "Name", file.Name },
+                                        { "Id", file.Id },
 
-                                { "base64", SheetHelper.UrlToBaseValue(file.Url) }
-                            };
+                                        { "base64", SheetHelper.UrlToBaseValue(file.Url) }
+                                    };
                                     BrandsattachmentsList.Add(attachmentInfo);
                                 }
                                 BrandsrowData["Attachments"] = BrandsattachmentsList;
@@ -411,12 +414,13 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 foreach (var attachment in attachments.Data)
                                 {
                                     long AID = (long)attachment.Id;
-                                    Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet3.Id.Value, AID));
+                                    Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet3, AID));
+                                    //Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet3.Id.Value, AID));
                                     Dictionary<string, object> attachmentInfo = new()
                             {
                                 { "Name", file.Name },
                                 { "Id", file.Id },
-                                { "base64" , SheetHelper.UrlToBaseValue(file.Url) }
+                                { "base64" ,SheetHelper.UrlToBaseValue(file.Url) }
                             };
                                     InviteesattachmentsList.Add(attachmentInfo);
                                 }
@@ -460,12 +464,14 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 foreach (var attachment in attachments.Data)
                                 {
                                     long AID = (long)attachment.Id;
-                                    Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet4.Id.Value, AID));
+                                    Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet4, AID));
+                                    //Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet4.Id.Value, AID));
                                     Dictionary<string, object> attachmentInfo = new()
                             {
                                 { "Name", file.Name },
                                 { "Id", file.Id },
-                                { "base64" , SheetHelper.UrlToBaseValue(file.Url) }
+                               { "base64" , SheetHelper.UrlToBaseValue(file.Url)
+                                }
                             };
                                     PanelattachmentsList.Add(attachmentInfo);
                                 }
@@ -506,12 +512,14 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 foreach (var attachment in attachments.Data)
                                 {
                                     long AID = (long)attachment.Id;
-                                    Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet5.Id.Value, AID));
+                                    Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet5, AID));
+                                    // Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet5.Id.Value, AID));
                                     Dictionary<string, object> attachmentInfo = new()
                             {
                                 { "Name", file.Name },
                                 { "Id", file.Id },
-                                { "base64" , SheetHelper.UrlToBaseValue(file.Url) }
+                                { "base64" , SheetHelper.UrlToBaseValue(file.Url)
+                                }
                             };
                                     SlideKitattachmentsList.Add(attachmentInfo);
                                 }
@@ -572,7 +580,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     foreach (var attachment in attachments.Data)
                                     {
                                         var AID = (long)attachment.Id;
-                                        var file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet7.Id.Value, AID));
+                                        Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet7, AID));
+                                        //var file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet7.Id.Value, AID));
                                         DeviationsattachmentInfo[val] = SheetHelper.UrlToBaseValue(file.Url);
                                     }
                                 }
@@ -589,6 +598,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     resultData["SlideKitSelection"] = SlideKiteventDetails;
                     resultData["ExpenseSelection"] = ExpenseeventDetails;
                     resultData["Deviation"] = DeviationsattachmentsList;
+                    Log.Information("end of api " + DateTime.Now);
                     return Ok(resultData);
                 }
                 catch (SmartsheetException ex)
@@ -627,6 +637,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 }
             }
+
             return Ok();
 
         }

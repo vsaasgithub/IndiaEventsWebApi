@@ -247,6 +247,29 @@ namespace IndiaEventsWebApi.Helper
 
         }
 
+        public static async Task<Attachment> GetAttachment(SmartsheetClient smartsheet, Sheet sheet1, long AID, int count = 0)
+        {
+
+            try
+            {
+                Attachment attachments = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID));
+                return attachments;
+            }
+            catch (Exception ex)
+            {
+
+
+                if (count >= 8)
+                {
+                    throw ex;
+                }
+
+                return await GetAttachment(smartsheet, sheet1, AID, count + 1);
+            }
+
+        }
+
+
         //public static async Task<PaginatedResult<Attachment>> DeleteAttachment(SmartsheetClient smartsheet, Sheet sheet4, long Id, int count = 0)
         //{
         //    try
