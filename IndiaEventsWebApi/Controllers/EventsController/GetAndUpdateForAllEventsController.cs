@@ -593,6 +593,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 }
                 catch (SmartsheetException ex)
                 {
+                    Log.Error($"Error occured on SmartsheetException method {ex.Message} at {DateTime.Now}");
+                    Log.Error(ex.StackTrace);
                     if (loopCount < count)
                     {
                         loopCount++;
@@ -608,10 +610,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 }
                 catch (Exception ex)
                 {
+                    Log.Error($"Error occured on GetData method {ex.Message} at {DateTime.Now}");
+                    Log.Error(ex.StackTrace);
                     if (loopCount < count)
                     {
                         loopCount++;
-                        await Task.Delay(2000);
+                        //await Task.Delay(2000);
                     }
                     else
                     {
