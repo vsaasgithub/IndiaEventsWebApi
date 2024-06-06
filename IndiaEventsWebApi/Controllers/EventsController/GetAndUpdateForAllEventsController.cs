@@ -1287,7 +1287,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     {
                         Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
                         List<long> rowIdsToDelete = new List<long>();
-                        foreach (Row row in sheet2.Rows)
+                        IEnumerable<Row> DataInSheet2 = [];
+                        DataInSheet2 = sheet2.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet2.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
+                        foreach (Row row in DataInSheet2)
+                        //foreach (Row row in sheet2.Rows)
                         {
                             if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
                             {
@@ -1330,7 +1333,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                         Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
                         List<long> rowIdsToDelete = new List<long>();
-                        foreach (Row row in sheet4.Rows)
+                        IEnumerable<Row> DataInSheet4 = [];
+                        DataInSheet4 = sheet4.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet4.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
+                        foreach (Row row in DataInSheet4)
+                        //foreach (Row row in sheet4.Rows)
                         {
                             if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
                             {
@@ -1444,7 +1450,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     {
                         Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
                         List<long> rowIdsToDelete = new List<long>();
-                        foreach (Row row in sheet5.Rows)
+                        IEnumerable<Row> DataInSheet5 = [];
+                        DataInSheet5 = sheet5.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet5.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
+                        foreach (Row row in DataInSheet5)
+                        //foreach (Row row in sheet5.Rows)
                         {
                             if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
                             {
@@ -1504,7 +1513,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     {
                         Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
                         List<long> rowIdsToDelete = new List<long>();
-                        foreach (Row row in sheet3.Rows)
+                        IEnumerable<Row> DataInSheet3 = [];
+                        DataInSheet3 = sheet3.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet3.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
+                        foreach (Row row in DataInSheet3)
+                        //foreach (Row row in sheet3.Rows)
                         {
                             if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
                             {
@@ -1559,7 +1571,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     {
                         Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
                         List<long> rowIdsToDelete = new List<long>();
-                        foreach (Row row in sheet6.Rows)
+                        IEnumerable<Row> DataInSheet6 = [];
+                        DataInSheet6 = sheet6.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet6.Columns.Where(y => y.Title == "EventId/EventRequestID").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
+                        foreach (Row row in DataInSheet6)
+                        //foreach (Row row in sheet6.Rows)
                         {
                             if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
                             {
@@ -1719,6 +1734,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     }
                                     catch (Exception ex)
                                     {
+                                        Log.Error($"Error occured on UpdateClassIPreEvent method {ex.Message} at {DateTime.Now}");
+                                        Log.Error(ex.StackTrace);
                                         return BadRequest(new
                                         {
                                             Message = ex.Message
@@ -1803,10 +1820,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
                     catch (Exception ex)
                     {
-                        //Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
-                        //Log.Error(ex.StackTrace);
+                        Log.Error($"Error occured on UpdateClassIPreEvent method {ex.Message} at {DateTime.Now}");
+                        Log.Error(ex.StackTrace);
                         //return BadRequest(ex.Message);
-                        return Ok(new
+                        return BadRequest(new
                         { Message = ex.Message + "------" + ex.StackTrace });
                     }
                 }
@@ -1815,8 +1832,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             catch (Exception ex)
             {
 
-                //Log.Error($"Error occured on EventSettlementController method {ex.Message} at {DateTime.Now}");
-                //Log.Error(ex.StackTrace);
+                Log.Error($"Error occured on UpdateClassIPreEvent method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
                 //return BadRequest(ex.Message);
                 return BadRequest(new
                 { Message = ex.Message + "------" + ex.StackTrace });

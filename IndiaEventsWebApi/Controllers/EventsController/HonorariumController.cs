@@ -37,7 +37,6 @@ namespace IndiaEventsWebApi.Controllers
         [HttpPost("AddHonorariumData")]
         public async Task<IActionResult> AddHonorariumData(HonorariumPaymentListPh2 formData)
         {
-
             try
             {
                 SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
@@ -45,10 +44,12 @@ namespace IndiaEventsWebApi.Controllers
                 string sheetId = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
                 string sheetId1 = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
                 string sheetId7 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
+                //string UI_URL = configuration.GetSection("SmartsheetSettings:UI_URL").Value;
 
                 Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
                 Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
                 Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+                //Sheet UrlData = SheetHelper.GetSheetById(smartsheet, UI_URL);
 
                 StringBuilder addedHcpData = new();
                 int addedHcpDataNo = 1;
@@ -60,46 +61,51 @@ namespace IndiaEventsWebApi.Controllers
                     addedHcpDataNo++;
                 }
                 string panalist = addedHcpData.ToString();
+                Dictionary<string, long> Sheetcolumns = new();
+                foreach (var column in sheet.Columns)
+                {
+                    Sheetcolumns.Add(column.Title, (long)column.Id);
+                }
                 Row newRow = new()
                 {
                     Cells = new List<Cell>()
                 };
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "SlideKits"), Value = formData.RequestHonorariumList.SlideKits });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "EventId/EventRequestId"), Value = formData.RequestHonorariumList.EventId });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Event Type"), Value = formData.RequestHonorariumList.EventType });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Event Date"), Value = formData.RequestHonorariumList.EventDate });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Event Topic"), Value = formData.RequestHonorariumList.EventTopic });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "City"), Value = formData.RequestHonorariumList.City });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "State"), Value = formData.RequestHonorariumList.State });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Start Time"), Value = formData.RequestHonorariumList.StartTime });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "End Time"), Value = formData.RequestHonorariumList.EndTime });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Venue Name"), Value = formData.RequestHonorariumList.VenueName });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Travel & Accommodation Amount"), Value = formData.RequestHonorariumList.TotalTravelAndAccomodationSpend });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Honorarium Amount"), Value = formData.RequestHonorariumList.TotalHonorariumSpend });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Budget Amount"), Value = formData.RequestHonorariumList.TotalSpend });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Expenses"), Value = formData.RequestHonorariumList.Expenses });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Travel Amount"), Value = formData.RequestHonorariumList.TotalTravelSpend });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Accommodation Amount"), Value = formData.RequestHonorariumList.TotalAccomodationSpend });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Expense"), Value = formData.RequestHonorariumList.TotalExpenses });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Total Local Conveyance"), Value = formData.RequestHonorariumList.TotalLocalConveyance });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Brands"), Value = formData.RequestHonorariumList.Brands });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Invitees"), Value = formData.RequestHonorariumList.Invitees });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Panelists"), Value = formData.RequestHonorariumList.Panelists });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Initiator Name"), Value = formData.RequestHonorariumList.InitiatorName });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Panelists & Agreements"), Value = panalist });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Honorarium Submitted?"), Value = formData.RequestHonorariumList.HonarariumSubmitted });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Initiator Email"), Value = formData.RequestHonorariumList.InitiatorEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "RBM/BM"), Value = formData.RequestHonorariumList.RBMorBM });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Sales Head"), Value = formData.RequestHonorariumList.SalesHeadEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Sales Coordinator"), Value = formData.RequestHonorariumList.SalesCoordinatorEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Marketing Coordinator"), Value = formData.RequestHonorariumList.MarketingCoordinatorEmail }); newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Marketing Head"), Value = formData.RequestHonorariumList.MarketingHeadEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Compliance"), Value = formData.RequestHonorariumList.Compliance });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Finance Accounts"), Value = formData.RequestHonorariumList.FinanceAccounts });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Finance Treasury"), Value = formData.RequestHonorariumList.FinanceTreasury });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Reporting Manager"), Value = formData.RequestHonorariumList.ReportingManagerEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "1 Up Manager"), Value = formData.RequestHonorariumList.FirstLevelEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Medical Affairs Head"), Value = formData.RequestHonorariumList.MedicalAffairsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Role"), Value = formData.RequestHonorariumList.Role });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["SlideKits"], Value = formData.RequestHonorariumList.SlideKits });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["EventId/EventRequestId"], Value = formData.RequestHonorariumList.EventId });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Event Type"], Value = formData.RequestHonorariumList.EventType });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Event Date"], Value = formData.RequestHonorariumList.EventDate });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Event Topic"], Value = formData.RequestHonorariumList.EventTopic });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["City"], Value = formData.RequestHonorariumList.City });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["State"], Value = formData.RequestHonorariumList.State });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Start Time"], Value = formData.RequestHonorariumList.StartTime });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["End Time"], Value = formData.RequestHonorariumList.EndTime });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Venue Name"], Value = formData.RequestHonorariumList.VenueName });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Total Travel & Accommodation Amount"], Value = formData.RequestHonorariumList.TotalTravelAndAccomodationSpend });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Total Honorarium Amount"], Value = formData.RequestHonorariumList.TotalHonorariumSpend });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Budget Amount"], Value = formData.RequestHonorariumList.TotalSpend });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Expenses"], Value = formData.RequestHonorariumList.Expenses });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Total Travel Amount"], Value = formData.RequestHonorariumList.TotalTravelSpend });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Total Accommodation Amount"], Value = formData.RequestHonorariumList.TotalAccomodationSpend });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Total Expense"], Value = formData.RequestHonorariumList.TotalExpenses });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Total Local Conveyance"], Value = formData.RequestHonorariumList.TotalLocalConveyance });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Brands"], Value = formData.RequestHonorariumList.Brands });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Invitees"], Value = formData.RequestHonorariumList.Invitees });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Panelists"], Value = formData.RequestHonorariumList.Panelists });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Initiator Name"], Value = formData.RequestHonorariumList.InitiatorName });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Panelists & Agreements"], Value = panalist });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Honorarium Submitted?"], Value = formData.RequestHonorariumList.HonarariumSubmitted });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Initiator Email"], Value = formData.RequestHonorariumList.InitiatorEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["RBM/BM"], Value = formData.RequestHonorariumList.RBMorBM });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Sales Head"], Value = formData.RequestHonorariumList.SalesHeadEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Sales Coordinator"], Value = formData.RequestHonorariumList.SalesCoordinatorEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Marketing Coordinator"], Value = formData.RequestHonorariumList.MarketingCoordinatorEmail }); newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Marketing Head"), Value = formData.RequestHonorariumList.MarketingHeadEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Compliance"], Value = formData.RequestHonorariumList.Compliance });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Finance Accounts"], Value = formData.RequestHonorariumList.FinanceAccounts });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Finance Treasury"], Value = formData.RequestHonorariumList.FinanceTreasury });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Reporting Manager"], Value = formData.RequestHonorariumList.ReportingManagerEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["1 Up Manager"], Value = formData.RequestHonorariumList.FirstLevelEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Medical Affairs Head"], Value = formData.RequestHonorariumList.MedicalAffairsEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Role"], Value = formData.RequestHonorariumList.Role });
 
                 //IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet.Id.Value, new Row[] { newRow });
 
@@ -134,28 +140,33 @@ namespace IndiaEventsWebApi.Controllers
 
                 if (formData.RequestHonorariumList.IsDeviationUpload == "Yes")
                 {
+                    Dictionary<string, long> Sheet7columns = new();
+                    foreach (var column in sheet7.Columns)
+                    {
+                        Sheet7columns.Add(column.Title, (long)column.Id);
+                    }
                     try
                     {
                         Row newRow7 = new()
                         {
                             Cells = new List<Cell>()
                         };
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formData.RequestHonorariumList.EventTopic });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Type"), Value = formData.RequestHonorariumList.EventType });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Date"), Value = formData.RequestHonorariumList.EventDate });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Start Time"), Value = formData.RequestHonorariumList.StartTime });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "End Time"), Value = formData.RequestHonorariumList.EndTime });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Venue Name"), Value = formData.RequestHonorariumList.VenueName });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "City"), Value = formData.RequestHonorariumList.City });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "State"), Value = formData.RequestHonorariumList.State });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInHonorarium:5WorkingdaysDeviationDateTrigger").Value });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HON-5Workingdays Deviation Date Trigger"), Value = formData.RequestHonorariumList.IsDeviationUpload });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formData.RequestHonorariumList.SalesHeadEmail });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formData.RequestHonorariumList.FinanceHead });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formData.RequestHonorariumList.InitiatorName });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formData.RequestHonorariumList.InitiatorEmail });
-                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formData.RequestHonorariumList.SalesCoordinatorEmail });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["EventId/EventRequestId"], Value = eventId });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Event Topic"], Value = formData.RequestHonorariumList.EventTopic });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Event Type"], Value = formData.RequestHonorariumList.EventType });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Event Date"], Value = formData.RequestHonorariumList.EventDate });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Start Time"], Value = formData.RequestHonorariumList.StartTime });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["End Time"], Value = formData.RequestHonorariumList.EndTime });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Venue Name"], Value = formData.RequestHonorariumList.VenueName });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["City"], Value = formData.RequestHonorariumList.City });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["State"], Value = formData.RequestHonorariumList.State });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Deviation Type"], Value = configuration.GetSection("DeviationNamesInHonorarium:5WorkingdaysDeviationDateTrigger").Value });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["HON-5Workingdays Deviation Date Trigger"], Value = formData.RequestHonorariumList.IsDeviationUpload });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Sales Head"], Value = formData.RequestHonorariumList.SalesHeadEmail });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Finance Head"], Value = formData.RequestHonorariumList.FinanceHead });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Initiator Name"], Value = formData.RequestHonorariumList.InitiatorName });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Initiator Email"], Value = formData.RequestHonorariumList.InitiatorEmail });
+                        newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Sales Coordinator"], Value = formData.RequestHonorariumList.SalesCoordinatorEmail });
 
                         // IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
                         IList<Row> addeddeviationrow = ApiCalls.DeviationData(smartsheet, sheet7, newRow7);
