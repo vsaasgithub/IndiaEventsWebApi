@@ -44,12 +44,14 @@ namespace IndiaEventsWebApi.Controllers
                 string sheetId = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
                 string sheetId1 = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
                 string sheetId7 = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
-                //string UI_URL = configuration.GetSection("SmartsheetSettings:UI_URL").Value;
+                string UI_URL = configuration.GetSection("SmartsheetSettings:UI_URL").Value;
+
+                Sheet UrlData = SheetHelper.GetSheetById(smartsheet, UI_URL);
 
                 Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
                 Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
                 Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
-                //Sheet UrlData = SheetHelper.GetSheetById(smartsheet, UI_URL);
+                
 
                 StringBuilder addedHcpData = new();
                 int addedHcpDataNo = 1;
@@ -70,6 +72,18 @@ namespace IndiaEventsWebApi.Controllers
                 {
                     Cells = new List<Cell>()
                 };
+
+                Row? targetRow1 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Finance Accounts URL"));
+                Row? targetRow2 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Finance Treasury URL"));
+                Row? targetRow3 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Approver Honorarium URL"));
+                Row? targetRow4 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Initiator URL"));
+
+
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Finance Accounts URL"], Value = targetRow1?.Cells[1].Value ?? "no url" });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Finance Treasury URL"], Value = targetRow2?.Cells[1].Value ?? "no url" });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Approver Honorarium URL"], Value = targetRow3?.Cells[1].Value ?? "no url" });
+                newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Initiator URL"], Value = targetRow4?.Cells[1].Value ?? "no url" });
+
                 newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["SlideKits"], Value = formData.RequestHonorariumList.SlideKits });
                 newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["EventId/EventRequestId"], Value = formData.RequestHonorariumList.EventId });
                 newRow.Cells.Add(new Cell { ColumnId = Sheetcolumns["Event Type"], Value = formData.RequestHonorariumList.EventType });

@@ -500,7 +500,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                         foreach (string sheetId in sheetIds)
                         {
                             Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
-                            Log.Information($"Executed the data in sheet {sheetId} --- {DateTime.Now}");
+                            //Log.Information($"Executed the data in sheet {sheetId} --- {DateTime.Now}");
 
                             List<string> columnNames = sheet.Columns.Select(column => column.Title).ToList();
 
