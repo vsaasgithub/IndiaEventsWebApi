@@ -492,6 +492,39 @@ namespace IndiaEventsWebApi.Helper
 
         }
 
+        public static List<Dictionary<string, object>> HcpData(string[] sheetIds, SmartsheetClient smartsheet, int count = 1)
+        {
+            List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
+            try
+            {
+
+                foreach (string sheetId in sheetIds)
+                {
+                    Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                    List<string> columnNames = sheet.Columns.Select(column => column.Title).ToList();
+                    foreach (Row row in sheet.Rows)
+                    {
+                        Dictionary<string, object> rowData = new Dictionary<string, object>();
+                        for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
+                        {
+                            rowData[columnNames[i]] = row.Cells[i].Value;
+                        }
+                        sheetData.Add(rowData);
+                    }
+                }
+
+                return sheetData;
+            }
+            catch (Exception ex)
+            {
+                if (count >= 5)
+                {
+                    throw ex;
+                }
+                return HcpData(sheetIds, smartsheet, count + 1);
+            }
+        }
+
 
     }
 }

@@ -1,10 +1,13 @@
 ﻿using Aspose.Pdf.Plugins;
 using IndiaEvents.Models.Models.GetData;
 using IndiaEventsWebApi.Helper;
+using IndiaEventsWebApi.Models.MasterSheets;
 using IndiaEventsWebApi.Models.RequestSheets;
+using LazyCache;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Org.BouncyCastle.Asn1.Ocsp;
 using Serilog;
 using Smartsheet.Api;
@@ -20,10 +23,12 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
         private readonly string accessToken;
         private readonly IConfiguration configuration;
         private readonly SmartsheetClient smartsheet;
+        private ICacheProvider _cacheProvider;
 
-        public GetMasterSheetsController(IConfiguration configuration)
+        public GetMasterSheetsController(IConfiguration configuration, ICacheProvider cacheProvider)
         {
             this.configuration = configuration;
+            this._cacheProvider = cacheProvider;
             accessToken = configuration.GetSection("SmartsheetSettings:AccessToken").Value;
             smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
         }
@@ -479,62 +484,40 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
         //    }
         //    return Ok();
         //}
+
         [HttpGet("HcpMaster")]
-        public IActionResult HcpMaster(int count = 5)
+        public async Task<IActionResult> HcpMaster()
         {
             try
             {
-                List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
-
-                for (int loopCount = 0; loopCount < count; loopCount++)
-                {
-                    try
-                    {
-                        string[] sheetIds = {
+                Log.Information("Hcp Master loop started at " + DateTime.Now);
+                string[] sheetIds = {
                             configuration.GetSection("SmartsheetSettings:HcpMaster1").Value,
                             configuration.GetSection("SmartsheetSettings:HcpMaster2").Value,
                             configuration.GetSection("SmartsheetSettings:HcpMaster3").Value,
                             configuration.GetSection("SmartsheetSettings:HcpMaster4").Value
                         };
-
-                        foreach (string sheetId in sheetIds)
-                        {
-                            Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
-                            //Log.Information($"Executed the data in sheet {sheetId} --- {DateTime.Now}");
-
-                            List<string> columnNames = sheet.Columns.Select(column => column.Title).ToList();
-
-                            foreach (Row row in sheet.Rows)
-                            {
-                                Dictionary<string, object> rowData = new Dictionary<string, object>();
-                                for (int i = 0; i < row.Cells.Count && i < columnNames.Count; i++)
-                                {
-                                    rowData[columnNames[i]] = row.Cells[i].Value;
-                                }
-                                sheetData.Add(rowData);
-                            }
-                        }
-                        return Ok(sheetData);
-                    }
-                    catch (SmartsheetException ex)
+                if (!_cacheProvider.TryGetValue(HcpCacheData.HcpData, out List<Dictionary<string, object>> HcpData))
+                {
+                    HcpData = ApiCalls.HcpData(sheetIds, smartsheet);
+                    var cacheEntryOption = new MemoryCacheEntryOptions
                     {
-                        Log.Error($"Error occurred on SmartsheetException method {ex.Message} at {DateTime.Now}");
-                        Log.Error(ex.StackTrace);
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error($"Error occurred on GetData method {ex.Message} at {DateTime.Now}");
-                        Log.Error(ex.StackTrace);
-                    }
+                        AbsoluteExpiration = DateTime.Now.AddHours(5),
+                        SlidingExpiration = TimeSpan.FromHours(5),
+                        Size = 40000000
+                    };
+                    _cacheProvider.Set(HcpCacheData.HcpData, HcpData, cacheEntryOption);
                 }
-
-                return Ok();
+                Log.Information("Hcp Master loop Ended at " + DateTime.Now);
+                return Ok(HcpData);
             }
             catch (Exception ex)
             {
                 Log.Error($"Unexpected error occurred: {ex.Message}");
                 return BadRequest(new { Message = ex.Message });
             }
+
+
         }
         [HttpGet("GetRowsDataInHcpMasterByMisCode")]
         public IActionResult GetRowsDataInHcpMasterByMisCode(string? searchValue)
@@ -1287,7 +1270,6 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
             return Ok(ProductBrandsListrowData);
         }
-
 
 
 

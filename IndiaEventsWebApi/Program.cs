@@ -15,6 +15,8 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 builder.Services.AddSingleton(new SemaphoreSlim(1, 1));
+builder.Services.AddMemoryCache();
+builder.Services.AddLazyCache();
 
 var configuration = builder.Configuration;
 
@@ -61,25 +63,27 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
-
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .CreateLogger();
+            .WriteTo.File("Logs\\logs.txt", rollingInterval: RollingInterval.Day).CreateLogger();
 
-builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
-{
-    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
-        .Enrich.FromLogContext()
-        .WriteTo.Console();
-}, preserveStaticLogger: true);
+//Log.Logger = new LoggerConfiguration()
+//    .WriteTo.Console()
+//    .CreateLogger();
 
-builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
-{
-    loggerConfiguration
-        .ReadFrom.Configuration(hostingContext.Configuration)
-        .Enrich.FromLogContext()
-        .WriteTo.Logger(lc => lc.Filter.ByIncludingOnly(evt => evt.Exception != null).WriteTo.Console());
-}, preserveStaticLogger: true);
+//builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+//{
+//    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
+//        .Enrich.FromLogContext()
+//        .WriteTo.Console();
+//}, preserveStaticLogger: true);
+
+//builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+//{
+//    loggerConfiguration
+//        .ReadFrom.Configuration(hostingContext.Configuration)
+//        .Enrich.FromLogContext()
+//        .WriteTo.Logger(lc => lc.Filter.ByIncludingOnly(evt => evt.Exception != null).WriteTo.Console());
+//}, preserveStaticLogger: true);
 
 var app = builder.Build();
 

@@ -103,3 +103,5 @@ D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net8.0\refint
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net8.0\IndiaEventsWebApi.pdb
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net8.0\IndiaEventsWebApi.genruntimeconfig.cache
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\obj\Debug\net8.0\ref\IndiaEventsWebApi.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net8.0\LazyCache.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net8.0\LazyCache.AspNetCore.dll

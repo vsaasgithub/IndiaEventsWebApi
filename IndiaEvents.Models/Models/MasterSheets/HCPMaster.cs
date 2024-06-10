@@ -36,4 +36,8 @@
         public string? MISCode { get; set;}
         public string? Type { get; set;}
     }
+    public static class HcpCacheData
+    {
+        public static string HcpData = "HcpData";
+    }
 }

@@ -188,7 +188,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     {
                         Cells = new List<Cell>()
                     };
-                   
+
                     Row? targetRow1 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Approver Pre Event URL"));
                     Row? targetRow2 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Finance Treasury URL"));
                     Row? targetRow4 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Initiator URL"));
@@ -1155,7 +1155,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             try
             {
                 //semaphore = new SemaphoreSlim(0, 1);
-
+                Log.Information("starting of api " + DateTime.Now);
                 //SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
                 strMessage += "==Before get token==" + DateTime.Now.ToString() + "==";
                 SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
@@ -1292,7 +1292,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 {
                     Cells = new List<Cell>()
                 };
-               
+
                 Row? targetRow1 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Approver Pre Event URL"));
                 Row? targetRow2 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Finance Treasury URL"));
                 Row? targetRow4 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Initiator URL"));
@@ -1762,15 +1762,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 strMessage += "==Before adding Role to WebSheet " + "==" + DateTime.Now.ToString() + "==";
                 await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet1, updateRows)); //smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRows }));
                 strMessage += "==Before adding Role to WebSheet " + "==" + DateTime.Now.ToString() + "==";
-
+                Log.Information("End of api " + DateTime.Now);
                 return Ok(new
                 { Message = " Success!" });/* { Message = " Success!" });*/
             }
             catch (Exception ex)
             {
                 //return BadRequest($"Could not find {ex.Message}");
-                //Log.Error($"Error occured on AllPreEventsController Attachementfile method {ex.Message} at {DateTime.Now}");
-                //Log.Error(ex.StackTrace);
+                Log.Error($"Error occured on webinar method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
                 //return BadRequest(ex.Message);
                 return BadRequest(new
                 { Message = ex.Message + "------" + ex.StackTrace });
@@ -2262,33 +2262,33 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Finance Treasury URL"], Value = targetRow2?.Cells[1].Value ?? "no url" });
                 newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Initiator URL"], Value = targetRow4?.Cells[1].Value ?? "no url" });
 
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Event Topic"], Value = formDataList.StallFabrication.EventName });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Event Type"], Value = formDataList.StallFabrication.EventType });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Event Date"], Value = formDataList.StallFabrication.StartDate });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "End Date"], Value = formDataList.StallFabrication.EndDate });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Class III Event Code"], Value = formDataList.StallFabrication.Class_III_EventCode });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Brands"], Value = brand });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Expenses"], Value = Expense });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Initiator Name"], Value = formDataList.StallFabrication.InitiatorName });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Total Expense"], Value = TotalExpenseAmount });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Budget Amount"], Value = total });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "IsAdvanceRequired"], Value = formDataList.StallFabrication.IsAdvanceRequired });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Advance Amount"], Value = SheetHelper.NumCheck(formDataList.StallFabrication.AdvanceAmount) });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Initiator Email"], Value = formDataList.StallFabrication.Initiator_Email });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "RBM/BM"], Value = formDataList.StallFabrication.RBMorBM });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Sales Head"], Value = formDataList.StallFabrication.Sales_Head });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Sales Coordinator"], Value = formDataList.StallFabrication.SalesCoordinatorEmail });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Marketing Coordinator"], Value = formDataList.StallFabrication.MarketingCoordinatorEmail }); newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Marketing Head"), Value = formDataList.StallFabrication.Marketing_Head });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Compliance"], Value = formDataList.StallFabrication.ComplianceEmail });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Finance Accounts"], Value = formDataList.StallFabrication.FinanceAccountsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Finance Treasury"], Value = formDataList.StallFabrication.Finance });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Reporting Manager"], Value = formDataList.StallFabrication.ReportingManagerEmail });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "1 Up Manager"], Value = formDataList.StallFabrication.FirstLevelEmail });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Medical Affairs Head"], Value = formDataList.StallFabrication.MedicalAffairsEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Event Topic"], Value = formDataList.StallFabrication.EventName });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Event Type"], Value = formDataList.StallFabrication.EventType });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Event Date"], Value = formDataList.StallFabrication.StartDate });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["End Date"], Value = formDataList.StallFabrication.EndDate });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Class III Event Code"], Value = formDataList.StallFabrication.Class_III_EventCode });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Brands"], Value = brand });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Expenses"], Value = Expense });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Initiator Name"], Value = formDataList.StallFabrication.InitiatorName });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Total Expense"], Value = TotalExpenseAmount });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Budget Amount"], Value = total });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["IsAdvanceRequired"], Value = formDataList.StallFabrication.IsAdvanceRequired });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Advance Amount"], Value = SheetHelper.NumCheck(formDataList.StallFabrication.AdvanceAmount) });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Initiator Email"], Value = formDataList.StallFabrication.Initiator_Email });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["RBM/BM"], Value = formDataList.StallFabrication.RBMorBM });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Sales Head"], Value = formDataList.StallFabrication.Sales_Head });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Sales Coordinator"], Value = formDataList.StallFabrication.SalesCoordinatorEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Marketing Coordinator"], Value = formDataList.StallFabrication.MarketingCoordinatorEmail }); newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Marketing Head"), Value = formDataList.StallFabrication.Marketing_Head });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Compliance"], Value = formDataList.StallFabrication.ComplianceEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Finance Accounts"], Value = formDataList.StallFabrication.FinanceAccountsEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Finance Treasury"], Value = formDataList.StallFabrication.Finance });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Reporting Manager"], Value = formDataList.StallFabrication.ReportingManagerEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["1 Up Manager"], Value = formDataList.StallFabrication.FirstLevelEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Medical Affairs Head"], Value = formDataList.StallFabrication.MedicalAffairsEmail });
                 //newRow.Cells.Add(new Cell { ColumnId Sheet1columns[1, "Role"), Value = formDataList.StallFabrication.Role });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ " Total Expense BTC"], Value = SheetHelper.NumCheck(formDataList.StallFabrication.TotalExpenseBTC) });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "Total Expense BTE"], Value = SheetHelper.NumCheck(formDataList.StallFabrication.TotalExpenseBTE) });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[ "BTE Expense Details"], Value = BTEExpense });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns[" Total Expense BTC"], Value = SheetHelper.NumCheck(formDataList.StallFabrication.TotalExpenseBTC) });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Total Expense BTE"], Value = SheetHelper.NumCheck(formDataList.StallFabrication.TotalExpenseBTE) });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["BTE Expense Details"], Value = BTEExpense });
 
                 IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet1.Id.Value, new Row[] { newRow });
                 long eventIdColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
