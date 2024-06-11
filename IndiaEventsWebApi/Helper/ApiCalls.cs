@@ -525,6 +525,27 @@ namespace IndiaEventsWebApi.Helper
             }
         }
 
+        public static async Task<Attachment> UpdateAttachments(SmartsheetClient smartsheet, long sheetId, long Id, string filePath, int count = 0)
+        {
 
+            try
+            {
+
+                Attachment attachment = smartsheet.SheetResources.AttachmentResources.VersioningResources.AttachNewVersion(
+                                    sheetId, Id, filePath, "application/msword");
+                return attachment;
+
+            }
+            catch (Exception ex)
+            {
+                if (count >= 8)
+                {
+                    throw ex;
+                }
+
+                return await UpdateAttachments(smartsheet, sheetId, Id, filePath, count + 1);
+            }
+
+        }
     }
 }

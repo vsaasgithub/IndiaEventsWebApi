@@ -11,7 +11,6 @@ namespace IndiaEvents.Models.Models.Draft
 {
     public class UpdateDataForClassI
     {
-
         public UpdateEventDetails EventDetails { get; set; }
         public List<UpdateBrandSelection> BrandSelection { get; set; }
         public List<UpdatePanelSelection> PanelSelection { get; set; }
@@ -19,8 +18,7 @@ namespace IndiaEvents.Models.Models.Draft
         public List<UpdateInviteeSelection> InviteeSelection { get; set; }
         public List<UpdateExpenseSelection> ExpenseSelection { get; set; }
         public string IsDeviationUpload { get; set; }
-        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }
-        //public List<string> DeviationFiles { get; set; }
+        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }        
     }
 
     public class UpdateDataForStall
@@ -279,6 +277,13 @@ namespace IndiaEvents.Models.Models.Draft
     public class UpdateFiles
     {
         public long? Id { get; set; }
+        public string? FileBase64 { get; set; }
+    }
+
+    public class UpdateAttachments
+    {
+        public long SheetId { get; set; }
+        public long AttachmentId { get; set; }
         public string? FileBase64 { get; set; }
     }
 

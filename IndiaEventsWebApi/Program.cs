@@ -9,6 +9,8 @@ using System.Text;
 using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.Extensions.DependencyInjection;
 
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

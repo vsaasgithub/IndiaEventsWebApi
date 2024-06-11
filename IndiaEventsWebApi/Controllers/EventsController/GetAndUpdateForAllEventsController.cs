@@ -271,6 +271,42 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             }
         }
 
+        [HttpPut("UpdateAttachmentsInSheet")]
+        public async Task<IActionResult> UpdateAttachmentsInSheet(List<UpdateAttachments> formData)
+        {
+            try
+            {
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+
+                foreach (var attachment in formData)
+                {
+
+                    string[] words = attachment.FileBase64.Split(':');
+                    string r = words[0];
+                    string q = words[1];
+                    string name = r.Split(".")[0];
+                    string filePath = SheetHelper.testingFile(q, name);
+
+
+                    await ApiCalls.UpdateAttachments(smartsheet, attachment.SheetId, attachment.AttachmentId, filePath);
+
+
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        SheetHelper.DeleteFile(filePath);
+                    }
+                }
+                return Ok(new { Message = "Attachment updated successFully" });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
         [HttpGet("GetDataFromAllSheetsUsingEventIdInPreEvent")]
         public async Task<IActionResult> GetDataFromAllSheetsUsingEventId(string eventId, int count = 5)
         {
