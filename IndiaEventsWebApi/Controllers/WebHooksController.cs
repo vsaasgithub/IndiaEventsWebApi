@@ -18,7 +18,6 @@ using Microsoft.Extensions.Logging;
 using IndiaEventsWebApi.Models.EventTypeSheets;
 using Microsoft.Extensions.Hosting;
 using System.Globalization;
-using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 using Aspose.Cells.Rendering;
 
 namespace IndiaEventsWebApi.Controllers

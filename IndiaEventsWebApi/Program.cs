@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -21,7 +22,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddLazyCache();
 
 var configuration = builder.Configuration;
-
+//builder.Services.AddMySqlDataSource(builder.Configuration.GetConnectionString("SampleConnectionString")!);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

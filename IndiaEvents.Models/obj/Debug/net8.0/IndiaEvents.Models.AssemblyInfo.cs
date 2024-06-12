@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IndiaEvents.Models")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d980f016ebde47f86c1af374e5a5bb5ba0b7f508")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dbac63c5493b6761cff3dba8479db9cc14c51174")]
 [assembly: System.Reflection.AssemblyProductAttribute("IndiaEvents.Models")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IndiaEvents.Models")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

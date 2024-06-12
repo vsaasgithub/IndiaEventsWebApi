@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Web.Http.Results;
 using Aspose.Pdf.Operators;
 using IndiaEventsWebApi.Helper;
-using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 using NPOI.HPSF;
 
 namespace IndiaEventsWebApi.Helper

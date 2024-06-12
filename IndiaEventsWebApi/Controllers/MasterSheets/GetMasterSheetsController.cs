@@ -1,5 +1,6 @@
 ﻿using Aspose.Pdf.Plugins;
 using IndiaEvents.Models.Models.GetData;
+using IndiaEvents.Models.Models.Webhook;
 using IndiaEventsWebApi.Helper;
 using IndiaEventsWebApi.Models.MasterSheets;
 using IndiaEventsWebApi.Models.RequestSheets;
@@ -7,11 +8,13 @@ using LazyCache;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Memory;
-using Org.BouncyCastle.Asn1.Ocsp;
+using MySqlConnector;
 using Serilog;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
+using System.Data;
 
 namespace IndiaEventsWebApi.Controllers.MasterSheets
 {
@@ -519,6 +522,69 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
 
 
         }
+
+        //[HttpGet("SqlHcpMaster")]
+        //public async Task<IActionResult> SqlHcpMaster()
+        //{
+        //    try
+        //    {
+        //        //string MyConnection = "Server = 10.9.128.92; User ID = menarini; Password = Men@rini123; Port = 3306; Database = IN-Events";
+        //        string MyConnection = "server=10.9.128.92;user=menarini;database=IN-Events;port=3306;password=Men@rini123";
+        //        //string MyConnection = "Server=10.9.128.92; Port=3306; Uid=menarini;SslMode =none;Allow User Variables=true; Pwd=Men@rini123;database=IN-Events; connection timeout =5000000; ";
+        //        string Query = "select * from HCPMaster;";
+        //        MySqlConnection MyConn2 = new MySqlConnection(MyConnection);
+        //        MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
+        //        await MyConn2.OpenAsync();
+        //        MySqlDataAdapter MyAdapter = new MySqlDataAdapter();
+        //        MyAdapter.SelectCommand = MyCommand2;
+        //        DataTable dTable = new DataTable();
+        //        MyAdapter.Fill(dTable);
+        //        return Ok();
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //    return Ok();
+        //    //string connStr = "server=10.9.128.92;user=menarini;database=IN-Events;port=3306;password=Men@rini123";
+        //    //MySqlConnection conn = new MySqlConnection(connStr);
+        //    //try
+        //    //{
+        //    //    Console.WriteLine("Connecting to MySQL...");
+        //    //    conn.Open();
+
+        //    //    string sql = "select * from HCPMaster";
+        //    //    MySqlCommand cmd = new MySqlCommand(sql, conn);
+        //    //    MySqlDataReader rdr = cmd.ExecuteReader();
+
+        //    //    while (rdr.Read())
+        //    //    {
+        //    //        Console.WriteLine(rdr[0] + " -- " + rdr[1]);
+        //    //    }
+        //    //    rdr.Close();
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    Console.WriteLine(ex.ToString());
+        //    //    return BadRequest(ex.Message);
+        //    //}
+
+        //    //conn.Close();
+        //    //Console.WriteLine("Done.");
+        //    //return Ok();
+        //}
+        ////[HttpGet("SqlHcpMaster")]
+        ////public async Task<IActionResult> SqlHcpMaster(int id)
+        ////{
+        ////    using var connection = await database.OpenConnectionAsync();
+        ////    using var command = connection.CreateCommand();
+        ////    command.CommandText = @"SELECT `Id`, `Title`, `Content` FROM `BlogPost` WHERE `Id` = @id";
+        ////    command.Parameters.AddWithValue("@id", id);
+        ////    var result = await ReadAllAsync(await command.ExecuteReaderAsync());
+        ////    return result.FirstOrDefault();
+        ////}
+
         [HttpGet("GetRowsDataInHcpMasterByMisCode")]
         public IActionResult GetRowsDataInHcpMasterByMisCode(string? searchValue)
         {
@@ -876,10 +942,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
                         SalesHead = row.TryGetValue("Sales Head", out var _7daysSalesHeadApproval) ? _7daysSalesHeadApproval?.ToString() : null,
                         MedicalAffairsHead = row.TryGetValue("Medical Affairs Head", out var _7daysSalesHeadApprovaldate) ? _7daysSalesHeadApprovaldate?.ToString() : null,
                         NAID = row.TryGetValue("NA ID", out var prefBExpenseExcludingTaxApproval) ? prefBExpenseExcludingTaxApproval?.ToString() : null,
-
-
                         AggregateHonorariumLimit = row.TryGetValue("Aggregate Honorarium Limit", out var totalAttendees) && int.TryParse(totalAttendees?.ToString(), out var parsedTotalAttendees) ? parsedTotalAttendees : 0,
-
                         AggregateAccommodataionLimit = row.TryGetValue("Aggregate Accommodataion Limit", out var totalHonorariumAmount) && int.TryParse(totalHonorariumAmount?.ToString(), out var parsedTotalHonorariumAmount) ? parsedTotalHonorariumAmount : 0,
                         AggregateHonorariumSpent = row.TryGetValue("Aggregate Honorarium Spent", out var totalTravelAccommodationAmount) && int.TryParse(totalTravelAccommodationAmount?.ToString(), out var parsedTotalTravelAccommodationAmount) ? parsedTotalTravelAccommodationAmount : 0,
                         AggregateAccommodationSpent = row.TryGetValue("Aggregate Accommodation Spent", out var totalTravelAmount) && int.TryParse(totalTravelAmount?.ToString(), out var parsedTotalTravelAmount) ? parsedTotalTravelAmount : 0,

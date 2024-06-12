@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 using System.Text;
-using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
+
 namespace IndiaEventsWebApi.Helper
 {
     public class ApiCalls
     {
-
+        #region
         public static IList<Row> AddWebinarData(SmartsheetClient smartsheet, Sheet sheet1, WebinarPayload formDataList)
         {
             try
@@ -177,7 +177,7 @@ namespace IndiaEventsWebApi.Helper
                 return (IList<Row>)AddWebinarData(smartsheet, sheet1, formDataList);
             }
         }
-
+        #endregion
         public static async Task<Attachment> AddAttachmentsToSheet(SmartsheetClient smartsheet, Sheet sheet1, Row addedRow, string filePath, int count = 0)
         {
 
@@ -454,7 +454,6 @@ namespace IndiaEventsWebApi.Helper
             }
 
         }
-
         public static IList<Row> UpdateRole(SmartsheetClient smartsheet, Sheet sheet4, Row updateRows, int count = 0)
         {
             try
@@ -491,7 +490,6 @@ namespace IndiaEventsWebApi.Helper
             }
 
         }
-
         public static List<Dictionary<string, object>> HcpData(string[] sheetIds, SmartsheetClient smartsheet, int count = 1)
         {
             List<Dictionary<string, object>> sheetData = new List<Dictionary<string, object>>();
@@ -524,7 +522,6 @@ namespace IndiaEventsWebApi.Helper
                 return HcpData(sheetIds, smartsheet, count + 1);
             }
         }
-
         public static async Task<Attachment> UpdateAttachments(SmartsheetClient smartsheet, long sheetId, long Id, string filePath, int count = 0)
         {
 
@@ -547,5 +544,6 @@ namespace IndiaEventsWebApi.Helper
             }
 
         }
+
     }
 }

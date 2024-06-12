@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
 using System.Text;
-using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 
 namespace IndiaEventsWebApi.Controllers.RequestSheets
 {
