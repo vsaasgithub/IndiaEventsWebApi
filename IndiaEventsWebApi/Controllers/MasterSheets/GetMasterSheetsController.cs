@@ -523,29 +523,31 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
 
         }
 
-        //[HttpGet("SqlHcpMaster")]
-        //public async Task<IActionResult> SqlHcpMaster()
-        //{
-        //    try
-        //    {
-        //        //string MyConnection = "Server = 10.9.128.92; User ID = menarini; Password = Men@rini123; Port = 3306; Database = IN-Events";
-        //        string MyConnection = "server=10.9.128.92;user=menarini;database=IN-Events;port=3306;password=Men@rini123";
-        //        //string MyConnection = "Server=10.9.128.92; Port=3306; Uid=menarini;SslMode =none;Allow User Variables=true; Pwd=Men@rini123;database=IN-Events; connection timeout =5000000; ";
-        //        string Query = "select * from HCPMaster;";
-        //        MySqlConnection MyConn2 = new MySqlConnection(MyConnection);
-        //        MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
-        //        await MyConn2.OpenAsync();
-        //        MySqlDataAdapter MyAdapter = new MySqlDataAdapter();
-        //        MyAdapter.SelectCommand = MyCommand2;
-        //        DataTable dTable = new DataTable();
-        //        MyAdapter.Fill(dTable);
-        //        return Ok();
+        [HttpGet("SqlHcpMaster")]
+        public async Task<IActionResult> SqlHcpMaster()
+        {
+            try
+            {
+                //string MyConnection = "Server = 10.9.128.92; User ID = menarini; Password = Men@rini123; Port = 3306; Database = IN-Events";
+                string MyConnection = "server=10.9.128.92;user=menarini;database=IN-Events;port=3306;password=Men@rini123";
+                //string MyConnection = "Server=10.9.128.92; Port=3306; Uid=menarini;SslMode =none;Allow User Variables=true; Pwd=Men@rini123;database=IN-Events; connection timeout =5000000; ";
+                string Query = "select * from HCPMaster;";
+                MySqlConnection MyConn2 = new MySqlConnection(MyConnection);
+                MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
+                await MyConn2.OpenAsync();
+                MySqlDataAdapter MyAdapter = new MySqlDataAdapter();
+                MyAdapter.SelectCommand = MyCommand2;
+                DataTable dTable = new DataTable();
+                MyAdapter.Fill(dTable);
+                string JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(dTable);
+                return Ok(JsonData);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         //    return Ok();
         //    //string connStr = "server=10.9.128.92;user=menarini;database=IN-Events;port=3306;password=Men@rini123";
         //    //MySqlConnection conn = new MySqlConnection(connStr);
