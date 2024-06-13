@@ -2199,6 +2199,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
             Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
             Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+
             Sheet UrlData = SheetHelper.GetSheetById(smartsheet, UI_URL);
 
             StringBuilder addedBrandsData = new StringBuilder();

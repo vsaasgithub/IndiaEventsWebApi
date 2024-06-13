@@ -430,7 +430,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     //strMessage += "==After getting row data from process sheet" + "==" + DateTime.Now.ToString() + "==";
                     ////PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null));
                     //strMessage += "==Before listing attachments in row form process sheet" + "==" + DateTime.Now.ToString() + "==";
-                    foreach (var row in sheet1.Rows.Where(row => row.Cells.Any(c => c.DisplayValue == eventId)))
+                    IEnumerable<Row> DataInSheet1 = [];
+                    DataInSheet1 = sheet1.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet1.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
+
+                    foreach (var row in DataInSheet1)
                     {
                         Dictionary<string, object> rowData = new Dictionary<string, object>
                         {

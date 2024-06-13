@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "3nfQuG0D5pA9rv+UZarRGOgCOrVwEmCIQc7RU07ayUi8mJpXuyQq50S/Bkop0A8+FCZ7/VsvI2eJhMJSPje4Pg==",
+  "dgSpecHash": "+HPboYouNFcCvHs/kf6CaHdmrk4mkmVN5hQ3rnz43gsNDANLf47cXRQRURjSQmJfDioXVjNoQ2fG1ZNJxV4JPA==",
   "success": true,
   "projectFilePath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\IndiaEvents.Models.csproj",
   "expectedPackageFiles": [
@@ -88,6 +88,7 @@
     "C:\\Users\\srikanth.n\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\nlog\\4.6.3\\nlog.4.6.3.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\npoi\\2.3.0\\npoi.2.3.0.nupkg.sha512",
+    "C:\\Users\\srikanth.n\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\8.0.2\\pomelo.entityframeworkcore.mysql.8.0.2.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\restsharp\\106.6.9\\restsharp.106.6.9.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\runtime.native.system\\4.0.0\\runtime.native.system.4.0.0.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\runtime.native.system.io.compression\\4.1.0\\runtime.native.system.io.compression.4.1.0.nupkg.sha512",

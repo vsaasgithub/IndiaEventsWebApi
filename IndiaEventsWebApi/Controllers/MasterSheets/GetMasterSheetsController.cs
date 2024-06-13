@@ -528,18 +528,17 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
         {
             try
             {
-                //string MyConnection = "Server = 10.9.128.92; User ID = menarini; Password = Men@rini123; Port = 3306; Database = IN-Events";
-                string MyConnection = "server=10.9.128.92;user=menarini;database=IN-Events;port=3306;password=Men@rini123";
-                //string MyConnection = "Server=10.9.128.92; Port=3306; Uid=menarini;SslMode =none;Allow User Variables=true; Pwd=Men@rini123;database=IN-Events; connection timeout =5000000; ";
-                string Query = "select * from HCPMaster;";
+                string MyConnection = configuration.GetSection("ConnectionStrings:mysql").Value;
                 MySqlConnection MyConn2 = new MySqlConnection(MyConnection);
-                MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
+                MySqlCommand MyCommand2 = new MySqlCommand("GetHCPMaster", MyConn2);
+                MyCommand2.CommandType = CommandType.StoredProcedure;
                 await MyConn2.OpenAsync();
                 MySqlDataAdapter MyAdapter = new MySqlDataAdapter();
                 MyAdapter.SelectCommand = MyCommand2;
                 DataTable dTable = new DataTable();
                 MyAdapter.Fill(dTable);
                 string JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(dTable);
+                await MyConn2.CloseAsync();
                 return Ok(JsonData);
 
             }
