@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Web.Http.Results;
 using Aspose.Pdf.Operators;
 using IndiaEventsWebApi.Helper;
-using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 using NPOI.HPSF;
 
 namespace IndiaEventsWebApi.Helper
@@ -50,7 +49,30 @@ namespace IndiaEventsWebApi.Helper
                         { "Name", file.Name },
                         { "Id", file.Id },
                         { "Url", file.Url },
-                        { "base64", UrlToBaseValue(file.Url) }
+                        { "base64", UrlToBaseValue(file.Url) },
+                        {"SheetId",sheetId }
+                    };
+                    attachmentsList.Add(attachmentInfo);
+                }
+            }
+            return attachmentsList;
+        }
+        internal static List<Dictionary<string, object>> GetAttachmentsIdForRow(SmartsheetClient smartsheet, long sheetId, long row)
+        {
+            List<Dictionary<string, object>> attachmentsList = new List<Dictionary<string, object>>();
+            PaginatedResult<Attachment>? attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheetId, row, null);
+
+            if (attachments.Data != null && attachments.Data.Count > 0)
+            {
+                foreach (var attachment in attachments.Data)
+                {
+
+                    Dictionary<string, object> attachmentInfo = new Dictionary<string, object>
+                    {
+                        { "Name", attachment.Name },
+                        { "Id", attachment.Id },
+                         {"SheetId",sheetId }
+
                     };
                     attachmentsList.Add(attachmentInfo);
                 }
