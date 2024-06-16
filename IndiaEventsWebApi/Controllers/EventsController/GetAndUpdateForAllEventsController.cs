@@ -271,6 +271,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 });
             }
         }
+
         [HttpGet("GetBase64FromSheet")]
         public async Task<IActionResult> GetBase64FromSheet(long SheetId, long AttachmentId)
         {
@@ -280,7 +281,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 Attachment attachments = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(SheetId, AttachmentId));
 
-                return attachments != null ? Ok(new { base64 = SheetHelper.UrlToBaseValue(attachments.Url) }) : (IActionResult)Ok(new { Message = "AttachmentId not found" });
+                return attachments != null ? Ok(new { base64 = SheetHelper.UrlToBaseValue(attachments.Url )}) : (IActionResult)Ok(new { Message = "AttachmentId not found" });
             }
             catch (Exception ex)
             {
@@ -689,7 +690,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 {
                                     long AID = (long)attachment.Id;
                                     string Name = attachment.Name;
-                                    // Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet4, AID));
+                                   // Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet4, AID));
                                     ////Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet4.Id.Value, AID));
                                     Dictionary<string, object> attachmentInfo = new()
                             {
@@ -931,7 +932,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 List<Dictionary<string, object>> DeviationsattachmentsList = [];
                 List<Dictionary<string, object>> attachmentInfoFiles = [];
 
-                Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);//.Rows.Where(row => row.Cells.Any(c =>c.DisplayValue ==eventId));
+                Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
                 Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
                 Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
                 Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
@@ -943,11 +944,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 List<string> columnNames = sheet1.Columns.Select(col => col.Title).ToList();
 
-                //List<string> columnNames = new List<string>();
-                //foreach (Column column in sheet1.Columns)
-                //{
-                //    columnNames.Add(column.Title);
-                //}
                 foreach (var row in sheet1.Rows.Where(row => row.Cells.Any(c => c.DisplayValue == eventId)))
                 {
                     Dictionary<string, object> rowData = new Dictionary<string, object>
@@ -1046,7 +1042,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             {
                                 { "Name", file.Name },
                                 { "Id", file.Id },
-                                { "base64", SheetHelper.UrlToBaseValue(file.Url) }
+                               { "base64", SheetHelper.UrlToBaseValue(file.Url) }
                             };
                                 BrandsattachmentsList.Add(attachmentInfo);
                             }
@@ -2871,17 +2867,17 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
                         {
                             rowIdsToDelete.Add((long)row.Id);
-                        }
+                    }
                     }
                     if (rowIdsToDelete.Count > 0)
                     {
                         smartsheet.SheetResources.RowResources.DeleteRows(sheet2.Id.Value, rowIdsToDelete.ToArray(), true);
-                    }
+                        }
                     List<Row> newRows2 = new();
                     foreach (var formdata in formDataList.BrandSelection)
-                    {
-                        Row newRow2 = new()
                         {
+                            Row newRow2 = new()
+                            {
                             Cells = new List<Cell>()
                         {
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "% Allocation"), Value = formdata.PercentageAllocation },
@@ -2889,15 +2885,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Project ID"), Value = formdata.ProjectId },
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "EventId/EventRequestId"), Value =  formDataList.EventDetails.Id }
                         }
-                        };
+                            };
 
-                        newRows2.Add(newRow2);
-                    }
+                            newRows2.Add(newRow2);
+                        }
                     smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray());
 
 
 
-                }
+                    }
 
 
                 if (formDataList.ExpenseSelection.Count > 0)
@@ -2909,17 +2905,17 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         if (row.Cells.Any(cell => cell.DisplayValue == formDataList.EventDetails.Id))
                         {
                             rowIdsToDelete.Add((long)row.Id);
-                        }
+                    }
                     }
                     if (rowIdsToDelete.Count > 0)
                     {
                         smartsheet.SheetResources.RowResources.DeleteRows(sheet6.Id.Value, rowIdsToDelete.ToArray(), true);
-                    }
+                        }
                     List<Row> newRows6 = new();
                     foreach (var formdata in formDataList.ExpenseSelection)
-                    {
-                        Row newRow6 = new()
                         {
+                            Row newRow6 = new()
+                            {
                             Cells = new List<Cell>()
                         {
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Expense"), Value = formdata.Expense },
@@ -2932,9 +2928,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.EventDetails.EventStartDate },
                             new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event End Date"), Value = formDataList.EventDetails.EventEndDate }
                         }
-                        };
-                        newRows6.Add(newRow6);
-                    }
+                            };
+                            newRows6.Add(newRow6);
+                        }
                     smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, newRows6.ToArray());
 
 
@@ -3363,7 +3359,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                         IList<Row> updatedRow = await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet10, updateRow));
 
-                        //IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet10.Id.Value, new Row[] { updateRow });
 
                         long uId = updatedRow[0].Id.Value;
                         UpdatedId = uId;
@@ -3391,8 +3386,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet10, addedRow, filePath);
 
 
-                                    //Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                    //   sheet10.Id.Value, addedRow.Id.Value, filePath, "application/msword");
                                 }
 
                                 if (System.IO.File.Exists(filePath))

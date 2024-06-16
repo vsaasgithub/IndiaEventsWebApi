@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "3Rdt0Rgqx7LAxcOTJ3ch7ORJJuTtMaDCHVquSkyptUfU5UKdPDuy383y8Tz/8FHXxEgoGUYtNoGijR14+b9iTQ==",
+  "dgSpecHash": "Fj55VAEScuGSe0v2tdJLpCJspEeKMoupvwJEkle/D7Ov8wkN/V0hHGq8sZzt4oeR/kjuV13mMZ8MX+zraLv9Bg==",
   "success": true,
   "projectFilePath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\IndiaEventsWebApi.csproj",
   "expectedPackageFiles": [
@@ -81,6 +81,7 @@
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.0.1\\microsoft.aspnetcore.http.abstractions.2.0.1.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.0.1\\microsoft.aspnetcore.http.features.2.0.1.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.aspnetcore.metadata\\6.0.23\\microsoft.aspnetcore.metadata.6.0.23.nupkg.sha512",
+    "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.4\\microsoft.aspnetcore.openapi.8.0.4.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.24\\microsoft.aspnetcore.razor.language.6.0.24.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.0.1\\microsoft.aspnetcore.webutilities.2.0.1.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
@@ -137,7 +138,7 @@
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.net.stringtools\\17.8.3\\microsoft.net.stringtools.17.8.3.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
-    "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\8.0.2\\microsoft.visualstudio.web.codegeneration.8.0.2.nupkg.sha512",
     "C:\\Users\\srikanth.n\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\8.0.2\\microsoft.visualstudio.web.codegeneration.core.8.0.2.nupkg.sha512",

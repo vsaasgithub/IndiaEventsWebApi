@@ -314,3 +314,4 @@ D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net8.0\ru\Mic
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
 D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll

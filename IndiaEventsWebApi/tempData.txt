@@ -1,4 +1,4 @@
-﻿webinar updated
+﻿webinar up
  List<long> rowIdsToDelete = new List<long>();
                         IEnumerable<Row> DataInSheet4 = [];
                         DataInSheet4 = sheet4.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet4.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);

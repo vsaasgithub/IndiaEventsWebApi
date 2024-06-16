@@ -224,6 +224,30 @@ namespace IndiaEventsWebApi.Helper
 
         }
 
+        public static async Task<Attachment> AddAttachmentsToSheetSync(SmartsheetClient smartsheet, Sheet sheet1, Row addedRow, string filename, int count = 0)
+        {
+
+            try
+            {
+                var folderName = Path.Combine("Resources", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                string filePath = Path.Combine(pathToSave, filename);
+                Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+                          sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+                return attachment;
+
+            }
+            catch (Exception ex)
+            {
+                if (count >= 8)
+                {
+                    throw ex;
+                }
+
+                return await AddAttachmentsToSheetSync(smartsheet, sheet1, addedRow, filename, count + 1);
+            }
+
+        }
 
         public static async Task<PaginatedResult<Attachment>> GetAttachmantsFromSheet(SmartsheetClient smartsheet, Sheet sheet1, Row row, int count = 0)
         {

@@ -26,6 +26,23 @@ namespace IndiaEventsWebApi.Helper
             }
             return 0;
         }
+        internal static string SQlFileinsertion(string base64, string name)
+        {
+            byte[] fileBytes = Convert.FromBase64String(base64);
+            //var fileSize = (fileBytes.Length) / 1048576;
+            var folderName = Path.Combine("Resources", "Images");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            if (!Directory.Exists(pathToSave))
+            {
+                Directory.CreateDirectory(pathToSave);
+            }
+            string fileType = GetFileType(fileBytes);
+            string fileName = name + DateTime.Now.ToString("ddMMyyyymmss") + "." + fileType;
+            string filePath = Path.Combine(pathToSave, fileName);
+            File.WriteAllBytes(filePath, fileBytes);
+            return fileName;
+        }
+
         public static string GetValueByColumnName(Row row, List<string> columnNames, string columnName)
         {
             int columnIndex = columnNames.IndexOf(columnName);
