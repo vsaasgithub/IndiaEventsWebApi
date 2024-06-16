@@ -48,7 +48,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
             UI_URL = configuration.GetSection("SmartsheetSettings:UI_URL").Value;
         }
 
-        [HttpPost("Getsyncdata")]
+        [HttpGet("Getsyncdata")]
         public async Task<IActionResult> GetSyncData()
         {
             try
