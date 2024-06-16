@@ -2463,7 +2463,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     string r = words[0];
                     string q = words[1];
                     string name = r.Split(".")[0];
-                    string filePath = SheetHelper.testingFile(q, name);
+                    string filePath = SheetHelper.SQlFileinsertion(q, name);
                     Attachmentpaths = Attachmentpaths + "," + filePath;
                 }
 
@@ -2514,8 +2514,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 com.Parameters.AddWithValue("@MedicalAffairsHead", formDataList.Webinar.MedicalAffairsEmail);
                 com.Parameters.AddWithValue("@BTEExpenseDetails", formDataList.Webinar.BTEExpenseDetails);
                 com.Parameters.AddWithValue("@AttachmentPaths", Attachmentpaths);
-
-                MyConn.Open();
+                com.Parameters.AddWithValue("@webinarRole", formDataList.Webinar.Role);
+                await MyConn.OpenAsync();
                 //com.ExecuteNonQuery();
                 MySqlDataReader reader = com.ExecuteReader();
                 String RefID = "";
@@ -2523,10 +2523,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 {
                     RefID = reader["ID"].ToString();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestPanelDetails", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formData in formDataList.EventRequestHcpRole)
@@ -2541,7 +2541,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             string r = words[0];
                             string q = words[1];
                             string name = r.Split(".")[0];
-                            string filePath = SheetHelper.testingFile(q, name);
+                            string filePath = SheetHelper.SQlFileinsertion(q, name);
                             PanelAttachmentpaths = PanelAttachmentpaths + "," + filePath;
                         }
 
@@ -2615,10 +2615,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 }
 
 
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestsBrandsList", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formdata in formDataList.RequestBrandsList)
@@ -2630,10 +2630,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestInvitees", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formdata in formDataList.EventRequestInvitees)
@@ -2657,10 +2657,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestHCPSlideKitDetails", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 String SlidekitsAttachent = "";
@@ -2675,7 +2675,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             string r = words[0];
                             string q = words[1];
                             string name = r.Split(".")[0];
-                            string filePath = SheetHelper.testingFile(q, name);
+                            string filePath = SheetHelper.SQlFileinsertion(q, name);
                             SlidekitsAttachent = SlidekitsAttachent + "," + filePath;
                         }
                     }
@@ -2724,7 +2724,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         string r = words[1];
                         DeviationNames.Add(r);
                     }
-                    MyConn.Open();
+                    await MyConn.OpenAsync();
                     com = new MySqlCommand("SPDeviation_Process", MyConn);
                     com.CommandType = CommandType.StoredProcedure;
 
@@ -2747,7 +2747,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         if (deviationname == r)
                                         {
                                             string name = nameSplit[0];
-                                            string filePath = SheetHelper.testingFile(q, name);
+                                            string filePath = SheetHelper.SQlFileinsertion(q, name);
                                             DeviationAttachmentpath = DeviationAttachmentpath + "," + filePath;
                                             //Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, addedRows[0], filePath);
                                         }
@@ -2876,7 +2876,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             //    semaphore.Release();
             //}
         }
-
 
         [HttpPost("HCPConsultantPreEvent"), DisableRequestSizeLimit]
         public IActionResult HCPConsultantPreEvent(HCPConsultantPayload formDataList)
@@ -3340,6 +3339,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 addedBrandsDataNo++;
             }
             string brand = addedBrandsData.ToString();
+
+
+
             double total = TotalExpenseAmount;
             Dictionary<string, long> Sheet1columns = new();
             foreach (var column in sheet1.Columns)
@@ -3616,17 +3618,363 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             }
 
 
-
-
-
-
-
-
-
-
-
-
         }
+
+        [HttpPost("StallFabricationPreEventSqlTest"), DisableRequestSizeLimit]
+        public async Task<IActionResult> StallFabricationPreEventSqlTest(AllStallFabrication formDataList)
+        {
+
+            string strMessage = string.Empty;
+
+
+            try
+            {
+                Log.Information("starting of api " + DateTime.Now);
+                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+                Sheet UrlData = SheetHelper.GetSheetById(smartsheet, UI_URL);
+                StringBuilder addedBrandsData = new StringBuilder();
+                StringBuilder addedExpences = new StringBuilder();
+                int addedBrandsDataNo = 1;
+                int addedExpencesNo = 1;
+                double TotalExpenseAmount = 0;
+
+                foreach (var formdata in formDataList.ExpenseSheets)
+                {
+                    string rowData = $"{addedExpencesNo}. {formdata.Expense} | AmountExcludingTax: {formdata.AmountExcludingTax}| Amount: {formdata.Amount} | {formdata.BtcorBte}";
+                    addedExpences.AppendLine(rowData);
+                    addedExpencesNo++;
+                    var amount = SheetHelper.NumCheck(formdata.Amount);
+                    TotalExpenseAmount = TotalExpenseAmount + amount;
+                }
+                string Expense = addedExpences.ToString();
+
+                StringBuilder addedExpencesBTE = new();
+                int addedExpencesNoBTE = 1;
+                foreach (var formdata in formDataList.ExpenseSheets)
+                {
+                    if (formdata.BtcorBte.ToLower() == "bte")
+                    {
+                        string rowData = $"{addedExpencesNoBTE}. {formdata.Expense} | Amount: {formdata.Amount}";
+                        addedExpencesBTE.AppendLine(rowData);
+                        addedExpencesNoBTE++;
+                    }
+                }
+                string BTEExpense = addedExpencesBTE.ToString();
+
+
+                foreach (var formdata in formDataList.EventBrands)
+                {
+                    string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
+                    addedBrandsData.AppendLine(rowData);
+                    addedBrandsDataNo++;
+                }
+                string brand = addedBrandsData.ToString();
+
+
+                string uploadDeviationForTableContainsData = !string.IsNullOrEmpty(formDataList.StallFabrication.TableContainsDataUpload) ? "Yes" : "No";
+                string EventWithin7Days = !string.IsNullOrEmpty(formDataList.StallFabrication.EventWithin7daysUpload) ? "Yes" : "No";
+                string BrouchereUpload = !string.IsNullOrEmpty(formDataList.StallFabrication.EventBrouchereUpload) ? "Yes" : "No";
+                string InvoiceUpload = !string.IsNullOrEmpty(formDataList.StallFabrication.Invoice_QuotationUpload) ? "Yes" : "No";
+
+                double total = TotalExpenseAmount;
+
+
+                Row? targetRow1 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Approver Pre Event URL"));
+                Row? targetRow2 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Finance Treasury URL"));
+                Row? targetRow4 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Initiator URL"));
+
+                String Attachmentpaths = "";
+
+                List<string> attachmentsBase64 = new List<string>();
+
+                if (uploadDeviationForTableContainsData == "yes") attachmentsBase64.Add(formDataList.StallFabrication.TableContainsDataUpload);
+                if (EventWithin7Days == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventWithin7daysUpload);
+                if (BrouchereUpload == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventBrouchereUpload);
+                if (InvoiceUpload == "yes") attachmentsBase64.Add(formDataList.StallFabrication.Invoice_QuotationUpload);
+
+
+                foreach (var p in attachmentsBase64)
+                {
+                    string[] words = p.Split(':');
+                    string r = words[0];
+                    string q = words[1];
+                    string name = r.Split(".")[0];
+                    string filePath = SheetHelper.testingFile(q, name);
+                    Attachmentpaths = Attachmentpaths + "," + filePath;
+                }
+
+                string MyConnection = configuration.GetSection("ConnectionStrings:mysql").Value;
+                MySqlConnection MyConn = new MySqlConnection(MyConnection);
+                MySqlCommand com = new MySqlCommand("StallFabricationPreevent", MyConn);
+
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@ApproverPreEventURL", targetRow1?.Cells[1].Value ?? "no url");
+                com.Parameters.AddWithValue("@FinanceTreasuryURL", targetRow2?.Cells[1].Value ?? "no url");
+                com.Parameters.AddWithValue("@InitiatorURL", targetRow4?.Cells[1].Value ?? "no url");
+                com.Parameters.AddWithValue("@EventTopic", formDataList.StallFabrication.EventName);
+                com.Parameters.AddWithValue("@EventType", formDataList.StallFabrication.EventType);
+                com.Parameters.AddWithValue("@EventDate", formDataList.StallFabrication.StartDate);
+
+                com.Parameters.AddWithValue("@EndDate", formDataList.StallFabrication.EndDate);
+
+                com.Parameters.AddWithValue("@Brands", brand);
+                com.Parameters.AddWithValue("@Expenses", Expense);
+
+                com.Parameters.AddWithValue("@IsAdvanceRequired", formDataList.StallFabrication.IsAdvanceRequired);
+
+                com.Parameters.AddWithValue("@InitiatorName", formDataList.StallFabrication.InitiatorName);
+                com.Parameters.AddWithValue("@AdvanceAmount", SheetHelper.NumCheck(formDataList.StallFabrication.AdvanceAmount));
+                com.Parameters.AddWithValue("@TotalExpenseBTC", SheetHelper.NumCheck(formDataList.StallFabrication.TotalExpenseBTC));
+                com.Parameters.AddWithValue("@TotalExpenseBTE", SheetHelper.NumCheck(formDataList.StallFabrication.TotalExpenseBTE));
+
+                com.Parameters.AddWithValue("@BudgetAmount", total);
+
+                com.Parameters.AddWithValue("@TotalExpense", Math.Round(TotalExpenseAmount, 2));
+                com.Parameters.AddWithValue("@InitiatorEmail", formDataList.StallFabrication.Initiator_Email);
+                com.Parameters.AddWithValue("@RBMBM", formDataList.StallFabrication.RBMorBM);
+                com.Parameters.AddWithValue("@SalesHead", formDataList.StallFabrication.Sales_Head);
+                com.Parameters.AddWithValue("@SalesCoordinator", formDataList.StallFabrication.SalesCoordinatorEmail);
+                com.Parameters.AddWithValue("@MarketingCoordinator", formDataList.StallFabrication.MarketingCoordinatorEmail);
+                com.Parameters.AddWithValue("@MarketingHead", formDataList.StallFabrication.Marketing_Head);
+                com.Parameters.AddWithValue("@Compliance", formDataList.StallFabrication.ComplianceEmail);
+                com.Parameters.AddWithValue("@FinanceAccounts", formDataList.StallFabrication.FinanceAccountsEmail);
+                com.Parameters.AddWithValue("@FinanceTreasury", formDataList.StallFabrication.Finance);
+                com.Parameters.AddWithValue("@ReportingManager", formDataList.StallFabrication.ReportingManagerEmail);
+                com.Parameters.AddWithValue("@1UpManager", formDataList.StallFabrication.FirstLevelEmail);
+                com.Parameters.AddWithValue("@MedicalAffairsHead", formDataList.StallFabrication.MedicalAffairsEmail);
+                com.Parameters.AddWithValue("@BTEExpenseDetails", addedExpencesBTE);
+                com.Parameters.AddWithValue("@AttachmentPaths", Attachmentpaths);
+
+
+                com.Parameters.AddWithValue("@Class_III_EventCode", formDataList.StallFabrication.Class_III_EventCode);
+
+
+
+
+                MyConn.Open();
+                //com.ExecuteNonQuery();
+                MySqlDataReader reader = com.ExecuteReader();
+                String RefID = "";
+                while (reader.Read())
+                {
+                    RefID = reader["ID"].ToString();
+                }
+                MyConn.CloseAsync();
+
+                MyConn.Open();
+                com = new MySqlCommand("SPEventRequestsBrandsList", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+                foreach (var formdata in formDataList.EventBrands)
+                {
+                    com.Parameters.AddWithValue("@Allocation", formdata.PercentAllocation);
+                    com.Parameters.AddWithValue("@Brands", formdata.BrandName);
+                    com.Parameters.AddWithValue("@ProjectID", formdata.ProjectId);
+                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+                MyConn.CloseAsync();
+
+
+
+
+
+
+                MyConn.Open();
+                com = new MySqlCommand("SPEventRequestExpensesSheet", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+
+                foreach (var formdata in formDataList.ExpenseSheets)
+                {
+                    com.Parameters.AddWithValue("@Expense", formdata.Expense);
+                    com.Parameters.AddWithValue("@EventIdEventRequestID", RefID);
+                    com.Parameters.AddWithValue("@AmountExcludingTaxq", formdata.AmountExcludingTax);
+                    com.Parameters.AddWithValue("@AmountExcludingTax", formdata.ExcludingTaxAmount);
+                    com.Parameters.AddWithValue("@Amount", SheetHelper.NumCheck(formdata.Amount));
+                    com.Parameters.AddWithValue("@BTCBTE", formdata.BtcorBte);
+                    com.Parameters.AddWithValue("@BudgetAmount", SheetHelper.NumCheck(formdata.BudgetAmount));
+                    com.Parameters.AddWithValue("@BTCAmount", SheetHelper.NumCheck(formdata.BtcAmount));
+                    com.Parameters.AddWithValue("@BTEAmount", SheetHelper.NumCheck(formdata.BteAmount));
+                    com.Parameters.AddWithValue("@EventTopic", formDataList.StallFabrication.EventName);
+                    com.Parameters.AddWithValue("@EventType", formDataList.StallFabrication.EventType);
+                    com.Parameters.AddWithValue("@EventDateStart", formDataList.StallFabrication.StartDate);
+                    com.Parameters.AddWithValue("@EventEndDate", formDataList.StallFabrication.EndDate);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+                MyConn.CloseAsync();
+
+
+
+
+
+
+
+                #region
+
+                //if (formDataList.class1.EventOpen30days == "Yes" || formDataList.class1.EventWithin7days == "Yes" || formDataList.class1.FB_Expense_Excluding_Tax == "Yes" || formDataList.class1.IsDeviationUpload == "Yes")
+                //{
+                //    List<string> DeviationNames = new List<string>();
+                //    foreach (var p in formDataList.class1.DeviationDetails)
+                //    {
+                //        string[] words = p.DeviationFile.Split(':')[0].Split("*");
+                //        string r = words[1];
+                //        DeviationNames.Add(r);
+                //    }
+                //    MyConn.Open();
+                //    com = new MySqlCommand("SPDeviation_Process", MyConn);
+                //    com.CommandType = CommandType.StoredProcedure;
+
+                //    foreach (var pp in formDataList.class1.DeviationDetails)
+                //    {
+                //        foreach (var deviationname in DeviationNames)
+                //        {
+                //            string file = deviationname.Split(".")[0];
+                //            string DeviationAttachmentpath = "";
+                //            if (pp.DeviationFile.Split(':')[0].Split("*")[1] == deviationname)
+                //            {
+                //                try
+                //                {
+                //                    foreach (var p in formDataList.class1.DeviationDetails)
+                //                    {
+                //                        string[] nameSplit = p.DeviationFile.Split("*");
+                //                        string[] words = nameSplit[1].Split(':');
+                //                        string r = words[0];
+                //                        string q = words[1];
+                //                        if (deviationname == r)
+                //                        {
+                //                            string name = nameSplit[0];
+                //                            string filePath = SheetHelper.testingFile(q, name);
+                //                            DeviationAttachmentpath = DeviationAttachmentpath + "," + filePath;
+                //                            //Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, addedRows[0], filePath);
+                //                        }
+                //                    }
+
+                //                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                //                    com.Parameters.AddWithValue("@EventTopic", formDataList.StallFabrication.EventTopic);
+                //                    com.Parameters.AddWithValue("@EventType", formDataList.StallFabrication.EventType);
+                //                    com.Parameters.AddWithValue("@EventDate", formDataList.StallFabrication.EventDate);
+                //                    com.Parameters.AddWithValue("@StartTime", formDataList.StallFabrication.StartTime);
+                //                    com.Parameters.AddWithValue("@EndTime", formDataList.StallFabrication.EndTime);
+                //                    com.Parameters.AddWithValue("@MISCode", SheetHelper.MisCodeCheck(pp.MisCode));
+                //                    com.Parameters.AddWithValue("@HCPName", pp.HcpName);
+                //                    com.Parameters.AddWithValue("@HonorariumAmount", pp.HonorariumAmountExcludingTax);
+                //                    com.Parameters.AddWithValue("@TravelAccommodationAmount", pp.TravelorAccomodationAmountExcludingTax);
+                //                    com.Parameters.AddWithValue("@OtherExpenses", pp.OtherExpenseAmountExcludingTax);
+
+
+                //                    if (file == "30DaysDeviationFile")
+                //                    {
+                //                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value);
+                //                        com.Parameters.AddWithValue("@EventOpen45days", formDataList.class1.EventOpen30days);
+                //                        com.Parameters.AddWithValue("@OutstandingEvents", SheetHelper.NumCheck(formDataList.class1.EventOpen30dayscount));
+                //                    }
+                //                    else
+                //                    {
+                //                        com.Parameters.AddWithValue("@EventOpen45days", "");
+                //                        com.Parameters.AddWithValue("@OutstandingEvents", "");
+                //                    }
+                //                    if (file == "7DaysDeviationFile")
+                //                    {
+                //                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value);
+                //                        com.Parameters.AddWithValue("@EventWithin5days", formDataList.class1.EventWithin7days);
+                //                    }
+                //                    else
+                //                    {
+                //                        com.Parameters.AddWithValue("@EventWithin5days", "");
+                //                    }
+                //                    if (file == "ExpenseExcludingTax")
+                //                    {
+                //                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value);
+                //                        com.Parameters.AddWithValue("@PREExpenseExcludingTax", formDataList.class1.FB_Expense_Excluding_Tax);
+                //                    }
+                //                    else
+                //                    {
+                //                        com.Parameters.AddWithValue("@PREExpenseExcludingTax", "");
+                //                    }
+                //                    if (file.Contains("Travel_Accomodation3LExceededFile"))
+                //                    {
+                //                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value);
+                //                        com.Parameters.AddWithValue("@TravelAccomodationExceededTrigger", "Yes");
+                //                    }
+                //                    else
+                //                    {
+                //                        com.Parameters.AddWithValue("@TravelAccomodationExceededTrigger", "");
+                //                    }
+                //                    if (file.Contains("TrainerHonorarium12LExceededFile"))
+                //                    {
+                //                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value);
+                //                        com.Parameters.AddWithValue("@TrainerHonorariumExceededTrigger", "Yes");
+                //                    }
+                //                    else
+                //                    {
+                //                        com.Parameters.AddWithValue("@TrainerHonorariumExceededTrigger", "");
+                //                    }
+                //                    if (file.Contains("HCPHonorarium6LExceededFile"))
+                //                    {
+                //                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value);
+                //                        com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "Yes");
+                //                    }
+                //                    else
+                //                    {
+                //                        com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "");
+                //                    }
+                //                    com.Parameters.AddWithValue("@SalesHead", formDataList.StallFabrication.Sales_Head);
+                //                    com.Parameters.AddWithValue("@FinanceHead", formDataList.StallFabrication.FinanceHead);
+                //                    com.Parameters.AddWithValue("@InitiatorName", formDataList.StallFabrication.InitiatorName);
+                //                    com.Parameters.AddWithValue("@InitiatorEmail", formDataList.StallFabrication.Initiator_Email);
+                //                    com.Parameters.AddWithValue("@SalesCoordinator", formDataList.StallFabrication.SalesCoordinatorEmail);
+                //                    com.Parameters.AddWithValue("@AttachmentPaths", DeviationAttachmentpath);
+                //                    com.ExecuteNonQuery();
+                //                    com.Parameters.Clear();
+                //                }
+                //                catch (Exception ex)
+                //                {
+                //                    return BadRequest(new
+                //                    {
+                //                        Message = ex.Message + "------" + ex.StackTrace
+                //                    });
+
+                //                }
+
+                //            }
+
+                //        }
+
+                //    }
+                //}
+
+                #endregion
+                //Row addedrow = addedRows[0];
+                //long ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                //Cell UpdateB = new Cell { ColumnId = ColumnId, Value = formDataList.Webinar.Role };
+                //Row updateRows = new Row { Id = addedrow.Id, Cells = new Cell[] { UpdateB } };
+                //Cell? cellsToUpdate = addedrow.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
+                //if (cellsToUpdate != null) { cellsToUpdate.Value = formDataList.Webinar.Role; }
+
+                //strMessage += "==Before adding Role to WebSheet " + "==" + DateTime.Now.ToString() + "==";
+                //await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet1, updateRows)); //smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRows }));
+                //strMessage += "==Before adding Role to WebSheet " + "==" + DateTime.Now.ToString() + "==";
+                //Log.Information("End of api " + DateTime.Now);
+                MyConn.CloseAsync();
+                return Ok(new
+                { Message = " Success!" });/* { Message = " Success!" });*/
+            }
+            catch (Exception ex)
+            {
+                //return BadRequest($"Could not find {ex.Message}");
+                Log.Error($"Error occured on class1 method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                //return BadRequest(ex.Message);
+                return BadRequest(new
+                { Message = ex.Message + "------" + ex.StackTrace });
+            }
+            //finally
+            //{
+            //    semaphore.Release();
+            //}
+        }
+
 
         [HttpPost("MedicalUtilityPreEvent"), DisableRequestSizeLimit]
         public IActionResult MedicalUtilityPreEvent(MedicalUtilityPreEventPayload formDataList)

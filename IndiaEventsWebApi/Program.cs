@@ -25,13 +25,13 @@ builder.Services.AddLazyCache();
 var configuration = builder.Configuration;
 //builder.Services.AddMySqlDataSource(builder.Configuration.GetConnectionString("SampleConnectionString")!);
 
-//builder.Services.AddDbContext<DataContext>(
-//    options =>
-//    {
-//        options.UseMySql(builder.Configuration.GetConnectionString("mysql"),
-//            new MySqlServerVersion(new Version(8, 0, 23)));
-//        //Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.23-mysql"));
-//    });
+builder.Services.AddDbContext<DataContext>(
+    options =>
+    {
+        options.UseMySql(builder.Configuration.GetConnectionString("mysql"),
+            new MySqlServerVersion(new Version(8, 0, 23)));
+        //Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.23-mysql"));
+    });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
