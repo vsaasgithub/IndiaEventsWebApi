@@ -183,7 +183,7 @@ namespace IndiaEventsWebApi.Helper
                 Directory.CreateDirectory(pathToSave);
             }
             string fileType = GetFileType(fileBytes);
-            string fileName = name + "." + fileType;
+            string fileName = DateTime.Now + name + "." + fileType;
             string filePath = Path.Combine(pathToSave, fileName);
             File.WriteAllBytes(filePath, fileBytes);
             return filePath;

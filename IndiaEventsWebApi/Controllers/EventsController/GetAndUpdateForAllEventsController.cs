@@ -271,6 +271,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 });
             }
         }
+
         [HttpGet("GetBase64FromSheet")]
         public async Task<IActionResult> GetBase64FromSheet(long SheetId, long AttachmentId)
         {
@@ -931,7 +932,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 List<Dictionary<string, object>> DeviationsattachmentsList = [];
                 List<Dictionary<string, object>> attachmentInfoFiles = [];
 
-                Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);//.Rows.Where(row => row.Cells.Any(c =>c.DisplayValue ==eventId));
+                Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
                 Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
                 Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
                 Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
@@ -943,11 +944,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 List<string> columnNames = sheet1.Columns.Select(col => col.Title).ToList();
 
-                //List<string> columnNames = new List<string>();
-                //foreach (Column column in sheet1.Columns)
-                //{
-                //    columnNames.Add(column.Title);
-                //}
                 foreach (var row in sheet1.Rows.Where(row => row.Cells.Any(c => c.DisplayValue == eventId)))
                 {
                     Dictionary<string, object> rowData = new Dictionary<string, object>
@@ -1046,7 +1042,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             {
                                 { "Name", file.Name },
                                 { "Id", file.Id },
-                                { "base64", SheetHelper.UrlToBaseValue(file.Url) }
+                               { "base64", SheetHelper.UrlToBaseValue(file.Url) }
                             };
                                 BrandsattachmentsList.Add(attachmentInfo);
                             }
