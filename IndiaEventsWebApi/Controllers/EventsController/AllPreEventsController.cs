@@ -60,8 +60,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         //private static SemaphoreSlim semaphore;
 
 
-        [HttpPost("Class1PreEvent"), DisableRequestSizeLimit]
-        public async Task<IActionResult> Class1PreEvent(AllObjModels formDataList)
+        [HttpPost("Class1PreEventSmartSheet"), DisableRequestSizeLimit]
+        public async Task<IActionResult> Class1PreEventSmartSheet(AllObjModels formDataList)
         {
             try
             {
@@ -640,8 +640,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
         }
 
-        [HttpPost("Class1PreEventSqlTest"), DisableRequestSizeLimit]
-        public async Task<IActionResult> Class1PreEventSqlTest(AllObjModels formDataList)
+        [HttpPost("Class1PreEvent"), DisableRequestSizeLimit]
+        public async Task<IActionResult> Class1PreEvent(AllObjModels formDataList)
         {
 
             string strMessage = string.Empty;
@@ -772,14 +772,13 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     string r = words[0];
                     string q = words[1];
                     string name = r.Split(".")[0];
-                    string filePath = SheetHelper.testingFile(q, name);
+                    string filePath = SheetHelper.SQlFileinsertion(q, name);
                     Attachmentpaths = Attachmentpaths + "," + filePath;
                 }
 
                 string MyConnection = configuration.GetSection("ConnectionStrings:mysql").Value;
                 MySqlConnection MyConn = new MySqlConnection(MyConnection);
                 MySqlCommand com = new MySqlCommand("WebinarPreevent", MyConn);
-
                 com.CommandType = CommandType.StoredProcedure;
                 com.Parameters.AddWithValue("@ApproverPreEventURL", targetRow1?.Cells[1].Value ?? "no url");
                 com.Parameters.AddWithValue("@FinanceTreasuryURL", targetRow2?.Cells[1].Value ?? "no url");
@@ -824,8 +823,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 com.Parameters.AddWithValue("@MedicalAffairsHead", formDataList.class1.MedicalAffairsEmail);
                 com.Parameters.AddWithValue("@BTEExpenseDetails", formDataList.class1.BTEExpenseDetails);
                 com.Parameters.AddWithValue("@AttachmentPaths", Attachmentpaths);
-
-                MyConn.Open();
+                com.Parameters.AddWithValue("@webinarRole", formDataList.class1.Role);
+                await MyConn.OpenAsync();
                 //com.ExecuteNonQuery();
                 MySqlDataReader reader = com.ExecuteReader();
                 String RefID = "";
@@ -833,10 +832,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 {
                     RefID = reader["ID"].ToString();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestPanelDetails", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formData in formDataList.EventRequestHcpRole)
@@ -851,7 +850,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             string r = words[0];
                             string q = words[1];
                             string name = r.Split(".")[0];
-                            string filePath = SheetHelper.testingFile(q, name);
+                            string filePath = SheetHelper.SQlFileinsertion(q, name);
                             PanelAttachmentpaths = PanelAttachmentpaths + "," + filePath;
                         }
 
@@ -925,10 +924,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 }
 
 
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestsBrandsList", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formdata in formDataList.RequestBrandsList)
@@ -940,10 +939,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestInvitees", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formdata in formDataList.EventRequestInvitees)
@@ -967,10 +966,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestHCPSlideKitDetails", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 String SlidekitsAttachent = "";
@@ -985,7 +984,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             string r = words[0];
                             string q = words[1];
                             string name = r.Split(".")[0];
-                            string filePath = SheetHelper.testingFile(q, name);
+                            string filePath = SheetHelper.SQlFileinsertion(q, name);
                             SlidekitsAttachent = SlidekitsAttachent + "," + filePath;
                         }
                     }
@@ -1034,7 +1033,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         string r = words[1];
                         DeviationNames.Add(r);
                     }
-                    MyConn.Open();
+                    await MyConn.OpenAsync();
                     com = new MySqlCommand("SPDeviation_Process", MyConn);
                     com.CommandType = CommandType.StoredProcedure;
 
@@ -1057,7 +1056,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         if (deviationname == r)
                                         {
                                             string name = nameSplit[0];
-                                            string filePath = SheetHelper.testingFile(q, name);
+                                            string filePath = SheetHelper.SQlFileinsertion(q, name);
                                             DeviationAttachmentpath = DeviationAttachmentpath + "," + filePath;
                                             //Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, addedRows[0], filePath);
                                         }
@@ -1138,6 +1137,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     com.Parameters.AddWithValue("@InitiatorEmail", formDataList.class1.Initiator_Email);
                                     com.Parameters.AddWithValue("@SalesCoordinator", formDataList.class1.SalesCoordinatorEmail);
                                     com.Parameters.AddWithValue("@AttachmentPaths", DeviationAttachmentpath);
+                                    com.Parameters.AddWithValue("@EndDate", "");
                                     com.ExecuteNonQuery();
                                     com.Parameters.Clear();
                                 }
@@ -1175,7 +1175,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             catch (Exception ex)
             {
                 //return BadRequest($"Could not find {ex.Message}");
-                Log.Error($"Error occured on class1 method {ex.Message} at {DateTime.Now}");
+                Log.Error($"Error occured on webinar method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
                 //return BadRequest(ex.Message);
                 return BadRequest(new
@@ -2828,6 +2828,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     com.Parameters.AddWithValue("@InitiatorEmail", formDataList.Webinar.Initiator_Email);
                                     com.Parameters.AddWithValue("@SalesCoordinator", formDataList.Webinar.SalesCoordinatorEmail);
                                     com.Parameters.AddWithValue("@AttachmentPaths", DeviationAttachmentpath);
+                                    com.Parameters.AddWithValue("@EndDate", "");
                                     com.ExecuteNonQuery();
                                     com.Parameters.Clear();
                                 }
@@ -3287,8 +3288,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             }
         }
 
-        [HttpPost("StallFabricationPreEvent"), DisableRequestSizeLimit]
-        public IActionResult StallFabricationPreEvent(AllStallFabrication formDataList)
+        [HttpPost("StallFabricationPreEventSmartSheet"), DisableRequestSizeLimit]
+        public IActionResult StallFabricationPreEventSmartSheet(AllStallFabrication formDataList)
         {
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
@@ -3378,7 +3379,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["RBM/BM"], Value = formDataList.StallFabrication.RBMorBM });
                 newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Sales Head"], Value = formDataList.StallFabrication.Sales_Head });
                 newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Sales Coordinator"], Value = formDataList.StallFabrication.SalesCoordinatorEmail });
-                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Marketing Coordinator"], Value = formDataList.StallFabrication.MarketingCoordinatorEmail }); newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Marketing Head"), Value = formDataList.StallFabrication.Marketing_Head });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Marketing Coordinator"], Value = formDataList.StallFabrication.MarketingCoordinatorEmail });
+                newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Marketing Head"], Value = formDataList.StallFabrication.Marketing_Head });
                 newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Compliance"], Value = formDataList.StallFabrication.ComplianceEmail });
                 newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Finance Accounts"], Value = formDataList.StallFabrication.FinanceAccountsEmail });
                 newRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Finance Treasury"], Value = formDataList.StallFabrication.Finance });
@@ -3620,8 +3622,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
         }
 
-        [HttpPost("StallFabricationPreEventSqlTest"), DisableRequestSizeLimit]
-        public async Task<IActionResult> StallFabricationPreEventSqlTest(AllStallFabrication formDataList)
+        [HttpPost("StallFabricationPreEvent"), DisableRequestSizeLimit]
+        public async Task<IActionResult> StallFabricationPreEvent(AllStallFabrication formDataList)
         {
 
             string strMessage = string.Empty;
@@ -3688,8 +3690,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 List<string> attachmentsBase64 = new List<string>();
 
                 if (uploadDeviationForTableContainsData == "yes") attachmentsBase64.Add(formDataList.StallFabrication.TableContainsDataUpload);
-                if (EventWithin7Days == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventWithin7daysUpload);
-                if (BrouchereUpload == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventBrouchereUpload);
+                //if (EventWithin7Days == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventWithin7daysUpload);
+                //if (BrouchereUpload == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventBrouchereUpload);
                 if (InvoiceUpload == "yes") attachmentsBase64.Add(formDataList.StallFabrication.Invoice_QuotationUpload);
 
 
@@ -3699,7 +3701,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     string r = words[0];
                     string q = words[1];
                     string name = r.Split(".")[0];
-                    string filePath = SheetHelper.testingFile(q, name);
+                    string filePath = SheetHelper.SQlFileinsertion(q, name);
                     Attachmentpaths = Attachmentpaths + "," + filePath;
                 }
 
@@ -3747,7 +3749,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
 
                 com.Parameters.AddWithValue("@Class_III_EventCode", formDataList.StallFabrication.Class_III_EventCode);
-
+                com.Parameters.AddWithValue("@webinarRole", formDataList.StallFabrication.Role);
 
 
 
@@ -3805,7 +3807,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 MyConn.CloseAsync();
 
 
-                
+
 
 
 
@@ -3867,7 +3869,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         if (deviationname == r)
                                         {
                                             string name = nameSplit[0];
-                                            string filePath = SheetHelper.testingFile(q, name);
+                                            string filePath = SheetHelper.SQlFileinsertion(q, name);
                                             DeviationAttachmentpath = DeviationAttachmentpath + "," + filePath;
                                             //Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, addedRows[0], filePath);
                                         }
@@ -3877,10 +3879,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     com.Parameters.AddWithValue("@EventTopic", formDataList.StallFabrication.EventName);
                                     com.Parameters.AddWithValue("@EventType", formDataList.StallFabrication.EventType);
                                     com.Parameters.AddWithValue("@EventDate", formDataList.StallFabrication.StartDate);
-                                    com.Parameters.AddWithValue("@StartTime","");
+                                    com.Parameters.AddWithValue("@EndDate", formDataList.StallFabrication.EndDate);
+                                    com.Parameters.AddWithValue("@StartTime", "");
                                     com.Parameters.AddWithValue("@EndTime", "");
                                     com.Parameters.AddWithValue("@MISCode", "");
-                                    com.Parameters.AddWithValue("@HCPName","");
+                                    com.Parameters.AddWithValue("@HCPName", "");
                                     com.Parameters.AddWithValue("@HonorariumAmount", "");
                                     com.Parameters.AddWithValue("@TravelAccommodationAmount", "");
                                     com.Parameters.AddWithValue("@OtherExpenses", "");

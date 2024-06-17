@@ -47,6 +47,47 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 return BadRequest(ex.Message);
             }
         }
+
+
+        [HttpGet("GetcolumnsbysheetId")]
+        public IActionResult GetcolumnsbysheetId(long Id)
+        {
+            try
+            {
+                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+                //Sheet sheet = smartsheet.SheetResources.GetSheet(Id, null, null, null, null, null, null, null);
+                PaginatedResult<Column> columns = smartsheet.SheetResources.ColumnResources.ListColumns(
+               Id,               // sheetId
+               null,                           // IEnumerable<ColumnInclusion> include
+               null,                           // PaginationParameters
+               2                               // int compatibilityLevel
+             );
+
+                List<string> columnNames = new List<string>();
+                foreach (Column column in columns.Data)
+                {
+
+                    var cn = column.Title;
+                    var id = column.Id;
+                    var str = $"{cn} : {id}";
+                    columnNames.Add(str);
+
+                }
+
+                return Ok(columnNames);
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+
+        }
+
+
         [HttpGet("GetEventRequestProcessData")]
         public IActionResult GetEventRequestProcessData()
         {

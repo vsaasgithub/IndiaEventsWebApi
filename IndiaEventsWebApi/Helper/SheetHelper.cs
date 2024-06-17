@@ -60,13 +60,13 @@ namespace IndiaEventsWebApi.Helper
                 foreach (var attachment in attachments.Data)
                 {
                     long AID = (long)attachment.Id;
-                    Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheetId, AID);
+                    //Attachment file = smartsheet.SheetResources.AttachmentResources.GetAttachment(sheetId, AID);
                     Dictionary<string, object> attachmentInfo = new Dictionary<string, object>
                     {
-                        { "Name", file.Name },
-                        { "Id", file.Id },
-                        { "Url", file.Url },
-                        { "base64", UrlToBaseValue(file.Url) },
+                        { "Name", attachment.Name },
+                        { "Id", AID },
+                       // { "Url", file.Url },
+                       // { "base64", UrlToBaseValue(file.Url) },
                         {"SheetId",sheetId }
                     };
                     attachmentsList.Add(attachmentInfo);
@@ -200,7 +200,7 @@ namespace IndiaEventsWebApi.Helper
                 Directory.CreateDirectory(pathToSave);
             }
             string fileType = GetFileType(fileBytes);
-            string fileName = name + "." + fileType;
+            string fileName =  name + DateTime.Now.ToString("ddMMyyyymmss") + "." + fileType;
             string filePath = Path.Combine(pathToSave, fileName);
             File.WriteAllBytes(filePath, fileBytes);
             return filePath;

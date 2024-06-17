@@ -19,6 +19,8 @@ using IndiaEventsWebApi.Models.EventTypeSheets;
 using Microsoft.Extensions.Hosting;
 using System.Globalization;
 using Aspose.Cells.Rendering;
+using IndiaEvents.Models.Models.Draft;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 
 namespace IndiaEventsWebApi.Controllers
 {
@@ -65,6 +67,37 @@ namespace IndiaEventsWebApi.Controllers
 
                 Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
                 Attachementfile(RequestWebhook);
+
+                string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+
+                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                //return Ok();
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occured on Webhook apicontroller PostData method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.StackTrace);
+            }
+        }
+
+        [HttpPost("EmailWebHook")]
+        public async Task<IActionResult> EmailWebHook()
+        {
+            try
+            {
+                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                string rawContent = string.Empty;
+                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                {
+                    rawContent = await reader.ReadToEndAsync();
+                }
+                requestHeaders.Add("Body", rawContent);
+                Log.Information(string.Join(";", requestHeaders.Select(x => x.Key + "=" + x.Value).ToArray()));
+
+
+                Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                MailChange(RequestWebhook);
 
                 string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
@@ -676,6 +709,7 @@ namespace IndiaEventsWebApi.Controllers
                     foreach (var WebHookEvent in RequestWebhook.events)
                     {
 
+
                         if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
                         {
                             //var DataInSheet = smartsheet.SheetResources.GetSheet(parsedProcessSheet, null, null, new List<long> { WebHookEvent.rowId }, null, null, null, null, null, null).Rows;
@@ -1015,6 +1049,77 @@ namespace IndiaEventsWebApi.Controllers
             }
         }
 
+
+        private async void MailChange(Root RequestWebhook)
+        {
+
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, processSheet);
+            string wehookSheetId = "" + RequestWebhook.scopeObjectId;
+            Sheet WebHookSheet = SheetHelper.GetSheetById(smartsheet, wehookSheetId);
+            Dictionary<string, long> Sheetcolumns = new();
+            foreach (Column? column in sheet.Columns)
+            {
+                Sheetcolumns.Add(column.Title, (long)column.Id);
+            }
+            IEnumerable<Row> DataInSheet1 = [];
+            int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
+            DataInSheet1 = sheet.Rows.Where(x =>
+            {
+                string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                return cellValue != "approved" || cellValue != "advance approved";
+            });
+            if (RequestWebhook != null && RequestWebhook.events != null)
+            {
+                foreach (var WebHookEvent in RequestWebhook.events)
+                {
+                    long RowId = WebHookEvent.rowId;
+                    string DesignationValue = "";
+                    string EmailValue = "";
+                    Row row = GetRowById(sheet, RowId);
+                    Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+                    Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+                    if (designationColumn != null && EmailColumn != null)
+                    {
+                        int? designationColumnIndex = designationColumn.Index;
+                        int? EmailColumnIndex = EmailColumn.Index;
+                        DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
+                        EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
+                        string columnName = "";
+                        if (DesignationValue == "Sales Head")
+                            columnName = "PRE-Sales Head Approval";
+                        else if (DesignationValue == "Marketing Head")
+                            columnName = "PRE-Marketing Head Approval";
+                        else if (DesignationValue == "Finance Treasury")
+                            columnName = "PRE-Finance Treasury Approval";
+                        else if (DesignationValue == "Medical Affairs Head")
+                            columnName = "PRE-Medical Affairs Head Approval";
+
+                        IEnumerable<Row> DataInSheet2 = [];
+                        DataInSheet2 = sheet.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault())].Value).ToLower() != "approved");
+
+                        List<Row> liRowsToUpdate = new();
+                        foreach (Row rowData in DataInSheet1)
+                        {
+                            Cell[] cellsToUpdate = new Cell[]
+                            { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                            row = new Row
+                            {
+                                Id = rowData.Id,
+                                Cells = cellsToUpdate
+                            };
+                            liRowsToUpdate.Add(row);
+                        }
+                        if (liRowsToUpdate.Count > 0)
+                        {
+                            smartsheet.SheetResources.RowResources.UpdateRows(Convert.ToUInt32(processSheet), liRowsToUpdate);
+                        }
+                    }
+                }
+            }
+        }
+
+
         public class Webhook
         {
             public string? smartsheetHookResponse { get; set; }
@@ -1024,7 +1129,10 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
-
+        public static Row GetRowById(Sheet sheet, long id)
+        {
+            return sheet.Rows.FirstOrDefault(r => r.Id == id);
+        }
     }
 
 }
