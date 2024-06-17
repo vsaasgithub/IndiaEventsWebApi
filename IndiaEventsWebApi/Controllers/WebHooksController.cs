@@ -97,7 +97,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
                 Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                //MailChange(RequestWebhook);
+                MailChange(RequestWebhook);
 
                 string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
