@@ -1175,7 +1175,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             catch (Exception ex)
             {
                 //return BadRequest($"Could not find {ex.Message}");
-                Log.Error($"Error occured on webinar method {ex.Message} at {DateTime.Now}");
+                Log.Error($"Error occured on class1 method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
                 //return BadRequest(ex.Message);
                 return BadRequest(new
