@@ -441,6 +441,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             {"SheetId",sheet1.Id.Value},
                             {"RowId",row.Id.Value },
                             { "Event Date", GetValueOrDefault(row, "Event Date") },
+                            { "Event End Date", GetValueOrDefault(row, "End Date") },
                             { "Event Topic", GetValueOrDefault(row, "Event Topic") },
                             { "Class III Event Code", GetValueOrDefault(row, "Class III Event Code") },
                             { "Start Time", GetValueOrDefault(row, "Start Time") },
@@ -3052,7 +3053,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                             string filePath = SheetHelper.testingFile(q, name);
                                             Row addedRow = addeddeviationrow[0];
                                             Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                            Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword");
+                                            //Attachment attachmentinmain = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, targetRow.Id.Value, filePath, "application/msword");
                                             j++;
                                             if (System.IO.File.Exists(filePath))
                                             {
