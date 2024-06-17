@@ -71,6 +71,12 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
 
                 if (EventRequestsWebdt.Rows.Count > 0)
                 {
+                    DataTable EventRequestPanelDetailsdt = new DataTable();
+                    DataTable EventRequestsBrandsListdt = new DataTable();
+                    DataTable EventRequestInviteesdt = new DataTable();
+                    DataTable EventRequestHCPSlideKitDetailsdt = new DataTable();
+                    DataTable EventRequestExpensesSheetdt = new DataTable();
+                    DataTable Deviation_Processdt = new DataTable();
                     SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
                     Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
                     Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
@@ -97,12 +103,30 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                         DataRow[] dr5 = ds.Tables[5].Select(expresssion);
                         DataRow[] dr6 = ds.Tables[6].Select(expresssion);
 
-                        DataTable EventRequestPanelDetailsdt = dr1.CopyToDataTable();
-                        DataTable EventRequestsBrandsListdt = dr2.CopyToDataTable();
-                        DataTable EventRequestInviteesdt = dr3.CopyToDataTable();
-                        DataTable EventRequestHCPSlideKitDetailsdt = dr4.CopyToDataTable();
-                        DataTable EventRequestExpensesSheetdt = dr5.CopyToDataTable();
-                        DataTable Deviation_Processdt = dr6.CopyToDataTable();
+                        if (dr1.Any())
+                        {
+                            EventRequestPanelDetailsdt = dr1.CopyToDataTable();
+                        }
+                        if (dr2.Any())
+                        {
+                            EventRequestsBrandsListdt = dr2.CopyToDataTable();
+                        }
+                        if (dr3.Any())
+                        {
+                            EventRequestInviteesdt = dr3.CopyToDataTable();
+                        }
+                        if (dr4.Any())
+                        {
+                            EventRequestHCPSlideKitDetailsdt = dr4.CopyToDataTable();
+                        }
+                        if (dr5.Any())
+                        {
+                            EventRequestExpensesSheetdt = dr5.CopyToDataTable();
+                        }
+                        if (dr6.Any())
+                        {
+                            Deviation_Processdt = dr6.CopyToDataTable();
+                        }
 
                         Cell[] cellsToInsertRequestWeb = new Cell[]
                         {
@@ -481,6 +505,8 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
                 Log.Error($"Error occured on webinar method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
                 return BadRequest(new { Message = ex.Message + "------" + ex.StackTrace });
