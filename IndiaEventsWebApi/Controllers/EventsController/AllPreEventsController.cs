@@ -1175,7 +1175,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             catch (Exception ex)
             {
                 //return BadRequest($"Could not find {ex.Message}");
-                Log.Error($"Error occured on class1 method {ex.Message} at {DateTime.Now}");
+                Log.Error($"Error occured on webinar method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
                 //return BadRequest(ex.Message);
                 return BadRequest(new
@@ -3689,10 +3689,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 List<string> attachmentsBase64 = new List<string>();
 
-                if (uploadDeviationForTableContainsData == "yes") attachmentsBase64.Add(formDataList.StallFabrication.TableContainsDataUpload);
+                //if (uploadDeviationForTableContainsData == "Yes") attachmentsBase64.Add(formDataList.StallFabrication.TableContainsDataUpload);
                 //if (EventWithin7Days == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventWithin7daysUpload);
-                //if (BrouchereUpload == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventBrouchereUpload);
-                if (InvoiceUpload == "yes") attachmentsBase64.Add(formDataList.StallFabrication.Invoice_QuotationUpload);
+                if (BrouchereUpload == "Yes") attachmentsBase64.Add(formDataList.StallFabrication.EventBrouchereUpload);
+                if (InvoiceUpload == "Yes") attachmentsBase64.Add(formDataList.StallFabrication.Invoice_QuotationUpload);
 
 
                 foreach (var p in attachmentsBase64)
