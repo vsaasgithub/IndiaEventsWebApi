@@ -488,8 +488,8 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
         //    return Ok();
         //}
 
-        [HttpGet("HcpMasterSmartSheet")]
-        public async Task<IActionResult> HcpMasterSmartSheet()
+        [HttpGet("HcpMaster")]//rock  HcpMasterSmartSheet
+        public async Task<IActionResult> HcpMaster()
         {
             try
             {
@@ -523,8 +523,8 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
 
         }
 
-        [HttpGet("HcpMaster")]
-        public async Task<IActionResult> HcpMaster()
+        [HttpGet("HcpMasterUAT")] //UAT  HcpMaster
+        public async Task<IActionResult> HcpMasterUAT()
         {
             try
             {
