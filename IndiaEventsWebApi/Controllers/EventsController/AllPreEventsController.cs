@@ -60,8 +60,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         //private static SemaphoreSlim semaphore;
 
 
-        [HttpPost("Class1PreEvent"), DisableRequestSizeLimit]
-        public async Task<IActionResult> Class1PreEvent(AllObjModels formDataList)
+        [HttpPost("Class1PreEventSmartSheet"), DisableRequestSizeLimit]
+        public async Task<IActionResult> Class1PreEventSmartSheet(AllObjModels formDataList)
         {
             try
             {
@@ -640,8 +640,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
         }
 
-        [HttpPost("Class1PreEventSqlTest"), DisableRequestSizeLimit]
-        public async Task<IActionResult> WebinarPreEvent(AllObjModels formDataList)
+        [HttpPost("Class1PreEvent"), DisableRequestSizeLimit]
+        public async Task<IActionResult> Class1PreEvent(AllObjModels formDataList)
         {
 
             string strMessage = string.Empty;
@@ -3288,8 +3288,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             }
         }
 
-        [HttpPost("StallFabricationPreEvent"), DisableRequestSizeLimit]
-        public IActionResult StallFabricationPreEvent(AllStallFabrication formDataList)
+        [HttpPost("StallFabricationPreEventSmartSheet"), DisableRequestSizeLimit]
+        public IActionResult StallFabricationPreEventSmartSheet(AllStallFabrication formDataList)
         {
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
@@ -3622,8 +3622,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
         }
 
-        [HttpPost("StallFabricationPreEventSqlTest"), DisableRequestSizeLimit]
-        public async Task<IActionResult> StallFabricationPreEventSqlTest(AllStallFabrication formDataList)
+        [HttpPost("StallFabricationPreEvent"), DisableRequestSizeLimit]
+        public async Task<IActionResult> StallFabricationPreEvent(AllStallFabrication formDataList)
         {
 
             string strMessage = string.Empty;
@@ -3689,10 +3689,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 List<string> attachmentsBase64 = new List<string>();
 
-                if (uploadDeviationForTableContainsData == "yes") attachmentsBase64.Add(formDataList.StallFabrication.TableContainsDataUpload);
+                //if (uploadDeviationForTableContainsData == "Yes") attachmentsBase64.Add(formDataList.StallFabrication.TableContainsDataUpload);
                 //if (EventWithin7Days == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventWithin7daysUpload);
-                //if (BrouchereUpload == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventBrouchereUpload);
-                if (InvoiceUpload == "yes") attachmentsBase64.Add(formDataList.StallFabrication.Invoice_QuotationUpload);
+                if (BrouchereUpload == "Yes") attachmentsBase64.Add(formDataList.StallFabrication.EventBrouchereUpload);
+                if (InvoiceUpload == "Yes") attachmentsBase64.Add(formDataList.StallFabrication.Invoice_QuotationUpload);
 
 
                 foreach (var p in attachmentsBase64)
