@@ -1180,36 +1180,46 @@ namespace IndiaEventsWebApi.Controllers
                     columnName = "PRE-Finance Treasury Approval";
                 else if (DesignationValue == "Medical Affairs Head")
                     columnName = "PRE-Medical Affairs Head Approval";
-
-                IEnumerable<Row> DataInSheet1 = [];
-                int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
-                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
-
-                DataInSheet1 = sheet.Rows.Where(x =>
+                else if (DesignationValue == "Compliance")
+                    columnName = "PRE-Compliance Approval";
+                if (columnName != "")
                 {
-                    string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
-                    string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
-                    return ((cellValue != "approved" || cellValue != "advance approved") && designationValue != "approved");
-                });
 
-                List<Row> liRowsToUpdate = new();
-                foreach (Row rowData in DataInSheet1)
-                {
-                    Cell[] cellsToUpdate = new Cell[]
-                    { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
 
-                    row = new Row
+                    IEnumerable<Row> DataInSheet1 = [];
+                    int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
+
+                    DataInSheet1 = sheet.Rows.Where(x =>
                     {
-                        Id = rowData.Id,
-                        Cells = cellsToUpdate
-                    };
-                    liRowsToUpdate.Add(row);
+                        string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return ((cellValue != "approved" || cellValue != "advance approved") && designationValue != "approved");
+                    });
+
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
                 }
-                if (liRowsToUpdate.Count > 0)
+                else
                 {
-                    ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
-                    //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
-                    Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    return "designation not found";
                 }
             }
 
@@ -1243,35 +1253,45 @@ namespace IndiaEventsWebApi.Controllers
                     columnName = "HON-Finance Treasury Approval";
                 else if (DesignationValue == "Medical Affairs Head")
                     columnName = "HON-Medical Affairs Head Approval";
-
-                IEnumerable<Row> DataInSheet1 = [];
-                int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Honorarium Request Status").Select(z => z.Index).FirstOrDefault();
-                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
-
-                DataInSheet1 = sheet.Rows.Where(x =>
+                else if (DesignationValue == "Compliance")
+                    columnName = "HON-Compliance Approval";
+                else if (DesignationValue == "Finance Accounts")
+                    columnName = "HON-Finance Accounts Approval";
+                if (columnName != "")
                 {
-                    string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
-                    string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
-                    return ((cellValue != "honorarium approved") && designationValue != "approved");
-                });
-                List<Row> liRowsToUpdate = new();
-                foreach (Row rowData in DataInSheet1)
-                {
-                    Cell[] cellsToUpdate = new Cell[]
-                    { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+                    IEnumerable<Row> DataInSheet1 = [];
+                    int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Honorarium Request Status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
 
-                    row = new Row
+                    DataInSheet1 = sheet.Rows.Where(x =>
                     {
-                        Id = rowData.Id,
-                        Cells = cellsToUpdate
-                    };
-                    liRowsToUpdate.Add(row);
+                        string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return ((cellValue != "honorarium approved") && designationValue != "approved");
+                    });
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
                 }
-                if (liRowsToUpdate.Count > 0)
+                else
                 {
-                    ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
-                    //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
-                    Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    return "designation not found";
                 }
             }
 
@@ -1305,35 +1325,45 @@ namespace IndiaEventsWebApi.Controllers
                     columnName = "EventSettlement-Finance Treasury Approval";
                 else if (DesignationValue == "Medical Affairs Head")
                     columnName = "EventSettlement-Medical Affairs Head Approval";
-
-                IEnumerable<Row> DataInSheet1 = [];
-                int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Post Event Request status").Select(z => z.Index).FirstOrDefault();
-                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
-
-                DataInSheet1 = sheet.Rows.Where(x =>
+                else if (DesignationValue == "Compliance")
+                    columnName = "EventSettlement-Compliance Approval";
+                else if (DesignationValue == "Finance Accounts")
+                    columnName = "EventSettlement-Finance Account Approval";
+                if (columnName != "")
                 {
-                    string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
-                    string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
-                    return ((cellValue != "closure approved") && designationValue != "approved");
-                });
-                List<Row> liRowsToUpdate = new();
-                foreach (Row rowData in DataInSheet1)
-                {
-                    Cell[] cellsToUpdate = new Cell[]
-                    { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+                    IEnumerable<Row> DataInSheet1 = [];
+                    int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Post Event Request status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
 
-                    row = new Row
+                    DataInSheet1 = sheet.Rows.Where(x =>
                     {
-                        Id = rowData.Id,
-                        Cells = cellsToUpdate
-                    };
-                    liRowsToUpdate.Add(row);
+                        string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return ((cellValue != "closure approved") && designationValue != "approved");
+                    });
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
                 }
-                if (liRowsToUpdate.Count > 0)
+                else
                 {
-                    //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
-                    ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
-                    Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    return "designation not found";
                 }
             }
 
