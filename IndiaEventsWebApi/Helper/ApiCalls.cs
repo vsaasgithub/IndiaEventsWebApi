@@ -496,6 +496,26 @@ namespace IndiaEventsWebApi.Helper
             }
 
         }
+        public static IList<Row> BulkUpdateRows(SmartsheetClient smartsheet, Sheet sheet, List<Row> liRowsToUpdate, int count = 0)
+        {
+            try
+            {
+                IList<Row> rows = smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                return rows;
+            }
+            catch (Exception ex)
+            {
+                if (count >= 5)
+                {
+                    throw ex;
+                }
+                return BulkUpdateRows(smartsheet, sheet, liRowsToUpdate, count + 1);
+
+            }
+
+        }
+
+
         public static IList<Row> DeviationData(SmartsheetClient smartsheet, Sheet sheet4, Row newRow1, int count = 0)
         {
             try
