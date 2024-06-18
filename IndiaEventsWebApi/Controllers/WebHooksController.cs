@@ -1053,83 +1053,651 @@ namespace IndiaEventsWebApi.Controllers
         private async void MailChange(Root RequestWebhook)
         {
 
+            string eventSettlement = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
+            string honorarium = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
+            string Deviation = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
+            string SpeakerCodeCreation = configuration.GetSection("SmartsheetSettings:SpeakerCodeCreation").Value;
+            string ApprovedSpeakers = configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value;
+            string TrainerCodeCreation = configuration.GetSection("SmartsheetSettings:TrainerCodeCreation").Value;
+            string ApprovedTrainers = configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value;
+            string VendorMasterSheet = configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value;
+            string VendorCodeCreation = configuration.GetSection("SmartsheetSettings:VendorCodeCreation").Value;
+
             Sheet sheet = SheetHelper.GetSheetById(smartsheet, processSheet);
+            Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, honorarium);
+            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, eventSettlement);
+            Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, Deviation);
+
+            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, SpeakerCodeCreation);
+            Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, ApprovedSpeakers);
+            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, TrainerCodeCreation);
+            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, ApprovedTrainers);
+            Sheet sheet8 = SheetHelper.GetSheetById(smartsheet, VendorMasterSheet);
+            Sheet sheet9 = SheetHelper.GetSheetById(smartsheet, VendorCodeCreation);
+
+
+
             string wehookSheetId = "" + RequestWebhook.scopeObjectId;
             Sheet WebHookSheet = SheetHelper.GetSheetById(smartsheet, wehookSheetId);
+
+
             Dictionary<string, long> Sheetcolumns = new();
             foreach (Column? column in sheet.Columns)
             {
                 Sheetcolumns.Add(column.Title, (long)column.Id);
             }
-            //IEnumerable<Row> DataInSheet1 = [];
-            //int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
-            //DataInSheet1 = sheet.Rows.Where(x =>
-            //{
-            //    string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
-            //    return cellValue != "approved" || cellValue != "advance approved";
-            //});
+            Dictionary<string, long> Sheetcolumns1 = new();
+            foreach (Column? column in sheet1.Columns)
+            {
+                Sheetcolumns1.Add(column.Title, (long)column.Id);
+            }
+            Dictionary<string, long> Sheetcolumns2 = new();
+            foreach (Column? column in sheet2.Columns)
+            {
+                Sheetcolumns2.Add(column.Title, (long)column.Id);
+            }
+            Dictionary<string, long> Sheetcolumns3 = new();
+            foreach (Column? column in sheet3.Columns)
+            {
+                Sheetcolumns3.Add(column.Title, (long)column.Id);
+            }
+
+            Dictionary<string, long> Sheetcolumns4 = new();
+            foreach (Column? column in sheet4.Columns)
+            {
+                Sheetcolumns4.Add(column.Title, (long)column.Id);
+            }
+
+            Dictionary<string, long> Sheetcolumns5 = new();
+            foreach (Column? column in sheet5.Columns)
+            {
+                Sheetcolumns5.Add(column.Title, (long)column.Id);
+            }
+
+            Dictionary<string, long> Sheetcolumns6 = new();
+            foreach (Column? column in sheet6.Columns)
+            {
+                Sheetcolumns6.Add(column.Title, (long)column.Id);
+            }
+
+            Dictionary<string, long> Sheetcolumns7 = new();
+            foreach (Column? column in sheet7.Columns)
+            {
+                Sheetcolumns7.Add(column.Title, (long)column.Id);
+            }
+
+            Dictionary<string, long> Sheetcolumns8 = new();
+            foreach (Column? column in sheet8.Columns)
+            {
+                Sheetcolumns8.Add(column.Title, (long)column.Id);
+            }
+
+            Dictionary<string, long> Sheetcolumns9 = new();
+            foreach (Column? column in sheet9.Columns)
+            {
+                Sheetcolumns9.Add(column.Title, (long)column.Id);
+            }
+
+
+
+
+
+
+
+
             if (RequestWebhook != null && RequestWebhook.events != null)
             {
+
                 foreach (var WebHookEvent in RequestWebhook.events)
                 {
-                    long RowId = WebHookEvent.rowId;
-                    string DesignationValue = "";
-                    string EmailValue = "";
-                    Row row = GetRowById(WebHookSheet, RowId);
-                    Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
-                    Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
-                    if (designationColumn != null && EmailColumn != null)
+                    if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
                     {
-                        int? designationColumnIndex = designationColumn.Index;
-                        int? EmailColumnIndex = EmailColumn.Index;
-                        DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
-                        EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
-                        string columnName = "";
-                        if (DesignationValue == "Sales Head")
-                            columnName = "PRE-Sales Head Approval";
-                        else if (DesignationValue == "Marketing Head")
-                            columnName = "PRE-Marketing Head Approval";
-                        else if (DesignationValue == "Finance Treasury")
-                            columnName = "PRE-Finance Treasury Approval";
-                        else if (DesignationValue == "Medical Affairs Head")
-                            columnName = "PRE-Medical Affairs Head Approval";
+                        long RowId = WebHookEvent.rowId;
+                        string processSheet = await Task.Run(() => processSheetEmailChange(RowId, WebHookSheet, sheet, Sheetcolumns, smartsheet));
+                        string HonorariumSheet = await Task.Run(() => HonorariumEmailChange(RowId, WebHookSheet, sheet1, Sheetcolumns1, smartsheet));
+                        string EventSettlementSheet = await Task.Run(() => EventSettlementEmailChange(RowId, WebHookSheet, sheet2, Sheetcolumns2, smartsheet));
+                        string DeviationSheet = await Task.Run(() => DeviatonEmailChange(RowId, WebHookSheet, sheet3, Sheetcolumns3, smartsheet));
+                        string SpeakerCodeCreationSheet = await Task.Run(() => ApprovedSpeakersEmailChange(RowId, WebHookSheet, sheet4, Sheetcolumns4, smartsheet));
+                        string ApprovedSpeakersSheet = await Task.Run(() => ApprovedSpeakersEmailChange(RowId, WebHookSheet, sheet5, Sheetcolumns5, smartsheet));
+                        string TrainerCodeCreationSheet = await Task.Run(() => ApprovedSpeakersEmailChange(RowId, WebHookSheet, sheet6, Sheetcolumns6, smartsheet));
+                        string ApprovedTrainersSheet = await Task.Run(() => ApprovedSpeakersEmailChange(RowId, WebHookSheet, sheet7, Sheetcolumns7, smartsheet));
+                        string VendorMasterSheetSheet = await Task.Run(() => VendorEmailChange(RowId, WebHookSheet, sheet8, Sheetcolumns8, smartsheet));
+                        string VendorCodeCreationSheet = await Task.Run(() => VendorCodeEmailChange(RowId, WebHookSheet, sheet9, Sheetcolumns9, smartsheet));
+                        #region
+                        //string DesignationValue = "";
+                        //string EmailValue = "";
+                        //Row row = GetRowById(WebHookSheet, RowId);
+                        //Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+                        //Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
 
-                        IEnumerable<Row> DataInSheet1 = [];
-                        int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
-                        int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
+                        ////string processSheet = await Task.Run(() => processSheetEmailChange(RowId, WebHookSheet, sheet, Sheetcolumns, smartsheet));
 
-                        DataInSheet1 = sheet.Rows.Where(x =>
-                        {
-                            string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
-                            string designationValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
-                            return ((cellValue != "approved" || cellValue != "advance approved") && designationValue != "approved");
-                        });
+                        //if (designationColumn != null && EmailColumn != null)
+                        //{
+                        //    int? designationColumnIndex = designationColumn.Index;
+                        //    int? EmailColumnIndex = EmailColumn.Index;
+                        //    DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
+                        //    EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
+                        //    string columnName = "";
+                        //    if (DesignationValue == "Sales Head")
+                        //        columnName = "PRE-Sales Head Approval";
+                        //    else if (DesignationValue == "Marketing Head")
+                        //        columnName = "PRE-Marketing Head Approval";
+                        //    else if (DesignationValue == "Finance Treasury")
+                        //        columnName = "PRE-Finance Treasury Approval";
+                        //    else if (DesignationValue == "Medical Affairs Head")
+                        //        columnName = "PRE-Medical Affairs Head Approval";
 
+                        //    IEnumerable<Row> DataInSheet1 = [];
+                        //    int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
+                        //    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
 
-                        //IEnumerable<Row> DataInSheet2 = [];
-                        //DataInSheet2 = sheet.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault())].Value).ToLower() != "approved");
+                        //    DataInSheet1 = sheet.Rows.Where(x =>
+                        //    {
+                        //        string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        //        string designationValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        //        return ((cellValue != "approved" || cellValue != "advance approved") && designationValue != "approved");
+                        //    });
+                        //    List<Row> liRowsToUpdate = new();
+                        //    foreach (Row rowData in DataInSheet1)
+                        //    {
+                        //        Cell[] cellsToUpdate = new Cell[]
+                        //        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
 
-                        List<Row> liRowsToUpdate = new();
-                        foreach (Row rowData in DataInSheet1)
-                        {
-                            Cell[] cellsToUpdate = new Cell[]
-                            { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
-
-                            row = new Row
-                            {
-                                Id = rowData.Id,
-                                Cells = cellsToUpdate
-                            };
-                            liRowsToUpdate.Add(row);
-                        }
-                        if (liRowsToUpdate.Count > 0)
-                        {
-                            smartsheet.SheetResources.RowResources.UpdateRows(Convert.ToUInt32(processSheet), liRowsToUpdate);
-                            Log.Information("updated " + liRowsToUpdate.Count + " rows");
-                        }
+                        //        row = new Row
+                        //        {
+                        //            Id = rowData.Id,
+                        //            Cells = cellsToUpdate
+                        //        };
+                        //        liRowsToUpdate.Add(row);
+                        //    }
+                        //    if (liRowsToUpdate.Count > 0)
+                        //    {
+                        //        smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        //        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                        //    }
+                        //}
+                        #endregion
                     }
                 }
+
             }
+        }
+
+        public static string processSheetEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
+            Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
+
+                string columnName = "";
+                if (DesignationValue == "Sales Head")
+                    columnName = "PRE-Sales Head Approval";
+                else if (DesignationValue == "Marketing Head")
+                    columnName = "PRE-Marketing Head Approval";
+                else if (DesignationValue == "Finance Treasury")
+                    columnName = "PRE-Finance Treasury Approval";
+                else if (DesignationValue == "Medical Affairs Head")
+                    columnName = "PRE-Medical Affairs Head Approval";
+                else if (DesignationValue == "Compliance")
+                    columnName = "PRE-Compliance Approval";
+                if (columnName != "")
+                {
+
+
+                    IEnumerable<Row> DataInSheet1 = [];
+                    int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
+
+                    DataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return ((cellValue != "approved" || cellValue != "advance approved") && designationValue != "approved");
+                    });
+
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "designation not found";
+                }
+            }
+
+
+            return "process sheet updated";
+        }
+
+        public static string HonorariumEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
+            Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
+                string columnName = "";
+                if (DesignationValue == "Sales Head")
+                    columnName = "HON-Sales Head Approval";
+                else if (DesignationValue == "Marketing Head")
+                    columnName = "HON-Marketing Head Approval";
+                else if (DesignationValue == "Finance Treasury")
+                    columnName = "HON-Finance Treasury Approval";
+                else if (DesignationValue == "Medical Affairs Head")
+                    columnName = "HON-Medical Affairs Head Approval";
+                else if (DesignationValue == "Compliance")
+                    columnName = "HON-Compliance Approval";
+                else if (DesignationValue == "Finance Accounts")
+                    columnName = "HON-Finance Accounts Approval";
+                if (columnName != "")
+                {
+                    IEnumerable<Row> DataInSheet1 = [];
+                    int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Honorarium Request Status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
+
+                    DataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return ((cellValue != "honorarium approved") && designationValue != "approved");
+                    });
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "designation not found";
+                }
+            }
+
+
+            return "Honorarium sheet updated";
+        }
+
+        public static string EventSettlementEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
+            Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
+                string columnName = "";
+                if (DesignationValue == "Sales Head")
+                    columnName = "EventSettlement-SalesHead Approval";
+                else if (DesignationValue == "Marketing Head")
+                    columnName = "EventSettlement-Marketing Head Approval";
+                else if (DesignationValue == "Finance Treasury")
+                    columnName = "EventSettlement-Finance Treasury Approval";
+                else if (DesignationValue == "Medical Affairs Head")
+                    columnName = "EventSettlement-Medical Affairs Head Approval";
+                else if (DesignationValue == "Compliance")
+                    columnName = "EventSettlement-Compliance Approval";
+                else if (DesignationValue == "Finance Accounts")
+                    columnName = "EventSettlement-Finance Account Approval";
+                if (columnName != "")
+                {
+                    IEnumerable<Row> DataInSheet1 = [];
+                    int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Post Event Request status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
+
+                    DataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return ((cellValue != "closure approved") && designationValue != "approved");
+                    });
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "designation not found";
+                }
+            }
+
+
+            return "Event Settlement sheet updated";
+        }
+
+        public static string DeviatonEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
+           Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
+                string columnName = "";
+                if (DesignationValue == "Sales Head")
+                    columnName = "Sales Head approval";
+                else if (DesignationValue == "Finance Head")
+                    columnName = "Finance Head Approval";
+
+                if (columnName != "")
+                {
+                    IEnumerable<Row> DataInSheet1 = [];
+                    // int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Post Event Request status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
+
+                    DataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        //string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return (designationValue != "approved");
+                    });
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "designation not found";
+                }
+            }
+
+
+            return "Event Settlement sheet updated";
+        }
+
+        public static string ApprovedSpeakersEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
+           Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
+                string columnName = "";
+                if (DesignationValue == "Sales Head")
+                    columnName = "Sales Head Approval";
+                else if (DesignationValue == "Medical Affairs Head")
+                    columnName = "Medical Affairs Head Approval";
+
+                if (columnName != "")
+                {
+                    IEnumerable<Row> DataInSheet1 = [];
+                    //int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Post Event Request status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
+
+                    DataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        //string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return (designationValue != "approved");
+                    });
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "designation not found";
+                }
+            }
+
+
+            return "Master sheet updated";
+        }
+
+        public static string VendorEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
+           Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
+                string columnName = "";
+                if (DesignationValue == "Finance Checker")
+                    columnName = "Finance Checker Approval";
+
+
+                if (columnName != "")
+                {
+                    IEnumerable<Row> DataInSheet1 = [];
+                    // int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Post Event Request status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
+
+                    DataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        //string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return (/*(cellValue != "closure approved") &&*/ designationValue != "approved");
+                    });
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "designation not found";
+                }
+            }
+
+
+            return "Vendor  sheet updated";
+        }
+
+        public static string VendorCodeEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
+           Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
+                string columnName = "";
+                if (DesignationValue == "Finance Checker")
+                    columnName = "Finance Checker  approval";
+
+
+                if (columnName != "")
+                {
+                    IEnumerable<Row> DataInSheet1 = [];
+                    //int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Post Event Request status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
+
+                    DataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        //string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return (/*(cellValue != "closure approved") &&*/ designationValue != "approved");
+                    });
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "designation not found";
+                }
+            }
+
+
+            return "Vendor sheet updated";
         }
 
 

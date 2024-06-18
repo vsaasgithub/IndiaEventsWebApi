@@ -618,8 +618,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet1, updateRow));
 
 
+                    //return Ok(new
+                    //{ Message = " Success!" });
+                    DateTime currentDate = DateTime.Now;
                     return Ok(new
-                    { Message = " Success!" });
+                    { Message = $"Thank you. Your event creation request has been received at {currentDate}. " +
+                    "You should receive a confirmation email with the details of your event after a few minutes." });
 
                 }
                 catch (Exception ex)
@@ -1169,8 +1173,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 //strMessage += "==Before adding Role to WebSheet " + "==" + DateTime.Now.ToString() + "==";
                 //Log.Information("End of api " + DateTime.Now);
                 MyConn.CloseAsync();
+                //return Ok(new
+                //{ Message = " Success!" });/* { Message = " Success!" });*/
+                DateTime currentDate = DateTime.Now;
                 return Ok(new
-                { Message = " Success!" });/* { Message = " Success!" });*/
+                {
+                    Message = $"Thank you. Your event creation request has been received at {currentDate}. " +
+                "You should receive a confirmation email with the details of your event after a few minutes."
+                });
+
             }
             catch (Exception ex)
             {
@@ -2860,8 +2871,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 //strMessage += "==Before adding Role to WebSheet " + "==" + DateTime.Now.ToString() + "==";
                 //Log.Information("End of api " + DateTime.Now);
                 MyConn.CloseAsync();
+                //return Ok(new
+                //{ Message = " Success!" });/* { Message = " Success!" });*/
+                DateTime currentDate = DateTime.Now;
                 return Ok(new
-                { Message = " Success!" });/* { Message = " Success!" });*/
+                {
+                    Message = $"Thank you. Your event creation request has been received at {currentDate}. " +
+                "You should receive a confirmation email with the details of your event after a few minutes."
+                });
+
             }
             catch (Exception ex)
             {
@@ -3602,8 +3620,13 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRows });
 
+                DateTime currentDate = DateTime.Now;
                 return Ok(new
-                { Message = " Success!" });
+                {
+                    Message = $"Thank you. Your event creation request has been received at {currentDate}. " +
+                "You should receive a confirmation email with the details of your event after a few minutes."
+                });
+
 
 
 
@@ -3986,8 +4009,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 //strMessage += "==Before adding Role to WebSheet " + "==" + DateTime.Now.ToString() + "==";
                 //Log.Information("End of api " + DateTime.Now);
                 MyConn.CloseAsync();
+                //return Ok(new
+                //{ Message = " Success!" });/* { Message = " Success!" });*/
+                DateTime currentDate = DateTime.Now;
                 return Ok(new
-                { Message = " Success!" });/* { Message = " Success!" });*/
+                {
+                    Message = $"Thank you. Your event creation request has been received at {currentDate}. " +
+                "You should receive a confirmation email with the details of your event after a few minutes."
+                });
+
             }
             catch (Exception ex)
             {
