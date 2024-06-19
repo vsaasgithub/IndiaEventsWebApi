@@ -622,8 +622,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     //{ Message = " Success!" });
                     DateTime currentDate = DateTime.Now;
                     return Ok(new
-                    { Message = $"Thank you. Your event creation request has been received. " +
-                    "You should receive a confirmation email with the details of your event after a few minutes." });
+                    {
+                        Message = $"Thank you. Your event creation request has been received. " +
+                    "You should receive a confirmation email with the details of your event after a few minutes."
+                    });
 
                 }
                 catch (Exception ex)
@@ -782,7 +784,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 string MyConnection = configuration.GetSection("ConnectionStrings:mysql").Value;
                 MySqlConnection MyConn = new MySqlConnection(MyConnection);
-                MySqlCommand com = new MySqlCommand("WebinarPreevent", MyConn);
+                MySqlCommand com = new MySqlCommand("Class1Preevent", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 com.Parameters.AddWithValue("@ApproverPreEventURL", targetRow1?.Cells[1].Value ?? "no url");
                 com.Parameters.AddWithValue("@FinanceTreasuryURL", targetRow2?.Cells[1].Value ?? "no url");
@@ -792,6 +794,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 com.Parameters.AddWithValue("@EventDate", formDataList.class1.EventDate);
                 com.Parameters.AddWithValue("@StartTime", formDataList.class1.StartTime);
                 com.Parameters.AddWithValue("@EndTime", formDataList.class1.EndTime);
+                com.Parameters.AddWithValue("@VenueName", formDataList.class1.VenueName);
+                com.Parameters.AddWithValue("@City", formDataList.class1.City);
+                com.Parameters.AddWithValue("@State", formDataList.class1.State);
                 com.Parameters.AddWithValue("@MeetingType", " ");
                 com.Parameters.AddWithValue("@Brands", brand);
                 com.Parameters.AddWithValue("@Expenses", Expense);
@@ -1173,31 +1178,21 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 //strMessage += "==Before adding Role to WebSheet " + "==" + DateTime.Now.ToString() + "==";
                 //Log.Information("End of api " + DateTime.Now);
                 MyConn.CloseAsync();
-                //return Ok(new
-                //{ Message = " Success!" });/* { Message = " Success!" });*/
-                DateTime currentDate = DateTime.Now;
                 return Ok(new
                 {
-                    Message = $"Thank you. Your event creation request has been received. " +
+                    Message = $"Thank you. Your event creation request has been received." +
                 "You should receive a confirmation email with the details of your event after a few minutes."
                 });
 
             }
             catch (Exception ex)
             {
-                //return BadRequest($"Could not find {ex.Message}");
                 Log.Error($"Error occured on webinar method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
-                //return BadRequest(ex.Message);
                 return BadRequest(new
                 { Message = ex.Message + "------" + ex.StackTrace });
             }
-            //finally
-            //{
-            //    semaphore.Release();
-            //}
         }
-
 
         [HttpPost("ClassIIPreEvent"), DisableRequestSizeLimit]
         public IActionResult ClassIIPreEvent(Class2 formDataList)

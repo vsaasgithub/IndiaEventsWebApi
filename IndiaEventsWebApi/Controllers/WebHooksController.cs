@@ -112,6 +112,37 @@ namespace IndiaEventsWebApi.Controllers
             }
         }
 
+        [HttpPost("EmailWebHookForEmployeeMaster")]
+        public async Task<IActionResult> EmailWebHookForEmployeeMaster()
+        {
+            try
+            {
+                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                string rawContent = string.Empty;
+                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                {
+                    rawContent = await reader.ReadToEndAsync();
+                }
+                requestHeaders.Add("Body", rawContent);
+                Log.Information(string.Join(";", requestHeaders.Select(x => x.Key + "=" + x.Value).ToArray()));
+
+
+                Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                MailChangeInMasters(RequestWebhook);
+
+                string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+
+                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                //return Ok();
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occured on Webhook mailchange  method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.StackTrace);
+            }
+        }
+
         [HttpPost("WebHookForAgreements")]
         public async Task<IActionResult> WebHookPostmethod()
         {
@@ -1067,7 +1098,6 @@ namespace IndiaEventsWebApi.Controllers
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, honorarium);
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, eventSettlement);
             Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, Deviation);
-
             Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, SpeakerCodeCreation);
             Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, ApprovedSpeakers);
             Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, TrainerCodeCreation);
@@ -1081,70 +1111,23 @@ namespace IndiaEventsWebApi.Controllers
             Sheet WebHookSheet = SheetHelper.GetSheetById(smartsheet, wehookSheetId);
 
 
-            Dictionary<string, long> Sheetcolumns = new();
-            foreach (Column? column in sheet.Columns)
-            {
-                Sheetcolumns.Add(column.Title, (long)column.Id);
-            }
-            Dictionary<string, long> Sheetcolumns1 = new();
-            foreach (Column? column in sheet1.Columns)
-            {
-                Sheetcolumns1.Add(column.Title, (long)column.Id);
-            }
-            Dictionary<string, long> Sheetcolumns2 = new();
-            foreach (Column? column in sheet2.Columns)
-            {
-                Sheetcolumns2.Add(column.Title, (long)column.Id);
-            }
-            Dictionary<string, long> Sheetcolumns3 = new();
-            foreach (Column? column in sheet3.Columns)
-            {
-                Sheetcolumns3.Add(column.Title, (long)column.Id);
-            }
 
-            Dictionary<string, long> Sheetcolumns4 = new();
-            foreach (Column? column in sheet4.Columns)
-            {
-                Sheetcolumns4.Add(column.Title, (long)column.Id);
-            }
+            var Sheetcolumns = sheet.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns1 = sheet1.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns2 = sheet2.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns3 = sheet3.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns4 = sheet4.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns5 = sheet5.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns6 = sheet6.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns7 = sheet7.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns8 = sheet8.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns9 = sheet9.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
 
-            Dictionary<string, long> Sheetcolumns5 = new();
-            foreach (Column? column in sheet5.Columns)
-            {
-                Sheetcolumns5.Add(column.Title, (long)column.Id);
-            }
-
-            Dictionary<string, long> Sheetcolumns6 = new();
-            foreach (Column? column in sheet6.Columns)
-            {
-                Sheetcolumns6.Add(column.Title, (long)column.Id);
-            }
-
-            Dictionary<string, long> Sheetcolumns7 = new();
-            foreach (Column? column in sheet7.Columns)
-            {
-                Sheetcolumns7.Add(column.Title, (long)column.Id);
-            }
-
-            Dictionary<string, long> Sheetcolumns8 = new();
-            foreach (Column? column in sheet8.Columns)
-            {
-                Sheetcolumns8.Add(column.Title, (long)column.Id);
-            }
-
-            Dictionary<string, long> Sheetcolumns9 = new();
-            foreach (Column? column in sheet9.Columns)
-            {
-                Sheetcolumns9.Add(column.Title, (long)column.Id);
-            }
-
-
-
-
-
-
-
-
+            //Dictionary<string, long> Sheetcolumns9 = new();
+            //foreach (Column? column in sheet9.Columns)
+            //{
+            //    Sheetcolumns9.Add(column.Title, (long)column.Id);
+            //}
             if (RequestWebhook != null && RequestWebhook.events != null)
             {
 
@@ -1223,17 +1206,48 @@ namespace IndiaEventsWebApi.Controllers
 
             }
         }
+        private async void MailChangeInMasters(Root RequestWebhook)
+        {
+
+            string eventSettlement = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
+            string honorarium = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
+            string Deviation = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, processSheet);
+            Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, honorarium);
+            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, eventSettlement);
+            string wehookSheetId = "" + RequestWebhook.scopeObjectId;
+            Sheet WebHookSheet = SheetHelper.GetSheetById(smartsheet, wehookSheetId);
+
+            Dictionary<string, long> Sheetcolumns = sheet.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            Dictionary<string, long> Sheetcolumns1 = sheet1.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            Dictionary<string, long> Sheetcolumns2 = sheet2.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            if (RequestWebhook != null && RequestWebhook.events != null)
+            {
+                foreach (var WebHookEvent in RequestWebhook.events)
+                {
+                    if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
+                    {
+                        long RowId = WebHookEvent.rowId;
+                        string processSheet = await Task.Run(() => TestprocessSheetEmailChange(RowId, WebHookSheet, sheet, Sheetcolumns, smartsheet));
+                        string HonorariumSheet = await Task.Run(() => TestHonorariumEmailChange(RowId, WebHookSheet, sheet1, Sheetcolumns1, smartsheet));
+                        string EventSettlementSheet = await Task.Run(() => TestEventSettlementEmailChange(RowId, WebHookSheet, sheet2, Sheetcolumns2, smartsheet));
+
+
+                    }
+                }
+            }
+        }
 
         public static string processSheetEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
-            Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
         {
             long RowId = rowId;
             string DesignationValue = "";
             string EmailValue = "";
 
             Row row = GetRowById(WebHookSheet, RowId);
-            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
-            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation"); //Approval master Role and should be the column name in respective sheet
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email"); // Approval master Email
 
             if (designationColumn != null && EmailColumn != null)
             {
@@ -1714,6 +1728,207 @@ namespace IndiaEventsWebApi.Controllers
         {
             return sheet.Rows.FirstOrDefault(r => r.Id == id);
         }
+
+
+
+
+
+
+        public static string TestprocessSheetEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
+        Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "RBM/BM");
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "EmailId");
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();//edited email
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();//initiator email
+
+
+
+
+                IEnumerable<Row> DataInSheet1 = [];
+                int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
+                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault();
+                int? InitiatorEmailIndex = sheet.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault();
+
+                DataInSheet1 = sheet.Rows.Where(x =>
+                {
+                    string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                    string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                    string InitiatorValue = Convert.ToString(x.Cells[(int)InitiatorEmailIndex].Value);
+                    return (cellValue != "approved" || cellValue != "advance approved") && designationValue != "approved" && InitiatorValue == EmailValue;
+                });
+                if (DataInSheet1 != null)
+                {
+
+
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns["RBM/BM"], Value = DesignationValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+
+            }
+
+
+            return "process sheet updated";
+        }
+
+        public static string TestHonorariumEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
+            Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "RBM/BM");
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "EmailId");
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();//edited email
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();//initiator email
+
+
+
+
+                IEnumerable<Row> DataInSheet1 = [];
+                int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Honorarium Request Status").Select(z => z.Index).FirstOrDefault();
+                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault();
+                int? InitiatorEmailIndex = sheet.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault();
+
+                DataInSheet1 = sheet.Rows.Where(x =>
+                {
+                    string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                    string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                    string InitiatorValue = Convert.ToString(x.Cells[(int)InitiatorEmailIndex].Value);
+                    return (cellValue != "honorarium approved") && designationValue != "approved" && InitiatorValue == EmailValue;
+                });
+                if (DataInSheet1 != null)
+                {
+
+
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns["RBM/BM"], Value = DesignationValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+
+            }
+
+
+            return "Honorarium sheet updated";
+        }
+
+        public static string TestEventSettlementEmailChange(long rowId, Sheet WebHookSheet, Sheet sheet,
+            Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "RBM/BM");
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "EmailId");
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();//edited email
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();//initiator email
+
+
+
+
+                IEnumerable<Row> DataInSheet1 = [];
+                int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Post Event Request status").Select(z => z.Index).FirstOrDefault();
+                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault();
+                int? InitiatorEmailIndex = sheet.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault();
+
+                DataInSheet1 = sheet.Rows.Where(x =>
+                {
+                    string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                    string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                    string InitiatorValue = Convert.ToString(x.Cells[(int)InitiatorEmailIndex].Value);
+                    return (cellValue != "closure approved") && designationValue != "approved" && InitiatorValue == EmailValue;
+                });
+                if (DataInSheet1 != null)
+                {
+
+
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns["RBM/BM"], Value = DesignationValue  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+
+            }
+
+
+            return "Event Settlement sheet updated";
+        }
+
     }
 
 }
