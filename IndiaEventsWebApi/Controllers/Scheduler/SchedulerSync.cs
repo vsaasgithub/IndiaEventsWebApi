@@ -163,7 +163,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                             Deviation_Processdt = dr6.CopyToDataTable();
                         }
 
-                        if (EventRequestsWebdt.Rows[loopcount]["Event Type"] == "Stall Fabrication")
+                        if (EventRequestsWebdt.Rows[loopcount]["Event Type"].ToString() == "Stall Fabrication")
                         {
                             try
                             {

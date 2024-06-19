@@ -112,6 +112,37 @@ namespace IndiaEventsWebApi.Controllers
             }
         }
 
+        [HttpPost("EmailWebHookForEmployeeMaster")]
+        public async Task<IActionResult> EmailWebHookForEmployeeMaster()
+        {
+            try
+            {
+                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                string rawContent = string.Empty;
+                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                {
+                    rawContent = await reader.ReadToEndAsync();
+                }
+                requestHeaders.Add("Body", rawContent);
+                Log.Information(string.Join(";", requestHeaders.Select(x => x.Key + "=" + x.Value).ToArray()));
+
+
+                Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                //MailChange(RequestWebhook);
+
+                string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+
+                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                //return Ok();
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occured on Webhook mailchange  method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.StackTrace);
+            }
+        }
+
         [HttpPost("WebHookForAgreements")]
         public async Task<IActionResult> WebHookPostmethod()
         {
@@ -1081,62 +1112,26 @@ namespace IndiaEventsWebApi.Controllers
             Sheet WebHookSheet = SheetHelper.GetSheetById(smartsheet, wehookSheetId);
 
 
-            Dictionary<string, long> Sheetcolumns = new();
-            foreach (Column? column in sheet.Columns)
-            {
-                Sheetcolumns.Add(column.Title, (long)column.Id);
-            }
-            Dictionary<string, long> Sheetcolumns1 = new();
-            foreach (Column? column in sheet1.Columns)
-            {
-                Sheetcolumns1.Add(column.Title, (long)column.Id);
-            }
-            Dictionary<string, long> Sheetcolumns2 = new();
-            foreach (Column? column in sheet2.Columns)
-            {
-                Sheetcolumns2.Add(column.Title, (long)column.Id);
-            }
-            Dictionary<string, long> Sheetcolumns3 = new();
-            foreach (Column? column in sheet3.Columns)
-            {
-                Sheetcolumns3.Add(column.Title, (long)column.Id);
-            }
 
-            Dictionary<string, long> Sheetcolumns4 = new();
-            foreach (Column? column in sheet4.Columns)
-            {
-                Sheetcolumns4.Add(column.Title, (long)column.Id);
-            }
+            var Sheetcolumns  = sheet.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns1 = sheet1.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns2 = sheet2.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns3 = sheet3.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns4 = sheet4.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns5 = sheet5.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns6 = sheet6.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns7 = sheet7.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns8 = sheet8.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            var Sheetcolumns9 = sheet9.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
 
-            Dictionary<string, long> Sheetcolumns5 = new();
-            foreach (Column? column in sheet5.Columns)
-            {
-                Sheetcolumns5.Add(column.Title, (long)column.Id);
-            }
 
-            Dictionary<string, long> Sheetcolumns6 = new();
-            foreach (Column? column in sheet6.Columns)
-            {
-                Sheetcolumns6.Add(column.Title, (long)column.Id);
-            }
 
-            Dictionary<string, long> Sheetcolumns7 = new();
-            foreach (Column? column in sheet7.Columns)
-            {
-                Sheetcolumns7.Add(column.Title, (long)column.Id);
-            }
 
-            Dictionary<string, long> Sheetcolumns8 = new();
-            foreach (Column? column in sheet8.Columns)
-            {
-                Sheetcolumns8.Add(column.Title, (long)column.Id);
-            }
-
-            Dictionary<string, long> Sheetcolumns9 = new();
-            foreach (Column? column in sheet9.Columns)
-            {
-                Sheetcolumns9.Add(column.Title, (long)column.Id);
-            }
+            //Dictionary<string, long> Sheetcolumns9 = new();
+            //foreach (Column? column in sheet9.Columns)
+            //{
+            //    Sheetcolumns9.Add(column.Title, (long)column.Id);
+            //}
 
 
 
