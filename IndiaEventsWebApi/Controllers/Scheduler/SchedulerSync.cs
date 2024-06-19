@@ -211,7 +211,8 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                     new Cell { ColumnId =Sheet1columns["1 Up Manager"],Value = EventRequestsWebdt.Rows[loopcount]["1 Up Manager"]},
                     new Cell { ColumnId =Sheet1columns["Medical Affairs Head"],Value = EventRequestsWebdt.Rows[loopcount]["Medical Affairs Head"]},
                     new Cell { ColumnId =Sheet1columns["BTE Expense Details"],Value = EventRequestsWebdt.Rows[loopcount]["BTE Expense Details"]},
-                    new Cell { ColumnId =Sheet1columns["Class III Event Code"],Value = EventRequestsWebdt.Rows[loopcount]["Class III Event Code"]}
+                    new Cell { ColumnId =Sheet1columns["Class III Event Code"],Value = EventRequestsWebdt.Rows[loopcount]["Class III Event Code"]},
+                    new Cell { ColumnId=Sheet1columns["End Date"],Value = EventRequestsWebdt.Rows[loopcount]["End Date"]}
                                                };
                                 Row row = new Row
                                 {

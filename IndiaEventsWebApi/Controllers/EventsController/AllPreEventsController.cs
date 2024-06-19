@@ -622,7 +622,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     //{ Message = " Success!" });
                     DateTime currentDate = DateTime.Now;
                     return Ok(new
-                    { Message = $"Thank you. Your event creation request has been received at {currentDate}. " +
+                    { Message = $"Thank you. Your event creation request has been received. " +
                     "You should receive a confirmation email with the details of your event after a few minutes." });
 
                 }
@@ -1178,7 +1178,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 DateTime currentDate = DateTime.Now;
                 return Ok(new
                 {
-                    Message = $"Thank you. Your event creation request has been received at {currentDate}. " +
+                    Message = $"Thank you. Your event creation request has been received. " +
                 "You should receive a confirmation email with the details of your event after a few minutes."
                 });
 
@@ -2876,7 +2876,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 DateTime currentDate = DateTime.Now;
                 return Ok(new
                 {
-                    Message = $"Thank you. Your event creation request has been received at {currentDate}. " +
+                    Message = $"Thank you. Your event creation request has been received. " +
                 "You should receive a confirmation email with the details of your event after a few minutes."
                 });
 
@@ -3623,7 +3623,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 DateTime currentDate = DateTime.Now;
                 return Ok(new
                 {
-                    Message = $"Thank you. Your event creation request has been received at {currentDate}. " +
+                    Message = $"Thank you. Your event creation request has been received. " +
                 "You should receive a confirmation email with the details of your event after a few minutes."
                 });
 
@@ -4014,7 +4014,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 DateTime currentDate = DateTime.Now;
                 return Ok(new
                 {
-                    Message = $"Thank you. Your event creation request has been received at {currentDate}. " +
+                    Message = $"Thank you. Your event creation request has been received. " +
                 "You should receive a confirmation email with the details of your event after a few minutes."
                 });
 
