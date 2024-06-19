@@ -1217,9 +1217,10 @@ namespace IndiaEventsWebApi.Controllers
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, eventSettlement);
             string wehookSheetId = "" + RequestWebhook.scopeObjectId;
             Sheet WebHookSheet = SheetHelper.GetSheetById(smartsheet, wehookSheetId);
-            var Sheetcolumns = sheet.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
-            var Sheetcolumns1 = sheet1.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
-            var Sheetcolumns2 = sheet2.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+
+            Dictionary<string, long> Sheetcolumns = sheet.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            Dictionary<string, long> Sheetcolumns1 = sheet1.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            Dictionary<string, long> Sheetcolumns2 = sheet2.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
             if (RequestWebhook != null && RequestWebhook.events != null)
             {
                 foreach (var WebHookEvent in RequestWebhook.events)
@@ -1245,8 +1246,8 @@ namespace IndiaEventsWebApi.Controllers
             string EmailValue = "";
 
             Row row = GetRowById(WebHookSheet, RowId);
-            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
-            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation"); //Approval master Role and should be the column name in respective sheet
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email"); // Approval master Email
 
             if (designationColumn != null && EmailColumn != null)
             {

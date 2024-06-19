@@ -300,7 +300,7 @@ namespace IndiaEventsWebApi.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error($"Error occured on Webhook apicontroller Attachementfile method {ex.Message} at {DateTime.Now}");
+                Log.Error($"Error occured  {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
                 return BadRequest(BadRequest(ex.Message));
             }
