@@ -27,7 +27,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
         StringBuilder addedInviteesData = new StringBuilder();
         StringBuilder addedHcpData = new StringBuilder();
 
-        [HttpPut("UpdateFinanceAccountPanelSheet")]
+        [HttpPut("UpdateFinanceAccountPanelSheet")] //no need to change
         public IActionResult UpdateFinanceAccountPanelSheet(FinanceAccountsUpdate updatedFormData)
         {
             try
@@ -173,7 +173,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
 
 
-        [HttpPut("UpdateFinanceTreasuryPanelSheet")]
+        [HttpPut("UpdateFinanceTreasuryPanelSheet")]//no need to change
         public IActionResult UpdateFinanceTreasuryPanelSheet(FinanceTreasuryUpdate updatedFormData)
         {
             try
