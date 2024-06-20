@@ -199,7 +199,7 @@ namespace IndiaEventsWebApi.Controllers
                 // Add arrays to the result dictionary
                 resultDict["panel"] = panelArray;
                 resultDict["expense"] = expenseArray;
-                resultDict["invitee"] = expenseArray;
+                resultDict["invitee"] = InviteArray;
 
                 return Ok(resultDict);
             }

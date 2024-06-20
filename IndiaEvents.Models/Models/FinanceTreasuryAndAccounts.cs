@@ -46,4 +46,15 @@
 
         public List<FinanceTreasury> FinanceTreasury { get; set; }
     }
+
+    public class FinanceTreasuryUpdateIn3Sheets
+    {
+        public string? EventId { get; set; }
+        public string? Status { get; set; }
+        public string? Description { get; set; }
+
+        public List<FinanceTreasury> PanelSheet { get; set; }
+        public List<FinanceTreasury> ExpenseSheet { get; set; }
+        public List<FinanceTreasury> InviteesSheet { get; set; }
+    }
 }
