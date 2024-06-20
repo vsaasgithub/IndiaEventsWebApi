@@ -266,8 +266,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                                 if (existingRow != null)
                                 {
                                     Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
-                                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(InviteesSheet, "JV Number"), Value = f.JVNumber });
-                                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(InviteesSheet, "JV Date"), Value = f.JVDate });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(InviteesSheet, "JV Number"), Value = f.JVNumber });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(InviteesSheet, "JV Date"), Value = f.JVDate });
 
                                     IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(InviteesSheet.Id.Value, new Row[] { updateRow1 });
 
