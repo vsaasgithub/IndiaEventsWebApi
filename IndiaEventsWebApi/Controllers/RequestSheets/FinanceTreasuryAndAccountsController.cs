@@ -98,7 +98,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
         }
 
 
-        [HttpPut("UpdateFinanceAccountExpenseSheet")]
+        [HttpPut("UpdateFinanceAccountExpenseSheet")]//not in use
         public IActionResult UpdateFinanceAccountExpenseSheet(FinanceAccountsUpdate updatedFormData)
         {
             try
@@ -173,7 +173,140 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
         }
 
+        [HttpPut("UpdateFinanceAccountsInEventSettlement")]
+        public async Task<IActionResult> UpdateFinanceAccountsInEventSettlement(FinanceAccountsUpdateIn3Sheets updatedFormData)
+        {
+            try
+            {
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
 
+
+                string EventSettlement = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
+                string EventRequestsExpensesSheet = configuration.GetSection("SmartsheetSettings:EventRequestsExpensesSheet").Value;
+                string EventRequestsHcpRole = configuration.GetSection("SmartsheetSettings:EventRequestsHcpRole").Value;
+                string EventRequestInvitees = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
+
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, EventSettlement);
+                Row? targetRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == updatedFormData.EventId));
+                if (targetRow != null)
+                {
+                    string FinanceAccounts = "";
+                    StringBuilder FinanceTreasuryHonorDetails = new StringBuilder();
+                    int FTNo = 1;
+
+                    if (updatedFormData.Status.ToLower() == "approved")
+                    {
+                        foreach (var formdata in updatedFormData.InviteesSheet)
+                        {
+                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| JV Number: {formdata.JVNumber} | JV Date: {formdata.JVDate.Value.ToShortDateString()}";
+                            FinanceTreasuryHonorDetails.AppendLine(rowData);
+                            FTNo++;
+                        }
+                        foreach (var formdata in updatedFormData.PanelSheet)
+                        {
+                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| JV Number: {formdata.JVNumber} | JV Date: {formdata.JVDate.Value.ToShortDateString()}";
+                            FinanceTreasuryHonorDetails.AppendLine(rowData);
+                            FTNo++;
+                        }
+                        foreach (var formdata in updatedFormData.ExpenseSheet)
+                        {
+                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| JV Number: {formdata.JVNumber} | JV Date: {formdata.JVDate.Value.ToShortDateString()}";
+                            FinanceTreasuryHonorDetails.AppendLine(rowData);
+                            FTNo++;
+                        }
+
+                        FinanceAccounts = FinanceTreasuryHonorDetails.ToString();
+
+                        Row updateRow = new() { Id = targetRow.Id, Cells = new List<Cell>() };
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Finance Accounts Given Details"), Value = FinanceAccounts });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "EventSettlement-Finance Account Approval"), Value = updatedFormData.Status });
+                        smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
+
+                        if (updatedFormData.ExpenseSheet.Count > 0)
+                        {
+                            Sheet ExpenseSheet = SheetHelper.GetSheetById(smartsheet, EventRequestsExpensesSheet);
+                            foreach (var f in updatedFormData.ExpenseSheet)
+                            {
+                                Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
+                                if (existingRow != null)
+                                {
+                                    Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(ExpenseSheet, "JV Number"), Value = f.JVNumber });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(ExpenseSheet, "JV Date"), Value = f.JVDate });
+
+                                    IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(ExpenseSheet.Id.Value, new Row[] { updateRow1 });
+
+                                }
+                            }
+
+                        }
+                        if (updatedFormData.PanelSheet.Count > 0)
+                        {
+                            Sheet PanelSheet = SheetHelper.GetSheetById(smartsheet, EventRequestsHcpRole);
+                            foreach (var f in updatedFormData.PanelSheet)
+                            {
+                                Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
+                                if (existingRow != null)
+                                {
+                                    Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "JV Number"), Value = f.JVNumber });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "JV Date"), Value = f.JVDate });
+
+                                    IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(PanelSheet.Id.Value, new Row[] { updateRow1 });
+
+                                }
+                            }
+                        }
+                        if (updatedFormData.InviteesSheet.Count > 0)
+                        {
+                            Sheet InviteesSheet = SheetHelper.GetSheetById(smartsheet, EventRequestInvitees);
+                            foreach (var f in updatedFormData.InviteesSheet)
+                            {
+                                Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
+                                if (existingRow != null)
+                                {
+                                    Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
+                                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(InviteesSheet, "JV Number"), Value = f.JVNumber });
+                                    updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(InviteesSheet, "JV Date"), Value = f.JVDate });
+
+                                    IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(InviteesSheet.Id.Value, new Row[] { updateRow1 });
+
+                                }
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        Row updateRow = new() { Id = targetRow.Id, Cells = new List<Cell>() };
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "EventSettlement-Finance Account Comments"), Value = updatedFormData.Description });
+                        updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "EventSettlement-Finance Account Approval"), Value = updatedFormData.Status });
+
+                        smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRow });
+                    }
+                }
+                else
+                {
+                    return Ok(new { Error = "Invalid Event ID." });
+                }
+                return Ok(new { Message = "Data Updated successfully." });
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occured {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(new
+                {
+                    Message = ex.Message
+                });
+
+
+            }
+
+
+
+
+        }
 
 
         [HttpPut("UpdateFinanceTreasuryPanelSheet")]//no need to change
@@ -260,7 +393,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
         }
 
-        [HttpPut("UpdateFinanceTreasuryExpenseSheet")]
+        [HttpPut("UpdateFinanceTreasuryExpenseSheet")]//not in use
         public IActionResult UpdateFinanceTreasuryExpenseSheet(FinanceTreasuryUpdate updatedFormData)
         {
             try
@@ -354,103 +487,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
 
         }
 
-        [HttpPut("UpdateFinanceTreasuryInviteeSheet")]
-        public IActionResult UpdateFinanceTreasuryInviteeSheet(FinanceTreasuryUpdate updatedFormData)
-        {
-            try
-            {
-                SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-                string sheetId = configuration.GetSection("SmartsheetSettings:EventRequestInvitees").Value;
-                string sheetId1 = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
-                long.TryParse(sheetId, out long parsedSheetId);
-                long.TryParse(sheetId1, out long parsedSheetId1);
-
-                Sheet sheet = smartsheet.SheetResources.GetSheet(parsedSheetId, null, null, null, null, null, null, null);
-                Sheet sheet1 = smartsheet.SheetResources.GetSheet(parsedSheetId1, null, null, null, null, null, null, null);
-
-                string FinanceTreasury = "";
-                StringBuilder FinanceTreasuryHonorDetails = new StringBuilder();
-                int FTNo = 1;
-
-
-                if (updatedFormData.Status.ToLower() == "approved")
-                {
-                    foreach (var formdata in updatedFormData.FinanceTreasury)
-                    {
-                        string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| PV Number: {formdata.PVNumber} | PV Date: {formdata.PVDate.Value.ToShortDateString()} | Bank Reference Number: {formdata.BankReferenceNumber} | Bank Reference Date: {formdata.BankReferenceDate.Value.ToShortDateString()}";
-                        FinanceTreasuryHonorDetails.AppendLine(rowData);
-                        FTNo++;
-
-
-                    }
-                    FinanceTreasury = FinanceTreasuryHonorDetails.ToString();
-                }
-
-
-                foreach (var f in updatedFormData.FinanceTreasury)
-                {
-                    if (updatedFormData.Status == "Approved")
-                    {
-                        Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
-                        if (existingRow != null)
-                        {
-                            if (updatedFormData.Status.ToLower() == "approved")
-                            {
-                                Row updateRow = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
-                                updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "PV Number"), Value = f.PVNumber });
-                                updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "PV Date"), Value = f.PVDate });
-                                updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Bank Reference Number"), Value = f.BankReferenceNumber });
-                                updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet, "Bank Reference Date"), Value = f.BankReferenceDate });
-                                var updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId, new Row[] { updateRow });
-
-                            }
-                        }
-                        else
-                        {
-                            return Ok(new { Error = "Invalid Event ID." });
-                        }
-
-                    }
-
-
-                    var targetRow = sheet1.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == updatedFormData.EventId));
-
-                    if (targetRow != null)
-                    {
-                        if (updatedFormData.Status == "Approved")
-                        {
-                            Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
-                            updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Finance Treasury Given Details"), Value = FinanceTreasury });
-                            updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventSettlement-Finance Treasury Approval"), Value = updatedFormData.Status });
-                            smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId1, new Row[] { updateRow });
-                        }
-                        else
-                        {
-                            Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
-                            updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventSettlement-Finance Treasury Comments"), Value = updatedFormData.Description });
-                            updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventSettlement-Finance Treasury Approval"), Value = updatedFormData.Status });
-                            smartsheet.SheetResources.RowResources.UpdateRows(parsedSheetId1, new Row[] { updateRow });
-                        }
-
-                    }
-                    else
-                    {
-                        return Ok(new { Error = "Invalid Event ID." });
-                    }
-                }
-                return Ok(new { Message = "Data Updated successfully." });
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-
-        [HttpPut("UpdateFinanceTreasuryIn3sheets")]
-        public async Task<IActionResult> UpdateFinanceTreasuryIn3sheets(FinanceTreasuryUpdateIn3Sheets updatedFormData)
+        [HttpPut("UpdateFinanceTreasuryInEventSettlement")]
+        public async Task<IActionResult> UpdateFinanceTreasuryInEventSettlement(FinanceTreasuryUpdateIn3Sheets updatedFormData)
         {
             try
             {
