@@ -192,12 +192,13 @@ namespace IndiaEventsWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPost("LoginWithGoogle")]
         public async Task<IActionResult> LoginWithGoogle([FromBody] string credential)
         {
             try
             {
-
+                Log.Information("google api stated");
                 string GoogleclientId = configuration.GetSection("GoogleAuthentication:ClientId").Value;
 
                 string sheetId1 = configuration.GetSection("SmartsheetSettings:SheetId1").Value;
@@ -207,8 +208,9 @@ namespace IndiaEventsWebApi.Controllers
                 {
                     Audience = new List<string>() { GoogleclientId }
                 };
+                Log.Information("Audience successfully loded");
                 var payload = await GoogleJsonWebSignature.ValidateAsync(credential, settings);
-
+                Log.Information("payload successfully loded");
                 SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
 
                 List<string> Sheets = new List<string>() { sheetId1, sheetId2 };

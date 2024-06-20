@@ -227,7 +227,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             Sheet ExpenseSheet = SheetHelper.GetSheetById(smartsheet, EventRequestsExpensesSheet);
                             foreach (var f in updatedFormData.ExpenseSheet)
                             {
-                                Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
+                                Row existingRow = ExpenseSheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
                                 if (existingRow != null)
                                 {
                                     Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
@@ -245,7 +245,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             Sheet PanelSheet = SheetHelper.GetSheetById(smartsheet, EventRequestsHcpRole);
                             foreach (var f in updatedFormData.PanelSheet)
                             {
-                                Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
+                                Row existingRow = PanelSheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
                                 if (existingRow != null)
                                 {
                                     Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
@@ -262,7 +262,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             Sheet InviteesSheet = SheetHelper.GetSheetById(smartsheet, EventRequestInvitees);
                             foreach (var f in updatedFormData.InviteesSheet)
                             {
-                                Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
+                                Row existingRow = InviteesSheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
                                 if (existingRow != null)
                                 {
                                     Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
@@ -544,7 +544,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             Sheet ExpenseSheet = SheetHelper.GetSheetById(smartsheet, EventRequestsExpensesSheet);
                             foreach (var f in updatedFormData.ExpenseSheet)
                             {
-                                Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
+                                Row existingRow = ExpenseSheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
                                 if (existingRow != null)
                                 {
                                     Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
@@ -564,7 +564,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             Sheet PanelSheet = SheetHelper.GetSheetById(smartsheet, EventRequestsHcpRole);
                             foreach (var f in updatedFormData.PanelSheet)
                             {
-                                Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
+                                Row existingRow = PanelSheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
                                 if (existingRow != null)
                                 {
                                     Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
@@ -583,7 +583,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                             Sheet InviteesSheet = SheetHelper.GetSheetById(smartsheet, EventRequestInvitees);
                             foreach (var f in updatedFormData.InviteesSheet)
                             {
-                                Row existingRow = sheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
+                                Row existingRow = InviteesSheet.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == f.Id));
                                 if (existingRow != null)
                                 {
                                     Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
