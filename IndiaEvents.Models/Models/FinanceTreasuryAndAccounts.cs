@@ -6,21 +6,30 @@
     }
     public class FinanceAccounts
     {
-    
+
         public string? Id { get; set; }
         public string? HCPName { get; set; }
         public string? MISCode { get; set; }
         public string? JVNumber { get; set; }
         public DateTime? JVDate { get; set; }
 
-       
+
     }
     public class FinanceAccountsUpdate
     {
         public string? EventId { get; set; }
         public string? Status { get; set; }
         public string? Description { get; set; }
-        public List<FinanceAccounts> FinanceAccounts { get; set;}
+        public List<FinanceAccounts> FinanceAccounts { get; set; }
+    }
+    public class FinanceAccountsUpdateIn3Sheets
+    {
+        public string? EventId { get; set; }
+        public string? Status { get; set; }
+        public string? Description { get; set; }
+        public List<FinanceAccounts>? PanelSheet { get; set; }
+        public List<FinanceAccounts>? ExpenseSheet { get; set; }
+        public List<FinanceAccounts>? InviteesSheet { get; set; }
     }
 
 
@@ -43,6 +52,18 @@
         public string? EventId { get; set; }
         public string? Status { get; set; }
         public string? Description { get; set; }
+
         public List<FinanceTreasury> FinanceTreasury { get; set; }
+    }
+
+    public class FinanceTreasuryUpdateIn3Sheets
+    {
+        public string? EventId { get; set; }
+        public string? Status { get; set; }
+        public string? Description { get; set; }
+
+        public List<FinanceTreasury>? PanelSheet { get; set; }
+        public List<FinanceTreasury>? ExpenseSheet { get; set; }
+        public List<FinanceTreasury>? InviteesSheet { get; set; }
     }
 }
