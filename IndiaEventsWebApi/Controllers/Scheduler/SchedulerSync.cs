@@ -831,7 +831,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["TotalSessionHours"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["TotalSessionHours"] });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Rationale"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Rationale "] });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["EventId/EventRequestId"], Value = val });
-                                    newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Venue Name"], Value = EventRequestsWebdt.Rows[loopcount]["Venue Name"] });
+                                    newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Venue name"], Value = EventRequestsWebdt.Rows[loopcount]["Venue Name"] });
 
                                     IList<Row> panelrow = await Task.Run(() => ApiCalls.PanelDetails(smartsheet, sheet4, newRow1));
 
@@ -946,7 +946,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                 new () { ColumnId = Sheet6columns[ "Event Type"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["Event Type"] },
                                 new () { ColumnId = Sheet6columns[ "Event Date Start"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["Event Date Start"] },
                                 new () { ColumnId = Sheet6columns[ "Event End Date"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["Event End Date"] },
-                                new () { ColumnId = Sheet6columns[ "Venue Name"], Value = EventRequestsWebdt.Rows[loopcount]["Venue Name"]}
+                                new () { ColumnId = Sheet6columns[ "Venue name"], Value = EventRequestsWebdt.Rows[loopcount]["Venue Name"]}
                                 }
                                     };
                                     newRows6.Add(newRow6);
