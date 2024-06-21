@@ -3,20 +3,36 @@
   "WorkspaceRootPath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\attendencesheetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\attendencesheetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\loginandregistercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\loginandregistercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\invoicebase64controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\invoicebase64controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}|IndiaEvents.Models\\IndiaEvents.Models.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaevents.models\\models\\mastersheets\\userdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}|IndiaEvents.Models\\IndiaEvents.Models.csproj|solutionrelative:indiaevents.models\\models\\mastersheets\\userdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\webhookscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\webhookscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\eventscontroller\\getandupdateforalleventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\eventscontroller\\getandupdateforalleventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\eventscontroller\\honorariumcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\eventscontroller\\honorariumcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\tempdata.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\tempdata.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\invoicebase64controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\invoicebase64controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\mastersheets\\getmastersheetscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -27,28 +43,12 @@
       "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\requestsheets\\financetreasuryandaccountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}|IndiaEvents.Models\\IndiaEvents.Models.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaevents.models\\models\\financetreasuryandaccounts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}|IndiaEvents.Models\\IndiaEvents.Models.csproj|solutionrelative:indiaevents.models\\models\\financetreasuryandaccounts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\loginandregistercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\loginandregistercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\eventscontroller\\getandupdateforalleventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\eventscontroller\\getandupdateforalleventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\eventscontroller\\eventsettlementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\eventscontroller\\eventsettlementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}|IndiaEvents.Models\\IndiaEvents.Models.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaevents.models\\models\\getids.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}|IndiaEvents.Models\\IndiaEvents.Models.csproj|solutionrelative:indiaevents.models\\models\\getids.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\eventscontroller\\honorariumcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\eventscontroller\\honorariumcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -57,8 +57,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 97,
-          "SelectedChildIndex": 2,
+          "DockedWidth": 2590,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,27 +66,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "tempData.txt",
-              "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\tempData.txt",
-              "RelativeDocumentMoniker": "IndiaEventsWebApi\\tempData.txt",
-              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\tempData.txt",
-              "RelativeToolTip": "IndiaEventsWebApi\\tempData.txt",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2024-06-21T03:49:53.413Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AttendenceSheetController.cs",
-              "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\AttendenceSheetController.cs",
-              "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\AttendenceSheetController.cs",
-              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\AttendenceSheetController.cs",
-              "RelativeToolTip": "IndiaEventsWebApi\\Controllers\\AttendenceSheetController.cs",
-              "ViewState": "AQIAADMAAAAAAAAAAAAEwDoAAAAQAAAA",
+              "DocumentIndex": 1,
+              "Title": "UserDetails.cs",
+              "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\Models\\MasterSheets\\UserDetails.cs",
+              "RelativeDocumentMoniker": "IndiaEvents.Models\\Models\\MasterSheets\\UserDetails.cs",
+              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\Models\\MasterSheets\\UserDetails.cs",
+              "RelativeToolTip": "IndiaEvents.Models\\Models\\MasterSheets\\UserDetails.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAkwAsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T03:36:46.041Z",
+              "WhenOpened": "2024-06-21T12:58:59.465Z",
               "EditorCaption": ""
             },
             {
@@ -97,50 +85,66 @@
               "RelativeDocumentMoniker": "IndiaEventsWebApi\\appsettings.json",
               "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\appsettings.json",
               "RelativeToolTip": "IndiaEventsWebApi\\appsettings.json",
-              "ViewState": "AQIAAEIAAAAAAAAAAAAAADAAAAAsAAAA",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAABcAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-06-20T10:33:56.888Z",
+              "WhenOpened": "2024-06-21T10:47:26.769Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
+              "Title": "WebHooksController.cs",
+              "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\WebHooksController.cs",
+              "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\WebHooksController.cs",
+              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\WebHooksController.cs",
+              "RelativeToolTip": "IndiaEventsWebApi\\Controllers\\WebHooksController.cs",
+              "ViewState": "AQIAAPQEAAAAAAAAAAAAAPkEAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-21T09:55:26.708Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "tempData.txt",
+              "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\tempData.txt",
+              "RelativeDocumentMoniker": "IndiaEventsWebApi\\tempData.txt",
+              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\tempData.txt",
+              "RelativeToolTip": "IndiaEventsWebApi\\tempData.txt",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEMBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2024-06-21T03:49:53.413Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "LoginAndRegisterController.cs",
               "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\LoginAndRegisterController.cs",
               "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\LoginAndRegisterController.cs",
               "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\LoginAndRegisterController.cs",
               "RelativeToolTip": "IndiaEventsWebApi\\Controllers\\LoginAndRegisterController.cs",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAAEoBAAAuAAAA",
+              "ViewState": "AQIAAFcBAAAAAAAAAAAuwEkBAAALAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T10:26:46.827Z"
+              "WhenOpened": "2024-06-20T10:26:46.827Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "FinanceTreasuryAndAccounts.cs",
-              "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\Models\\FinanceTreasuryAndAccounts.cs",
-              "RelativeDocumentMoniker": "IndiaEvents.Models\\Models\\FinanceTreasuryAndAccounts.cs",
-              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\Models\\FinanceTreasuryAndAccounts.cs",
-              "RelativeToolTip": "IndiaEvents.Models\\Models\\FinanceTreasuryAndAccounts.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAYAAAAgAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T09:02:00.172Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 4,
               "Title": "GetAndUpdateForAllEventsController.cs",
               "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\EventsController\\GetAndUpdateForAllEventsController.cs",
               "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\EventsController\\GetAndUpdateForAllEventsController.cs",
               "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\EventsController\\GetAndUpdateForAllEventsController.cs",
               "RelativeToolTip": "IndiaEventsWebApi\\Controllers\\EventsController\\GetAndUpdateForAllEventsController.cs",
-              "ViewState": "AQIAAOMHAAAAAAAAAAAAAOcHAAAPAAAA",
+              "ViewState": "AQIAAPwFAAAAAAAAAAAAAKEFAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T07:03:56.127Z"
+              "WhenOpened": "2024-06-20T07:03:56.127Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "FinanceTreasuryAndAccountsController.cs",
               "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\RequestSheets\\FinanceTreasuryAndAccountsController.cs",
               "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\RequestSheets\\FinanceTreasuryAndAccountsController.cs",
@@ -153,7 +157,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "getIds.cs",
               "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\Models\\getIds.cs",
               "RelativeDocumentMoniker": "IndiaEvents.Models\\Models\\getIds.cs",
@@ -165,7 +169,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "GetMasterSheetsController.cs",
               "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\MasterSheets\\GetMasterSheetsController.cs",
               "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\MasterSheets\\GetMasterSheetsController.cs",
@@ -178,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "EventSettlementController.cs",
               "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\EventsController\\EventSettlementController.cs",
               "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\EventsController\\EventSettlementController.cs",
@@ -190,19 +194,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 5,
               "Title": "HonorariumController.cs",
               "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\EventsController\\HonorariumController.cs",
               "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\EventsController\\HonorariumController.cs",
               "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\EventsController\\HonorariumController.cs",
               "RelativeToolTip": "IndiaEventsWebApi\\Controllers\\EventsController\\HonorariumController.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAAAIYAAAARAAAA",
+              "ViewState": "AQIAACAAAAAAAAAAAAAAADMAAABMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T04:40:04.348Z"
+              "WhenOpened": "2024-06-20T04:40:04.348Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "InvoiceBase64Controller.cs",
               "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\InvoiceBase64Controller.cs",
               "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\InvoiceBase64Controller.cs",
@@ -210,13 +215,12 @@
               "RelativeToolTip": "IndiaEventsWebApi\\Controllers\\InvoiceBase64Controller.cs",
               "ViewState": "AQIAAHIAAAAAAAAAAAAAACcAAABCAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T04:27:36.546Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-20T04:27:36.546Z"
             }
           ]
         },
         {
-          "DockedWidth": 2573,
+          "DockedWidth": 80,
           "SelectedChildIndex": -1,
           "Children": [
             {
@@ -226,6 +230,10 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             }
           ]
         }
