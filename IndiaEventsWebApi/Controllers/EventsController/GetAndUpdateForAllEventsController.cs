@@ -2009,7 +2009,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                                 string filePath = SheetHelper.testingFile(q, name);
                                                 Row addedRow = addeddeviationrow[0];
                                                 Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet7, addedRow, filePath);
-                                                Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, targetRow, filePath);
+                                                //Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, targetRow, filePath);
 
 
 

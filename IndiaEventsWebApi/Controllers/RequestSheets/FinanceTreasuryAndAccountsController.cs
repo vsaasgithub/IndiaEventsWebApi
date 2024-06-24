@@ -520,7 +520,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         foreach (var formdata in updatedFormData.PanelSheet)
                         {
 
-                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| PV Number: {formdata.PVNumber} | PV Date: {formdata.PVDate.Value.ToShortDateString()} | Bank Reference Number: {formdata.BankReferenceNumber} | Bank Reference Date: {formdata.BankReferenceDate.Value.ToShortDateString()}";
+                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| PV Number: {formdata.PanelDataInFinance.Travel.PVNumber} | PV Date: {formdata.PanelDataInFinance.Travel.PVDate.Value.ToShortDateString()} | Bank Reference Number: {formdata.PanelDataInFinance.Travel.BankReferenceNumber} | Bank Reference Date: {formdata.PanelDataInFinance.Travel.BankReferenceDate.Value.ToShortDateString()}";
                             FinanceTreasuryHonorDetails.AppendLine(rowData);
                             FTNo++;
                         }
@@ -568,10 +568,10 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                                 if (existingRow != null)
                                 {
                                     Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
-                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "PV Number"), Value = f.PVNumber });
-                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "PV Date"), Value = f.PVDate });
-                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Bank Reference Number"), Value = f.BankReferenceNumber });
-                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Bank Reference Date"), Value = f.BankReferenceDate });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "PV Number"), Value = f.PanelDataInFinance.Travel.PVNumber });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "PV Date"), Value = f.PanelDataInFinance.Travel.PVDate });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Bank Reference Number"), Value = f.PanelDataInFinance.Travel.BankReferenceNumber });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Bank Reference Date"), Value = f.PanelDataInFinance.Travel.BankReferenceDate });
 
                                     IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(PanelSheet.Id.Value, new Row[] { updateRow1 });
 
