@@ -1663,6 +1663,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet4columns["Event Type"], Value = formDataList.EventDetails.EventType });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet4columns["Venue name"], Value = formDataList.EventDetails.VenueName });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet4columns["Event Date Start"], Value = formDataList.EventDetails.EventDate });
+                                updateRow.Cells.Add(new Cell { ColumnId = Sheet4columns["Event End Date"], Value = formDataList.EventDetails.EventDate });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet4columns["HCPName"], Value = data.HcpName });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet4columns["PAN card name"], Value = data.PanCardName });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet4columns["ExpenseType"], Value = data.ExpenseType });
@@ -1751,6 +1752,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Event Type"], Value = formDataList.EventDetails.EventType });
                                 newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Venue name"], Value = formDataList.EventDetails.VenueName });
                                 newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Event Date Start"], Value = formDataList.EventDetails.EventDate });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Event End Date"], Value = formDataList.EventDetails.EventDate });
                                 newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["HCPName"], Value = data.HcpName });
                                 newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["PAN card name"], Value = data.PanCardName });
                                 newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["ExpenseType"], Value = data.ExpenseType });
@@ -3537,7 +3539,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                             string filePath = SheetHelper.testingFile(q, name);
                                             Row addedRow = addeddeviationrow[0];
                                             Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet7, addedRow, filePath);
-                                            Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet10, targetRow, filePath);
+                                            //Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet10, targetRow, filePath);
 
 
                                             //Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
