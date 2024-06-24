@@ -204,7 +204,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         }
                         foreach (var formdata in updatedFormData.PanelSheet)
                         {
-                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| JV Number: {formdata.JVNumber} | JV Date: {formdata.JVDate.Value.ToShortDateString()}";
+                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| JV Number: {formdata.PanelDataInFinance.Travel.JVNumber ?? " "} | JV Date: {formdata.PanelDataInFinance.Travel.JVDate?.ToString("dd/MM/yyyy") ?? " "}";
                             FinanceTreasuryHonorDetails.AppendLine(rowData);
                             FTNo++;
                         }
@@ -249,11 +249,16 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                                 if (existingRow != null)
                                 {
                                     Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
-                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "JV Number"), Value = f.JVNumber });
-                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "JV Date"), Value = f.JVDate });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Travel JV No"), Value = f.PanelDataInFinance.Travel.JVNumber ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Travel JV Date"), Value = f.PanelDataInFinance.Travel.JVDate?.ToString("dd/MM/yyyy") ?? " " });
+
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Accommodation JV No"), Value = f.PanelDataInFinance.Accomodation.JVNumber ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Accommodation JV Date"), Value = f.PanelDataInFinance.Accomodation.JVDate?.ToString("dd/MM/yyyy") ?? " " });
+
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Local Conveyance JV No"), Value = f.PanelDataInFinance.LocalConveyance.JVNumber ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Local Conveyance JV Date"), Value = f.PanelDataInFinance.LocalConveyance.JVDate?.ToString("dd/MM/yyyy") ?? " " });
 
                                     IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(PanelSheet.Id.Value, new Row[] { updateRow1 });
-
                                 }
                             }
                         }
@@ -520,14 +525,14 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                         foreach (var formdata in updatedFormData.PanelSheet)
                         {
 
-                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| PV Number: {formdata.PanelDataInFinance.Travel.PVNumber} | PV Date: {formdata.PanelDataInFinance.Travel.PVDate.Value.ToShortDateString()} | Bank Reference Number: {formdata.PanelDataInFinance.Travel.BankReferenceNumber} | Bank Reference Date: {formdata.PanelDataInFinance.Travel.BankReferenceDate.Value.ToShortDateString()}";
+                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| PV Number: {formdata.PanelDataInFinance.Travel.PVNumber ?? " "} | PV Date: {formdata.PanelDataInFinance.Travel.PVDate?.ToString("dd/MM/yyyy") ?? " "} | Bank Reference Number: {formdata.PanelDataInFinance.Travel.BankReferenceNumber ?? " "} | Bank Reference Date: {formdata.PanelDataInFinance.Travel.BankReferenceDate?.ToString("dd/MM/yyyy") ?? " "}";
                             FinanceTreasuryHonorDetails.AppendLine(rowData);
                             FTNo++;
                         }
                         foreach (var formdata in updatedFormData.ExpenseSheet)
                         {
 
-                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| PV Number: {formdata.PVNumber} | PV Date: {formdata.PVDate.Value.ToShortDateString()} | Bank Reference Number: {formdata.BankReferenceNumber} | Bank Reference Date: {formdata.BankReferenceDate.Value.ToShortDateString()}";
+                            string rowData = $"{FTNo}. {formdata.HCPName} | MIS Code: {formdata.MISCode}| PV Number: {formdata.PVNumber} | PV Date: {formdata.PVDate?.ToString("dd/MM/yyyy") ?? " "} | Bank Reference Number: {formdata.BankReferenceNumber ?? " "} | Bank Reference Date: {formdata.BankReferenceDate?.ToString("dd/MM/yyyy") ?? " "/*.ToShortDateString() ?? " "*/}";
                             FinanceTreasuryHonorDetails.AppendLine(rowData);
                             FTNo++;
                         }
@@ -568,10 +573,20 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                                 if (existingRow != null)
                                 {
                                     Row updateRow1 = new Row { Id = existingRow.Id, Cells = new List<Cell>() };
-                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "PV Number"), Value = f.PanelDataInFinance.Travel.PVNumber });
-                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "PV Date"), Value = f.PanelDataInFinance.Travel.PVDate });
-                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Bank Reference Number"), Value = f.PanelDataInFinance.Travel.BankReferenceNumber });
-                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Bank Reference Date"), Value = f.PanelDataInFinance.Travel.BankReferenceDate });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Travel PV No"), Value = f.PanelDataInFinance.Travel.PVNumber ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Travel PV Date"), Value = f.PanelDataInFinance.Travel.PVDate?.ToString("dd/MM/yyyy") ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Travel Bank Reference No"), Value = f.PanelDataInFinance.Travel.BankReferenceNumber ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Travel Bank Reference Date"), Value = f.PanelDataInFinance.Travel.BankReferenceDate?.ToString("dd/MM/yyyy") ?? " " });
+
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Accommodation PV No"), Value = f.PanelDataInFinance.Accomodation.PVNumber ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Accommodation PV Date"), Value = f.PanelDataInFinance.Accomodation.PVDate?.ToString("dd/MM/yyyy") ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Accommodation Bank Reference No"), Value = f.PanelDataInFinance.Accomodation.BankReferenceNumber ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Accommodation Bank Reference Date"), Value = f.PanelDataInFinance.Accomodation.BankReferenceDate?.ToString("dd/MM/yyyy") ?? " " });
+
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Local Conveyance PV No"), Value = f.PanelDataInFinance.LocalConveyance.PVNumber ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Local Conveyance PV Date"), Value = f.PanelDataInFinance.LocalConveyance.PVDate?.ToString("dd/MM/yyyy") ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Local Conveyance Bank Reference No"), Value = f.PanelDataInFinance.LocalConveyance.BankReferenceNumber ?? " " });
+                                    updateRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(PanelSheet, "Local Conveyance Bank Reference Date"), Value = f.PanelDataInFinance.LocalConveyance.BankReferenceDate?.ToString("dd/MM/yyyy") ?? " " });
 
                                     IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(PanelSheet.Id.Value, new Row[] { updateRow1 });
 
