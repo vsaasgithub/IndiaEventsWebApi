@@ -4,16 +4,15 @@
     {
 
     }
+
+
     public class FinanceAccounts
     {
-
         public string? Id { get; set; }
         public string? HCPName { get; set; }
         public string? MISCode { get; set; }
         public string? JVNumber { get; set; }
         public DateTime? JVDate { get; set; }
-
-
     }
     public class FinanceAccountsUpdate
     {
@@ -27,12 +26,33 @@
         public string? EventId { get; set; }
         public string? Status { get; set; }
         public string? Description { get; set; }
-        public List<FinanceAccounts>? PanelSheet { get; set; }
-        public List<FinanceAccounts>? ExpenseSheet { get; set; }
-        public List<FinanceAccounts>? InviteesSheet { get; set; }
+        public List<FinanceAccountsForPanel> PanelSheet { get; set; }
+        public List<FinanceAccounts> ExpenseSheet { get; set; }
+        public List<FinanceAccounts> InviteesSheet { get; set; }
     }
 
 
+    public class FinanceAccountsForPanel
+    {
+        public string? Id { get; set; }
+        public string? HCPName { get; set; }
+        public string? MISCode { get; set; }
+        public PanelDataInFinanceAccounts PanelDataInFinance { get; set; }
+    }
+
+    public class PanelDataInFinanceAccounts    {
+
+   
+        public JVNumberAndJVDate Travel { get; set; }
+        public JVNumberAndJVDate Accomodation { get; set; }
+        public JVNumberAndJVDate LocalConveyance { get; set; }
+
+    }
+    public class JVNumberAndJVDate
+    {
+        public string? JVNumber { get; set; }
+        public DateTime? JVDate { get; set; }
+    }
 
     public class FinanceTreasury
     {
@@ -62,8 +82,31 @@
         public string? Status { get; set; }
         public string? Description { get; set; }
 
-        public List<FinanceTreasury>? PanelSheet { get; set; }
-        public List<FinanceTreasury>? ExpenseSheet { get; set; }
-        public List<FinanceTreasury>? InviteesSheet { get; set; }
+        public List<FinanceTreasuryForPanel> PanelSheet { get; set; }
+        public List<FinanceTreasury> ExpenseSheet { get; set; }
+        public List<FinanceTreasury> InviteesSheet { get; set; }
+    }
+    public class PanelDataInFinance
+    {
+        public PVNumberAndPVDate Travel { get; set; }
+        public PVNumberAndPVDate Accomodation { get; set; }
+        public PVNumberAndPVDate LocalConveyance { get; set; }
+
+    }
+
+    public class FinanceTreasuryForPanel
+    {
+
+        public string? Id { get; set; }
+        public string? HCPName { get; set; }
+        public string? MISCode { get; set; }
+        public PanelDataInFinance PanelDataInFinance { get; set; }
+    }
+    public class PVNumberAndPVDate
+    {
+        public string? PVNumber { get; set; }
+        public DateTime? PVDate { get; set; }
+        public string? BankReferenceNumber { get; set; }
+        public DateTime? BankReferenceDate { get; set; }
     }
 }
