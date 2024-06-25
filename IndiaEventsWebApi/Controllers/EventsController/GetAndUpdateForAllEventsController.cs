@@ -281,7 +281,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 Attachment attachments = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(SheetId, AttachmentId));
 
-                return attachments != null ? Ok(new { base64 = SheetHelper.UrlToBaseValue(attachments.Url )}) : (IActionResult)Ok(new { Message = "AttachmentId not found" });
+                return attachments != null ? Ok(new { base64 = SheetHelper.UrlToBaseValue(attachments.Url) }) : (IActionResult)Ok(new { Message = "AttachmentId not found" });
             }
             catch (Exception ex)
             {
@@ -691,7 +691,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 {
                                     long AID = (long)attachment.Id;
                                     string Name = attachment.Name;
-                                   // Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet4, AID));
+                                    // Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet4, AID));
                                     ////Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet4.Id.Value, AID));
                                     Dictionary<string, object> attachmentInfo = new()
                             {
@@ -3697,6 +3697,88 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             {
                 Log.Error($"Error occured on Update ClassI/Webinar Honorarium api method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
+            }
+        }
+
+        [HttpDelete("DeleteFilesInAllSheets")]
+        public async Task<IActionResult> DelateFilesInAllSheets(long sheetId, List<long> AttachmentId)
+        {
+            try
+            {
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+                foreach (long AID in AttachmentId)
+                {
+                    await Task.Run(() => smartsheet.SheetResources.AttachmentResources.DeleteAttachment(sheetId, AID));
+                }
+
+                return Ok(new
+                { Message = $"Deleted Attachments Successfully" });
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
+            }
+
+        }
+
+        [HttpDelete("DeleteFilesFromEventProcessSheet")]
+        public async Task<IActionResult> DeleteFilesFromEventProcessSheet(DeleteFilesArray formDataList)
+        {
+            try
+            {
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+                var eventId = formDataList.EventId;
+                Sheet sheet10 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+                var a = 0;
+
+                Row? targetRow = sheet10.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == eventId));
+                if (targetRow != null)
+
+                {
+                    PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet10.Id.Value, targetRow.Id.Value, null);
+
+                    if (attachments.Data != null || attachments.Data.Count > 0)
+                    {
+                        foreach (var attachment in attachments.Data)
+                        {
+                            long Id = attachment.Id.Value;
+                            if (formDataList.AttachmentIds.Contains(Id.ToString()))
+                            {
+                                smartsheet.SheetResources.AttachmentResources.DeleteAttachment(sheet10.Id.Value, Id);
+                                a++;
+                            }
+                        }
+                        if (a > 0)
+                        {
+                            return Ok(new
+                            { Message = $"Deleted Attachments Successfully" });
+                        }
+                        else
+                        {
+                            return Ok(new
+                            { Message = $"No Attachments Found" });
+                        }
+                    }
+                }
+                else
+                {
+                    return Ok(new
+                    { Message = "Row not found" });
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
                 return BadRequest(new
                 {
                     Message = ex.Message + "------" + ex.StackTrace

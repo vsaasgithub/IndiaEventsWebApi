@@ -304,12 +304,7 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 {
                     Message = ex.Message
                 });
-
-
             }
-
-
-
 
         }
 
