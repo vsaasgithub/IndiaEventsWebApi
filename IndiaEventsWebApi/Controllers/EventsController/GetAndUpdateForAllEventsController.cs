@@ -1,6 +1,7 @@
 ﻿using Aspose.Pdf.Plugins;
 using IndiaEvents.Models.Models.Draft;
 using IndiaEvents.Models.Models.EventTypeSheets;
+using IndiaEvents.Models.Models.MasterSheets;
 using IndiaEventsWebApi.Helper;
 using IndiaEventsWebApi.Models;
 using IndiaEventsWebApi.Models.EventTypeSheets;
@@ -251,6 +252,241 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         //}
 
         #endregion
+        
+
+
+        [HttpGet("GetLoggedUserData")]
+        public async Task< IActionResult> GetLoggedUserData(string Role, string emailid)
+        {
+            try
+            {
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+
+                string ProcessSheet = configuration.GetSection("SmartsheetSettings:EventRequestProcess").Value;
+                string HonorariumSheet = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
+                string EventSettlementSheet = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
+                string DeviationProcessSheet = configuration.GetSection("SmartsheetSettings:DeviationProcess").Value;
+                string TrainerCodeSheet = configuration.GetSection("SmartsheetSettings:TrainerCodeCreation").Value;
+                string SpeakerCodeSheet = configuration.GetSection("SmartsheetSettings:SpeakerCodeCreation").Value;
+
+                ApprovalEventCount Eventcount = new ApprovalEventCount();
+
+                IEnumerable<Row> DataInSheet = [];
+
+                if (Role.ToLower() == "rbm")
+                {
+                    Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
+                    Sheet HonorariumSheetData = SheetHelper.GetSheetById(smartsheet, HonorariumSheet);
+                    Sheet EventSettlementSheetData = SheetHelper.GetSheetById(smartsheet, EventSettlementSheet);
+                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.PreeventCount = DataInSheet.Count();
+
+                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.honarariumCount = DataInSheet.Count();
+
+                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.PostCount = DataInSheet.Count();
+                }
+                else if (Role.ToLower() == "sales head")
+                {
+                    Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
+                    Sheet HonorariumSheetData = SheetHelper.GetSheetById(smartsheet, HonorariumSheet);
+                    Sheet EventSettlementSheetData = SheetHelper.GetSheetById(smartsheet, EventSettlementSheet);
+                    Sheet DeviationProcessSheetData = SheetHelper.GetSheetById(smartsheet, DeviationProcessSheet);
+                    Sheet TrainerCodeSheetData = SheetHelper.GetSheetById(smartsheet, TrainerCodeSheet);
+                    Sheet SpeakerCodeSheetData = SheetHelper.GetSheetById(smartsheet, SpeakerCodeSheet);
+                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.PreeventCount = DataInSheet.Count();
+
+                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.honarariumCount = DataInSheet.Count();
+
+                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-SalesHead Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-SalesHead Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.PostCount = DataInSheet.Count();
+
+                    DataInSheet = DeviationProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Sales Head approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Sales Head approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.DeviationCount = DataInSheet.Count();
+
+                    DataInSheet = TrainerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.TrainerPendigCount = DataInSheet.Count();
+
+                    DataInSheet = SpeakerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.speakerPendingCount = DataInSheet.Count();
+                }
+                else if (Role.ToLower() == "marketing head")
+                {
+                    Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
+                    Sheet HonorariumSheetData = SheetHelper.GetSheetById(smartsheet, HonorariumSheet);
+                    Sheet EventSettlementSheetData = SheetHelper.GetSheetById(smartsheet, EventSettlementSheet);
+                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Marketing Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.PreeventCount = DataInSheet.Count();
+
+                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                    && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                    && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "Marketing Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.honarariumCount = DataInSheet.Count();
+
+                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                         && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                         && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "Marketing Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.PostCount = DataInSheet.Count();
+                }
+                else if (Role.ToLower() == "compliance")
+                {
+                    Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
+                    Sheet HonorariumSheetData = SheetHelper.GetSheetById(smartsheet, HonorariumSheet);
+                    Sheet EventSettlementSheetData = SheetHelper.GetSheetById(smartsheet, EventSettlementSheet);
+                    List<string> ProcessSheetcolumnNames = ProcessSheetData.Columns.Select(column => column.Title).ToList();
+                    List<string> HonorariumSheetcolumnNames = HonorariumSheetData.Columns.Select(column => column.Title).ToList();
+                    List<string> EventSettlementSheetcolumnNames = EventSettlementSheetData.Columns.Select(column => column.Title).ToList();
+
+                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "");
+                    int precount = 0;
+                    foreach (var data in DataInSheet)
+                    {
+                        var ComplianceEmail = SheetHelper.GetValueByColumnName(data, ProcessSheetcolumnNames, "Compliance");
+                        string[] values = ComplianceEmail.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                        if (values.Contains(emailid))
+                        {
+                            precount++;
+                        }
+                    }
+                    Eventcount.PreeventCount = precount;
+
+                    int Honcount = 0;
+                    DataInSheet = HonorariumSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                    && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "");
+
+                    foreach (var data in DataInSheet)
+                    {
+                        var ComplianceEmail = SheetHelper.GetValueByColumnName(data, HonorariumSheetcolumnNames, "Compliance");
+                        string[] values = ComplianceEmail.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                        if (values.Contains(emailid))
+                        {
+                            Honcount++;
+                        }
+                    }
+
+
+                    Eventcount.honarariumCount = Honcount;
+
+                    DataInSheet = EventSettlementSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                         && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "");
+                    int Posteventcount = 0;
+                    foreach (var data in DataInSheet)
+                    {
+                        var ComplianceEmail = SheetHelper.GetValueByColumnName(data, EventSettlementSheetcolumnNames, "Compliance");
+                        string[] values = ComplianceEmail.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                        if (values.Contains(emailid))
+                        {
+                            Posteventcount++;
+                        }
+                    }
+
+                    Eventcount.PostCount = Posteventcount;
+                }
+                else if (Role.ToLower() == "medical affairs head")
+                {
+                    Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
+                    Sheet HonorariumSheetData = SheetHelper.GetSheetById(smartsheet, HonorariumSheet);
+                    Sheet EventSettlementSheetData = SheetHelper.GetSheetById(smartsheet, EventSettlementSheet);
+                    Sheet TrainerCodeSheetData = SheetHelper.GetSheetById(smartsheet, TrainerCodeSheet);
+                    Sheet SpeakerCodeSheetData = SheetHelper.GetSheetById(smartsheet, SpeakerCodeSheet);
+                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.PreeventCount = DataInSheet.Count();
+
+                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.honarariumCount = DataInSheet.Count();
+
+                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                 && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.PostCount = DataInSheet.Count();
+
+                    DataInSheet = TrainerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.TrainerPendigCount = DataInSheet.Count();
+
+                    DataInSheet = SpeakerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.speakerPendingCount = DataInSheet.Count();
+                }
+                else if (Role.ToLower() == "finance head")
+                {
+                    Sheet DeviationProcessSheetData = SheetHelper.GetSheetById(smartsheet, DeviationProcessSheet);
+                    DataInSheet = DeviationProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.DeviationCount = DataInSheet.Count();
+                }
+                else if (Role.ToLower() == "finance treasury")
+                {
+                    Sheet DeviationProcessSheetData = SheetHelper.GetSheetById(smartsheet, DeviationProcessSheet);
+                    DataInSheet = DeviationProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "PRE-Finance Treasury Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "PRE-Finance Treasury Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Treasury").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.DeviationCount = DataInSheet.Count();
+                }
+                return new JsonResult(Eventcount);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [HttpGet("GetUrlFromSheet")]
         public async Task<IActionResult> GetUrlFromSheet(long SheetId, long AttachmentId)
@@ -281,7 +517,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 Attachment attachments = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(SheetId, AttachmentId));
 
-                return attachments != null ? Ok(new { base64 = SheetHelper.UrlToBaseValue(attachments.Url )}) : (IActionResult)Ok(new { Message = "AttachmentId not found" });
+                return attachments != null ? Ok(new { base64 = SheetHelper.UrlToBaseValue(attachments.Url) }) : (IActionResult)Ok(new { Message = "AttachmentId not found" });
             }
             catch (Exception ex)
             {
@@ -691,7 +927,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 {
                                     long AID = (long)attachment.Id;
                                     string Name = attachment.Name;
-                                   // Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet4, AID));
+                                    // Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet4, AID));
                                     ////Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet4.Id.Value, AID));
                                     Dictionary<string, object> attachmentInfo = new()
                             {
@@ -3697,6 +3933,88 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             {
                 Log.Error($"Error occured on Update ClassI/Webinar Honorarium api method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
+            }
+        }
+
+        [HttpDelete("DeleteFilesInAllSheets")]
+        public async Task<IActionResult> DelateFilesInAllSheets(long sheetId, List<long> AttachmentId)
+        {
+            try
+            {
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+                foreach (long AID in AttachmentId)
+                {
+                    await Task.Run(() => smartsheet.SheetResources.AttachmentResources.DeleteAttachment(sheetId, AID));
+                }
+
+                return Ok(new
+                { Message = $"Deleted Attachments Successfully" });
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
+            }
+
+        }
+
+        [HttpDelete("DeleteFilesFromEventProcessSheet")]
+        public async Task<IActionResult> DeleteFilesFromEventProcessSheet(DeleteFilesArray formDataList)
+        {
+            try
+            {
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+                var eventId = formDataList.EventId;
+                Sheet sheet10 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+                var a = 0;
+
+                Row? targetRow = sheet10.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == eventId));
+                if (targetRow != null)
+
+                {
+                    PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet10.Id.Value, targetRow.Id.Value, null);
+
+                    if (attachments.Data != null || attachments.Data.Count > 0)
+                    {
+                        foreach (var attachment in attachments.Data)
+                        {
+                            long Id = attachment.Id.Value;
+                            if (formDataList.AttachmentIds.Contains(Id.ToString()))
+                            {
+                                smartsheet.SheetResources.AttachmentResources.DeleteAttachment(sheet10.Id.Value, Id);
+                                a++;
+                            }
+                        }
+                        if (a > 0)
+                        {
+                            return Ok(new
+                            { Message = $"Deleted Attachments Successfully" });
+                        }
+                        else
+                        {
+                            return Ok(new
+                            { Message = $"No Attachments Found" });
+                        }
+                    }
+                }
+                else
+                {
+                    return Ok(new
+                    { Message = "Row not found" });
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
                 return BadRequest(new
                 {
                     Message = ex.Message + "------" + ex.StackTrace

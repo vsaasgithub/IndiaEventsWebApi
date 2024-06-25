@@ -46,7 +46,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             sheetId6 = configuration.GetSection("SmartsheetSettings:EventRequestsExpensesSheet").Value;
             sheetId8 = configuration.GetSection("SmartsheetSettings:EventRequestBeneficiary").Value;
             sheetId9 = configuration.GetSection("SmartsheetSettings:EventRequestProductBrandsList").Value;
-
             sheetId10 = configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value;
             sheetId11 = configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value;
             sheetId12 = configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value;
@@ -460,8 +459,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             }
         }
 
-
-
         [HttpPut("ApprovedSpeakersApproval")]
         public IActionResult ApprovedSpeakersApproval(ApprovalAndRejectionFlowInApprovedSpeakers formDataList)
         {
@@ -826,13 +823,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 return BadRequest(new { Message = "Row data not found" });
             }
         }
-
-
-
-
-
-
-
 
     }
 }

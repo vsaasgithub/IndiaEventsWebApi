@@ -1,5 +1,6 @@
 ﻿using Aspose.Pdf.Plugins;
 using IndiaEvents.Models.Models.GetData;
+using IndiaEvents.Models.Models.MasterSheets;
 using IndiaEvents.Models.Models.Webhook;
 using IndiaEventsWebApi.Helper;
 using IndiaEventsWebApi.Models.MasterSheets;
@@ -257,6 +258,32 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
             catch (Exception ex)
             {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetCountrySheetData")]
+        public IActionResult GetCountrySheetData()
+        {
+            try
+            {
+                string sheetId = configuration.GetSection("SmartsheetSettings:CountryMaster").Value;
+                Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                List<Dictionary<string, object>> sheetData = SheetHelper.GetSheetData(sheet);
+                List<CountryMaster> Countrydata = sheetData
+                    .Where(row => row.TryGetValue("Is Active", out var isActive) && isActive?.ToString().ToLower().Equals("yes", StringComparison.OrdinalIgnoreCase) == true)
+                    .Select(row => new CountryMaster
+                    {
+
+                        CountryName = row.TryGetValue("Country Name", out var eventTopic) ? eventTopic?.ToString() : null,
+                        CountryId = row.TryGetValue("Country Id", out var eventId) ? eventId?.ToString() : null,
+                       
+                    }).ToList();
+                return Ok(Countrydata);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occurred on GetCountrySheetData method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
                 return BadRequest(ex.Message);
             }
         }
