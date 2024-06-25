@@ -282,7 +282,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
             catch (Exception ex)
             {
-                Log.Error($"Error occurred on AllPreEventsController AttachmentFile method {ex.Message} at {DateTime.Now}");
+                Log.Error($"Error occurred on GetCountrySheetData method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
                 return BadRequest(ex.Message);
             }
