@@ -257,6 +257,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets
             }
             catch (Exception ex)
             {
+                return Ok(eventRequestBrandsList);
                 return BadRequest(ex.Message);
             }
         }
