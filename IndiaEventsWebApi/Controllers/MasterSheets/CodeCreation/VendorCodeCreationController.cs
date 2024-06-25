@@ -90,9 +90,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                     if (misCodeColumn != null)
                     {
                         Row existingRow = sheeti.Rows.FirstOrDefault(row =>
-                        row.Cells != null &&
-
-                        row.Cells.Any(cell =>
+                        row.Cells != null && row.Cells.Any(cell =>
                             cell.ColumnId == misCodeColumn.Id && cell.Value != null && cell.Value.ToString() == formData.MisCode
                         )
                         );
@@ -105,7 +103,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                         }
                     }
                 }
-                if (mis != "")
+                if (mis != "" && mis.ToLower() != "na")
                 {
                     return Ok(new { Message = $"MIS Code: {formData.MisCode} already exist in sheetname:{sheetval}" });
                 }
