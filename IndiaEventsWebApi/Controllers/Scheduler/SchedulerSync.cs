@@ -447,7 +447,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                         Cells = new List<Cell>()
                                     };
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["HcpRole"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["HcpRole"] });
-                                    newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["MISCode"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["MISCode"] });
+                                    newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["MISCode"], Value = SheetHelper.MisCodeCheck(""+EventRequestPanelDetailsdt.Rows[panelcount]["MISCode"]) });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Travel"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Travel"] });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["TotalSpend"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["TotalSpend"] });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Accomodation"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Accomodation"] });
@@ -554,7 +554,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                             new () { ColumnId = Sheet3columns[ "Invitee Source"], Value = EventRequestInviteesdt.Rows[Inviteescount]["Invitee Source"] },
                             new () { ColumnId = Sheet3columns[ "HCP Type"], Value = EventRequestInviteesdt.Rows[Inviteescount]["HCP Type"] },
                             new () { ColumnId = Sheet3columns[ "Speciality"], Value = EventRequestInviteesdt.Rows[Inviteescount]["Speciality"] },
-                            new () { ColumnId = Sheet3columns[ "MISCode"], Value = EventRequestInviteesdt.Rows[Inviteescount]["MISCode"] },
+                            new () { ColumnId = Sheet3columns[ "MISCode"], Value =SheetHelper.MisCodeCheck( ""+EventRequestInviteesdt.Rows[Inviteescount]["MISCode"]) },
                             new () { ColumnId = Sheet3columns[ "Event Topic"], Value = EventRequestInviteesdt.Rows[Inviteescount]["Event Topic"] },
                             new () { ColumnId = Sheet3columns[ "Event Type"], Value = EventRequestInviteesdt.Rows[Inviteescount]["Event Type"] },
                             new () { ColumnId = Sheet3columns[ "Event Date Start"], Value = EventRequestInviteesdt.Rows[Inviteescount]["Event Date Start"] },
@@ -575,7 +575,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                         Cells = new List<Cell>()
                                     };
 
-                                    newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["MIS"], Value = EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["MIS"] });
+                                    newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["MIS"], Value = SheetHelper.MisCodeCheck("" + EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["MIS"] )});
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["Slide Kit Type"], Value = EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["Slide Kit Type"] });
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["SlideKit Document"], Value = EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["SlideKit Document"] });
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["EventId/EventRequestId"], Value = val });
@@ -634,7 +634,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Event Date"], Value = Deviation_Processdt.Rows[Deviationcount]["Event Date"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Start Time"], Value = Deviation_Processdt.Rows[Deviationcount]["Start Time"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["End Time"], Value = Deviation_Processdt.Rows[Deviationcount]["End Time"] });
-                                    newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["MIS Code"], Value = Deviation_Processdt.Rows[Deviationcount]["MIS Code"] });
+                                    newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["MIS Code"], Value = SheetHelper.MisCodeCheck("" + Deviation_Processdt.Rows[Deviationcount]["MIS Code"]) });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["HCP Name"], Value = Deviation_Processdt.Rows[Deviationcount]["HCP Name"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Honorarium Amount"], Value = Deviation_Processdt.Rows[Deviationcount]["Honorarium Amount"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Travel & Accommodation Amount"], Value = Deviation_Processdt.Rows[Deviationcount]["Travel & Accommodation Amount"] });
@@ -785,7 +785,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                         Cells = new List<Cell>()
                                     };
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["HcpRole"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["HcpRole"] });
-                                    newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["MISCode"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["MISCode"] });
+                                    newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["MISCode"], Value = SheetHelper.MisCodeCheck("" + EventRequestPanelDetailsdt.Rows[panelcount]["MISCode"]) });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Travel"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Travel"] });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["TotalSpend"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["TotalSpend"] });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Accomodation"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Accomodation"] });
@@ -893,7 +893,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                             new () { ColumnId = Sheet3columns[ "Invitee Source"], Value = EventRequestInviteesdt.Rows[Inviteescount]["Invitee Source"] },
                             new () { ColumnId = Sheet3columns[ "HCP Type"], Value = EventRequestInviteesdt.Rows[Inviteescount]["HCP Type"] },
                             new () { ColumnId = Sheet3columns[ "Speciality"], Value = EventRequestInviteesdt.Rows[Inviteescount]["Speciality"] },
-                            new () { ColumnId = Sheet3columns[ "MISCode"], Value = EventRequestInviteesdt.Rows[Inviteescount]["MISCode"] },
+                            new () { ColumnId = Sheet3columns[ "MISCode"], Value =SheetHelper.MisCodeCheck(""+ EventRequestInviteesdt.Rows[Inviteescount]["MISCode"]) },
                             new () { ColumnId = Sheet3columns[ "Event Topic"], Value = EventRequestInviteesdt.Rows[Inviteescount]["Event Topic"] },
                             new () { ColumnId = Sheet3columns[ "Event Type"], Value = EventRequestInviteesdt.Rows[Inviteescount]["Event Type"] },
                             new () { ColumnId = Sheet3columns[ "Event Date Start"], Value = EventRequestInviteesdt.Rows[Inviteescount]["Event Date Start"] },
@@ -914,7 +914,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                         Cells = new List<Cell>()
                                     };
 
-                                    newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["MIS"], Value = EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["MIS"] });
+                                    newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["MIS"], Value = SheetHelper.MisCodeCheck("" + EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["MIS"] )});
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["Slide Kit Type"], Value = EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["Slide Kit Type"] });
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["SlideKit Document"], Value = EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["SlideKit Document"] });
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["EventId/EventRequestId"], Value = val });
@@ -974,7 +974,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Event Date"], Value = Deviation_Processdt.Rows[Deviationcount]["Event Date"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Start Time"], Value = Deviation_Processdt.Rows[Deviationcount]["Start Time"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["End Time"], Value = Deviation_Processdt.Rows[Deviationcount]["End Time"] });
-                                    newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["MIS Code"], Value = Deviation_Processdt.Rows[Deviationcount]["MIS Code"] });
+                                    newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["MIS Code"], Value = SheetHelper.MisCodeCheck("" + Deviation_Processdt.Rows[Deviationcount]["MIS Code"] )});
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["HCP Name"], Value = Deviation_Processdt.Rows[Deviationcount]["HCP Name"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Honorarium Amount"], Value = Deviation_Processdt.Rows[Deviationcount]["Honorarium Amount"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Travel & Accommodation Amount"], Value = Deviation_Processdt.Rows[Deviationcount]["Travel & Accommodation Amount"] });
