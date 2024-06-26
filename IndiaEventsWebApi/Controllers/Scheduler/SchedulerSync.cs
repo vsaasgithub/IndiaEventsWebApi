@@ -138,6 +138,14 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                         DataRow[] dr5 = ds.Tables[5].Select(expresssion);
                         DataRow[] dr6 = ds.Tables[6].Select(expresssion);
 
+                        EventRequestPanelDetailsdt.Clear();
+                        EventRequestsBrandsListdt.Clear();
+                        EventRequestInviteesdt.Clear();
+                        EventRequestHCPSlideKitDetailsdt.Clear();
+                        EventRequestExpensesSheetdt.Clear();
+                        Deviation_Processdt.Clear();
+
+
                         if (dr1.Any())
                         {
                             EventRequestPanelDetailsdt = dr1.CopyToDataTable();

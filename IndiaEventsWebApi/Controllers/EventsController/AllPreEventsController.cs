@@ -6,6 +6,7 @@ using IndiaEventsWebApi.Models.EventTypeSheets;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
+using Newtonsoft.Json;
 using NPOI.Util;
 using Org.BouncyCastle.Crypto.Tls;
 using Serilog;
@@ -65,8 +66,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         {
             try
             {
+                var payloadjson = JsonConvert.SerializeObject(formDataList);
 
-
+                Log.Information("class1 payload : {Payload}", payloadjson);
                 SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
 
                 Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
@@ -656,6 +658,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             //await Task.Delay(timeInterval);
             try
             {
+                var payloadjson = JsonConvert.SerializeObject(formDataList);
+
+                Log.Information("class1 payload : {Payload}", payloadjson);
                 //semaphore = new SemaphoreSlim(0, 1);
                 Log.Information("starting of api " + DateTime.Now);
                 SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
@@ -1710,6 +1715,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             //await Task.Delay(timeInterval);
             try
             {
+                var payloadjson = JsonConvert.SerializeObject(formDataList);
+
+                Log.Information("Webinar payload : {Payload}", payloadjson);
                 //semaphore = new SemaphoreSlim(0, 1);
                 Log.Information("starting of api " + DateTime.Now);
                 //SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
@@ -2347,6 +2355,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             //await Task.Delay(timeInterval);
             try
             {
+                var payloadjson = JsonConvert.SerializeObject(formDataList);
+
+                Log.Information("Webinar payload : {Payload}", payloadjson);
                 //semaphore = new SemaphoreSlim(0, 1);
                 Log.Information("starting of api " + DateTime.Now);
                 SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
@@ -3304,6 +3315,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         [HttpPost("StallFabricationPreEventSmartSheet"), DisableRequestSizeLimit]
         public IActionResult StallFabricationPreEventSmartSheet(AllStallFabrication formDataList)
         {
+            var payloadjson = JsonConvert.SerializeObject(formDataList);
+
+            Log.Information("Stall Fabrication payload : {Payload}", payloadjson);
             SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
             Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
             Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
@@ -3649,6 +3663,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
             try
             {
+                var payloadjson = JsonConvert.SerializeObject(formDataList);
+
+                Log.Information("Stall Fabrication payload : {Payload}", payloadjson);
                 Log.Information("starting of api " + DateTime.Now);
                 SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
                 Sheet UrlData = SheetHelper.GetSheetById(smartsheet, UI_URL);
