@@ -145,6 +145,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                         EventRequestExpensesSheetdt.Clear();
                         Deviation_Processdt.Clear();
 
+
                         if (dr1.Any())
                         {
                             EventRequestPanelDetailsdt = dr1.CopyToDataTable();
