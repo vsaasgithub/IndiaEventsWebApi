@@ -101,7 +101,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                         }
                     }
                 }
-                if (mis != "")
+                if (mis != "" && mis.ToLower() != "na")
                 {
                     return Ok(new
                     {

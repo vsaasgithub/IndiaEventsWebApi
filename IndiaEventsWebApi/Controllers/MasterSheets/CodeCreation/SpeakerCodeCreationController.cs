@@ -66,7 +66,7 @@ namespace IndiaEventsWebApi.Controllers.MasterSheets.CodeCreation
                         }
                     }
                 }
-                if (mis != "")
+                if (mis != "" && mis.ToLower() != "na")
                 {
                     return Ok(new {Message = $"MIS Code: {formData.MISCode} already exist in sheetname:{sheetval}" });
                 }
