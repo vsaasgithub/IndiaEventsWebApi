@@ -1758,7 +1758,7 @@ namespace IndiaEventsWebApi.Controllers
 
                 IEnumerable<Row> DataInSheet1 = [];
                 int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
-                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault();
+                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "pre-PRE-RBM/BM Approval").Select(z => z.Index).FirstOrDefault();
                 int? InitiatorEmailIndex = sheet.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault();
 
                 DataInSheet1 = sheet.Rows.Where(x =>
@@ -1823,7 +1823,7 @@ namespace IndiaEventsWebApi.Controllers
 
                 IEnumerable<Row> DataInSheet1 = [];
                 int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Honorarium Request Status").Select(z => z.Index).FirstOrDefault();
-                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault();
+                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "hon-HON-RBM/BM Approval").Select(z => z.Index).FirstOrDefault();
                 int? InitiatorEmailIndex = sheet.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault();
 
                 DataInSheet1 = sheet.Rows.Where(x =>
@@ -1888,7 +1888,7 @@ namespace IndiaEventsWebApi.Controllers
 
                 IEnumerable<Row> DataInSheet1 = [];
                 int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Post Event Request status").Select(z => z.Index).FirstOrDefault();
-                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault();
+                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "post-EventSettlement-RBM/BM Approval").Select(z => z.Index).FirstOrDefault();
                 int? InitiatorEmailIndex = sheet.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault();
 
                 DataInSheet1 = sheet.Rows.Where(x =>
