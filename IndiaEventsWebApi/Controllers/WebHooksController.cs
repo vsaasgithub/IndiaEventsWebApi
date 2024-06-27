@@ -128,7 +128,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
                 Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                //await Task.Run(() => MailChangeSample(RequestWebhook));
+                await Task.Run(() => MailChangeSample(RequestWebhook));
 
                 string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
@@ -1238,7 +1238,7 @@ namespace IndiaEventsWebApi.Controllers
 
             }
         }
-       
+
 
 
         private async void MailChangeInMasters(Root RequestWebhook)
@@ -2030,13 +2030,13 @@ namespace IndiaEventsWebApi.Controllers
                         //string ApprovedTrainersSheet = await Task.Run(() => ApprovedSpeakersEmailChange(RowId, WebHookSheet, sheet7, Sheetcolumns7, smartsheet));
                         //string VendorMasterSheetSheet = await Task.Run(() => VendorEmailChange(RowId, WebHookSheet, sheet8, Sheetcolumns8, smartsheet));
                         //string VendorCodeCreationSheet = await Task.Run(() => VendorCodeEmailChange(RowId, WebHookSheet, sheet9, Sheetcolumns9, smartsheet));
-                      
+
                     }
                 }
 
             }
         }
-        public static string processSheetEmailChangeSample(long rowId, Sheet WebHookSheet, Sheet sheet,
+        public static string processSheetEmailChangeSample1(long rowId, Sheet WebHookSheet, Sheet sheet,
        Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
         {
             long RowId = rowId;
@@ -2053,7 +2053,8 @@ namespace IndiaEventsWebApi.Controllers
                 int? EmailColumnIndex = EmailColumn.Index;
                 DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
                 EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
-
+                //string.Join(",",EmailValue);
+                var i = EmailValue.Split(",");
                 string columnName = "";
                 if (DesignationValue == "Sales Head")
                     columnName = "PRE-Sales Head Approval";
@@ -2075,8 +2076,8 @@ namespace IndiaEventsWebApi.Controllers
 
                     DataInSheet1 = sheet.Rows.Where(x =>
                     {
-                        string cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
-                        string designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        string? cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string? designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
                         return ((cellValue != "approved" || cellValue != "advance approved") && designationValue != "approved");
                     });
 
@@ -2084,7 +2085,7 @@ namespace IndiaEventsWebApi.Controllers
                     foreach (Row rowData in DataInSheet1)
                     {
                         Cell[] cellsToUpdate = new Cell[]
-                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = EmailValue  }};
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = i  }};
 
                         row = new Row
                         {
@@ -2108,6 +2109,76 @@ namespace IndiaEventsWebApi.Controllers
 
 
             return "process sheet updated";
+        }
+
+
+        public static string processSheetEmailChangeSample(long rowId, Sheet webHookSheet, Sheet sheet, Dictionary<string, long> sheetColumns, SmartsheetClient smartsheet)
+        {
+            string designationValue = "";
+            string emailValue = "";
+            Row row = GetRowById(webHookSheet, rowId);
+
+            Column? designationColumn = webHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+            Column? emailColumn = webHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+
+            if (designationColumn != null && emailColumn != null)
+            {
+                int designationColumnIndex = (int)designationColumn.Index;
+                int emailColumnIndex = (int)emailColumn.Index;
+
+                designationValue = row.Cells[designationColumnIndex].Value?.ToString() ?? "";
+                emailValue = row.Cells[emailColumnIndex].Value?.ToString() ?? "";
+
+                var emailList = emailValue.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(e => e.Trim()).ToArray();
+
+                string columnName = designationValue switch
+                {
+                    "Sales Head" => "PRE-Sales Head Approval",
+                    "Marketing Head" => "PRE-Marketing Head Approval",
+                    "Finance Treasury" => "PRE-Finance Treasury Approval",
+                    "Medical Affairs Head" => "PRE-Medical Affairs Head Approval",
+                    "Compliance" => "PRE-Compliance Approval",
+                    _ => ""
+                };
+
+                if (columnName != "")
+                {
+                    int statusColumnIndex = sheet.Columns.FirstOrDefault(y => y.Title == "Event Request Status")?.Index ?? -1;
+                    int designationStatusIndex = sheet.Columns.FirstOrDefault(y => y.Title == columnName)?.Index ?? -1;
+
+                    var dataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        string cellValue = x.Cells[statusColumnIndex]?.Value?.ToString().ToLower() ?? "";
+                        string designationStatusValue = x.Cells[designationStatusIndex]?.Value?.ToString().ToLower() ?? "";
+
+                        return (cellValue != "approved" && cellValue != "advance approved") && designationStatusValue != "approved";
+                    }).ToList();
+
+                    List<Row> rowsToUpdate = new();
+
+                    foreach (var rowData in dataInSheet1)
+                    {
+                        var cellsToUpdate = new Cell[]
+                        {
+                    new Cell { ColumnId = sheetColumns[designationValue], Value = string.Join(", ", emailList) }
+                        };
+
+                        var rowToUpdate = new Row { Id = rowData.Id, Cells = cellsToUpdate };
+                        rowsToUpdate.Add(rowToUpdate);
+                    }
+
+                    if (rowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, rowsToUpdate);
+                        Log.Information("Updated " + rowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "Designation not found";
+                }
+            }
+            return "Process sheet updated";
         }
 
     }

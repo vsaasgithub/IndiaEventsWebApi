@@ -255,8 +255,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         
 
 
-        [HttpGet("GetLoggedUserData")]
-        public async Task< IActionResult> GetLoggedUserData(string Role, string emailid)
+        [HttpGet("GetLoggedUserData")]       
+        public async Task<IActionResult> GetLoggedUserData(string emailid, string Role = "")
         {
             try
             {
@@ -292,6 +292,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PostCount = DataInSheet.Count();
+                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.ViewCount = DataInSheet.Count();
+
                 }
                 else if (Role.ToLower() == "sales head")
                 {
@@ -330,6 +333,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.speakerPendingCount = DataInSheet.Count();
+                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.ViewCount = DataInSheet.Count();
                 }
                 else if (Role.ToLower() == "marketing head")
                 {
@@ -350,6 +355,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "Marketing Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PostCount = DataInSheet.Count();
+
+                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.ViewCount = DataInSheet.Count();
                 }
                 else if (Role.ToLower() == "compliance")
                 {
@@ -405,6 +413,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
 
                     Eventcount.PostCount = Posteventcount;
+
+                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.ViewCount = DataInSheet.Count();
                 }
                 else if (Role.ToLower() == "medical affairs head")
                 {
@@ -437,22 +448,38 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.speakerPendingCount = DataInSheet.Count();
+
+                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.ViewCount = DataInSheet.Count();
                 }
                 else if (Role.ToLower() == "finance head")
                 {
+                    Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
                     Sheet DeviationProcessSheetData = SheetHelper.GetSheetById(smartsheet, DeviationProcessSheet);
                     DataInSheet = DeviationProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
                                                                           && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                           && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.DeviationCount = DataInSheet.Count();
+
+                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.ViewCount = DataInSheet.Count();
                 }
                 else if (Role.ToLower() == "finance treasury")
                 {
-                    Sheet DeviationProcessSheetData = SheetHelper.GetSheetById(smartsheet, DeviationProcessSheet);
-                    DataInSheet = DeviationProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "PRE-Finance Treasury Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
-                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "PRE-Finance Treasury Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
-                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Treasury").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
-                    Eventcount.DeviationCount = DataInSheet.Count();
+                    Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
+                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Finance Treasury Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Finance Treasury Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
+                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Finance Treasury").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.PreeventCount = DataInSheet.Count();
+
+                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.ViewCount = DataInSheet.Count();
+                }
+                else
+                {
+                    Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
+                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
+                    Eventcount.ViewCount = DataInSheet.Count();
                 }
                 return new JsonResult(Eventcount);
             }
@@ -461,7 +488,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 return BadRequest(ex.Message);
             }
         }
-
 
 
 
