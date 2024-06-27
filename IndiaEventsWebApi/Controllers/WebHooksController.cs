@@ -112,6 +112,38 @@ namespace IndiaEventsWebApi.Controllers
             }
         }
 
+        [HttpPost("EmailWebHookSampleWorkSpace")]
+        public async Task<IActionResult> EmailWebHookSampleWorkSpace()
+        {
+            try
+            {
+                Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
+                string rawContent = string.Empty;
+                using (var reader = new StreamReader(Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false))
+                {
+                    rawContent = await reader.ReadToEndAsync();
+                }
+                requestHeaders.Add("Body", rawContent);
+                Log.Information(string.Join(";", requestHeaders.Select(x => x.Key + "=" + x.Value).ToArray()));
+
+
+                Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
+                await Task.Run(() => MailChangeSample(RequestWebhook));
+
+                string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
+
+                return Ok(new Webhook { smartsheetHookResponse = RequestWebhook.challenge });
+                //return Ok();
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occured on Webhook mailchange  method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.StackTrace);
+            }
+        }
+
+
         [HttpPost("EmailWebHookForEmployeeMaster")]
         public async Task<IActionResult> EmailWebHookForEmployeeMaster()
         {
@@ -343,8 +375,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status2.ToLower() == "approved")
                                 {
@@ -353,8 +385,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    // smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status3.ToLower() == "approved")
                                 {
@@ -363,8 +395,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status4.ToLower() == "approved")
                                 {
@@ -373,8 +405,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status5.ToLower() == "approved")
                                 {
@@ -383,8 +415,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status6.ToLower() == "approved")
                                 {
@@ -393,8 +425,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status7.ToLower() == "approved")
                                 {
@@ -403,8 +435,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status8.ToLower() == "approved")
                                 {
@@ -413,8 +445,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status9.ToLower() == "approved")
                                 {
@@ -423,8 +455,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    // smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                             }
                         }
@@ -531,8 +563,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status2.ToLower() == "approved")
                                 {
@@ -541,8 +573,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status3.ToLower() == "approved")
                                 {
@@ -551,8 +583,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status4.ToLower() == "approved")
                                 {
@@ -561,8 +593,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status5.ToLower() == "approved")
                                 {
@@ -571,8 +603,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    // smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status6.ToLower() == "approved")
                                 {
@@ -581,8 +613,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status7.ToLower() == "approved")
                                 {
@@ -591,8 +623,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status8.ToLower() == "approved")
                                 {
@@ -601,8 +633,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status9.ToLower() == "approved")
                                 {
@@ -611,8 +643,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
 
 
@@ -658,8 +690,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                             }
                         }
@@ -707,8 +739,8 @@ namespace IndiaEventsWebApi.Controllers
                             Row updatedRow = new() { Id = targetRowId?.Id, Cells = new List<Cell> { updatedCell } };
 
 
-
-                            smartsheet.SheetResources.RowResources.UpdateRows(sheet_SpeakerCode.Id.Value, new Row[] { updatedRow });
+                            await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet_SpeakerCode, updatedRow));
+                            //smartsheet.SheetResources.RowResources.UpdateRows(sheet_SpeakerCode.Id.Value, new Row[] { updatedRow });
 
 
 
@@ -1206,6 +1238,9 @@ namespace IndiaEventsWebApi.Controllers
 
             }
         }
+
+
+
         private async void MailChangeInMasters(Root RequestWebhook)
         {
 
@@ -1758,7 +1793,7 @@ namespace IndiaEventsWebApi.Controllers
 
                 IEnumerable<Row> DataInSheet1 = [];
                 int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
-                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault();
+                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "PRE-RBM/BM Approval").Select(z => z.Index).FirstOrDefault();
                 int? InitiatorEmailIndex = sheet.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault();
 
                 DataInSheet1 = sheet.Rows.Where(x =>
@@ -1823,7 +1858,7 @@ namespace IndiaEventsWebApi.Controllers
 
                 IEnumerable<Row> DataInSheet1 = [];
                 int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Honorarium Request Status").Select(z => z.Index).FirstOrDefault();
-                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault();
+                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "HON-RBM/BM Approval").Select(z => z.Index).FirstOrDefault();
                 int? InitiatorEmailIndex = sheet.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault();
 
                 DataInSheet1 = sheet.Rows.Where(x =>
@@ -1888,7 +1923,7 @@ namespace IndiaEventsWebApi.Controllers
 
                 IEnumerable<Row> DataInSheet1 = [];
                 int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Post Event Request status").Select(z => z.Index).FirstOrDefault();
-                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault();
+                int? designationStatusIndex = sheet.Columns.Where(y => y.Title == "EventSettlement-RBM/BM Approval").Select(z => z.Index).FirstOrDefault();
                 int? InitiatorEmailIndex = sheet.Columns.Where(y => y.Title == "Initiator Email").Select(z => z.Index).FirstOrDefault();
 
                 DataInSheet1 = sheet.Rows.Where(x =>
@@ -1927,6 +1962,223 @@ namespace IndiaEventsWebApi.Controllers
 
 
             return "Event Settlement sheet updated";
+        }
+
+
+        private async void MailChangeSample(Root RequestWebhook)
+        {
+
+            //string eventSettlement = configuration.GetSection("SmartsheetSettings:EventSettlement").Value;
+            //string honorarium = configuration.GetSection("SmartsheetSettings:HonorariumPayment").Value;
+            //string Deviation = configuration.GetSection("SmartsheetSettings:Deviation_Process").Value;
+            //string SpeakerCodeCreation = configuration.GetSection("SmartsheetSettings:SpeakerCodeCreation").Value;
+            //string ApprovedSpeakers = configuration.GetSection("SmartsheetSettings:ApprovedSpeakers").Value;
+            //string TrainerCodeCreation = configuration.GetSection("SmartsheetSettings:TrainerCodeCreation").Value;
+            //string ApprovedTrainers = configuration.GetSection("SmartsheetSettings:ApprovedTrainers").Value;
+            //string VendorMasterSheet = configuration.GetSection("SmartsheetSettings:VendorMasterSheet").Value;
+            //string VendorCodeCreation = configuration.GetSection("SmartsheetSettings:VendorCodeCreation").Value;
+
+            Sheet sheet = SheetHelper.GetSheetById(smartsheet, "5194709991378820");
+            //Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, honorarium);
+            //Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, eventSettlement);
+            //Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, Deviation);
+            //Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, SpeakerCodeCreation);
+            //Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, ApprovedSpeakers);
+            //Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, TrainerCodeCreation);
+            //Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, ApprovedTrainers);
+            //Sheet sheet8 = SheetHelper.GetSheetById(smartsheet, VendorMasterSheet);
+            //Sheet sheet9 = SheetHelper.GetSheetById(smartsheet, VendorCodeCreation);
+
+
+
+            string wehookSheetId = "" + RequestWebhook.scopeObjectId;
+            Sheet WebHookSheet = SheetHelper.GetSheetById(smartsheet, wehookSheetId);
+
+
+
+            var Sheetcolumns = sheet.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            //var Sheetcolumns1 = sheet1.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            //var Sheetcolumns2 = sheet2.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            //var Sheetcolumns3 = sheet3.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            //var Sheetcolumns4 = sheet4.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            //var Sheetcolumns5 = sheet5.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            //var Sheetcolumns6 = sheet6.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            //var Sheetcolumns7 = sheet7.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            //var Sheetcolumns8 = sheet8.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+            //var Sheetcolumns9 = sheet9.Columns.ToDictionary(column => column.Title, column => (long)column.Id);
+
+            //Dictionary<string, long> Sheetcolumns9 = new();
+            //foreach (Column? column in sheet9.Columns)
+            //{
+            //    Sheetcolumns9.Add(column.Title, (long)column.Id);
+            //}
+            if (RequestWebhook != null && RequestWebhook.events != null)
+            {
+
+                foreach (var WebHookEvent in RequestWebhook.events)
+                {
+                    if (WebHookEvent.eventType.ToLower() == "updated" || WebHookEvent.eventType.ToLower() == "created")
+                    {
+                        long RowId = WebHookEvent.rowId;
+                        string processSheet = await Task.Run(() => processSheetEmailChangeSample(RowId, WebHookSheet, sheet, Sheetcolumns, smartsheet));
+                        //string HonorariumSheet = await Task.Run(() => HonorariumEmailChange(RowId, WebHookSheet, sheet1, Sheetcolumns1, smartsheet));
+                        //string EventSettlementSheet = await Task.Run(() => EventSettlementEmailChange(RowId, WebHookSheet, sheet2, Sheetcolumns2, smartsheet));
+                        //string DeviationSheet = await Task.Run(() => DeviatonEmailChange(RowId, WebHookSheet, sheet3, Sheetcolumns3, smartsheet));
+                        //string SpeakerCodeCreationSheet = await Task.Run(() => ApprovedSpeakersEmailChange(RowId, WebHookSheet, sheet4, Sheetcolumns4, smartsheet));
+                        //string ApprovedSpeakersSheet = await Task.Run(() => ApprovedSpeakersEmailChange(RowId, WebHookSheet, sheet5, Sheetcolumns5, smartsheet));
+                        //string TrainerCodeCreationSheet = await Task.Run(() => ApprovedSpeakersEmailChange(RowId, WebHookSheet, sheet6, Sheetcolumns6, smartsheet));
+                        //string ApprovedTrainersSheet = await Task.Run(() => ApprovedSpeakersEmailChange(RowId, WebHookSheet, sheet7, Sheetcolumns7, smartsheet));
+                        //string VendorMasterSheetSheet = await Task.Run(() => VendorEmailChange(RowId, WebHookSheet, sheet8, Sheetcolumns8, smartsheet));
+                        //string VendorCodeCreationSheet = await Task.Run(() => VendorCodeEmailChange(RowId, WebHookSheet, sheet9, Sheetcolumns9, smartsheet));
+
+                    }
+                }
+
+            }
+        }
+        public static string processSheetEmailChangeSample1(long rowId, Sheet WebHookSheet, Sheet sheet,
+       Dictionary<string, long> Sheetcolumns, SmartsheetClient smartsheet)
+        {
+            long RowId = rowId;
+            string DesignationValue = "";
+            string EmailValue = "";
+
+            Row row = GetRowById(WebHookSheet, RowId);
+            Column? designationColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation"); //Approval master Role and should be the column name in respective sheet
+            Column? EmailColumn = WebHookSheet.Columns.FirstOrDefault(c => c.Title == "Email"); // Approval master Email
+
+            if (designationColumn != null && EmailColumn != null)
+            {
+                int? designationColumnIndex = designationColumn.Index;
+                int? EmailColumnIndex = EmailColumn.Index;
+                DesignationValue = row.Cells[(int)designationColumnIndex].Value.ToString();
+                EmailValue = row.Cells[(int)EmailColumnIndex].Value.ToString();
+                //string.Join(",",EmailValue);
+                var i = EmailValue.Split(",");
+                string columnName = "";
+                if (DesignationValue == "Sales Head")
+                    columnName = "PRE-Sales Head Approval";
+                else if (DesignationValue == "Marketing Head")
+                    columnName = "PRE-Marketing Head Approval";
+                else if (DesignationValue == "Finance Treasury")
+                    columnName = "PRE-Finance Treasury Approval";
+                else if (DesignationValue == "Medical Affairs Head")
+                    columnName = "PRE-Medical Affairs Head Approval";
+                else if (DesignationValue == "Compliance")
+                    columnName = "PRE-Compliance Approval";
+                if (columnName != "")
+                {
+
+
+                    IEnumerable<Row> DataInSheet1 = [];
+                    int? statusColumnIndex = sheet.Columns.Where(y => y.Title == "Event Request Status").Select(z => z.Index).FirstOrDefault();
+                    int? designationStatusIndex = sheet.Columns.Where(y => y.Title == columnName).Select(z => z.Index).FirstOrDefault();
+
+                    DataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        string? cellValue = Convert.ToString(x.Cells[(int)statusColumnIndex].Value).ToLower();
+                        string? designationValue = Convert.ToString(x.Cells[(int)designationStatusIndex].Value).ToLower();
+                        return ((cellValue != "approved" || cellValue != "advance approved") && designationValue != "approved");
+                    });
+
+                    List<Row> liRowsToUpdate = new();
+                    foreach (Row rowData in DataInSheet1)
+                    {
+                        Cell[] cellsToUpdate = new Cell[]
+                        { new Cell {  ColumnId = Sheetcolumns[DesignationValue], Value = i  }};
+
+                        row = new Row
+                        {
+                            Id = rowData.Id,
+                            Cells = cellsToUpdate
+                        };
+                        liRowsToUpdate.Add(row);
+                    }
+                    if (liRowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, liRowsToUpdate);
+                        //smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, liRowsToUpdate);
+                        Log.Information("updated " + liRowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "designation not found";
+                }
+            }
+
+
+            return "process sheet updated";
+        }
+
+
+        public static string processSheetEmailChangeSample(long rowId, Sheet webHookSheet, Sheet sheet, Dictionary<string, long> sheetColumns, SmartsheetClient smartsheet)
+        {
+            string designationValue = "";
+            string emailValue = "";
+            Row row = GetRowById(webHookSheet, rowId);
+
+            Column? designationColumn = webHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+            Column? emailColumn = webHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+
+            if (designationColumn != null && emailColumn != null)
+            {
+                int designationColumnIndex = (int)designationColumn.Index;
+                int emailColumnIndex = (int)emailColumn.Index;
+
+                designationValue = row.Cells[designationColumnIndex].Value?.ToString() ?? "";
+                emailValue = row.Cells[emailColumnIndex].Value?.ToString() ?? "";
+
+                var emailList = emailValue.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(e => e.Trim()).ToArray();
+
+                string columnName = designationValue switch
+                {
+                    "Sales Head" => "PRE-Sales Head Approval",
+                    "Marketing Head" => "PRE-Marketing Head Approval",
+                    "Finance Treasury" => "PRE-Finance Treasury Approval",
+                    "Medical Affairs Head" => "PRE-Medical Affairs Head Approval",
+                    "Compliance" => "PRE-Compliance Approval",
+                    _ => ""
+                };
+
+                if (columnName != "")
+                {
+                    int statusColumnIndex = sheet.Columns.FirstOrDefault(y => y.Title == "Event Request Status")?.Index ?? -1;
+                    int designationStatusIndex = sheet.Columns.FirstOrDefault(y => y.Title == columnName)?.Index ?? -1;
+
+                    var dataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        string cellValue = x.Cells[statusColumnIndex]?.Value?.ToString().ToLower() ?? "";
+                        string designationStatusValue = x.Cells[designationStatusIndex]?.Value?.ToString().ToLower() ?? "";
+
+                        return (cellValue != "approved" && cellValue != "advance approved") && designationStatusValue != "approved";
+                    }).ToList();
+
+                    List<Row> rowsToUpdate = new();
+
+                    foreach (var rowData in dataInSheet1)
+                    {
+                        var cellsToUpdate = new Cell[]
+                        {
+                    new Cell { ColumnId = sheetColumns[designationValue], Value = string.Join(", ", emailList) }
+                        };
+
+                        var rowToUpdate = new Row { Id = rowData.Id, Cells = cellsToUpdate };
+                        rowsToUpdate.Add(rowToUpdate);
+                    }
+
+                    if (rowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, rowsToUpdate);
+                        Log.Information("Updated " + rowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "Designation not found";
+                }
+            }
+            return "Process sheet updated";
         }
 
     }

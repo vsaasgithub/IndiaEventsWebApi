@@ -17,5 +17,6 @@ namespace IndiaEvents.Models.Models.MasterSheets
         public int PreeventfinanceCount { get; set; }
         public int TrainerPendigCount { get; set; }
         public int speakerPendingCount { get; set; }
+        public int ViewCount { get; set; }
     }
 }
