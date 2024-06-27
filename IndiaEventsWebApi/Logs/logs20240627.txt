@@ -15,3 +15,6 @@
       }
    ]
 }
+2024-06-27 16:11:06.146 +05:30 [INF] Body=
+2024-06-27 16:11:18.421 +05:30 [ERR] Error occured on Webhook mailchange  method Object reference not set to an instance of an object. at 27-06-2024 16:11:17
+2024-06-27 16:11:18.477 +05:30 [ERR]    at IndiaEventsWebApi.Controllers.WebHooksController.EmailWebHookSampleWorkSpace() in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\WebHooksController.cs:line 135
