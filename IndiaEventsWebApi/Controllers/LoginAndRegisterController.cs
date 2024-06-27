@@ -232,7 +232,7 @@ namespace IndiaEventsWebApi.Controllers
                 long UsernameColumnId = Sheetcolumns["UserName"];
                 long passwordColumnId = Sheetcolumns["Password"];
                 long IsActiveColumnId = Sheetcolumns["IsActive"];
-                long roleColumnId = Sheetcolumns["Designation"];
+                long roleColumnId = Sheetcolumns["Role"];
                 long ReportingManagerColumnId = Sheetcolumns["Reporting Manager"];
                 long FirstLevelManagerId = Sheetcolumns["1stLevelManager"];
                 long RBM_BMId = Sheetcolumns["RBM/BM"];
@@ -373,7 +373,7 @@ namespace IndiaEventsWebApi.Controllers
                 long UsernameColumnId = Sheetcolumns["UserName"];
                 long passwordColumnId = Sheetcolumns["Password"];
                 long IsActiveColumnId = Sheetcolumns["IsActive"];
-                long roleColumnId = Sheetcolumns["Designation"];
+                long roleColumnId = Sheetcolumns["Role"];
                 long ReportingManagerColumnId = Sheetcolumns["Reporting Manager"];
                 long FirstLevelManagerId = Sheetcolumns["1stLevelManager"];
                 long RBM_BMId = Sheetcolumns["RBM/BM"];
