@@ -343,8 +343,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status2.ToLower() == "approved")
                                 {
@@ -353,8 +353,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                   // smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status3.ToLower() == "approved")
                                 {
@@ -363,8 +363,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(()=>ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status4.ToLower() == "approved")
                                 {
@@ -373,8 +373,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status5.ToLower() == "approved")
                                 {
@@ -383,8 +383,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status6.ToLower() == "approved")
                                 {
@@ -393,8 +393,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status7.ToLower() == "approved")
                                 {
@@ -403,8 +403,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status8.ToLower() == "approved")
                                 {
@@ -413,8 +413,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status9.ToLower() == "approved")
                                 {
@@ -423,8 +423,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    // smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                             }
                         }
@@ -531,8 +531,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status2.ToLower() == "approved")
                                 {
@@ -541,8 +541,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status3.ToLower() == "approved")
                                 {
@@ -551,8 +551,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status4.ToLower() == "approved")
                                 {
@@ -561,8 +561,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status5.ToLower() == "approved")
                                 {
@@ -571,8 +571,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                   // smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status6.ToLower() == "approved")
                                 {
@@ -581,8 +581,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status7.ToLower() == "approved")
                                 {
@@ -591,8 +591,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status8.ToLower() == "approved")
                                 {
@@ -601,8 +601,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                                 if (status9.ToLower() == "approved")
                                 {
@@ -611,8 +611,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
 
 
@@ -658,8 +658,8 @@ namespace IndiaEventsWebApi.Controllers
                                     Row updateRow = new() { Id = targetRowId.Id, Cells = new Cell[] { cellToUpdateB } };
                                     Cell? cellToUpdate = targetRowId.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
                                     if (cellToUpdate != null) { cellToUpdate.Value = "Yes"; }
-
-                                    smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
+                                    await Task.Run(() => ApiCalls.UpdateRole(smartsheet, TestingSheetData, updateRow));
+                                    //smartsheet.SheetResources.RowResources.UpdateRows(TestingSheetData.Id.Value, new Row[] { updateRow });
                                 }
                             }
                         }
@@ -707,8 +707,8 @@ namespace IndiaEventsWebApi.Controllers
                             Row updatedRow = new() { Id = targetRowId?.Id, Cells = new List<Cell> { updatedCell } };
 
 
-
-                            smartsheet.SheetResources.RowResources.UpdateRows(sheet_SpeakerCode.Id.Value, new Row[] { updatedRow });
+                            await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet_SpeakerCode, updatedRow));
+                            //smartsheet.SheetResources.RowResources.UpdateRows(sheet_SpeakerCode.Id.Value, new Row[] { updatedRow });
 
 
 
