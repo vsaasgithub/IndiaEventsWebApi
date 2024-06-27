@@ -128,7 +128,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
                 Root? RequestWebhook = JsonConvert.DeserializeObject<Root>(rawContent);
-                await Task.Run(() => MailChangeSample(RequestWebhook));
+                //await Task.Run(() => MailChangeSample(RequestWebhook));
 
                 string? challenge = requestHeaders.Where(x => x.Key == "challenge").Select(x => x.Value).FirstOrDefault();
 
