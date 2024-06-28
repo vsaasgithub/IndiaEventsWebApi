@@ -353,16 +353,18 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
+               
                 string IsActiveVal = "";
                 Log.Information("google api stated");
-                string GoogleclientId = configuration.GetSection("GoogleAuthentication:ClientId").Value;
+                Log.Information(credential);
+                //string GoogleclientId = configuration.GetSection("GoogleAuthentication:ClientId").Value;
                 string sheetId1 = configuration.GetSection("SmartsheetSettings:SheetId2").Value;
-                var settings = new GoogleJsonWebSignature.ValidationSettings()
-                {
-                    Audience = new List<string>() { GoogleclientId }
-                };
+                //var settings = new GoogleJsonWebSignature.ValidationSettings()
+                //{
+                //    Audience = new List<string>() { GoogleclientId }
+                //};
                 Log.Information("Audience successfully loded");
-                var payload = await GoogleJsonWebSignature.ValidateAsync(credential, settings);
+                //var payload = await GoogleJsonWebSignature.ValidateAsync(credential, settings);
                 Log.Information("payload successfully loded");
                 SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
 
@@ -397,7 +399,7 @@ namespace IndiaEventsWebApi.Controllers
                 {
                     string EmailIdValue = Convert.ToString(x.Cells.FirstOrDefault(c => c.ColumnId == EmailColumnId)?.Value);
 
-                    return EmailIdValue == payload.Email;
+                    return EmailIdValue == credential;//payload.Email;
                 });
 
 

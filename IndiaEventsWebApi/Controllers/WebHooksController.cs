@@ -2112,7 +2112,7 @@ namespace IndiaEventsWebApi.Controllers
         }
 
 
-        public static string processSheetEmailChangeSample(long rowId, Sheet webHookSheet, Sheet sheet, Dictionary<string, long> sheetColumns, SmartsheetClient smartsheet)
+        public static string __processSheetEmailChangeSample(long rowId, Sheet webHookSheet, Sheet sheet, Dictionary<string, long> sheetColumns, SmartsheetClient smartsheet)
         {
             string designationValue = "";
             string emailValue = "";
@@ -2180,6 +2180,79 @@ namespace IndiaEventsWebApi.Controllers
             }
             return "Process sheet updated";
         }
+
+
+        public static string processSheetEmailChangeSample(long rowId, Sheet webHookSheet, Sheet sheet, Dictionary<string, long> sheetColumns, SmartsheetClient smartsheet)
+        {
+            string designationValue = "";
+            string emailValue = "";
+            Row row = GetRowById(webHookSheet, rowId);
+
+            Column? designationColumn = webHookSheet.Columns.FirstOrDefault(c => c.Title == "Designation");
+            Column? emailColumn = webHookSheet.Columns.FirstOrDefault(c => c.Title == "Email");
+
+            if (designationColumn != null && emailColumn != null)
+            {
+                int designationColumnIndex = (int)designationColumn.Index;
+                int emailColumnIndex = (int)emailColumn.Index;
+
+                designationValue = row.Cells[designationColumnIndex].Value?.ToString() ?? "";
+                emailValue = row.Cells[emailColumnIndex].Value?.ToString() ?? "";
+
+                var emailList = emailValue.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(e => e.Trim()).ToArray();
+
+                string columnName = designationValue switch
+                {
+                    "Sales Head" => "PRE-Sales Head Approval",
+                    "Marketing Head" => "PRE-Marketing Head Approval",
+                    "Finance Treasury" => "PRE-Finance Treasury Approval",
+                    "Medical Affairs Head" => "PRE-Medical Affairs Head Approval",
+                    "Compliance" => "PRE-Compliance Approval",
+                    _ => ""
+                };
+
+                if (columnName != "")
+                {
+                    int statusColumnIndex = sheet.Columns.FirstOrDefault(y => y.Title == "Event Request Status")?.Index ?? -1;
+                    int designationStatusIndex = sheet.Columns.FirstOrDefault(y => y.Title == columnName)?.Index ?? -1;
+
+                    var dataInSheet1 = sheet.Rows.Where(x =>
+                    {
+                        string cellValue = x.Cells[statusColumnIndex]?.Value?.ToString().ToLower() ?? "";
+                        string designationStatusValue = x.Cells[designationStatusIndex]?.Value?.ToString().ToLower() ?? "";
+
+                        return (cellValue != "approved" && cellValue != "advance approved") && designationStatusValue != "approved";
+                    }).ToList();
+
+                    List<Row> rowsToUpdate = new();
+
+                    foreach (var rowData in dataInSheet1)
+                    {
+                        var contactList = emailList.Select(email => new ContactObjectValue { Email = email }).ToArray();
+
+                        var cellsToUpdate = new Cell[]
+                        {
+                    new Cell { ColumnId = sheetColumns[designationValue], ObjectValue =new MultiContactObjectValue( contactList) }
+                        };
+
+                        var rowToUpdate = new Row { Id = rowData.Id, Cells = cellsToUpdate };
+                        rowsToUpdate.Add(rowToUpdate);
+                    }
+
+                    if (rowsToUpdate.Count > 0)
+                    {
+                        ApiCalls.BulkUpdateRows(smartsheet, sheet, rowsToUpdate);
+                        Log.Information("Updated " + rowsToUpdate.Count + " rows");
+                    }
+                }
+                else
+                {
+                    return "Designation not found";
+                }
+            }
+            return "Process sheet updated";
+        }
+
 
     }
 
