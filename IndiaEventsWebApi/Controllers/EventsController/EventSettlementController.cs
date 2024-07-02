@@ -3,6 +3,7 @@ using IndiaEventsWebApi.Helper;
 using IndiaEventsWebApi.Models.EventTypeSheets;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Serilog;
 using Smartsheet.Api;
 using Smartsheet.Api.Models;
@@ -266,6 +267,9 @@ namespace IndiaEventsWebApi.Controllers
         [HttpPost("AddEventSettlementDataForFirst5"), DisableRequestSizeLimit]
         public async Task<IActionResult> AddEventSettlementDataForFirst5(EventSettlement formData)
         {
+            string strMessage = string.Empty;
+
+            strMessage += "==starting of api== " + DateTime.Now + "==";
             try
             {
                 Log.Information("Start of EventSettlement Post" + DateTime.Now);
@@ -277,13 +281,17 @@ namespace IndiaEventsWebApi.Controllers
                 string UI_URL = configuration.GetSection("SmartsheetSettings:UI_URL").Value;
 
                 Sheet UrlData = SheetHelper.GetSheetById(smartsheet, UI_URL);
+                strMessage += "==UI_URL Get Completed==" + DateTime.Now.ToString() + "==";
                 //long.TryParse(sheetId, out long parsedSheetId);
                 //long.TryParse(sheetId1, out long parsedSheetId1);
                 //long.TryParse(sheetId7, out long parsedSheetId7);
 
                 Sheet sheet = SheetHelper.GetSheetById(smartsheet, sheetId);
+                strMessage += "==EventSettlement Get Completed==" + DateTime.Now.ToString() + "==";
                 Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+                strMessage += "==EventRequestProcess Get Completed==" + DateTime.Now.ToString() + "==";
                 Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+                strMessage += "==Deviation_Process Get Completed==" + DateTime.Now.ToString() + "==";
                 StringBuilder addedInviteesData = new();
                 StringBuilder addedExpences = new();
                 int addedInviteesDataNo = 1;
@@ -380,7 +388,9 @@ namespace IndiaEventsWebApi.Controllers
 
                 // IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet.Id.Value, new Row[] { newRow });
 
+                strMessage += "== Before EventSettlement  Add in sheet==" + DateTime.Now.ToString() + "==";
                 IList<Row> addedRows = ApiCalls.DeviationData(smartsheet, sheet, newRow);
+                strMessage += "==After EventSettlement  Add in sheet==" + DateTime.Now.ToString() + "==";
 
                 long eventIdColumnId = SheetHelper.GetColumnIdByName(sheet, "EventId/EventRequestId");
                 Cell? eventIdCell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == eventIdColumnId);
@@ -394,8 +404,9 @@ namespace IndiaEventsWebApi.Controllers
                     string name = r.Split(".")[0];
                     string filePath = SheetHelper.testingFile(q, name);
                     Row addedRow = addedRows[0];
+                    strMessage += "==Before Add Attachment in sheet==" + x.ToString() + DateTime.Now.ToString() + "==";
                     Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet, addedRow, filePath);
-
+                    strMessage += "==After Add Attachment in sheet==" + x.ToString() + DateTime.Now.ToString() + "==";
                     // Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet.Id.Value, addedRow.Id.Value, filePath, "application/msword");
                     x++;
                     if (System.IO.File.Exists(filePath))
@@ -500,8 +511,9 @@ namespace IndiaEventsWebApi.Controllers
                             newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Sales Coordinator"], Value = formData.SalesCoordinatorEmail });
 
                             //IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
+                            strMessage += "==Before Add Data in deviation sheet==" + x.ToString() + DateTime.Now.ToString() + "==";
                             IList<Row> addeddeviationrow = ApiCalls.DeviationData(smartsheet, sheet7, newRow7);
-
+                            strMessage += "==After Add Data in deviation sheet==" + x.ToString() + DateTime.Now.ToString() + "==";
                             int j = 1;
                             foreach (var p in formData.DeviationFiles)
                             {
@@ -513,10 +525,12 @@ namespace IndiaEventsWebApi.Controllers
                                     string name = words[0].Split("*")[0];
                                     string filePath = SheetHelper.testingFile(q, name);
                                     Row addedRow = addeddeviationrow[0];
-
+                                    strMessage += "==Before Add Attachment in deviation sheet=="+ DateTime.Now.ToString() + "==";
                                     Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet7, addedRow, filePath);
+                                    strMessage += "==After Add Attachment in deviation sheet==" + x.ToString() + DateTime.Now.ToString() + "==";
+                                    strMessage += "==Before Add Attachment in Eventsettlement sheet==" + x.ToString() + DateTime.Now.ToString() + "==";
                                     Attachment attachmentintoMain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet, addedRows[0], filePath);
-
+                                    strMessage += "==After Add Attachment in Eventsettlement sheet==" + DateTime.Now.ToString() + "==";
 
 
                                     //Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
@@ -554,13 +568,15 @@ namespace IndiaEventsWebApi.Controllers
                 Cell? cellsToUpdate = s.Cells.FirstOrDefault(c => c.ColumnId == ColumnId);
                 if (cellsToUpdate != null) { cellsToUpdate.Value = formData.Role; }
 
+                strMessage += "==Before Update Role in Eventsettlement sheet==" + DateTime.Now.ToString() + "==";
                 smartsheet.SheetResources.RowResources.UpdateRows(sheet.Id.Value, new Row[] { updateRows });
+                strMessage += "==After Update Role in Eventsettlement sheet==" + DateTime.Now.ToString() + "==";
                 Log.Information("End of EventSettlement Post" + DateTime.Now);
-
+                strMessage += "==End Of Api==" + DateTime.Now.ToString() + "==";
                 return Ok(new
                 { Message = "Data added successfully." });
 
-              
+
             }
             catch (Exception ex)
             {
@@ -576,15 +592,20 @@ namespace IndiaEventsWebApi.Controllers
         [HttpPut("EventSettlementUpdate")]
         public async Task<IActionResult> EventSettlementUpdate(UpdateAttendees formData)
         {
+            string strMessage = string.Empty;
+
+            strMessage += "==starting of api== " + DateTime.Now + "==";
             try
             {
                 Log.Information("Start of EventSettlement Update" + DateTime.Now);
 
                 SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
-
+               
                 if (formData.InviteesData.Count > 0)
                 {
+
                     Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, InviteeSheet);
+                    strMessage += "==Invitee sheet Get Completed==" + DateTime.Now.ToString() + "==";
                     foreach (var formdata in formData.InviteesData)
                     {
                         var targetRow = sheet2.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.InviteeId));
@@ -594,13 +615,15 @@ namespace IndiaEventsWebApi.Controllers
 
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Attended?"), Value = formdata.IsAttended });
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Actual Local Conveyance Amount"), Value = formdata.ActualAmount });
-
+                            strMessage += "==Before updtate data in invitee==" + DateTime.Now.ToString() + "==";
                             IList<Row> updatedRow = await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet2, updateRow));
+                            strMessage += "==After updtate data in invitee==" + DateTime.Now.ToString() + "==";
                             // IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet2.Id.Value, new Row[] { updateRow });
                             if (formdata.IsUploadDocument == "Yes")
                             {
+                                strMessage += "==Before GetAttachmentsFromSheet invitee==" + DateTime.Now.ToString() + "==";
                                 PaginatedResult<Attachment> attachments = await Task.Run(() => ApiCalls.GetAttachmantsFromSheet(smartsheet, sheet2, targetRow));
-
+                                strMessage += "==After GetAttachmentsFromSheet invitee==" + DateTime.Now.ToString() + "==";
 
                                 //PaginatedResult<Attachment> attachments = smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet2.Id.Value, targetRow.Id.Value, null);
 
@@ -610,11 +633,12 @@ namespace IndiaEventsWebApi.Controllers
                                     foreach (var attachment in attachments.Data)
                                     {
                                         long Id = attachment.Id.Value;
+                                        strMessage += "==Before DeleteAttachment==" + DateTime.Now.ToString() + "==";
                                         smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
                                           sheet2.Id.Value,           // sheetId
                                           Id            // attachmentId
                                         );
-
+                                        strMessage += "==After DeleteAttachment==" + DateTime.Now.ToString() + "==";
 
                                     }
 
@@ -629,8 +653,9 @@ namespace IndiaEventsWebApi.Controllers
                                     var addedRow = updatedRow[0];
                                     //var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                     //        sheet2.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                                    strMessage += "==Before AddAttachmentsToSheet==" + DateTime.Now.ToString() + "==";
                                     Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet2, addedRow, filePath);
-
+                                    strMessage += "==After AddAttachmentsToSheet==" + DateTime.Now.ToString() + "==";
                                     if (System.IO.File.Exists(filePath))
                                     {
                                         SheetHelper.DeleteFile(filePath);
@@ -644,6 +669,7 @@ namespace IndiaEventsWebApi.Controllers
                 if (formData.PanelData.Count > 0)
                 {
                     Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, panelSheet);
+                    strMessage += "==After updtate data in panel sheet==" + DateTime.Now.ToString() + "==";
                     foreach (var formdata in formData.PanelData)
                     {
                         var targetRow = sheet1.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.PanelId));
@@ -655,8 +681,9 @@ namespace IndiaEventsWebApi.Controllers
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Actual Accomodation Amount"), Value = formdata.ActualAccomodationAmount });
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Actual Travel Amount"), Value = formdata.ActualTravelAmount });
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Actual Local Conveyance Amount"), Value = formdata.ActualLCAmount });
+                            strMessage += "==Before updtate panel==" + DateTime.Now.ToString() + "==";
                             IList<Row> updatedRow = await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet1, updateRow));
-
+                            strMessage += "==After updtate panel==" + DateTime.Now.ToString() + "==";
 
                             //IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
 
@@ -675,10 +702,12 @@ namespace IndiaEventsWebApi.Controllers
                                         if (name.ToLower().Contains("invoice"))
                                         {
                                             long Id = attachment.Id.Value;
+                                            strMessage += "==Before DeleteAttachment==" + DateTime.Now.ToString() + "==";
                                             smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
                                               sheet1.Id.Value,           // sheetId
                                               Id            // attachmentId
                                             );
+                                            strMessage += "==After DeleteAttachment==" + DateTime.Now.ToString() + "==";
                                         }
                                     }
 
@@ -693,8 +722,9 @@ namespace IndiaEventsWebApi.Controllers
                                     var addedRow = updatedRow[0];
                                     //var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                     //        sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+                                    strMessage += "==Before AddAttachmentsToSheet==" + DateTime.Now.ToString() + "==";
                                     Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, addedRow, filePath);
-
+                                    strMessage += "==After AddAttachmentsToSheet==" + DateTime.Now.ToString() + "==";
                                     if (System.IO.File.Exists(filePath))
                                     {
                                         SheetHelper.DeleteFile(filePath);
@@ -710,13 +740,15 @@ namespace IndiaEventsWebApi.Controllers
                     foreach (var formdata in formData.ExpenseData)
                     {
                         Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, ExpenseSheet);
+                        strMessage += "==Loded ExpenseSheet==" + DateTime.Now.ToString() + "==";
                         var targetRow = sheet3.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == formdata.ExpenseId));
                         if (targetRow != null)
                         {
                             Row updateRow = new Row { Id = targetRow.Id, Cells = new List<Cell>() };
                             updateRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Actual Amount"), Value = formdata.ActualAmount });
+                            strMessage += "==Before updtate data in ExpenseSheet==" + DateTime.Now.ToString() + "==";
                             IList<Row> updatedRow = await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet3, updateRow));
-
+                            strMessage += "==After updtate data in ExpenseSheet==" + DateTime.Now.ToString() + "==";
                             // IList<Row> updatedRow = smartsheet.SheetResources.RowResources.UpdateRows(sheet3.Id.Value, new Row[] { updateRow });
                             if (formdata.IsUploadDocument == "Yes")
                             {
@@ -730,11 +762,12 @@ namespace IndiaEventsWebApi.Controllers
                                     foreach (var attachment in attachments.Data)
                                     {
                                         long Id = attachment.Id.Value;
+                                        strMessage += "==Before DeleteAttachment==" + DateTime.Now.ToString() + "==";
                                         smartsheet.SheetResources.AttachmentResources.DeleteAttachment(
                                           sheet3.Id.Value,           // sheetId
                                           Id            // attachmentId
                                         );
-
+                                        strMessage += "==After DeleteAttachment==" + DateTime.Now.ToString() + "==";
 
                                     }
 
@@ -750,9 +783,9 @@ namespace IndiaEventsWebApi.Controllers
                                     var addedRow = updatedRow[0];
                                     //var attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                     //        sheet3.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-
+                                    strMessage += "==Before AddAttachmentsToSheet==" + DateTime.Now.ToString() + "==";
                                     Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet3, addedRow, filePath);
-
+                                    strMessage += "==After AddAttachmentsToSheet==" + DateTime.Now.ToString() + "==";
                                     if (System.IO.File.Exists(filePath))
                                     {
                                         SheetHelper.DeleteFile(filePath);
@@ -802,7 +835,7 @@ namespace IndiaEventsWebApi.Controllers
                 //    }
                 //}
                 Log.Information("End of EventSettlement Update" + DateTime.Now);
-
+                strMessage += "==End of Api==" + DateTime.Now.ToString() + "==";
                 return Ok(new { Message = "Attendees Updated Successfully" });
                 //}
                 //catch (Exception ex)

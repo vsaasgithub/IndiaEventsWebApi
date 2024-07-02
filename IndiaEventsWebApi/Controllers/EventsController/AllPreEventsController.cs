@@ -3010,7 +3010,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Panelists"), Value = HCP });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Initiator Name"), Value = formDataList.HcpConsultant.InitiatorName });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total HCP Registration Amount"), Value = TotalHonorariumAmount });
-                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total HCP Registration Amount"), Value = TotalExpenseAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel Amount"), Value = TotalTravelAmount });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel & Accommodation Amount"), Value = s });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Accommodation Amount"), Value = TotalAccomodateAmount });
@@ -3029,7 +3028,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.HcpConsultant.ReportingManagerEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.HcpConsultant.FirstLevelEmail });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.HcpConsultant.MedicalAffairsEmail });
-                //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.HcpConsultant.Role });
+              //newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role"), Value = formDataList.HcpConsultant.Role });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = SheetHelper.NumCheck(formDataList.HcpConsultant.TotalExpenseBTC) });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = SheetHelper.NumCheck(formDataList.HcpConsultant.TotalExpenseBTE) });
                 newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTE Expense Details"), Value = BTEExpense });
@@ -4033,6 +4032,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             //    semaphore.Release();
             //}
         }
+
         //[HttpPost("MedicalUtilityPreEvent"), DisableRequestSizeLimit]
         //public async Task<IActionResult> MedicalUtilityPreEvent(MedicalUtilityPreEventPayload formDataList)
         //{
@@ -4269,105 +4269,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
 
         //        await MyConn.CloseAsync();
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //        foreach (var formData in formDataList.HcpList)
-        //        {
-
-        //            //Request Date,fcpa date,Expense type
-        //            IList<Row> addeddatarows = smartsheet.SheetResources.RowResources.AddRows(sheet4.Id.Value, new Row[] { newRow1 });
-
-        //            string FCPAFile = !string.IsNullOrEmpty(formData.UploadFCPA) ? "Yes" : "No";
-        //            string UploadWrittenRequestDate = !string.IsNullOrEmpty(formData.UploadWrittenRequestDate) ? "Yes" : "No";
-        //            string Invoice_Brouchere_Quotation = !string.IsNullOrEmpty(formData.Invoice_Brouchere_Quotation) ? "Yes" : "No";
-
-        //            long columnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
-        //            Cell? Cell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == columnId);
-        //            string value = Cell.DisplayValue;
-        //            if (FCPAFile == "Yes")
-        //            {
-        //                string filename = " FCPA";
-        //                string filePath = SheetHelper.testingFile(formData.UploadFCPA, filename);
-        //                Row addedRow = addeddatarows[0];
-        //                Row webRow = addedRows[0];
-        //                Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-        //                Attachment webattachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, webRow.Id.Value, filePath, "application/msword");
-        //                if (System.IO.File.Exists(filePath))
-        //                {
-        //                    SheetHelper.DeleteFile(filePath);
-        //                }
-        //            }
-        //            if (UploadWrittenRequestDate == "Yes")
-        //            {
-        //                string filename = " UploadWrittenRequestDate";
-        //                string filePath = SheetHelper.testingFile(formData.UploadWrittenRequestDate, filename);
-        //                Row addedRow = addeddatarows[0];
-        //                Row webRow = addedRows[0];
-        //                Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-        //                Attachment webattachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, webRow.Id.Value, filePath, "application/msword");
-        //                if (System.IO.File.Exists(filePath))
-        //                {
-        //                    SheetHelper.DeleteFile(filePath);
-        //                }
-        //            }
-
-        //            if (Invoice_Brouchere_Quotation == "Yes")
-        //            {
-        //                string filename = " Invoice_Brouchere_Quotation";
-        //                string filePath = SheetHelper.testingFile(formData.Invoice_Brouchere_Quotation, filename);
-        //                Row addedRow = addeddatarows[0];
-        //                Row webRow = addedRows[0];
-        //                Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-        //                Attachment webattachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet1.Id.Value, webRow.Id.Value, filePath, "application/msword");
-        //                if (System.IO.File.Exists(filePath))
-        //                {
-        //                    System.IO.File.Delete(filePath);
-        //                }
-        //            }
-
-        //        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //    }
         //    catch (Exception ex)
@@ -5838,6 +5739,439 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             }
             return Ok();
         }
+        [HttpPost("MedicalUtilityPreEvent"), DisableRequestSizeLimit]
+        public async Task<IActionResult> MedicalUtilityPreEvent(MedicalUtilityPreEventPayload formDataList)
+        {
+            try
+            {
+                #region
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+                Sheet UrlData = SheetHelper.GetSheetById(smartsheet, UI_URL);
 
+                StringBuilder addedBrandsData = new();
+                StringBuilder addedHcpData = new();
+                StringBuilder addedExpences = new();
+
+                int addedHcpDataNo = 1;
+                int addedBrandsDataNo = 1;
+                int addedExpencesNo = 1;
+
+                double TotalExpenseAmount = 0;
+
+                string EventOpen30Days = !string.IsNullOrEmpty(formDataList.MedicalUtilityData.EventOpen30daysFile) ? "Yes" : "No";
+                string EventWithin7Days = !string.IsNullOrEmpty(formDataList.MedicalUtilityData.EventWithin7daysFile) ? "Yes" : "No";
+                string UploadDeviationFile = !string.IsNullOrEmpty(formDataList.MedicalUtilityData.UploadDeviationFile) ? "Yes" : "No";
+                string FCPA = "";
+
+
+                List<string> DeviationFiles = new List<string>();
+
+                if (EventOpen30Days == "Yes")
+                {
+                    string[] deviationFile = formDataList.MedicalUtilityData.EventOpen30daysFile.Split(":");
+                    string name = deviationFile[0].Split(".")[0];
+                    string ext = deviationFile[0].Split(".")[1];
+                    string base64 = deviationFile[1];
+                    string concatFile = name + "*" + "30DaysDeviationFile" + "." + ext + ":" + base64;
+                    DeviationFiles.Add(concatFile);
+                }
+                if (EventWithin7Days == "Yes")
+                {
+                    string[] deviationFile = formDataList.MedicalUtilityData.EventWithin7daysFile.Split(":");
+                    string name = deviationFile[0].Split(".")[0];
+                    string ext = deviationFile[0].Split(".")[1];
+                    string base64 = deviationFile[1];
+                    string concatFile = name + "*" + "7DaysDeviationFile" + "." + ext + ":" + base64;
+                    DeviationFiles.Add(concatFile);
+                }
+                if (UploadDeviationFile == "Yes")
+                {
+                    string[] deviationFile = formDataList.MedicalUtilityData.UploadDeviationFile.Split(":");
+                    string name = deviationFile[0].Split(".")[0];
+                    string ext = deviationFile[0].Split(".")[1];
+                    string base64 = deviationFile[1];
+                    string concatFile = name + "*" + "AgregateSpendDeviationFile" + "." + ext + ":" + base64;
+                    DeviationFiles.Add(concatFile);
+                }
+                foreach (var formdata in formDataList.ExpenseSheet)
+                {
+                    string rowData = $"{addedExpencesNo}. {formdata.Expense} | TotalAmount: {formdata.TotalExpenseAmount}| {formdata.BTC_BTE}";
+                    addedExpences.AppendLine(rowData);
+                    addedExpencesNo++;
+                    double amount = SheetHelper.NumCheck(formdata.TotalExpenseAmount);
+                    TotalExpenseAmount = TotalExpenseAmount + amount;
+                }
+                string Expense = addedExpences.ToString();
+                foreach (var formdata in formDataList.BrandsList)
+                {
+                    string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
+                    addedBrandsData.AppendLine(rowData);
+                    addedBrandsDataNo++;
+                }
+                string brand = addedBrandsData.ToString();
+                foreach (var formdata in formDataList.HcpList)
+                {
+                    string rowData = $"{addedHcpDataNo}. {formdata.MisCode} |{formdata.HcpName} |Speciality: {formdata.Speciality} |Tier: {formdata.Tier} |Rationale :{formdata.Rationale}";
+                    addedHcpData.AppendLine(rowData);
+                    addedHcpDataNo++;
+                }
+                string HCP = addedHcpData.ToString();
+
+                double total = TotalExpenseAmount;
+
+                StringBuilder addedExpencesBTE = new();
+                int addedExpencesNoBTE = 1;
+                foreach (var formdata in formDataList.ExpenseSheet)
+                {
+                    if (formdata.BTC_BTE.ToLower() == "bte")
+                    {
+                        string rowData = $"{addedExpencesNoBTE}. {formdata.Expense} | Amount: {formdata.TotalExpenseAmount}";
+                        addedExpencesBTE.AppendLine(rowData);
+                        addedExpencesNoBTE++;
+                    }
+                }
+                string BTEExpense = addedExpencesBTE.ToString();
+
+                Row? targetRow1 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Approver Pre Event URL"));
+                Row? targetRow2 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Finance Treasury URL"));
+                Row? targetRow4 = UrlData.Rows.FirstOrDefault(r => r.Cells.Any(c => c.DisplayValue == "Initiator URL"));
+
+
+
+                String Attachmentpaths = "";
+                #endregion
+
+                #region                
+
+
+                string MyConnection = configuration.GetSection("ConnectionStrings:mysql").Value;
+                MySqlConnection MyConn = new MySqlConnection(MyConnection);
+                MySqlCommand com = new MySqlCommand("MedicalUtilityPreevent", MyConn);
+
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@ApproverPreEventURL", targetRow1?.Cells[1].Value ?? "no url");
+                com.Parameters.AddWithValue("@FinanceTreasuryURL", targetRow2?.Cells[1].Value ?? "no url");
+                com.Parameters.AddWithValue("@InitiatorURL", targetRow4?.Cells[1].Value ?? "no url");
+                com.Parameters.AddWithValue("@EventTopic", formDataList.MedicalUtilityData.EventTopic);
+                com.Parameters.AddWithValue("@EventType", formDataList.MedicalUtilityData.EventType);
+                com.Parameters.AddWithValue("@EventDate", formDataList.MedicalUtilityData.EventDate);
+                com.Parameters.AddWithValue("@ValidFrom", formDataList.MedicalUtilityData.ValidFrom);
+                com.Parameters.AddWithValue("@ValidTill", formDataList.MedicalUtilityData.ValidTill);
+                com.Parameters.AddWithValue("@MedicalUtilityType", formDataList.MedicalUtilityData.MedicalUtilityType);
+                com.Parameters.AddWithValue("@MedicalUtilityDescription", formDataList.MedicalUtilityData.MedicalUtilityDescription);
+                com.Parameters.AddWithValue("@Brands", brand);
+                com.Parameters.AddWithValue("@Expenses", Expense);
+                com.Parameters.AddWithValue("@Panelist", HCP);
+                com.Parameters.AddWithValue("@IsAdvanceRequired", formDataList.MedicalUtilityData.IsAdvanceRequired);
+                com.Parameters.AddWithValue("@InitiatorName", formDataList.MedicalUtilityData.InitiatorName);
+                com.Parameters.AddWithValue("@AdvanceAmount", SheetHelper.NumCheck(formDataList.MedicalUtilityData.AdvanceAmount));
+                com.Parameters.AddWithValue("@TotalExpenseBTC", SheetHelper.NumCheck(formDataList.MedicalUtilityData.TotalExpenseBTC));
+                com.Parameters.AddWithValue("@TotalExpenseBTE", SheetHelper.NumCheck(formDataList.MedicalUtilityData.TotalExpenseBTE));
+                com.Parameters.AddWithValue("@BudgetAmount", total);
+                com.Parameters.AddWithValue("@TotalExpense", Math.Round(TotalExpenseAmount, 2));
+                com.Parameters.AddWithValue("@InitiatorEmail", formDataList.MedicalUtilityData.Initiator_Email);
+                com.Parameters.AddWithValue("@RBMBM", formDataList.MedicalUtilityData.RBMorBM);
+                com.Parameters.AddWithValue("@SalesHead", formDataList.MedicalUtilityData.Sales_Head);
+                com.Parameters.AddWithValue("@SalesCoordinator", formDataList.MedicalUtilityData.SalesCoordinatorEmail);
+                com.Parameters.AddWithValue("@MarketingCoordinator", formDataList.MedicalUtilityData.MarketingCoordinatorEmail);
+                com.Parameters.AddWithValue("@MarketingHead", formDataList.MedicalUtilityData.Marketing_Head);
+                com.Parameters.AddWithValue("@Compliance", formDataList.MedicalUtilityData.ComplianceEmail);
+                com.Parameters.AddWithValue("@FinanceAccounts", formDataList.MedicalUtilityData.FinanceAccountsEmail);
+                com.Parameters.AddWithValue("@FinanceTreasury", formDataList.MedicalUtilityData.Finance);
+                com.Parameters.AddWithValue("@ReportingManager", formDataList.MedicalUtilityData.ReportingManagerEmail);
+                com.Parameters.AddWithValue("@1UpManager", formDataList.MedicalUtilityData.FirstLevelEmail);
+                com.Parameters.AddWithValue("@MedicalAffairsHead", formDataList.MedicalUtilityData.MedicalAffairsEmail);
+                com.Parameters.AddWithValue("@BTEExpenseDetails", addedExpencesBTE);
+                com.Parameters.AddWithValue("@AttachmentPaths", Attachmentpaths);
+                com.Parameters.AddWithValue("@mRole", formDataList.MedicalUtilityData.Role);
+                #endregion
+
+                MyConn.Open();
+                MySqlDataReader reader = com.ExecuteReader();
+                String RefID = "";
+                while (reader.Read())
+                {
+                    RefID = reader["ID"].ToString();
+                }
+                MyConn.CloseAsync();
+
+
+                #region EventBrands
+                MyConn.Open();
+                com = new MySqlCommand("SPEventRequestsBrandsList", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+                foreach (var formdata in formDataList.BrandsList)
+                {
+                    com.Parameters.AddWithValue("@Allocation", formdata.PercentAllocation);
+                    com.Parameters.AddWithValue("@Brands", formdata.BrandName);
+                    com.Parameters.AddWithValue("@ProjectID", formdata.ProjectId);
+                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+                MyConn.CloseAsync();
+                #endregion
+
+                #region ExpenseSheets
+                MyConn.Open();
+                com = new MySqlCommand("SPEventRequestExpensesSheet", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+
+                foreach (var formdata in formDataList.ExpenseSheet)
+                {
+                    com.Parameters.AddWithValue("@Expense", formdata.Expense);
+                    com.Parameters.AddWithValue("@EventIdEventRequestID", RefID);
+                    // com.Parameters.AddWithValue("@MisCode", SheetHelper.MisCodeCheck(formdata.MisCode));
+                    com.Parameters.AddWithValue("@AmountExcludingTax", formdata.TotalExpenseAmountExcludingTax);
+                    com.Parameters.AddWithValue("@Amount", SheetHelper.NumCheck(formdata.TotalExpenseAmount));
+                    com.Parameters.AddWithValue("@BTCBTE", formdata.BTC_BTE);
+                    com.Parameters.AddWithValue("@BTCAmount", SheetHelper.NumCheck(formdata.BtcAmount));
+                    com.Parameters.AddWithValue("@BTEAmount", SheetHelper.NumCheck(formdata.BteAmount));
+                    com.Parameters.AddWithValue("@EventTopic", formDataList.MedicalUtilityData.EventTopic);
+                    com.Parameters.AddWithValue("@EventType", formDataList.MedicalUtilityData.EventType);
+                    com.Parameters.AddWithValue("@EventDateStart", formDataList.MedicalUtilityData.ValidFrom);
+                    com.Parameters.AddWithValue("@EventEndDate", formDataList.MedicalUtilityData.ValidTill);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+                MyConn.CloseAsync();
+
+                #endregion
+
+           
+
+
+                await MyConn.OpenAsync();
+                com = new MySqlCommand("MU_SPEventRequestPanelDetails", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+                foreach (var formData in formDataList.HcpList)
+                {
+                    string FCPAFile = !string.IsNullOrEmpty(formData.UploadFCPA) ? "Yes" : "No";
+                    string UploadWrittenRequestDate = !string.IsNullOrEmpty(formData.UploadWrittenRequestDate) ? "Yes" : "No";
+                    string Invoice_Brouchere_Quotation = !string.IsNullOrEmpty(formData.Invoice_Brouchere_Quotation) ? "Yes" : "No";
+
+                    List<string> attachmentsBase64 = new List<string>();
+
+                    //if (uploadDeviationForTableContainsData == "Yes") attachmentsBase64.Add(formDataList.StallFabrication.TableContainsDataUpload);
+                    //if (EventWithin7Days == "yes") attachmentsBase64.Add(formDataList.StallFabrication.EventWithin7daysUpload);
+                    if (FCPAFile == "Yes") attachmentsBase64.Add(formData.UploadFCPA);
+                    if (UploadWrittenRequestDate == "Yes") attachmentsBase64.Add(formData.UploadWrittenRequestDate);
+                    if (Invoice_Brouchere_Quotation == "Yes") attachmentsBase64.Add(formData.Invoice_Brouchere_Quotation);
+
+                    List<string> PanelFiles = new List<string>();
+
+
+
+                    String PanelAttachmentpaths = "";
+                    if (FCPAFile == "Yes" || UploadWrittenRequestDate == "Yes" || Invoice_Brouchere_Quotation == "Yes")
+                    {
+
+                        int j = 1;
+                        foreach (string p in attachmentsBase64)
+                        {
+                            //file format = name.ext:base64
+                            string[] words = p.Split(':');
+                            string r = words[0];
+                            string q = words[1];
+                            string name = r.Split(".")[0];
+                            string filePath = SheetHelper.SQlFileinsertion(q, name);
+                            PanelAttachmentpaths = PanelAttachmentpaths + "," + filePath;
+                        }
+
+                    }
+                    // com.Parameters.AddWithValue("@HcpRole", formData.HcpRole);
+                    com.Parameters.AddWithValue("@MISCode", SheetHelper.MisCodeCheck(formData.MisCode));
+                    com.Parameters.AddWithValue("@Speciality", formData.Speciality);
+                    com.Parameters.AddWithValue("@HCPName", formData.HcpName);
+                    com.Parameters.AddWithValue("@Tier", formData.Tier);
+                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                    com.Parameters.AddWithValue("@Rationale", formData.Rationale);
+                    com.Parameters.AddWithValue("@EventTopic", formDataList.MedicalUtilityData.EventTopic);
+                    com.Parameters.AddWithValue("@EventType", formDataList.MedicalUtilityData.EventType);
+                    com.Parameters.AddWithValue("@EventDateStart", formDataList.MedicalUtilityData.ValidFrom);
+                    com.Parameters.AddWithValue("@EventEndDate", formDataList.MedicalUtilityData.ValidTill);
+                    com.Parameters.AddWithValue("@ExpenseType", formData.ExpenseType);
+                    com.Parameters.AddWithValue("@FCPADate", formData.Fcpadate);
+                    com.Parameters.AddWithValue("@HcpType", formData.HcpType);
+                    com.Parameters.AddWithValue("@MedicalUtilityCost", SheetHelper.NumCheck(formData.MedicalUtilityCostAmount));
+                    com.Parameters.AddWithValue("@MedicalUtilityType", formDataList.MedicalUtilityData.MedicalUtilityType);
+                    com.Parameters.AddWithValue("@MedicalUtilityDescription", formDataList.MedicalUtilityData.MedicalUtilityDescription);
+                    com.Parameters.AddWithValue("@LegitimateNeed", formData.Legitimate);
+                    com.Parameters.AddWithValue("@ObjectiveCriteria", formData.Objective);
+                    com.Parameters.AddWithValue("@RequestDate", formData.HCPRequestDate);
+                    com.Parameters.AddWithValue("@ValidFrom", formDataList.MedicalUtilityData.ValidFrom);
+                    com.Parameters.AddWithValue("@ValidTo", formDataList.MedicalUtilityData.ValidTill);
+
+
+
+                    com.Parameters.AddWithValue("@AttachmentPaths", PanelAttachmentpaths);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+                #region devtation
+
+                if (formDataList.MedicalUtilityData.IsDeviationUpload == "Yes")
+                {
+
+                    List<string> DeviationNames = new List<string>();
+                    foreach (var p in DeviationFiles)
+                    {
+                        string[] words = p.Split(':')[0].Split("*");
+                        // string[] words = p.DeviationFile.Split(':')[0].Split("*");
+                        string r = words[1];
+                        DeviationNames.Add(r);
+                    }
+                    MyConn.Open();
+                    com = new MySqlCommand("SPDeviation_Process", MyConn);
+                    com.CommandType = CommandType.StoredProcedure;
+
+                    foreach (var pp in DeviationFiles)
+                    {
+                        foreach (var deviationname in DeviationNames)
+                        {
+                            string file = deviationname.Split(".")[0];
+                            string DeviationAttachmentpath = "";
+                            if (pp.Split(':')[0].Split("*")[1] == deviationname)
+                            {
+                                try
+                                {
+                                    foreach (var p in DeviationFiles)
+                                    {
+                                        string[] nameSplit = p.Split("*");
+                                        string[] words = nameSplit[1].Split(':');
+                                        string r = words[0];
+                                        string q = words[1];
+                                        if (deviationname == r)
+                                        {
+                                            string name = nameSplit[0];
+                                            string filePath = SheetHelper.SQlFileinsertion(q, name);
+                                            DeviationAttachmentpath = DeviationAttachmentpath + "," + filePath;
+                                            //Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, addedRows[0], filePath);
+                                        }
+                                    }
+
+                                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                                    com.Parameters.AddWithValue("@EventTopic", formDataList.MedicalUtilityData.EventTopic);
+                                    com.Parameters.AddWithValue("@EventType", formDataList.MedicalUtilityData.EventType);
+                                    com.Parameters.AddWithValue("@EventDate", formDataList.MedicalUtilityData.ValidFrom);
+                                    com.Parameters.AddWithValue("@EndDate", formDataList.MedicalUtilityData.ValidTill);
+                                    com.Parameters.AddWithValue("@StartTime", "");
+                                    com.Parameters.AddWithValue("@EndTime", "");
+                                    com.Parameters.AddWithValue("@MISCode", "");
+                                    com.Parameters.AddWithValue("@HCPName", "");
+                                    com.Parameters.AddWithValue("@HonorariumAmount", "");
+                                    com.Parameters.AddWithValue("@TravelAccommodationAmount", "");
+                                    com.Parameters.AddWithValue("@OtherExpenses", "");
+
+
+                                    if (file == "30DaysDeviationFile")
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value);
+                                        com.Parameters.AddWithValue("@EventOpen45days", "Yes");
+                                        com.Parameters.AddWithValue("@OutstandingEvents", SheetHelper.NumCheck(formDataList.MedicalUtilityData.EventOpen30dayscount));
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@EventOpen45days", "");
+                                        com.Parameters.AddWithValue("@OutstandingEvents", "");
+                                    }
+                                    if (file == "7DaysDeviationFile")
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value);
+                                        com.Parameters.AddWithValue("@EventWithin5days", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@EventWithin5days", "");
+                                    }
+                                    if (file == "ExpenseExcludingTax")
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value);
+                                        com.Parameters.AddWithValue("@PREExpenseExcludingTax", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@PREExpenseExcludingTax", "");
+                                    }
+                                    if (file.Contains("Travel_Accomodation3LExceededFile"))
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value);
+                                        com.Parameters.AddWithValue("@TravelAccomodationExceededTrigger", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@TravelAccomodationExceededTrigger", "");
+                                    }
+                                    if (file.Contains("TrainerHonorarium12LExceededFile"))
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value);
+                                        com.Parameters.AddWithValue("@TrainerHonorariumExceededTrigger", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@TrainerHonorariumExceededTrigger", "");
+                                    }
+                                    if (file.Contains("HCPHonorarium6LExceededFile"))
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value);
+                                        com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "");
+                                    }
+                                    if (file.Contains("AgregateSpendDeviationFile"))
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile1L").Value);
+                                        com.Parameters.AddWithValue("@HCP exceeds 1,00,000 Trigger", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@HCP exceeds 1,00,000 Trigger", "");
+                                    }
+                                    com.Parameters.AddWithValue("@SalesHead", formDataList.MedicalUtilityData.Sales_Head);
+                                    com.Parameters.AddWithValue("@FinanceHead", formDataList.MedicalUtilityData.FinanceHead);
+                                    com.Parameters.AddWithValue("@InitiatorName", formDataList.MedicalUtilityData.InitiatorName);
+                                    com.Parameters.AddWithValue("@InitiatorEmail", formDataList.MedicalUtilityData.Initiator_Email);
+                                    com.Parameters.AddWithValue("@SalesCoordinator", formDataList.MedicalUtilityData.SalesCoordinatorEmail);
+                                    com.Parameters.AddWithValue("@AttachmentPaths", DeviationAttachmentpath);
+                                    com.ExecuteNonQuery();
+                                    com.Parameters.Clear();
+                                }
+                                catch (Exception ex)
+                                {
+                                    return BadRequest(new
+                                    {
+                                        Message = ex.Message + "------" + ex.StackTrace
+                                    });
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+                }
+
+                #endregion
+
+
+                await MyConn.CloseAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+                Log.Error($"Error occured on Medical Utility method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(new
+                { Message = ex.Message + "------" + ex.StackTrace });
+            }
+
+
+
+            return Ok();
+        }
     }
 }
