@@ -256,7 +256,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
                 strMessage += "==End of api== " + DateTime.Now + "==";
-                return Ok(strMessage);
+                //return Ok(strMessage);
                 return Ok(new
                 { Message = "Data added successfully." });
                 //}
@@ -356,7 +356,7 @@ namespace IndiaEventsWebApi.Controllers
 
 
                 strMessage += "==End of api== " + DateTime.Now + "==";
-                return Ok(strMessage);
+                //return Ok(strMessage);
                 return Ok(new { Message = " Updated Successfully" });
                 //}
                 //catch (Exception ex)
