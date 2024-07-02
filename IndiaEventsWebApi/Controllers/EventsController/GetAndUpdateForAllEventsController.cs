@@ -252,10 +252,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         //}
 
         #endregion
-        
 
 
-        [HttpGet("GetLoggedUserData")]       
+
+        [HttpGet("GetLoggedUserData")]
         public async Task<IActionResult> GetLoggedUserData(string emailid, string Role = "")
         {
             try
@@ -278,17 +278,17 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
                     Sheet HonorariumSheetData = SheetHelper.GetSheetById(smartsheet, HonorariumSheet);
                     Sheet EventSettlementSheetData = SheetHelper.GetSheetById(smartsheet, EventSettlementSheet);
-                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PreeventCount = DataInSheet.Count();
 
-                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.honarariumCount = DataInSheet.Count();
 
-                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-RBM/BM Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "RBM/BM").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PostCount = DataInSheet.Count();
@@ -304,32 +304,32 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     Sheet DeviationProcessSheetData = SheetHelper.GetSheetById(smartsheet, DeviationProcessSheet);
                     Sheet TrainerCodeSheetData = SheetHelper.GetSheetById(smartsheet, TrainerCodeSheet);
                     Sheet SpeakerCodeSheetData = SheetHelper.GetSheetById(smartsheet, SpeakerCodeSheet);
-                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PreeventCount = DataInSheet.Count();
 
-                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.honarariumCount = DataInSheet.Count();
 
-                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-SalesHead Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-SalesHead Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-SalesHead Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PostCount = DataInSheet.Count();
 
-                    DataInSheet = DeviationProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Sales Head approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = DeviationProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Sales Head approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                           && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Sales Head approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                           && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.DeviationCount = DataInSheet.Count();
 
-                    DataInSheet = TrainerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = TrainerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.TrainerPendigCount = DataInSheet.Count();
 
-                    DataInSheet = SpeakerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = SpeakerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Sales Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Sales Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.speakerPendingCount = DataInSheet.Count();
@@ -341,17 +341,17 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
                     Sheet HonorariumSheetData = SheetHelper.GetSheetById(smartsheet, HonorariumSheet);
                     Sheet EventSettlementSheetData = SheetHelper.GetSheetById(smartsheet, EventSettlementSheet);
-                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Marketing Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PreeventCount = DataInSheet.Count();
 
-                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "Marketing Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.honarariumCount = DataInSheet.Count();
 
-                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Marketing Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "Marketing Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PostCount = DataInSheet.Count();
@@ -368,7 +368,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     List<string> HonorariumSheetcolumnNames = HonorariumSheetData.Columns.Select(column => column.Title).ToList();
                     List<string> EventSettlementSheetcolumnNames = EventSettlementSheetData.Columns.Select(column => column.Title).ToList();
 
-                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = ProcessSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "");
                     int precount = 0;
                     foreach (var data in DataInSheet)
@@ -383,7 +383,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     Eventcount.PreeventCount = precount;
 
                     int Honcount = 0;
-                    DataInSheet = HonorariumSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = HonorariumSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                     && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "");
 
                     foreach (var data in DataInSheet)
@@ -399,7 +399,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                     Eventcount.honarariumCount = Honcount;
 
-                    DataInSheet = EventSettlementSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = EventSettlementSheetData.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                          && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Compliance Approval").Select(z => z.Index).FirstOrDefault())].Value) != "");
                     int Posteventcount = 0;
                     foreach (var data in DataInSheet)
@@ -424,27 +424,27 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     Sheet EventSettlementSheetData = SheetHelper.GetSheetById(smartsheet, EventSettlementSheet);
                     Sheet TrainerCodeSheetData = SheetHelper.GetSheetById(smartsheet, TrainerCodeSheet);
                     Sheet SpeakerCodeSheetData = SheetHelper.GetSheetById(smartsheet, SpeakerCodeSheet);
-                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PreeventCount = DataInSheet.Count();
 
-                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = HonorariumSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "HON-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(HonorariumSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.honarariumCount = DataInSheet.Count();
 
-                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = EventSettlementSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "EventSettlement-Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                  && Convert.ToString(x.Cells[Convert.ToInt32(EventSettlementSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PostCount = DataInSheet.Count();
 
-                    DataInSheet = TrainerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = TrainerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(TrainerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.TrainerPendigCount = DataInSheet.Count();
 
-                    DataInSheet = SpeakerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = SpeakerCodeSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                      && Convert.ToString(x.Cells[Convert.ToInt32(SpeakerCodeSheetData.Columns.Where(y => y.Title == "Medical Affairs Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.speakerPendingCount = DataInSheet.Count();
@@ -456,7 +456,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 {
                     Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
                     Sheet DeviationProcessSheetData = SheetHelper.GetSheetById(smartsheet, DeviationProcessSheet);
-                    DataInSheet = DeviationProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = DeviationProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Head Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                           && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Head Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                           && Convert.ToString(x.Cells[Convert.ToInt32(DeviationProcessSheetData.Columns.Where(y => y.Title == "Finance Head").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.DeviationCount = DataInSheet.Count();
@@ -467,7 +467,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 else if (Role.ToLower() == "finance treasury")
                 {
                     Sheet ProcessSheetData = SheetHelper.GetSheetById(smartsheet, ProcessSheet);
-                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Finance Treasury Approval").Select(z => z.Index).FirstOrDefault())].Value) != "Approved"
+                    DataInSheet = ProcessSheetData.Rows.Where(x => (Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Finance Treasury Approval").Select(z => z.Index).FirstOrDefault())].Value).ToLower() == "submitted"
                                                                           && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "PRE-Finance Treasury Approval").Select(z => z.Index).FirstOrDefault())].Value) != "")
                                                                           && Convert.ToString(x.Cells[Convert.ToInt32(ProcessSheetData.Columns.Where(y => y.Title == "Finance Treasury").Select(z => z.Index).FirstOrDefault())].Value) == emailid);
                     Eventcount.PreeventCount = DataInSheet.Count();
@@ -666,33 +666,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     {
                         columnNames.Add(column.Title);
                     }
-                    //IEnumerable<Row> DataInSheet1 = [];
-                    //DataInSheet1 = sheet1.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet1.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
-                    //foreach (Row row in DataInSheet1)
-                    ////foreach (var row in sheet1.Rows)
-                    //{
-
-                    //if (row.Cells.Any(c => c.DisplayValue == eventId))
-                    //{
-                    //strMessage += "==Before getting row data from process sheet" + "==" + DateTime.Now.ToString() + "==";
-                    //List<string> columnsToInclude = new List<string> { "Event Date", "Event Topic", "Class III Event Code", "Start Time",
-                    //                                            "End Time", "State", "Venue Name",
-                    //                                            "City", "Brands", "Panelists", "SlideKits", "Invitees",
-                    //                                            "MIPL Invitees", "Expenses", "Meeting Type" };
-
-                    //Dictionary<string, object> rowData = [];
-
-                    //for (int i = 0; i < columnNames.Count; i++)
-                    //{
-                    //    if (columnsToInclude.Contains(columnNames[i]))
-                    //    {
-                    //        rowData[columnNames[i]] = row.Cells[i].Value;
-                    //    }
-                    //}
-
-                    //strMessage += "==After getting row data from process sheet" + "==" + DateTime.Now.ToString() + "==";
-                    ////PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet1.Id.Value, row.Id.Value, null));
-                    //strMessage += "==Before listing attachments in row form process sheet" + "==" + DateTime.Now.ToString() + "==";
                     IEnumerable<Row> DataInSheet1 = [];
                     DataInSheet1 = sheet1.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet1.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
 
@@ -744,24 +717,24 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             }
                             return null;
                         }
+                        int i = 1;
 
-
-
+                        strMessage += "==Before Getting attachment" + i.ToString() + "==" + DateTime.Now.ToString() + "==";
                         PaginatedResult<Attachment> attachments = await Task.Run(() => ApiCalls.GetAttachmantsFromSheet(smartsheet, sheet1, row));
-
+                        strMessage += "==After Getting attachment" + i.ToString() + "==" + DateTime.Now.ToString() + "==";
 
 
                         if (attachments.Data != null || attachments.Data.Count > 0)
                         {
-                            int i = 1;
+                            
                             foreach (Attachment attachment in attachments.Data)
                             {
                                 long AID = (long)attachment.Id;
                                 string Name = attachment.Name;
-                                strMessage += "==Before Getting attachment" + i.ToString() + "==" + DateTime.Now.ToString() + "==";
+                               // strMessage += "==Before Getting attachment" + i.ToString() + "==" + DateTime.Now.ToString() + "==";
 
                                 //Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet1, AID));
-                                strMessage += "==After Getting attachment" + i.ToString() + "==" + DateTime.Now.ToString() + "==";
+                                
                                 i++;
                                 // Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID));
 
@@ -1641,13 +1614,20 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         [HttpPut("UpdateClassIPreEvent")]
         public async Task<IActionResult> UpdateClassIPreEvent(UpdateDataForClassI formDataList)
         {
+            string strMessage = string.Empty;
             try
             {
-                Log.Information("Start of UpdateClassI/WebinarPreEvent api " + DateTime.Now);
-                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
-                var eventId = formDataList.EventDetails.Id;
-                Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
 
+
+                Log.Information("Start of UpdateClassI/WebinarPreEvent api " + DateTime.Now);
+                strMessage += "==Start of api==" + DateTime.Now.ToString() + "==";
+                strMessage += "==Before get token==" + DateTime.Now.ToString() + "==";
+                SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
+                strMessage += "==After get token==" + DateTime.Now.ToString() + "==";
+                var eventId = formDataList.EventDetails.Id;
+                strMessage += "==Before Process Sheet Get Completed==" + DateTime.Now.ToString() + "==";
+                Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+                strMessage += "==After Process Sheet Get Completed==" + DateTime.Now.ToString() + "==";
                 #region
                 //StringBuilder addedBrandsData = new();
                 //StringBuilder addedInviteesData = new();
@@ -1723,7 +1703,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                     if (formDataList.BrandSelection.Count > 0)
                     {
+                        strMessage += "==Before Brands sheet load==" + DateTime.Now.ToString() + "==";
                         Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+                        strMessage += "==After Brands sheet load==" + DateTime.Now.ToString() + "==";
                         List<Row> newRows2 = [];
                         Dictionary<string, long> Sheet2columns = new();
                         foreach (Column? column in sheet2.Columns)
@@ -1741,8 +1723,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet2columns["Brands"], Value = data.BrandName });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet2columns["Project ID"], Value = data.ProjectId });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet2columns["EventId/EventRequestId"], Value = formDataList.EventDetails.Id });
-
+                                strMessage += "==Before Brands sheet Update==" + DateTime.Now.ToString() + "==";
                                 await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet2, updateRow));
+                                strMessage += "==After Brands sheet Update==" + DateTime.Now.ToString() + "==";
                             }
                             else
                             {
@@ -1761,13 +1744,17 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         }
                         if (newRows2.Count > 0)
                         {
+                            strMessage += "==Before Brands sheet Post==" + DateTime.Now.ToString() + "==";
                             await Task.Run(() => ApiCalls.BrandsDetails(smartsheet, sheet2, newRows2));
+                            strMessage += "==After Brands sheet Post==" + DateTime.Now.ToString() + "==";
                         }
                     }
 
                     if (formDataList.InviteeSelection.Count > 0)
                     {
+                        strMessage += "==Before Invitees sheet Load==" + DateTime.Now.ToString() + "==";
                         Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+                        strMessage += "==After Invitees sheet Load==" + DateTime.Now.ToString() + "==";
                         List<Row> newRows3 = new();
                         Dictionary<string, long> Sheet3columns = new();
                         foreach (var column in sheet3.Columns)
@@ -1799,7 +1786,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet3columns["Event Date Start"], Value = formDataList.EventDetails.EventDate });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet3columns["Event End Date"], Value = formDataList.EventDetails.EventDate });
 
+                                strMessage += "==Before Invitees sheet Update==" + DateTime.Now.ToString() + "==";
                                 await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet3, updateRow));
+                                strMessage += "==After Invitees sheet Update==" + DateTime.Now.ToString() + "==";
                             }
                             else
                             {
@@ -1830,14 +1819,22 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 newRows3.Add(newRow3);
                             }
                         }
-
-                        await Task.Run(() => ApiCalls.InviteesDetails(smartsheet, sheet3, newRows3));
+                        if (newRows3.Count > 0)
+                        {
+                            strMessage += "==Before Invitees sheet Post==" + DateTime.Now.ToString() + "==";
+                            await Task.Run(() => ApiCalls.InviteesDetails(smartsheet, sheet3, newRows3));
+                            strMessage += "==After Invitees sheet Post==" + DateTime.Now.ToString() + "==";
+                        }
 
                     }
 
                     if (formDataList.ExpenseSelection.Count > 0)
                     {
+                        strMessage += "==Before Expense sheet Load==" + DateTime.Now.ToString() + "==";
+
                         Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+                        strMessage += "==After Invitees sheet Load==" + DateTime.Now.ToString() + "==";
+
                         List<Row> newRows6 = new();
                         Dictionary<string, long> Sheet6columns = new();
                         foreach (var column in sheet6.Columns)
@@ -1862,8 +1859,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet6columns["Venue name"], Value = formDataList.EventDetails.VenueName });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet6columns["Event Date Start"], Value = formDataList.EventDetails.EventDate });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet6columns["Event End Date"], Value = formDataList.EventDetails.EventDate });
+                                strMessage += "==Before Expense sheet Update==" + DateTime.Now.ToString() + "==";
 
                                 await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet6, updateRow));
+                                strMessage += "==Before Expense sheet Update==" + DateTime.Now.ToString() + "==";
+
                             }
                             else
                             {
@@ -1886,15 +1886,20 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 newRows6.Add(newRow6);
                             }
                         }
-                        await Task.Run(() => ApiCalls.ExpenseDetails(smartsheet, sheet6, newRows6));
-
+                        if (newRows6.Count > 0)
+                        {
+                            strMessage += "==Before Expense sheet Post==" + DateTime.Now.ToString() + "==";
+                            await Task.Run(() => ApiCalls.ExpenseDetails(smartsheet, sheet6, newRows6));
+                            strMessage += "==After Expense sheet Post==" + DateTime.Now.ToString() + "==";
+                        }
 
                     }
 
                     if (formDataList.PanelSelection.Count > 0)
                     {
-
+                        strMessage += "==Before Panel sheet Load==" + DateTime.Now.ToString() + "==";
                         Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+                        strMessage += "==After Panel sheet Load==" + DateTime.Now.ToString() + "==";
                         Dictionary<string, long> Sheet4columns = new();
                         foreach (var column in sheet4.Columns)
                         {
@@ -1964,7 +1969,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                                     updateRow.Cells.Add(new Cell { ColumnId = Sheet4columns["Other Type"], Value = data.OthersType });
                                 }
+                                strMessage += "==Before Panel sheet Update==" + DateTime.Now.ToString() + "==";
                                 IList<Row> row = await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet4, updateRow));
+                                strMessage += "==After Panel sheet Update==" + DateTime.Now.ToString() + "==";
 
                                 if (data.IsFilesUpload == "Yes")
                                 {
@@ -1978,11 +1985,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         Row addedRow = row[0];
                                         if (p.Id != null)
                                         {
+                                            strMessage += "==Before UpdateAttachments in panel sheet==" + DateTime.Now.ToString() + "==";
                                             await ApiCalls.UpdateAttachments(smartsheet, sheet4.Id.Value, (long)p.Id, filePath);
+                                            strMessage += "==After UpdateAttachments in panel sheet==" + DateTime.Now.ToString() + "==";
                                         }
                                         else
                                         {
+                                            strMessage += "==Before Add Attachments in panel sheet==" + DateTime.Now.ToString() + "==";
                                             Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet4, addedRow, filePath);
+                                            strMessage += "==After Add Attachments in panel sheet==" + DateTime.Now.ToString() + "==";
                                         }
 
                                         if (System.IO.File.Exists(filePath))
@@ -2054,8 +2065,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Other Type"], Value = data.OthersType });
                                 }
 
-
+                                strMessage += "==Before Add Data in panel sheet==" + DateTime.Now.ToString() + "==";
                                 IList<Row> row = await Task.Run(() => ApiCalls.PanelDetails(smartsheet, sheet4, newRow1));
+                                strMessage += "==After Add Data in panel sheet==" + DateTime.Now.ToString() + "==";
                                 if (data.IsFilesUpload == "Yes")
                                 {
                                     foreach (var p in data.Files)
@@ -2069,11 +2081,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                                         if (p.Id != null)
                                         {
+                                            strMessage += "==Before UpdateAttachments in panel sheet==" + DateTime.Now.ToString() + "==";
                                             await ApiCalls.UpdateAttachments(smartsheet, sheet4.Id.Value, (long)p.Id, filePath);
+                                            strMessage += "==After UpdateAttachments in panel sheet==" + DateTime.Now.ToString() + "==";
                                         }
                                         else
                                         {
+                                            strMessage += "==Before Add Attachments in panel sheet==" + DateTime.Now.ToString() + "==";
                                             Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet4, addedRow, filePath);
+                                            strMessage += "==After Add Attachments in panel sheet==" + DateTime.Now.ToString() + "==";
                                         }
 
                                         if (System.IO.File.Exists(filePath))
@@ -2090,7 +2106,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                     if (formDataList.SlideKitSelection.Count > 0)
                     {
+                        strMessage += "==Before SlideKitSelection sheet load==" + DateTime.Now.ToString() + "==";
                         Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+                        strMessage += "==After SlideKitSelection sheet load" + DateTime.Now.ToString() + "==";
                         Dictionary<string, long> Sheet5columns = new();
                         foreach (var column in sheet5.Columns)
                         {
@@ -2108,8 +2126,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet5columns["Slide Kit Type"], Value = data.SlideKitType });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet5columns["SlideKit Document"], Value = data.SlideKitOption });
                                 updateRow.Cells.Add(new Cell { ColumnId = Sheet5columns["EventId/EventRequestId"], Value = eventId });
-
+                                strMessage += "==Before Update in Slide kit sheet==" + DateTime.Now.ToString() + "==";
                                 IList<Row> row = await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet5, updateRow));
+                                strMessage += "==After Update in Slide kit sheet==" + DateTime.Now.ToString() + "==";
                                 if (data.IsFilesUpload == "Yes")
                                 {
                                     foreach (var p in data.Files)
@@ -2122,11 +2141,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         Row addedRow = row[0];
                                         if (p.Id != null)
                                         {
+                                            strMessage += "==Before UpdateAttachments in Slide kit sheet==" + DateTime.Now.ToString() + "==";
                                             await ApiCalls.UpdateAttachments(smartsheet, sheet5.Id.Value, (long)p.Id, filePath);
+                                            strMessage += "==After UpdateAttachments in Slide Kit sheet==" + DateTime.Now.ToString() + "==";
                                         }
                                         else
                                         {
+                                            strMessage += "==Before Add Attachments in Slide kit sheet==" + DateTime.Now.ToString() + "==";
                                             Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet5, addedRow, filePath);
+                                            strMessage += "==After Add Attachments in Slide kit sheet==" + DateTime.Now.ToString() + "==";
                                         }
                                         if (System.IO.File.Exists(filePath))
                                         {
@@ -2146,7 +2169,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["Slide Kit Type"], Value = data.SlideKitType });
                                 newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["SlideKit Document"], Value = data.SlideKitOption });
                                 newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["EventId/EventRequestId"], Value = eventId });
+
+                                strMessage += "==Before Post in Slide kit sheet==" + DateTime.Now.ToString() + "==";
                                 IList<Row> row = await Task.Run(() => ApiCalls.SlideKitDetails(smartsheet, sheet5, newRow5));
+                                strMessage += "==After Post in Slide kit sheet==" + DateTime.Now.ToString() + "==";
                                 if (data.IsFilesUpload == "Yes")
                                 {
                                     foreach (var p in data.Files)
@@ -2157,7 +2183,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         string name = r.Split(".")[0];
                                         string filePath = SheetHelper.testingFile(q, name);
                                         Row addedRow = row[0];
+                                        strMessage += "==Before Add Attachments in Slide kit sheet==" + DateTime.Now.ToString() + "==";
                                         Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet5, addedRow, filePath);
+                                        strMessage += "==After Add Attachments in Slide kit sheet==" + DateTime.Now.ToString() + "==";
                                         if (System.IO.File.Exists(filePath))
                                         {
                                             SheetHelper.DeleteFile(filePath);
@@ -2174,7 +2202,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                     if (formDataList.IsDeviationUpload == "Yes")
                     {
+                        strMessage += "==Before deviation sheet load==" + DateTime.Now.ToString() + "==";
                         Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+                        strMessage += "==After deviation sheet load==" + DateTime.Now.ToString() + "==";
+
                         Dictionary<string, long> Sheet7columns = [];
                         foreach (var column in sheet7.Columns)
                         {
@@ -2258,8 +2289,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                         newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Sales Coordinator"], Value = formDataList.EventDetails.SalesCoordinator });
 
                                         //IList<Row> addeddeviationrow = await Task.Run(() => smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 }));
+                                        strMessage += "==Before Update in deviation sheet==" + DateTime.Now.ToString() + "==";
                                         IList<Row> addeddeviationrow = ApiCalls.DeviationData(smartsheet, sheet7, newRow7);
-
+                                        strMessage += "==After Update in deviation sheet==" + DateTime.Now.ToString() + "==";
                                         int j = 1;
                                         foreach (var p in formDataList.DeviationDetails)
                                         {
@@ -2272,9 +2304,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                                 string name = nameSplit[0];
                                                 string filePath = SheetHelper.testingFile(q, name);
                                                 Row addedRow = addeddeviationrow[0];
+                                                strMessage += "==Before Add Attachments in Deviation sheet==" + DateTime.Now.ToString() + "==";
                                                 Attachment attachment = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet7, addedRow, filePath);
                                                 //Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, targetRow, filePath);
-
+                                                strMessage += "==After Add Attachments in Deviation sheet==" + DateTime.Now.ToString() + "==";
 
 
                                                 //Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
@@ -2340,7 +2373,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         updateRow.Cells.Add(new Cell { ColumnId = Sheet1columns["Total Expense"], Value = formDataList.EventDetails.TotalExpense });
 
                         // IList<Row> updatedRow = await Task.Run(() => smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow }));
+                        strMessage += "==Before Update in process sheet==" + DateTime.Now.ToString() + "==";
                         IList<Row> updatedRow = await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet1, updateRow));
+                        strMessage += "==After Update in process sheet==" + DateTime.Now.ToString() + "==";
                         long uId = updatedRow[0].Id.Value;
                         UpdatedId = uId;
                         if (formDataList.EventDetails.IsFilesUpload == "Yes")
@@ -2356,13 +2391,17 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 Row addedRow = updatedRow[0];
                                 if (p.Id != null)
                                 {
+                                    strMessage += "==Before Update Attachments in Panel sheet==" + DateTime.Now.ToString() + "==";
                                     Attachment Updateattachment = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.VersioningResources.AttachNewVersion(
                                         sheet1.Id.Value, (long)p.Id, filePath, "application/msword"));
+                                    strMessage += "==After Update Attachments in Panel sheet==" + DateTime.Now.ToString() + "==";
                                 }
                                 else
                                 {
+                                    strMessage += "==Before Add Attachments in Process sheet==" + DateTime.Now.ToString() + "==";
                                     Attachment attachment = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                        sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword"));
+                                    strMessage += "==After Add Attachments in Process sheet==" + DateTime.Now.ToString() + "==";
                                 }
 
                                 if (System.IO.File.Exists(filePath))
@@ -2390,6 +2429,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 Log.Error($"Error occured on UpdateClassIPreEvent method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
                 //return BadRequest(ex.Message);
+               
                 return BadRequest(new
                 { Message = ex.Message + "------" + ex.StackTrace });
             }
@@ -2397,7 +2437,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
             Log.Information("End of UpdateClassI/WebinarPreEvent api " + DateTime.Now);
 
-
+            strMessage += "==End of api==" + DateTime.Now.ToString() + "==";
+            //return Ok(strMessage);
             return Ok(new
             { Message = "Updated Successfully" });
         }

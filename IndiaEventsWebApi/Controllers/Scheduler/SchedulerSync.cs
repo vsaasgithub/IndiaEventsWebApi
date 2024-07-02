@@ -447,7 +447,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                         Cells = new List<Cell>()
                                     };
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["HcpRole"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["HcpRole"] });
-                                    newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["MISCode"], Value = SheetHelper.MisCodeCheck(""+EventRequestPanelDetailsdt.Rows[panelcount]["MISCode"]) });
+                                    newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["MISCode"], Value = SheetHelper.MisCodeCheck("" + EventRequestPanelDetailsdt.Rows[panelcount]["MISCode"]) });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Travel"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Travel"] });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["TotalSpend"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["TotalSpend"] });
                                     newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Accomodation"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Accomodation"] });
@@ -575,7 +575,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                         Cells = new List<Cell>()
                                     };
 
-                                    newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["MIS"], Value = SheetHelper.MisCodeCheck("" + EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["MIS"] )});
+                                    newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["MIS"], Value = SheetHelper.MisCodeCheck("" + EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["MIS"]) });
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["Slide Kit Type"], Value = EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["Slide Kit Type"] });
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["SlideKit Document"], Value = EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["SlideKit Document"] });
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["EventId/EventRequestId"], Value = val });
@@ -698,6 +698,221 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                 Log.Error($"Error occured on webinar method {ex.Message} at {DateTime.Now}");
                                 Log.Error(ex.StackTrace);
                             }
+                        }
+                        else if (EventRequestsWebdt.Rows[loopcount]["Event Type"].ToString() == "Medical Utility")
+                        {
+
+                            Cell[] cellsToInsertRequestWeb = new Cell[]
+                               {
+                                    new Cell { ColumnId = Sheet1columns["Approver Pre Event URL"],Value = EventRequestsWebdt.Rows[loopcount]["Approver Pre Event URL"] },
+                                    new Cell { ColumnId = Sheet1columns["Finance Treasury URL"],Value = EventRequestsWebdt.Rows[loopcount]["Finance Treasury URL"] },
+                                    new Cell { ColumnId = Sheet1columns["Initiator URL"],Value = EventRequestsWebdt.Rows[loopcount]["Initiator URL"] },
+                                    new Cell { ColumnId = Sheet1columns["Event Topic"],Value = EventRequestsWebdt.Rows[loopcount]["Event Type"] },
+                                    new Cell { ColumnId = Sheet1columns["Event Type"],Value = EventRequestsWebdt.Rows[loopcount]["Event Type"] },
+                                    new Cell { ColumnId = Sheet1columns["Event Date"],Value = EventRequestsWebdt.Rows[loopcount]["Event Date"]           },
+                                    new Cell { ColumnId = Sheet1columns["Valid From"],Value = EventRequestsWebdt.Rows[loopcount]["Valid From"]           },
+                                    new Cell { ColumnId = Sheet1columns["Valid To"],                    Value = EventRequestsWebdt.Rows[loopcount]["Valid To"]             },
+                                    new Cell { ColumnId = Sheet1columns["Medical Utility Type"],        Value = EventRequestsWebdt.Rows[loopcount]["Medical Utility Type"] },
+                                    new Cell { ColumnId = Sheet1columns["Medical Utility Description"], Value = EventRequestsWebdt.Rows[loopcount]["Medical Utility Description"]},
+                                    new Cell { ColumnId = Sheet1columns["IsAdvanceRequired"],           Value = EventRequestsWebdt.Rows[loopcount]["IsAdvanceRequired"]    },
+                                    new Cell { ColumnId = Sheet1columns["Advance Amount"],              Value = EventRequestsWebdt.Rows[loopcount]["Advance Amount"]       },
+                                    new Cell { ColumnId = Sheet1columns["Brands"],                      Value = EventRequestsWebdt.Rows[loopcount]["Brands"]               },
+                                    new Cell { ColumnId = Sheet1columns["Expenses"],                    Value = EventRequestsWebdt.Rows[loopcount]["Expenses"]             },
+                                    new Cell { ColumnId = Sheet1columns["Panelists"],                   Value = EventRequestsWebdt.Rows[loopcount]["Panelists"]            },
+                                    new Cell { ColumnId = Sheet1columns["Initiator Name"],              Value = EventRequestsWebdt.Rows[loopcount]["Initiator Name"]       },
+                                    new Cell { ColumnId = Sheet1columns["Total Expense"],               Value = EventRequestsWebdt.Rows[loopcount]["Total Expense"]        },
+                                    new Cell { ColumnId = Sheet1columns["Budget Amount"],               Value = EventRequestsWebdt.Rows[loopcount]["Budget Amount"]        },
+                                    new Cell { ColumnId = Sheet1columns["Initiator Email"],             Value = EventRequestsWebdt.Rows[loopcount]["Initiator Email"]      },
+                                    new Cell { ColumnId = Sheet1columns["RBM/BM"],                      Value = EventRequestsWebdt.Rows[loopcount]["RBM/BM"]               },
+                                    new Cell { ColumnId = Sheet1columns["Sales Head"],                  Value = EventRequestsWebdt.Rows[loopcount]["Sales Head"]           },
+                                    new Cell { ColumnId = Sheet1columns["Sales Coordinator"],           Value = EventRequestsWebdt.Rows[loopcount]["Sales Coordinator"]    },
+                                    new Cell { ColumnId = Sheet1columns["Marketing Coordinator"],       Value = EventRequestsWebdt.Rows[loopcount]["Marketing Coordinator"]},
+                                    new Cell { ColumnId = Sheet1columns["Marketing Head"],              Value = EventRequestsWebdt.Rows[loopcount]["Marketing Head"]       },
+                                    new Cell { ColumnId = Sheet1columns["Compliance"],                  Value = EventRequestsWebdt.Rows[loopcount]["Compliance"]           },
+                                    new Cell { ColumnId = Sheet1columns["Finance Accounts"],            Value = EventRequestsWebdt.Rows[loopcount]["Finance Accounts"]     },
+                                    new Cell { ColumnId = Sheet1columns["Finance Treasury"],            Value = EventRequestsWebdt.Rows[loopcount]["Finance Treasury"]     },
+                                    new Cell { ColumnId = Sheet1columns["Reporting Manager"],           Value = EventRequestsWebdt.Rows[loopcount]["Reporting Manager"]    },
+                                    new Cell { ColumnId = Sheet1columns["1 Up Manager"],                Value = EventRequestsWebdt.Rows[loopcount]["1 Up Manager"]         },
+                                    new Cell { ColumnId = Sheet1columns["Medical Affairs Head"],        Value = EventRequestsWebdt.Rows[loopcount]["Medical Affairs Head"] },
+                                    new Cell { ColumnId = Sheet1columns[" Total Expense BTC"],          Value = EventRequestsWebdt.Rows[loopcount][" Total Expense BTC"]   },
+                                    new Cell { ColumnId = Sheet1columns["Total Expense BTE"],           Value = EventRequestsWebdt.Rows[loopcount]["Total Expense BTE"]    },
+                                    new Cell { ColumnId = Sheet1columns["BTE Expense Details"],         Value = EventRequestsWebdt.Rows[loopcount]["BTE Expense Details"] }
+                                };
+                            Row row = new Row
+                            {
+                                ToBottom = true,
+                                Cells = cellsToInsertRequestWeb,
+                            };
+                            IList<Row> addedRows = ApiCalls.WebDetails(smartsheet, sheet1, row);
+
+                            long eventIdColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
+                            Cell? eventIdCell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == Sheet1columns["EventId/EventRequestId"]);
+                            string val = eventIdCell.DisplayValue;
+
+                            string[] eventattachment = EventRequestsWebdt.Rows[loopcount]["AttachmentPaths"].ToString().Split(',');
+
+                            for (int attachcount = 1; attachcount < eventattachment.Length; attachcount++)
+                            {
+                                Row addedRow = addedRows[0];
+                                Attachment attachment = await ApiCalls.AddAttachmentsToSheetSync(smartsheet, sheet1, addedRow, eventattachment[attachcount]);
+                                if (System.IO.File.Exists(eventattachment[attachcount]))
+                                {
+                                    SheetHelper.DeleteFile(eventattachment[attachcount]);
+                                }
+                            }
+                            //deviation
+                            for (int Deviationcount = 0; Deviationcount < Deviation_Processdt.Rows.Count; Deviationcount++)
+                            {
+                                Row newRow7 = new()
+                                {
+                                    Cells = new List<Cell>()
+                                };
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["EventId/EventRequestId"], Value = val });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Event Topic"], Value = Deviation_Processdt.Rows[Deviationcount]["Event Topic"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Event Type"], Value = Deviation_Processdt.Rows[Deviationcount]["Event Type"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Event Date"], Value = Deviation_Processdt.Rows[Deviationcount]["Event Date"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["End Date"], Value = Deviation_Processdt.Rows[Deviationcount]["End Date"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["EventOpen45days"], Value = Deviation_Processdt.Rows[Deviationcount]["EventOpen45days"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Sales Head"], Value = Deviation_Processdt.Rows[Deviationcount]["Sales Head"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Initiator Name"], Value = Deviation_Processdt.Rows[Deviationcount]["Initiator Name"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Initiator Email"], Value = Deviation_Processdt.Rows[Deviationcount]["Initiator Email"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Deviation Type"], Value = Deviation_Processdt.Rows[Deviationcount]["Deviation Type"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Outstanding Events"], Value = Deviation_Processdt.Rows[Deviationcount]["Outstanding Events"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Sales Coordinator"], Value = Deviation_Processdt.Rows[Deviationcount]["Sales Coordinator"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["EventWithin5days"], Value = Deviation_Processdt.Rows[Deviationcount]["EventWithin5days"] });
+                                newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["HCP exceeds 1,00,000 Trigger"], Value = Deviation_Processdt.Rows[Deviationcount]["HCP exceeds 1,00,000 Trigger"] });
+
+                                IList<Row> addeddeviationrow = ApiCalls.DeviationData(smartsheet, sheet7, newRow7);
+
+                                string[] Deviationattachment = Deviation_Processdt.Rows[Deviationcount]["AttachmentPaths"].ToString().Split(',');
+                                for (int Deviationattachcount = 1; Deviationattachcount < Deviationattachment.Length; Deviationattachcount++)
+                                {
+                                    Row addedRow = addeddeviationrow[0];
+                                    Attachment attachment = await ApiCalls.AddAttachmentsToSheetSync(smartsheet, sheet7, addedRow, Deviationattachment[Deviationattachcount]);
+                                    Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheetSync(smartsheet, sheet1, addedRows[0], Deviationattachment[Deviationattachcount]);
+                                    if (System.IO.File.Exists(Deviationattachment[Deviationattachcount]))
+                                    {
+                                        SheetHelper.DeleteFile(Deviationattachment[Deviationattachcount]);
+                                    }
+                                }
+
+                            }
+                            //Brand sheet insertion
+                            List<Row> newRows2 = new();
+                            for (int brandcount = 0; brandcount < EventRequestsBrandsListdt.Rows.Count; brandcount++)
+                            {
+                                Row newRow2 = new()
+                                {
+                                    Cells = new List<Cell>()
+                                        {
+                                        new(){ ColumnId = Sheet2columns[ "% Allocation"], Value = EventRequestsBrandsListdt.Rows[brandcount]["% Allocation"]},
+                                        new(){ ColumnId = Sheet2columns[ "Brands"], Value = EventRequestsBrandsListdt.Rows[brandcount]["Brands"] },
+                                        new(){ ColumnId = Sheet2columns[ "Project ID"], Value = EventRequestsBrandsListdt.Rows[brandcount]["Project ID"]},
+                                        new(){ ColumnId = Sheet2columns[ "EventId/EventRequestId"], Value = val }
+                                        }
+                                };
+
+                                newRows2.Add(newRow2);
+                            }
+                            await Task.Run(() => ApiCalls.BrandsDetails(smartsheet, sheet2, newRows2));
+
+                            //ExpenseSheet Insertion
+                            List<Row> newRows6 = new();
+                            for (int Expensecount = 0; Expensecount < EventRequestExpensesSheetdt.Rows.Count; Expensecount++)
+                            {
+                                Row newRow6 = new()
+                                {
+                                    Cells = new List<Cell>()
+                                        {
+                                new () { ColumnId = Sheet6columns[ "Expense"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["Expense"] },
+                                new () { ColumnId = Sheet6columns[ "EventId/EventRequestID"], Value = val },
+                                new () { ColumnId = Sheet6columns[ "AmountExcludingTax?"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["AmountExcludingTax?"] },
+                                new () { ColumnId = Sheet6columns[ "Amount Excluding Tax"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["Amount Excluding Tax"] },
+                                new () { ColumnId = Sheet6columns[ "Amount"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["Amount"] },
+                                new () { ColumnId = Sheet6columns[ "BTC/BTE"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["BTC/BTE"] },
+                                new () { ColumnId = Sheet6columns[ "BudgetAmount"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["BudgetAmount"] },
+                                new () { ColumnId = Sheet6columns[ "BTCAmount"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["BTCAmount"] },
+                                new () { ColumnId = Sheet6columns[ "BTEAmount"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["BTEAmount"] },
+                                new () { ColumnId = Sheet6columns[ "Event Topic"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["Event Topic"] },
+                                new () { ColumnId = Sheet6columns[ "Event Type"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["Event Type"] },
+                                new () { ColumnId = Sheet6columns[ "Event Date Start"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["Event Date Start"] },
+                                new () { ColumnId = Sheet6columns[ "Event End Date"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["Event End Date"] },
+                                new () { ColumnId = Sheet6columns[ "MisCode"], Value = EventRequestExpensesSheetdt.Rows[Expensecount]["MisCode"] }
+
+                                         }
+                                };
+                                newRows6.Add(newRow6);
+                            }
+                            await Task.Run(() => ApiCalls.ExpenseDetails(smartsheet, sheet6, newRows6));
+                            //panel
+                            for (int panelcount = 0; panelcount < EventRequestPanelDetailsdt.Rows.Count; panelcount++)
+                            {
+                                Row newRow1 = new()
+                                {
+                                    Cells = new List<Cell>()
+                                };
+
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["HCPName"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["HCPName"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["MISCode"], Value = SheetHelper.MisCodeCheck("" + EventRequestPanelDetailsdt.Rows[panelcount]["MisCode"]) });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["HCP Type"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["HCP Type"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Speciality"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Speciality"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Tier"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Tier"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Medical Utility Cost"], Value = SheetHelper.NumCheck("" + EventRequestPanelDetailsdt.Rows[panelcount]["Medical Utility Cost"]) });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Medical Utility Type"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Medical Utility Type"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Medical Utility description"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Medical Utility description"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Legitimate Need"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Legitimate Need"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Objective Criteria"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Objective Criteria"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Rationale"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Rationale"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Event Topic"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Event Topic"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Event Type"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Event Date Start"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Event Date Start"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Event End Date"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Event End Date"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["ExpenseType"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["ExpenseType"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["FCPA Date"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["FCPA Date"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Request Date"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Request Date"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Valid From"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Valid From"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["Valid To"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["Valid To"], Value = EventRequestPanelDetailsdt.Rows[panelcount]["EventId/EventRequestId"] });
+                                newRow1.Cells.Add(new Cell { ColumnId = Sheet4columns["EventId/EventRequestId"], Value = val });
+
+
+
+                                IList<Row> panelrow = await Task.Run(() => ApiCalls.PanelDetails(smartsheet, sheet4, newRow1));
+
+                                string[] panelattachment = EventRequestPanelDetailsdt.Rows[panelcount]["AttachmentPaths"].ToString().Split(',');
+                                for (int panelattachcount = 1; panelattachcount < panelattachment.Length; panelattachcount++)
+                                {
+                                    Row addedRow = panelrow[0];
+                                    Row websheetRow = addedRows[0];
+                                    Attachment attachment = await ApiCalls.AddAttachmentsToSheetSync(smartsheet, sheet4, addedRow, panelattachment[panelattachcount]);
+                                    Attachment attachmentWebSheet = await ApiCalls.AddAttachmentsToSheetSync(smartsheet, sheet1, websheetRow, panelattachment[panelattachcount]);
+
+                                    if (System.IO.File.Exists(panelattachment[panelattachcount]))
+                                    {
+                                        SheetHelper.DeleteFile(panelattachment[panelattachcount]);
+                                    }
+                                }
+                            }
+
+                            //role update
+
+                            Row addedrow = addedRows[0];
+                            long ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+                            Cell UpdateB = new Cell
+                            {
+                                ColumnId = ColumnId,
+                                Value = EventRequestsWebdt.Rows[loopcount]["Role"]
+                            };
+                            Row updateRows = new Row
+                            {
+                                Id = addedrow.Id,
+                                Cells = new Cell[]
+                              { UpdateB }
+                            };
+                            
+                            await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet1, updateRows));
+
+                            UpdateEventId.Rows.Add(new Object[] { EventRequestsWebdt.Rows[loopcount]["ID"], val });
+
                         }
                         else
                         {
@@ -914,7 +1129,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                         Cells = new List<Cell>()
                                     };
 
-                                    newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["MIS"], Value = SheetHelper.MisCodeCheck("" + EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["MIS"] )});
+                                    newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["MIS"], Value = SheetHelper.MisCodeCheck("" + EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["MIS"]) });
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["Slide Kit Type"], Value = EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["Slide Kit Type"] });
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["SlideKit Document"], Value = EventRequestHCPSlideKitDetailsdt.Rows[SlideKitcount]["SlideKit Document"] });
                                     newRow5.Cells.Add(new Cell { ColumnId = Sheet5columns["EventId/EventRequestId"], Value = val });
@@ -974,7 +1189,7 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Event Date"], Value = Deviation_Processdt.Rows[Deviationcount]["Event Date"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Start Time"], Value = Deviation_Processdt.Rows[Deviationcount]["Start Time"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["End Time"], Value = Deviation_Processdt.Rows[Deviationcount]["End Time"] });
-                                    newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["MIS Code"], Value = SheetHelper.MisCodeCheck("" + Deviation_Processdt.Rows[Deviationcount]["MIS Code"] )});
+                                    newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["MIS Code"], Value = SheetHelper.MisCodeCheck("" + Deviation_Processdt.Rows[Deviationcount]["MIS Code"]) });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["HCP Name"], Value = Deviation_Processdt.Rows[Deviationcount]["HCP Name"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Honorarium Amount"], Value = Deviation_Processdt.Rows[Deviationcount]["Honorarium Amount"] });
                                     newRow7.Cells.Add(new Cell { ColumnId = Sheet7columns["Travel & Accommodation Amount"], Value = Deviation_Processdt.Rows[Deviationcount]["Travel & Accommodation Amount"] });
@@ -1067,7 +1282,10 @@ namespace IndiaEventsWebApi.Controllers.Scheduler
                 Console.WriteLine(ex.Message);
                 Log.Error($"Error occured on webinar method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
-                return BadRequest(new { Message = ex.Message + "------" + ex.StackTrace });
+                return BadRequest(new
+                {
+                    Message = ex.Message + "------" + ex.StackTrace
+                });
             }
             return Ok();
         }

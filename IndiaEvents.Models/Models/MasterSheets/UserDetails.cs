@@ -27,6 +27,8 @@ namespace IndiaEvents.Models.Models.MasterSheets
         public string FinanceAccounts { get; set; }
         public string SalesCoordinator { get; set; }
         public string MarketingCoordinator { get; set; }
+        public string? StartDate { get; set; }
+        public string? EndDate { get; set; }
        
     }
 }

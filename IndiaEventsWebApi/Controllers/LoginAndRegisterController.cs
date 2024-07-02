@@ -19,6 +19,7 @@ using IndiaEventsWebApi.Helper;
 using Serilog;
 using IndiaEvents.Models.Models.MasterSheets;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 
 namespace IndiaEventsWebApi.Controllers
 {
@@ -246,6 +247,9 @@ namespace IndiaEventsWebApi.Controllers
                 long FinanceAccountsId = Sheetcolumns["Finance Accounts"];
                 long SalesCoordinatorId = Sheetcolumns["Sales Coordinator"];
                 long MarketingCoordinatorId = Sheetcolumns["Marketing Coordinator"];
+                long StartDateId = Sheetcolumns["Start Date"];
+                long EndDateId = Sheetcolumns["End Date"];
+
 
                 if (EmailColumnId == 0 || passwordColumnId == 0)
                 {
@@ -255,12 +259,28 @@ namespace IndiaEventsWebApi.Controllers
 
 
 
-
                 IEnumerable<Row> rows = sheet.Rows.Where(x =>
                 {
                     string EmailIdValue = Convert.ToString(x.Cells.FirstOrDefault(c => c.ColumnId == EmailColumnId)?.Value);
                     string PasswordValue = Convert.ToString(x.Cells.FirstOrDefault(c => c.ColumnId == passwordColumnId)?.Value);
-                    return EmailIdValue == userData.EmailId && PasswordValue == userData.Password;
+
+
+                    var StartDateValue = x.Cells.FirstOrDefault(c => c.ColumnId == StartDateId);
+                    var EndDateValue = x.Cells.FirstOrDefault(c => c.ColumnId == EndDateId);
+
+                    DateTime startDate;
+                    DateTime endDate;
+                    bool isStartDateValid = DateTime.TryParse(Convert.ToString(StartDateValue?.Value), out startDate);
+                    bool isEndDateValid = DateTime.TryParse(Convert.ToString(EndDateValue?.Value), out endDate);
+                    DateTime currentDate = DateTime.Now.Date;
+
+
+                    bool isDateInRange =
+                        (!isStartDateValid || currentDate >= startDate) &&
+                        (!isEndDateValid || currentDate <= endDate);
+
+
+                    return EmailIdValue == userData.EmailId && PasswordValue == userData.Password && isDateInRange;
                 });
 
 
@@ -289,6 +309,9 @@ namespace IndiaEventsWebApi.Controllers
                     var MarketingCoordinatorCell = row.Cells.FirstOrDefault(c => c.ColumnId == MarketingCoordinatorId);
                     var FinanceCheckerCell = row.Cells.FirstOrDefault(c => c.ColumnId == FinanceCheckerId);
                     var isActiveCell = row.Cells.FirstOrDefault(c => c.ColumnId == IsActiveColumnId);
+                    var StartDateCell = row.Cells.FirstOrDefault(c => c.ColumnId == StartDateId);
+                    var EndDateCell = row.Cells.FirstOrDefault(c => c.ColumnId == EndDateId);
+
 
                     if (isActiveCell?.Value?.ToString() == "No")
                     {
@@ -313,6 +336,8 @@ namespace IndiaEventsWebApi.Controllers
                         SalesCoordinator = SalesCoordinatorCell?.Value?.ToString(),
                         MarketingCoordinator = MarketingCoordinatorCell?.Value?.ToString(),
                         FinanceChecker = FinanceCheckerCell?.Value?.ToString(),
+                        StartDate = StartDateCell?.Value?.ToString(),
+                        EndDate = EndDateCell?.Value?.ToString()
                     };
                     userDetailsList.Add(userDetails);
                 }
@@ -353,7 +378,7 @@ namespace IndiaEventsWebApi.Controllers
         {
             try
             {
-               
+
                 string IsActiveVal = "";
                 Log.Information("google api stated");
                 Log.Information(credential);
@@ -389,6 +414,8 @@ namespace IndiaEventsWebApi.Controllers
                 long FinanceAccountsId = Sheetcolumns["Finance Accounts"];
                 long SalesCoordinatorId = Sheetcolumns["Sales Coordinator"];
                 long MarketingCoordinatorId = Sheetcolumns["Marketing Coordinator"];
+                long StartDateId = Sheetcolumns["Start Date"];
+                long EndDateId = Sheetcolumns["End Date"];
 
                 if (EmailColumnId == 0)
                 {
@@ -399,7 +426,22 @@ namespace IndiaEventsWebApi.Controllers
                 {
                     string EmailIdValue = Convert.ToString(x.Cells.FirstOrDefault(c => c.ColumnId == EmailColumnId)?.Value);
 
-                    return EmailIdValue == credential;//payload.Email;
+                    var StartDateValue = x.Cells.FirstOrDefault(c => c.ColumnId == StartDateId);
+                    var EndDateValue = x.Cells.FirstOrDefault(c => c.ColumnId == EndDateId);
+
+                    DateTime startDate;
+                    DateTime endDate;
+                    bool isStartDateValid = DateTime.TryParse(Convert.ToString(StartDateValue?.Value), out startDate);
+                    bool isEndDateValid = DateTime.TryParse(Convert.ToString(EndDateValue?.Value), out endDate);
+                    DateTime currentDate = DateTime.Now.Date;
+
+
+                    bool isDateInRange =
+                        (!isStartDateValid || currentDate >= startDate) &&
+                        (!isEndDateValid || currentDate <= endDate);
+
+
+                    return EmailIdValue == credential && isDateInRange;//payload.Email;
                 });
 
 
