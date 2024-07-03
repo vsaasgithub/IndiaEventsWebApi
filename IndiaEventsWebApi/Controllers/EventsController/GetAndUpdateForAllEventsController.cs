@@ -617,9 +617,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
         [HttpGet("GetDataFromAllSheetsUsingEventIdInPreEvent")]
         public async Task<IActionResult> GetDataFromAllSheetsUsingEventId(string eventId, int count = 5)
         {
-
             string strMessage = string.Empty;
-
             strMessage += "==starting of api== " + DateTime.Now + "==";
             Log.Information("starting of api " + DateTime.Now);
             int loopCount = 0;
@@ -639,6 +637,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     List<Dictionary<string, object>> eventDetails = [];
                     List<Dictionary<string, object>> BrandseventDetails = [];
                     List<Dictionary<string, object>> InviteeseventDetails = [];
+                    List<Dictionary<string, object>> EventRequestBeneficiaryDetails = [];
+                    List<Dictionary<string, object>> ProductBrandsDetails = [];
                     List<Dictionary<string, object>> PaneleventDetails = [];
                     List<Dictionary<string, object>> SlideKiteventDetails = [];
                     List<Dictionary<string, object>> ExpenseeventDetails = [];
@@ -658,7 +658,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     strMessage += "==HcpSlideKit Get Completed==" + DateTime.Now.ToString() + "==";
                     Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
                     strMessage += "==ExpensesSheet Get Completed==" + DateTime.Now.ToString() + "==";
-                    //Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+                    Sheet sheet8 = SheetHelper.GetSheetById(smartsheet, sheetId8);
+                    Sheet sheet9 = SheetHelper.GetSheetById(smartsheet, sheetId9);
                     //strMessage += "==Deviation Get Completed==" + DateTime.Now.ToString() + "==";
 
                     List<string> columnNames = [];
@@ -728,15 +729,15 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                         if (attachments.Data != null || attachments.Data.Count > 0)
                         {
-                            
+
                             foreach (Attachment attachment in attachments.Data)
                             {
                                 long AID = (long)attachment.Id;
                                 string Name = attachment.Name;
-                               // strMessage += "==Before Getting attachment" + i.ToString() + "==" + DateTime.Now.ToString() + "==";
+                                // strMessage += "==Before Getting attachment" + i.ToString() + "==" + DateTime.Now.ToString() + "==";
 
                                 //Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet1, AID));
-                                
+
                                 i++;
                                 // Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet1.Id.Value, AID));
 
@@ -830,7 +831,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     IEnumerable<Row> DataInSheet3 = [];
                     DataInSheet3 = sheet3.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet3.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
                     foreach (Row row in DataInSheet3)
-                    //foreach (var row in sheet3.Rows)
+
                     {
                         if (row.Cells.Any(c => c.DisplayValue == eventId))
                         {
@@ -850,32 +851,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             InviteesrowData["RowId"] = row.Id.Value;
 
                             strMessage += "==After getting row data from Invitees sheet" + j.ToString() + "==" + DateTime.Now.ToString() + "==";
-                            //j++;
-                            //strMessage += "==Before listing attachments in row form Invitees sheet" + "==" + DateTime.Now.ToString() + "==";
 
-                            ////PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet3.Id.Value, row.Id.Value, null));
-                            //PaginatedResult<Attachment> attachments = await Task.Run(() => ApiCalls.GetAttachmantsFromSheet(smartsheet, sheet3, row));
-
-                            //List<Dictionary<string, object>> InviteesattachmentsList = new();
-                            //if (attachments.Data != null || attachments.Data.Count > 0)
-                            //{
-                            //    foreach (var attachment in attachments.Data)
-                            //    {
-                            //        long AID = (long)attachment.Id;
-                            //        Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet3, AID));
-                            //        //Attachment file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet3.Id.Value, AID));
-                            //        Dictionary<string, object> attachmentInfo = new()
-                            //{
-                            //    { "Name", file.Name },
-                            //    { "Id", file.Id },
-                            //    { "base64" ,SheetHelper.UrlToBaseValue(file.Url) }
-                            //};
-                            //        InviteesattachmentsList.Add(attachmentInfo);
-                            //    }
-                            //    InviteesrowData["Attachments"] = InviteesattachmentsList;
-                            //}
                             InviteeseventDetails.Add(InviteesrowData);
-                            //strMessage += "==After listing " + attachments.Data.Count.ToString() + " attachments in row from Invitees sheet" + "==" + DateTime.Now.ToString() + "==";
 
                         }
                     }
@@ -1026,7 +1003,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         {
                             strMessage += "==Before getting row data from expense sheet" + j.ToString() + "==" + DateTime.Now.ToString() + "==";
 
-                            List<string> ExpensecolumnsToInclude = new List<string> { "Expenses ID", "Expense", "BTC/BTE", "Amount Excluding Tax", "Amount", "Registration Amount", "Registration Amount Excluding Tax","MisCode" };
+                            List<string> ExpensecolumnsToInclude = new List<string> { "Expenses ID", "Expense", "BTC/BTE", "Amount Excluding Tax", "Amount", "Registration Amount", "Registration Amount Excluding Tax", "MisCode" };
 
                             Dictionary<string, object> ExpenserowData = new Dictionary<string, object>();
                             for (int i = 0; i < ExpenseColumnNames.Count; i++)
@@ -1047,50 +1024,86 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
 
 
-                    //List<string> DeviationscolumnNames = [];
+                    List<string> EventRequestBeneficiaryColumnNames = [];
+                    foreach (Column column in sheet8.Columns)
+                    {
+                        EventRequestBeneficiaryColumnNames.Add(column.Title);
+                    }
+                    IEnumerable<Row> DataInSheet8 = [];
+                    DataInSheet8 = sheet8.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet8.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
+                    foreach (Row row in DataInSheet8)
 
-                    //foreach (Column column in sheet7.Columns)
-                    //{
-                    //    DeviationscolumnNames.Add(column.Title);
-                    //}
-                    //IEnumerable<Row> DataInSheet7 = [];
-                    //DataInSheet7 = sheet7.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet7.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
-                    //foreach (Row row in DataInSheet7)
-                    ////foreach (var row in sheet7.Rows)
-                    //{
-                    //    if (row.Cells.Any(c => c.DisplayValue == eventId))
-                    //    {
-                    //        List<string> DeviationscolumnsToInclude = new List<string> { "Deviation Type" };
+                    {
+                        if (row.Cells.Any(c => c.DisplayValue == eventId))
+                        {
+                            strMessage += "==Before getting row data from EventRequestBeneficiary sheet" + j.ToString() + "==" + DateTime.Now.ToString() + "==";
 
-                    //        Dictionary<string, object> DeviationsattachmentInfo = new Dictionary<string, object>();
-                    //        for (int i = 0; i < DeviationscolumnNames.Count; i++)
-                    //        {
-                    //            if (DeviationscolumnsToInclude.Contains(DeviationscolumnNames[i]))
-                    //            {
-                    //                var val = row.Cells[i].Value.ToString();
+                            //List<string> EventRequestBeneficiarycolumnsToInclude = new List<string> { "INV", "Invitee Source", "HCPName", "MISCode", "Employee Code", "LocalConveyance", "BTC/BTE", "LocalConveyance", "Speciality", "Lc Amount Excluding Tax", "LcAmount" };
+                            List<string> EventRequestBeneficiarycolumnsToInclude = new List<string> {"Benf Id",
+                                    "EventId/EventRequestId" ,"EventType" ,"EventDate" ,"VenueName" ,"State" ,"City" ,"Facility Charges" ,"Anesthetist Required?" ,
+                                    "Type of Beneficiary" ,"Currency" ,"Other Currency" ,"Beneficiary Name" ,"Bank Account Number" ,"Bank Name" ,
+                                    "PAN card name" ,"Pan Number" ,"IFSC Code" ,"Email Id" ,"Swift Code" ,"IBN Number" ,"Tax Residence Certificate Date"  };
+                            Dictionary<string, object> EventRequestBeneficiaryData = new Dictionary<string, object>();
+                            for (int i = 0; i < EventRequestBeneficiaryColumnNames.Count; i++)
+                            {
+                                if (EventRequestBeneficiarycolumnsToInclude.Contains(EventRequestBeneficiaryColumnNames[i]))
+                                {
+                                    EventRequestBeneficiaryData[EventRequestBeneficiaryColumnNames[i]] = row.Cells[i].Value;
+                                }
 
-                    //                // PaginatedResult<Attachment> attachments = await Task.Run(() => smartsheet.SheetResources.RowResources.AttachmentResources.ListAttachments(sheet7.Id.Value, row.Id.Value, null));
-                    //                strMessage += "==Before listing attachments in row form deviation sheet" + "==" + DateTime.Now.ToString() + "==";
+                            }
+                            EventRequestBeneficiaryData["SheetId"] = sheet3.Id.Value;
+                            EventRequestBeneficiaryData["RowId"] = row.Id.Value;
 
-                    //                PaginatedResult<Attachment> attachments = await Task.Run(() => ApiCalls.GetAttachmantsFromSheet(smartsheet, sheet7, row));
+                            strMessage += "==After getting row data from EventRequestBeneficiary sheet" + j.ToString() + "==" + DateTime.Now.ToString() + "==";
+
+                            EventRequestBeneficiaryDetails.Add(EventRequestBeneficiaryData);
+
+                        }
+                    }
 
 
-                    //                foreach (var attachment in attachments.Data)
-                    //                {
-                    //                    var AID = (long)attachment.Id;
-                    //                    //string Name = attachment.Name;
-                    //                    //Attachment file = await Task.Run(() => ApiCalls.GetAttachment(smartsheet, sheet7, AID));
-                    //                    //var file = await Task.Run(() => smartsheet.SheetResources.AttachmentResources.GetAttachment(sheet7.Id.Value, AID));
-                    //                    DeviationsattachmentInfo[val] = AID;//SheetHelper.UrlToBaseValue(file.Url);
 
-                    //                }
-                    //                strMessage += "==After listing " + attachments.Data.Count.ToString() + " attachments in row from deviation sheet" + "==" + DateTime.Now.ToString() + "==";
+                    List<string> ProductBrandsColumnNames = [];
+                    foreach (Column column in sheet9.Columns)
+                    {
+                        ProductBrandsColumnNames.Add(column.Title);
+                    }
+                    IEnumerable<Row> DataInSheet9 = [];
+                    DataInSheet9 = sheet9.Rows.Where(x => Convert.ToString(x.Cells[Convert.ToInt32(sheet9.Columns.Where(y => y.Title == "EventId/EventRequestId").Select(z => z.Index).FirstOrDefault())].Value) == eventId);
+                    foreach (Row row in DataInSheet9)
 
-                    //            }
-                    //        }
-                    //        DeviationsattachmentsList.Add(DeviationsattachmentInfo);
-                    //    }
-                    //}
+                    {
+                        if (row.Cells.Any(c => c.DisplayValue == eventId))
+                        {
+                            strMessage += "==Before getting row data from ProductBrands sheet" + j.ToString() + "==" + DateTime.Now.ToString() + "==";
+
+                            //List<string> ProductBrandscolumnsToInclude = new List<string> { "INV", "Invitee Source", "HCPName", "MISCode", "Employee Code", "LocalConveyance", "BTC/BTE", "LocalConveyance", "Speciality", "Lc Amount Excluding Tax", "LcAmount" };
+
+                            List<string> ProductBrandscolumnsToInclude = new List<string> { "Product ID", "EventId/EventRequestId", "EventType", "EventDate", "Event Topic", "Product Brand", "Product Name", "No of Samples Required" };
+
+                            Dictionary<string, object> ProductBrandsData = new Dictionary<string, object>();
+                            for (int i = 0; i < ProductBrandsColumnNames.Count; i++)
+                            {
+                                if (ProductBrandscolumnsToInclude.Contains(ProductBrandsColumnNames[i]))
+                                {
+                                    ProductBrandsData[ProductBrandsColumnNames[i]] = row.Cells[i].Value;
+                                }
+                            }
+                            ProductBrandsData["SheetId"] = sheet3.Id.Value;
+                            ProductBrandsData["RowId"] = row.Id.Value;
+
+                            strMessage += "==After getting row data from ProductBrands sheet" + j.ToString() + "==" + DateTime.Now.ToString() + "==";
+
+                            ProductBrandsDetails.Add(ProductBrandsData);
+
+                        }
+                    }
+
+
+
+
+
 
                     resultData["eventDetails"] = eventDetails;
                     resultData["Files"] = attachmentInfoFiles;
@@ -1099,11 +1112,13 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     resultData["PanelDetails"] = PaneleventDetails;
                     resultData["SlideKitSelection"] = SlideKiteventDetails;
                     resultData["ExpenseSelection"] = ExpenseeventDetails;
+                    resultData["EventRequestProductBrandsList"] = ProductBrandsDetails;
+                    resultData["EventRequestBeneficiary"] = EventRequestBeneficiaryDetails;
                     //resultData["Deviation"] = DeviationsattachmentsList;
                     Log.Information("end of api " + DateTime.Now);
                     strMessage += "==end of api== " + DateTime.Now + "==";
                     return Ok(resultData);
-                   // return Ok(strMessage);
+                    // return Ok(strMessage);
                 }
                 catch (SmartsheetException ex)
                 {
@@ -2432,7 +2447,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 Log.Error($"Error occured on UpdateClassIPreEvent method {ex.Message} at {DateTime.Now}");
                 Log.Error(ex.StackTrace);
                 //return BadRequest(ex.Message);
-               
+
                 return BadRequest(new
                 { Message = ex.Message + "------" + ex.StackTrace });
             }
@@ -3485,7 +3500,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                 }
                                 else
                                 {
-                                   
+
                                     strMessage += "==before attach file== " + DateTime.Now + "==";
                                     Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
                                        sheet10.Id.Value, addedRow.Id.Value, filePath, "application/msword");
@@ -3942,7 +3957,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             try
             {
                 strMessage += "==Start of api==" + DateTime.Now.ToString() + "==";
-                
+
                 Log.Information("Start of Update ClassI/Webinar Honorarium api " + DateTime.Now);
                 SmartsheetClient smartsheet = await Task.Run(() => SmartSheetBuilder.AccessClient(accessToken, _externalApiSemaphore));
                 strMessage += "==After get token==" + DateTime.Now.ToString() + "==";

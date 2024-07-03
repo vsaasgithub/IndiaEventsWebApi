@@ -3409,7 +3409,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 string MyConnection = configuration.GetSection("ConnectionStrings:mysql").Value;
                 MySqlConnection MyConn = new MySqlConnection(MyConnection);
-                MySqlCommand com = new MySqlCommand("MedicalUtilityPreevent", MyConn);
+                MySqlCommand com = new MySqlCommand("HCPConsultantPreEvent", MyConn);
 
                 com.CommandType = CommandType.StoredProcedure;
                 com.Parameters.AddWithValue("@ApproverPreEventURL", targetRow1?.Cells[1].Value ?? "no url");
@@ -3418,10 +3418,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 com.Parameters.AddWithValue("@EventTopic", formDataList.HcpConsultant.EventTopic);
                 com.Parameters.AddWithValue("@EventType", formDataList.HcpConsultant.EventType);
                 com.Parameters.AddWithValue("@EventDate", formDataList.HcpConsultant.EventDate);
-
+                com.Parameters.AddWithValue("@EndDate", formDataList.HcpConsultant.EventEndDate);
+                com.Parameters.AddWithValue("@VenueName", formDataList.HcpConsultant.VenueName);
                 com.Parameters.AddWithValue("@Brands", brand);
                 com.Parameters.AddWithValue("@Expenses", Expense);
-                com.Parameters.AddWithValue("@Panelist", HCP);
+                com.Parameters.AddWithValue("@Panelists", HCP);
                 com.Parameters.AddWithValue("@IsAdvanceRequired", formDataList.HcpConsultant.IsAdvanceRequired);
                 com.Parameters.AddWithValue("@InitiatorName", formDataList.HcpConsultant.InitiatorName);
                 com.Parameters.AddWithValue("@AdvanceAmount", SheetHelper.NumCheck(formDataList.HcpConsultant.AdvanceAmount));
@@ -3444,6 +3445,19 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 com.Parameters.AddWithValue("@BTEExpenseDetails", addedExpencesBTE);
                 com.Parameters.AddWithValue("@AttachmentPaths", Attachmentpaths);
                 com.Parameters.AddWithValue("@mRole", formDataList.HcpConsultant.Role);
+                com.Parameters.AddWithValue("@SponsorshipSocietyName", formDataList.HcpConsultant.SponsorshipSocietyName);
+                com.Parameters.AddWithValue("@VenueCountry", formDataList.HcpConsultant.Country);
+
+
+                com.Parameters.AddWithValue("@TotalHCPRegistrationAmount", TotalRegstAmount);
+                com.Parameters.AddWithValue("@TotalTravelAmount", TotalTravelAmount);
+                com.Parameters.AddWithValue("@TotalTravelAccommodationAmount", s);
+                com.Parameters.AddWithValue("@TotalAccommodationAmount", TotalAccomodateAmount);
+                com.Parameters.AddWithValue("@TotalLocalConveyance", TotalHCPLcAmount);
+
+
+
+                //TotalAccommodationAmount Decimal(15,4), TotalLocalConveyance Decimal(15,4)
                 #endregion
 
                 MyConn.Open();
@@ -3474,7 +3488,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 #region ExpenseSheets
                 MyConn.Open();
-                com = new MySqlCommand("SPEventRequestExpensesSheet", MyConn);
+                com = new MySqlCommand("HcpConsultantEventRequestExpensesSheet", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
 
                 foreach (var formdata in formDataList.ExpenseSheet)
@@ -3483,16 +3497,17 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.Parameters.AddWithValue("@EventIdEventRequestID", RefID);
 
                     //// need to add
-                    //com.Parameters.AddWithValue("@RegistrationAmount", SheetHelper.NumCheck(formdata.RegstAmount));
-                    //com.Parameters.AddWithValue("@RegistrationAmountExcludingTax", formdata.RegstAmountExcludingTax);
-                    //com.Parameters.AddWithValue("@VenueName", formDataList.HcpConsultant.VenueName);
-                    // com.Parameters.AddWithValue("@MisCode", SheetHelper.MisCodeCheck(formdata.MisCode));
-
+                    com.Parameters.AddWithValue("@RegistrationAmount", SheetHelper.NumCheck(formdata.RegstAmount));
+                    com.Parameters.AddWithValue("@RegistrationAmountBtcBte", SheetHelper.NumCheck(formdata.BTC_BTE));
+                    com.Parameters.AddWithValue("@RegistrationAmountExcludingTax", formdata.RegstAmountExcludingTax);
+                    com.Parameters.AddWithValue("@VenueName", formDataList.HcpConsultant.VenueName);
+                    com.Parameters.AddWithValue("@MisCode", formdata.MisCode);
                     com.Parameters.AddWithValue("@AmountExcludingTax", formdata.ExpenseAmountExcludingTax);
                     com.Parameters.AddWithValue("@Amount", SheetHelper.NumCheck(formdata.ExpenseAmount));
                     com.Parameters.AddWithValue("@BTCBTE", formdata.BTC_BTE);
                     com.Parameters.AddWithValue("@BTCAmount", SheetHelper.NumCheck(formdata.BtcAmount));
                     com.Parameters.AddWithValue("@BTEAmount", SheetHelper.NumCheck(formdata.BteAmount));
+                    com.Parameters.AddWithValue("@BudgetAmount", SheetHelper.NumCheck(formdata.BudgetAmount));
                     com.Parameters.AddWithValue("@EventTopic", formDataList.HcpConsultant.EventTopic);
                     com.Parameters.AddWithValue("@EventType", formDataList.HcpConsultant.EventType);
                     com.Parameters.AddWithValue("@EventDateStart", formDataList.HcpConsultant.EventDate);
@@ -3505,89 +3520,92 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 #endregion
 
 
+                #region Panel
 
-
-                await MyConn.OpenAsync();
-                com = new MySqlCommand("MU_SPEventRequestPanelDetails", MyConn);
-                com.CommandType = CommandType.StoredProcedure;
-                foreach (var formData in formDataList.HcpList)
-                {
-
-
-
-
-                    String PanelAttachmentpaths = "";
-                    if (formData.IsUpload.ToLower() == "yes")
-                    {
-
-                        int j = 1;
-                        foreach (string p in formData.FilesToUpload)
-                        {
-                            //file format = name.ext:base64
-                            string[] words = p.Split(':');
-                            string r = words[0];
-                            string q = words[1];
-                            string name = r.Split(".")[0];
-                            string filePath = SheetHelper.SQlFileinsertion(q, name);
-                            PanelAttachmentpaths = PanelAttachmentpaths + "," + filePath;
-                        }
-
-                    }
+                //await MyConn.OpenAsync();
+                //com = new MySqlCommand("MU_SPEventRequestPanelDetails", MyConn);
+                //com.CommandType = CommandType.StoredProcedure;
+                //foreach (var formData in formDataList.HcpList)
+                //{
 
 
 
 
+                //    String PanelAttachmentpaths = "";
+                //    if (formData.IsUpload.ToLower() == "yes")
+                //    {
 
+                //        int j = 1;
+                //        foreach (string p in formData.FilesToUpload)
+                //        {
+                //            //file format = name.ext:base64
+                //            string[] words = p.Split(':');
+                //            string r = words[0];
+                //            string q = words[1];
+                //            string name = r.Split(".")[0];
+                //            string filePath = SheetHelper.SQlFileinsertion(q, name);
+                //            PanelAttachmentpaths = PanelAttachmentpaths + "," + filePath;
+                //        }
 
-                    // com.Parameters.AddWithValue("@HcpRole", formData.HcpRole);
-                    com.Parameters.AddWithValue("@MISCode", SheetHelper.MisCodeCheck(formData.MisCode));
-                    com.Parameters.AddWithValue("@Speciality", "");
-                    com.Parameters.AddWithValue("@HCPName", formData.HcpName);
-                    com.Parameters.AddWithValue("@Tier", "");
-                    com.Parameters.AddWithValue("@TotalSpend", formData.BudgetAmount);
-                    com.Parameters.AddWithValue("@RegistrationAmountIncludingTax", formData.RegistrationAmountIncludingTax);
-                    com.Parameters.AddWithValue("@RegistrationAmountExcludingTax", formData.RegistrationAmountExcludingTax);
-                    com.Parameters.AddWithValue("@RegistrationAmountBtcBte", formData.RegistrationAmountBtcBte);
-                    com.Parameters.AddWithValue("@Accomodation", formData.AccomAmountIncludingTax);
-                    com.Parameters.AddWithValue("@AccomodationBTCBTE", formData.AccomodationBtcorBte);
-                    com.Parameters.AddWithValue("@AccomodationExcludingTax", formData.AccomAmountExcludingTax);
-                    com.Parameters.AddWithValue("@LocalConveyance", formData.LcAmountIncludingTax);
-                    com.Parameters.AddWithValue("@LocalConveyanceExcludingTax", formData.LcAmountExcludingTax);
-                    com.Parameters.AddWithValue("@LCBTCBTE", formData.LcBtcorBte);
-                    com.Parameters.AddWithValue("@VenueName", formDataList.HcpConsultant.VenueName);
-                    com.Parameters.AddWithValue("@TravelAirBtcBte", formData.AirTravelBtcBte);
-                    com.Parameters.AddWithValue("@TravelAirIncludingTax", formData.AirTravelAmountIncludingTax);
-                    com.Parameters.AddWithValue("@TravelAirExcludingTax", formData.AirTravelAmountExcludingTax);
-                    com.Parameters.AddWithValue("@TravelRoadBtcBte", formData.RoadTravelBtcBte);
-                    com.Parameters.AddWithValue("@TravelRoadIncludingTax", formData.RoadTravelAmountIncludingTax);
-                    com.Parameters.AddWithValue("@TravelRoadExcludingTax", formData.RoadTravelAmountExcludingTax);
-                    com.Parameters.AddWithValue("@TravelTrainBtcBte", formData.TrainTravelBtcBte);
-                    com.Parameters.AddWithValue("@TravelTrainIncludingTax", formData.TrainTravelAmountIncludingTax);
-                    com.Parameters.AddWithValue("@TravelTrainExcludingTax", formData.TrainTravelAmountExcludingTax);
-                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
-                    com.Parameters.AddWithValue("@Rationale", formData.Rationale);
-                    com.Parameters.AddWithValue("@EventTopic", formDataList.HcpConsultant.EventTopic);
-                    com.Parameters.AddWithValue("@EventType", formDataList.HcpConsultant.EventType);
-                    com.Parameters.AddWithValue("@EventDateStart", formDataList.HcpConsultant.EventDate);
-                    com.Parameters.AddWithValue("@EventEndDate", formDataList.HcpConsultant.EventEndDate);
-                    com.Parameters.AddWithValue("@ExpenseType", formData.ExpenseType);
-                    com.Parameters.AddWithValue("@FCPADate", formData.Fcpadate);
-                    com.Parameters.AddWithValue("@HcpType", formData.HcpType);
-                    com.Parameters.AddWithValue("@MedicalUtilityCost", "");
-                    com.Parameters.AddWithValue("@MedicalUtilityType", "");
-                    com.Parameters.AddWithValue("@MedicalUtilityDescription", "");
-                    com.Parameters.AddWithValue("@LegitimateNeed", formData.Legitimate);
-                    com.Parameters.AddWithValue("@ObjectiveCriteria", formData.Objective);
-                    com.Parameters.AddWithValue("@RequestDate", "");
-                    com.Parameters.AddWithValue("@ValidFrom", "");
-                    com.Parameters.AddWithValue("@ValidTo", "");
+                //    }
 
 
 
-                    com.Parameters.AddWithValue("@AttachmentPaths", PanelAttachmentpaths);
-                    com.ExecuteNonQuery();
-                    com.Parameters.Clear();
-                }
+
+
+
+                //    // com.Parameters.AddWithValue("@HcpRole", formData.HcpRole);
+                //    com.Parameters.AddWithValue("@MISCode", SheetHelper.MisCodeCheck(formData.MisCode));
+                //    com.Parameters.AddWithValue("@Speciality", "");
+                //    com.Parameters.AddWithValue("@HCPName", formData.HcpName);
+                //    com.Parameters.AddWithValue("@Tier", "");
+                //    com.Parameters.AddWithValue("@TotalSpend", formData.BudgetAmount);
+                //    com.Parameters.AddWithValue("@RegistrationAmountIncludingTax", formData.RegistrationAmountIncludingTax);
+                //    com.Parameters.AddWithValue("@RegistrationAmountExcludingTax", formData.RegistrationAmountExcludingTax);
+                //    com.Parameters.AddWithValue("@RegistrationAmountBtcBte", formData.RegistrationAmountBtcBte);
+                //    com.Parameters.AddWithValue("@Accomodation", formData.AccomAmountIncludingTax);
+                //    com.Parameters.AddWithValue("@AccomodationBTCBTE", formData.AccomodationBtcorBte);
+                //    com.Parameters.AddWithValue("@AccomodationExcludingTax", formData.AccomAmountExcludingTax);
+                //    com.Parameters.AddWithValue("@LocalConveyance", formData.LcAmountIncludingTax);
+                //    com.Parameters.AddWithValue("@LocalConveyanceExcludingTax", formData.LcAmountExcludingTax);
+                //    com.Parameters.AddWithValue("@LCBTCBTE", formData.LcBtcorBte);
+                //    com.Parameters.AddWithValue("@VenueName", formDataList.HcpConsultant.VenueName);
+                //    com.Parameters.AddWithValue("@TravelAirBtcBte", formData.AirTravelBtcBte);
+                //    com.Parameters.AddWithValue("@TravelAirIncludingTax", formData.AirTravelAmountIncludingTax);
+                //    com.Parameters.AddWithValue("@TravelAirExcludingTax", formData.AirTravelAmountExcludingTax);
+                //    com.Parameters.AddWithValue("@TravelRoadBtcBte", formData.RoadTravelBtcBte);
+                //    com.Parameters.AddWithValue("@TravelRoadIncludingTax", formData.RoadTravelAmountIncludingTax);
+                //    com.Parameters.AddWithValue("@TravelRoadExcludingTax", formData.RoadTravelAmountExcludingTax);
+                //    com.Parameters.AddWithValue("@TravelTrainBtcBte", formData.TrainTravelBtcBte);
+                //    com.Parameters.AddWithValue("@TravelTrainIncludingTax", formData.TrainTravelAmountIncludingTax);
+                //    com.Parameters.AddWithValue("@TravelTrainExcludingTax", formData.TrainTravelAmountExcludingTax);
+                //    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                //    com.Parameters.AddWithValue("@Rationale", formData.Rationale);
+                //    com.Parameters.AddWithValue("@EventTopic", formDataList.HcpConsultant.EventTopic);
+                //    com.Parameters.AddWithValue("@EventType", formDataList.HcpConsultant.EventType);
+                //    com.Parameters.AddWithValue("@EventDateStart", formDataList.HcpConsultant.EventDate);
+                //    com.Parameters.AddWithValue("@EventEndDate", formDataList.HcpConsultant.EventEndDate);
+                //    com.Parameters.AddWithValue("@ExpenseType", formData.ExpenseType);
+                //    com.Parameters.AddWithValue("@FCPADate", formData.Fcpadate);
+                //    com.Parameters.AddWithValue("@HcpType", formData.HcpType);
+                //    com.Parameters.AddWithValue("@MedicalUtilityCost", "");
+                //    com.Parameters.AddWithValue("@MedicalUtilityType", "");
+                //    com.Parameters.AddWithValue("@MedicalUtilityDescription", "");
+                //    com.Parameters.AddWithValue("@LegitimateNeed", formData.Legitimate);
+                //    com.Parameters.AddWithValue("@ObjectiveCriteria", formData.Objective);
+                //    com.Parameters.AddWithValue("@RequestDate", "");
+                //    com.Parameters.AddWithValue("@ValidFrom", "");
+                //    com.Parameters.AddWithValue("@ValidTo", "");
+
+
+
+                //    com.Parameters.AddWithValue("@AttachmentPaths", PanelAttachmentpaths);
+                //    com.ExecuteNonQuery();
+                //    com.Parameters.Clear();
+                //}
+                #endregion
+
+
                 #region devtation
 
 
@@ -3742,7 +3760,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 return BadRequest(new
                 { Message = ex.Message + "------" + ex.StackTrace });
             }
-
+            return Ok(new
+            {
+                Message = $"Thank you. Your event creation request has been received. " +
+               "You should receive a confirmation email with the details of your event after a few minutes."
+            });
 
 
             return Ok();
