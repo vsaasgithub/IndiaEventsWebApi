@@ -573,6 +573,7 @@ namespace IndiaEventsWebApi.Controllers
                 strMessage += "==After Update Role in Eventsettlement sheet==" + DateTime.Now.ToString() + "==";
                 Log.Information("End of EventSettlement Post" + DateTime.Now);
                 strMessage += "==End Of Api==" + DateTime.Now.ToString() + "==";
+               //return Ok(strMessage);
                 return Ok(new
                 { Message = "Data added successfully." });
 
@@ -836,6 +837,7 @@ namespace IndiaEventsWebApi.Controllers
                 //}
                 Log.Information("End of EventSettlement Update" + DateTime.Now);
                 strMessage += "==End of Api==" + DateTime.Now.ToString() + "==";
+                //return Ok(strMessage);
                 return Ok(new { Message = "Attendees Updated Successfully" });
                 //}
                 //catch (Exception ex)
