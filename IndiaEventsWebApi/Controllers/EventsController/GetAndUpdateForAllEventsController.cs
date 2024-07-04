@@ -814,7 +814,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                             List<string> InviteescolumnsToInclude = new List<string> { "INV", "Invitee Source", "HCPName", "MISCode",
                                 "Employee Code", "LocalConveyance","BTC/BTE", "LocalConveyance", "Speciality",
-                                "Lc Amount Excluding Tax", "LcAmount","Experience","Qualification","Designation" };
+                                "Lc Amount Excluding Tax", "LcAmount","Experience","Qualification","Designation","HCP Type" };
                             Dictionary<string, object> InviteesrowData = new Dictionary<string, object>();
                             for (int i = 0; i < InviteesColumnNames.Count; i++)
                             {
