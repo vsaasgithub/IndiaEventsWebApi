@@ -41,6 +41,9 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? Role { get; set; }
 
         public string? Finance { get; set; }
+        public string? IsFilesUpload { get; set; }
+        public List<string>? Files { get; set; }
+
         public string? InitiatorName { get; set; }
         //public string? Role { get; set; }
         public string? Initiator_Email { get; set; }

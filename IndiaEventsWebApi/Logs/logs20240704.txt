@@ -13,3 +13,61 @@
 2024-07-04 11:10:59.331 +05:30 [ERR] Error occured on Medical Utility method Cannot Open when State is Open. at 04-07-2024 11:10:59
 2024-07-04 11:11:00.072 +05:30 [ERR]    at MySqlConnector.MySqlConnection.OpenAsync(Nullable`1 ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlConnection.cs:line 529
    at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.MedicalUtilityPreEvent(MedicalUtilityPreEventPayload formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 6517
+2024-07-04 13:27:32.793 +05:30 [ERR] Error occured on Handson Pre Event method Parameter '@BTEExpenseDetails' has already been defined. at 04-07-2024 13:27:32
+2024-07-04 13:27:33.013 +05:30 [ERR]    at MySqlConnector.MySqlParameterCollection.AddParameter(MySqlParameter parameter, Int32 index) in /_/src/MySqlConnector/MySqlParameterCollection.cs:line 191
+   at MySqlConnector.MySqlParameterCollection.AddWithValue(String parameterName, Object value) in /_/src/MySqlConnector/MySqlParameterCollection.cs:line 66
+   at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 6965
+2024-07-04 14:40:36.573 +05:30 [ERR] Error occured on Handson Pre Event method Object reference not set to an instance of an object. at 04-07-2024 14:40:36
+2024-07-04 14:40:37.061 +05:30 [ERR]    at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 6987
+2024-07-04 14:41:19.749 +05:30 [ERR] Error occured on Handson Pre Event method Object reference not set to an instance of an object. at 04-07-2024 14:41:19
+2024-07-04 14:41:19.977 +05:30 [ERR]    at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 6987
+2024-07-04 15:05:04.177 +05:30 [ERR] Error occured on Handson Pre Event method Parameter 'EventDate' not found in the collection. at 04-07-2024 15:05:04
+2024-07-04 15:05:04.793 +05:30 [ERR]    at MySqlConnector.Core.CachedProcedure.AlignParamsWithDb(MySqlParameterCollection parameterCollection) in /_/src/MySqlConnector/Core/CachedProcedure.cs:line 128
+   at MySqlConnector.Core.SingleCommandPayloadCreator.WriteStoredProcedure(IMySqlCommand command, IDictionary`2 cachedProcedures, ByteBufferWriter writer) in /_/src/MySqlConnector/Core/SingleCommandPayloadCreator.cs:line 189
+   at MySqlConnector.Core.SingleCommandPayloadCreator.WriteQueryPayload(IMySqlCommand command, IDictionary`2 cachedProcedures, ByteBufferWriter writer, Boolean appendSemicolon, Boolean isFirstCommand, Boolean isLastCommand) in /_/src/MySqlConnector/Core/SingleCommandPayloadCreator.cs:line 77
+   at MySqlConnector.Core.SingleCommandPayloadCreator.WriteQueryCommand(CommandListPosition& commandListPosition, IDictionary`2 cachedProcedures, ByteBufferWriter writer, Boolean appendSemicolon) in /_/src/MySqlConnector/Core/SingleCommandPayloadCreator.cs:line 45
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 44
+   at MySqlConnector.MySqlCommand.ExecuteNonQueryAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 309
+   at MySqlConnector.MySqlCommand.ExecuteNonQuery() in /_/src/MySqlConnector/MySqlCommand.cs:line 108
+   at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 7203
+2024-07-04 15:08:47.356 +05:30 [ERR] Error occured on Handson Pre Event method Parameter '@EventType' has already been defined. at 04-07-2024 15:08:47
+2024-07-04 15:08:47.712 +05:30 [ERR]    at MySqlConnector.MySqlParameterCollection.AddParameter(MySqlParameter parameter, Int32 index) in /_/src/MySqlConnector/MySqlParameterCollection.cs:line 191
+   at MySqlConnector.MySqlParameterCollection.AddWithValue(String parameterName, Object value) in /_/src/MySqlConnector/MySqlParameterCollection.cs:line 66
+   at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 7200
+2024-07-04 15:28:07.321 +05:30 [ERR] Error occured on Handson Pre Event method Parameter 'EventEndDate' not found in the collection. at 04-07-2024 15:28:07
+2024-07-04 15:28:07.597 +05:30 [ERR]    at MySqlConnector.Core.CachedProcedure.AlignParamsWithDb(MySqlParameterCollection parameterCollection) in /_/src/MySqlConnector/Core/CachedProcedure.cs:line 128
+   at MySqlConnector.Core.SingleCommandPayloadCreator.WriteStoredProcedure(IMySqlCommand command, IDictionary`2 cachedProcedures, ByteBufferWriter writer) in /_/src/MySqlConnector/Core/SingleCommandPayloadCreator.cs:line 189
+   at MySqlConnector.Core.SingleCommandPayloadCreator.WriteQueryPayload(IMySqlCommand command, IDictionary`2 cachedProcedures, ByteBufferWriter writer, Boolean appendSemicolon, Boolean isFirstCommand, Boolean isLastCommand) in /_/src/MySqlConnector/Core/SingleCommandPayloadCreator.cs:line 77
+   at MySqlConnector.Core.SingleCommandPayloadCreator.WriteQueryCommand(CommandListPosition& commandListPosition, IDictionary`2 cachedProcedures, ByteBufferWriter writer, Boolean appendSemicolon) in /_/src/MySqlConnector/Core/SingleCommandPayloadCreator.cs:line 45
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 44
+   at MySqlConnector.MySqlCommand.ExecuteNonQueryAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 309
+   at MySqlConnector.MySqlCommand.ExecuteNonQuery() in /_/src/MySqlConnector/MySqlCommand.cs:line 108
+   at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 7213
+2024-07-04 15:34:36.191 +05:30 [ERR] Error occured on Handson Pre Event method Connect Timeout expired. at 04-07-2024 15:34:36
+2024-07-04 15:34:37.432 +05:30 [ERR]    at MySqlConnector.MySqlConnection.CreateSessionAsync(ConnectionPool pool, Int64 startingTimestamp, Activity activity, Nullable`1 ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlConnection.cs:line 1090
+   at MySqlConnector.MySqlConnection.OpenAsync(Nullable`1 ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlConnection.cs:line 556
+   at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 7302
+2024-07-04 15:38:38.577 +05:30 [ERR] Error occured on Handson Pre Event method Connection must be Open; current state is Connecting at 04-07-2024 15:38:38
+2024-07-04 15:38:38.683 +05:30 [ERR]    at MySqlConnector.MySqlConnection.get_Session() in /_/src/MySqlConnector/MySqlConnection.cs:line 870
+   at MySqlConnector.Core.ICancellableCommandExtensions.ResetCommandTimeout(ICancellableCommand command) in /_/src/MySqlConnector/Core/ICancellableCommand.cs:line 48
+   at MySqlConnector.MySqlCommand.ExecuteNonQueryAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 307
+   at MySqlConnector.MySqlCommand.ExecuteNonQuery() in /_/src/MySqlConnector/MySqlCommand.cs:line 108
+   at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 7397
+2024-07-04 15:40:29.630 +05:30 [ERR] Error occured on Handson Pre Event method Connection must be Open; current state is Connecting at 04-07-2024 15:40:29
+2024-07-04 15:40:29.735 +05:30 [ERR]    at MySqlConnector.MySqlConnection.get_Session() in /_/src/MySqlConnector/MySqlConnection.cs:line 870
+   at MySqlConnector.Core.ICancellableCommandExtensions.ResetCommandTimeout(ICancellableCommand command) in /_/src/MySqlConnector/Core/ICancellableCommand.cs:line 48
+   at MySqlConnector.MySqlCommand.ExecuteNonQueryAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 307
+   at MySqlConnector.MySqlCommand.ExecuteNonQuery() in /_/src/MySqlConnector/MySqlCommand.cs:line 108
+   at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 7397
+2024-07-04 15:40:51.528 +05:30 [ERR] Error occured on Handson Pre Event method Connection must be Open; current state is Connecting at 04-07-2024 15:40:51
+2024-07-04 15:40:51.529 +05:30 [ERR]    at MySqlConnector.MySqlConnection.get_Session() in /_/src/MySqlConnector/MySqlConnection.cs:line 870
+   at MySqlConnector.Core.ICancellableCommandExtensions.ResetCommandTimeout(ICancellableCommand command) in /_/src/MySqlConnector/Core/ICancellableCommand.cs:line 48
+   at MySqlConnector.MySqlCommand.ExecuteNonQueryAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 307
+   at MySqlConnector.MySqlCommand.ExecuteNonQuery() in /_/src/MySqlConnector/MySqlCommand.cs:line 108
+   at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 7397
+2024-07-04 15:42:44.338 +05:30 [ERR] Error occured on Handson Pre Event method Connection must be Open; current state is Connecting at 04-07-2024 15:42:44
+2024-07-04 15:42:44.400 +05:30 [ERR]    at MySqlConnector.MySqlConnection.get_Session() in /_/src/MySqlConnector/MySqlConnection.cs:line 870
+   at MySqlConnector.Core.ICancellableCommandExtensions.ResetCommandTimeout(ICancellableCommand command) in /_/src/MySqlConnector/Core/ICancellableCommand.cs:line 48
+   at MySqlConnector.MySqlCommand.ExecuteNonQueryAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 307
+   at MySqlConnector.MySqlCommand.ExecuteNonQuery() in /_/src/MySqlConnector/MySqlCommand.cs:line 108
+   at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.HandsOnPreEvent(HandsOnTrainingPreEvet formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 7397

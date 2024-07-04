@@ -1018,7 +1018,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 MyConn.CloseAsync();
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestExpensesSheet", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
 
@@ -1220,7 +1220,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 //await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet1, updateRows)); //smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRows }));
                 //strMessage += "==Before adding Role to WebSheet " + "==" + DateTime.Now.ToString() + "==";
                 //Log.Information("End of api " + DateTime.Now);
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
                 return Ok(new
                 {
                     Message = $"Thank you. Your event creation request has been received." +
@@ -2743,10 +2743,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.Parameters.Clear();
                 }
 
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
+
                 com = new MySqlCommand("SPEventRequestExpensesSheet", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
 
@@ -2768,7 +2769,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
                 if (formDataList.Webinar.EventOpen30days == "Yes" || formDataList.Webinar.EventWithin7days == "Yes" || formDataList.Webinar.FB_Expense_Excluding_Tax == "Yes" || formDataList.Webinar.IsDeviationUpload == "Yes")
                 {
@@ -2946,7 +2947,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 //await Task.Run(() => ApiCalls.UpdateRole(smartsheet, sheet1, updateRows)); //smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRows }));
                 //strMessage += "==Before adding Role to WebSheet " + "==" + DateTime.Now.ToString() + "==";
                 //Log.Information("End of api " + DateTime.Now);
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
                 //return Ok(new
                 //{ Message = " Success!" });/* { Message = " Success!" });*/
                 DateTime currentDate = DateTime.Now;
@@ -3470,8 +3471,19 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 String Attachmentpaths = "";
                 #endregion
 
-                #region                
-
+                #region             
+                if (formDataList.HcpConsultant.IsFilesUpload?.ToLower() == "yes")
+                {
+                    foreach (var p in formDataList.HcpConsultant.Files)
+                    {
+                        string[] words = p.Split(':');
+                        string r = words[0];
+                        string q = words[1];
+                        string name = r.Split(".")[0];
+                        string filePath = SheetHelper.SQlFileinsertion(q, name);
+                        Attachmentpaths = Attachmentpaths + "," + filePath;
+                    }
+                }
 
                 string MyConnection = configuration.GetSection("ConnectionStrings:mysql").Value;
                 MySqlConnection MyConn = new MySqlConnection(MyConnection);
@@ -3526,18 +3538,18 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 //TotalAccommodationAmount Decimal(15,4), TotalLocalConveyance Decimal(15,4)
                 #endregion
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 MySqlDataReader reader = com.ExecuteReader();
                 String RefID = "";
                 while (reader.Read())
                 {
                     RefID = reader["ID"].ToString();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
                 #region EventBrands
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestsBrandsList", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formdata in formDataList.BrandsList)
@@ -3549,11 +3561,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
                 #endregion
 
                 #region ExpenseSheets
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("HcpConsultantEventRequestExpensesSheet", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
 
@@ -3581,7 +3593,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                 await MyConn.CloseAsync();
 
                 #endregion
 
@@ -3669,6 +3681,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
+                await MyConn.CloseAsync();
                 #endregion
 
 
@@ -4345,7 +4358,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 #endregion
 
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 //com.ExecuteNonQuery();
                 MySqlDataReader reader = com.ExecuteReader();
                 String RefID = "";
@@ -4353,11 +4366,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 {
                     RefID = reader["ID"].ToString();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
                 #region EventBrands
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestsBrandsList", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formdata in formDataList.EventBrands)
@@ -4369,11 +4382,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
                 #endregion
 
                 #region ExpenseSheets
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestExpensesSheet", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
 
@@ -4395,7 +4408,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
                 #endregion
 
@@ -4434,7 +4447,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         string r = words[1];
                         DeviationNames.Add(r);
                     }
-                    MyConn.Open();
+                    await MyConn.OpenAsync();
                     com = new MySqlCommand("SPDeviation_Process", MyConn);
                     com.CommandType = CommandType.StoredProcedure;
 
@@ -4595,7 +4608,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
 
 
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
                 //return Ok(new
                 //{ Message = " Success!" });/* { Message = " Success!" });*/
                 DateTime currentDate = DateTime.Now;
@@ -6442,18 +6455,18 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 com.Parameters.AddWithValue("@mRole", formDataList.MedicalUtilityData.Role);
                 #endregion
 
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 MySqlDataReader reader = com.ExecuteReader();
                 String RefID = "";
                 while (reader.Read())
                 {
                     RefID = reader["ID"].ToString();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
 
                 #region EventBrands
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestsBrandsList", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formdata in formDataList.BrandsList)
@@ -6465,11 +6478,11 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
                 #endregion
 
                 #region ExpenseSheets
-                MyConn.Open();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("HcpConsultantEventRequestExpensesSheet", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
 
@@ -6497,7 +6510,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
 
                 #endregion
 
@@ -6588,7 +6601,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
+                await MyConn.CloseAsync();
                 #region devtation
 
                 if (formDataList.MedicalUtilityData.IsDeviationUpload == "Yes")
@@ -6877,8 +6890,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     addedBEneficirydataNo++;
                 }
                 string BeneficiaryData = addedBEneficirydata.ToString();
-
-
                 StringBuilder addedExpencesBTE = new();
                 int addedExpencesNoBTE = 1;
                 foreach (var formdata in formDataList.ExpenseData)
@@ -6907,6 +6918,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 MySqlConnection MyConn = new MySqlConnection(MyConnection);
                 MySqlCommand com = new MySqlCommand("HandsonPreevent", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
+
+
                 com.Parameters.AddWithValue("@EventDate", formDataList.HandsOnTraining.EventDate);
                 com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventType);
                 com.Parameters.AddWithValue("@EventTopic", formDataList.HandsOnTraining.EventName);
@@ -6926,10 +6939,10 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 com.Parameters.AddWithValue("@FacilityChargesBTCBTE", formDataList.HandsOnTraining.VenueFacilityChargesBtc_Bte);
                 com.Parameters.AddWithValue("@FacilityChargesExcludingTax", formDataList.HandsOnTraining.FacilityChargesExcludingTax);
                 com.Parameters.AddWithValue("@TotalFacilityChargesIncludingTax", formDataList.HandsOnTraining.FacilityChargesIncludingTax);
-                com.Parameters.AddWithValue("@AnesthetistRequired?", formDataList.HandsOnTraining.IsAnesthetistRequired);
+                com.Parameters.AddWithValue("@AnesthetistRequiredq", formDataList.HandsOnTraining.IsAnesthetistRequired);
                 com.Parameters.AddWithValue("@AnesthetistBTCBTE", formDataList.HandsOnTraining.AnesthetistRequiredBtc_Bte);
                 com.Parameters.AddWithValue("@AnesthetistExcludingTax", formDataList.HandsOnTraining.AnesthetistChargesExcludingTax);
-                com.Parameters.AddWithValue("@AnesthetistIncluding Tax", formDataList.HandsOnTraining.AnesthetistChargesIncludingTax);
+                com.Parameters.AddWithValue("@AnesthetistIncludingTax", formDataList.HandsOnTraining.AnesthetistChargesIncludingTax);
                 com.Parameters.AddWithValue("@InitiatorName", formDataList.HandsOnTraining.InitiatorName);
                 com.Parameters.AddWithValue("@AdvanceAmount", formDataList.HandsOnTraining.AdvanceAmount);
                 com.Parameters.AddWithValue("@TotalExpenseBTC", formDataList.HandsOnTraining.TotalExpenseBTC);
@@ -6962,7 +6975,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 com.Parameters.AddWithValue("@BeneficiaryDetails", BeneficiaryData);
                 com.Parameters.AddWithValue("@SelectedProducts", SelectedProductData);
                 com.Parameters.AddWithValue("@BTEExpenseDetails", BTEExpense);
-                com.Parameters.AddWithValue("@BTEExpenseDetails", BTEExpense);
+                //com.Parameters.AddWithValue("@BTEExpenseDetails", BTEExpense);
                 com.Parameters.AddWithValue("@AttachmentPaths", AttachmentPath);
                 com.Parameters.AddWithValue("@webinarRole", formDataList.HandsOnTraining.Role);
 
@@ -6976,160 +6989,170 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 await MyConn.CloseAsync();
                 string val = RefID;
 
+
                 if (formDataList.HandsOnTraining.IsDeviationUpload == "Yes")
                 {
-
-                    await MyConn.OpenAsync();
-                    com = new MySqlCommand("SPDeviation_Process", MyConn);
-                    com.CommandType = CommandType.StoredProcedure;
-                    List<string> DeviationNames = new();
-
+                    List<string> DeviationNames = new List<string>();
                     foreach (var p in formDataList.HandsOnTraining.DeviationDetails)
                     {
                         string[] words = p.DeviationFile.Split(':')[0].Split("*");
                         string r = words[1];
                         DeviationNames.Add(r);
                     }
+                    await MyConn.OpenAsync();
+                    com = new MySqlCommand("SPDeviation_Process", MyConn);
+                    com.CommandType = CommandType.StoredProcedure;
+
                     foreach (var pp in formDataList.HandsOnTraining.DeviationDetails)
                     {
-                        foreach (string deviationname in DeviationNames)
+                        foreach (var deviationname in DeviationNames)
                         {
                             string file = deviationname.Split(".")[0];
-                            try
+                            string DeviationAttachmentpath = "";
+                            if (pp.DeviationFile.Split(':')[0].Split("*")[1] == deviationname)
                             {
-                                String DeviationAttachmentpath = "";
-                                foreach (var p in formDataList.HandsOnTraining.DeviationDetails)
+                                try
                                 {
-
-                                    string[] words = p.DeviationFile.Split(':');
-                                    string r = words[0];
-                                    string q = words[1];
-                                    if (deviationname == r)
+                                    foreach (var p in formDataList.HandsOnTraining.DeviationDetails)
                                     {
-                                        string name = r.Split(".")[0];
-                                        string filePath = SheetHelper.SQlFileinsertion(q, name);
-                                        DeviationAttachmentpath = DeviationAttachmentpath + "," + filePath;
+                                        string[] nameSplit = p.DeviationFile.Split("*");
+                                        string[] words = nameSplit[1].Split(':');
+                                        string r = words[0];
+                                        string q = words[1];
+                                        if (deviationname == r)
+                                        {
+                                            string name = nameSplit[0];
+                                            string filePath = SheetHelper.SQlFileinsertion(q, name);
+                                            DeviationAttachmentpath = DeviationAttachmentpath + "," + filePath;
+                                            //Attachment attachmentinmain = await ApiCalls.AddAttachmentsToSheet(smartsheet, sheet1, addedRows[0], filePath);
+                                        }
                                     }
-                                }
-                                com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
-                                com.Parameters.AddWithValue("@EventTopic", formDataList.HandsOnTraining.EventName);
-                                com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventName);
-                                com.Parameters.AddWithValue("@EventDate", formDataList.HandsOnTraining.EventDate);
-                                com.Parameters.AddWithValue("@StartTime", formDataList.HandsOnTraining.EventStartTime);
-                                com.Parameters.AddWithValue("@EndTime", formDataList.HandsOnTraining.EventEndTime);
-                                com.Parameters.AddWithValue("@MISCode", pp.MisCode);
-                                com.Parameters.AddWithValue("@HCPName", pp.HcpName);
-                                com.Parameters.AddWithValue("@HonorariumAmount", pp.HonorariumAmountExcludingTax);
-                                com.Parameters.AddWithValue("@TravelAccommodationAmount", pp.TravelorAccomodationAmountExcludingTax);
-                                com.Parameters.AddWithValue("@OtherExpenses", pp.OtherExpenseAmountExcludingTax);
+                                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                                    com.Parameters.AddWithValue("@EventTopic", formDataList.HandsOnTraining.EventName);
+                                    com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventName);
+                                    com.Parameters.AddWithValue("@EventDate", formDataList.HandsOnTraining.EventDate);
+                                    com.Parameters.AddWithValue("@StartTime", formDataList.HandsOnTraining.EventStartTime);
+                                    com.Parameters.AddWithValue("@EndTime", formDataList.HandsOnTraining.EventEndTime);
+                                    com.Parameters.AddWithValue("@MISCode", pp.MisCode);
+                                    com.Parameters.AddWithValue("@HCPName", pp.HcpName);
+                                    com.Parameters.AddWithValue("@HonorariumAmount", pp.HonorariumAmountExcludingTax);
+                                    com.Parameters.AddWithValue("@TravelAccommodationAmount", pp.TravelorAccomodationAmountExcludingTax);
+                                    com.Parameters.AddWithValue("@OtherExpenses", pp.OtherExpenseAmountExcludingTax);
 
-                                if (file == "30DaysDeviationFile")
-                                {
-                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value);
-                                    com.Parameters.AddWithValue("@EventOpen45days", "Yes");
-                                    com.Parameters.AddWithValue("@OutstandingEvents", formDataList.HandsOnTraining.EventOpen30dayscount);
-                                }
-                                else
-                                {
-                                    com.Parameters.AddWithValue("@EventOpen45days", "");
-                                    com.Parameters.AddWithValue("@OutstandingEvents", "");
-                                }
-                                if (file == "7DaysDeviationFile")
-                                {
-                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value);
-                                    com.Parameters.AddWithValue("@EventWithin5days", "Yes");
-                                }
-                                else
-                                {
-                                    com.Parameters.AddWithValue("@EventWithin5days", "");
-                                }
-                                if (file == "ExpenseExcludingTax")
-                                {
-                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value);
-                                    com.Parameters.AddWithValue("@PREExpenseExcludingTax", "Yes");
-                                }
-                                else
-                                {
-                                    com.Parameters.AddWithValue("@PREExpenseExcludingTax", "");
-                                }
-                                if (file.Contains("Travel_Accomodation3LExceededFile"))
-                                {
-                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value);
-                                    com.Parameters.AddWithValue("@TravelAccomodationExceededTrigger", "Yes");
-                                }
-                                else
-                                {
-                                    com.Parameters.AddWithValue("@TravelAccomodationExceededTrigger", "");
-                                }
-                                if (file.Contains("TrainerHonorarium12LExceededFile"))
-                                {
-                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value);
-                                    com.Parameters.AddWithValue("@TrainerHonorariumExceededTrigger", "Yes");
-                                }
-                                else
-                                {
-                                    com.Parameters.AddWithValue("@TrainerHonorariumExceededTrigger", "");
-                                }
-                                if (file.Contains("HCPHonorarium6LExceededFile"))
-                                {
-                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value);
-                                    com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "Yes");
-                                }
-                                else
-                                {
-                                    com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "");
-                                }
-                                if (file.Contains("AgregateSpendDeviationFile"))
-                                {
-                                    if (formDataList.HandsOnTraining.EventType == "Medical Utility")
+                                    if (file == "30DaysDeviationFile")
                                     {
-                                        com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "Yes");
-                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile1L").Value);
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value);
+                                        com.Parameters.AddWithValue("@EventOpen45days", "Yes");
+                                        com.Parameters.AddWithValue("@OutstandingEvents", formDataList.HandsOnTraining.EventOpen30dayscount);
                                     }
                                     else
                                     {
-                                        //need to add
-
-                                        com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                        com.Parameters.AddWithValue("@EventOpen45days", "");
+                                        com.Parameters.AddWithValue("@OutstandingEvents", "");
                                     }
-                                    if (formDataList.HandsOnTraining.EventType == "HCP Consultants")
+                                    if (file == "7DaysDeviationFile")
                                     {
-                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile5L").Value);
-                                        com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "Yes");
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value);
+                                        com.Parameters.AddWithValue("@EventWithin5days", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@EventWithin5days", "");
+                                    }
+                                    if (file == "ExpenseExcludingTax")
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value);
+                                        com.Parameters.AddWithValue("@PREExpenseExcludingTax", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@PREExpenseExcludingTax", "");
+                                    }
+                                    if (file.Contains("Travel_Accomodation3LExceededFile"))
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value);
+                                        com.Parameters.AddWithValue("@TravelAccomodationExceededTrigger", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@TravelAccomodationExceededTrigger", "");
+                                    }
+                                    if (file.Contains("TrainerHonorarium12LExceededFile"))
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value);
+                                        com.Parameters.AddWithValue("@TrainerHonorariumExceededTrigger", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@TrainerHonorariumExceededTrigger", "");
+                                    }
+                                    if (file.Contains("HCPHonorarium6LExceededFile"))
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value);
+                                        com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "Yes");
+                                    }
+                                    else
+                                    {
+                                        com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "");
+                                    }
+                                    if (file.Contains("AgregateSpendDeviationFile"))
+                                    {
+                                        if (formDataList.HandsOnTraining.EventType == "Medical Utility")
+                                        {
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "Yes");
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile1L").Value);
+                                        }
+                                        else
+                                        {
+                                            //need to add
+
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                        }
+                                        if (formDataList.HandsOnTraining.EventType == "HCP Consultants")
+                                        {
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile5L").Value);
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "Yes");
+                                        }
+                                        else
+                                        {
+                                            //need to add
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+
+                                        }
+
                                     }
                                     else
                                     {
                                         //need to add
                                         com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
-
+                                        com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
                                     }
-
+                                    com.Parameters.AddWithValue("@SalesHead", formDataList.HandsOnTraining.SalesHeadEmail);
+                                    com.Parameters.AddWithValue("@FinanceHead", formDataList.HandsOnTraining.FinanceEmail);
+                                    com.Parameters.AddWithValue("@InitiatorName", formDataList.HandsOnTraining.InitiatorName);
+                                    com.Parameters.AddWithValue("@InitiatorEmail", formDataList.HandsOnTraining.InitiatorEmail);
+                                    com.Parameters.AddWithValue("@SalesCoordinator", formDataList.HandsOnTraining.SalesCoordinatorEmail);
+                                    com.Parameters.AddWithValue("@AttachmentPaths", DeviationAttachmentpath);
+                                    com.Parameters.AddWithValue("@EndDate", "");
+                                    com.ExecuteNonQuery();
+                                    com.Parameters.Clear();
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    //need to add
-                                    com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
-                                    com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                    Log.Error($"Error occured on HandsonPreevent method {ex.Message} at {DateTime.Now}");
+                                    Log.Error(ex.StackTrace);
+                                    return BadRequest(ex.Message);
                                 }
-                                com.Parameters.AddWithValue("@SalesHead", formDataList.HandsOnTraining.SalesHeadEmail);
-                                com.Parameters.AddWithValue("@FinanceHead", formDataList.HandsOnTraining.FinanceEmail);
-                                com.Parameters.AddWithValue("@InitiatorName", formDataList.HandsOnTraining.InitiatorName);
-                                com.Parameters.AddWithValue("@InitiatorEmail", formDataList.HandsOnTraining.InitiatorEmail);
-                                com.Parameters.AddWithValue("@SalesCoordinator", formDataList.HandsOnTraining.SalesCoordinatorEmail);
-                                com.Parameters.AddWithValue("@AttachmentPaths", DeviationAttachmentpath);
-                                com.Parameters.AddWithValue("@EndDate", "");
-                                com.ExecuteNonQuery();
-                                com.Parameters.Clear();
-                            }
-                            catch (Exception ex)
-                            {
-                                Log.Error($"Error occured on HandsonPreevent method {ex.Message} at {DateTime.Now}");
-                                Log.Error(ex.StackTrace);
-                                return BadRequest(ex.Message);
                             }
                         }
                     }
                 }
+                await MyConn.CloseAsync();
+
+
+                await MyConn.OpenAsync();
+                com = new MySqlCommand("HO_EventRequestPanelDetails", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
 
                 foreach (var formData in formDataList.TrainerDetails)
                 {
@@ -7146,6 +7169,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                     com.Parameters.AddWithValue("@MISCode", SheetHelper.MisCodeCheck(formData.MISCode));
                     com.Parameters.AddWithValue("@HcpRole", formData.HCPRole);
+                    com.Parameters.AddWithValue("@EventDate", formDataList.HandsOnTraining.EventDate);
                     com.Parameters.AddWithValue("@HCPName", formData.TrainerName);
                     com.Parameters.AddWithValue("@TrainerCode", formData.TrainerCode);
                     com.Parameters.AddWithValue("@Qualification", formData.TrainerQualification);
@@ -7175,6 +7199,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.Parameters.AddWithValue("@TravelExcludingTax", formData.TravelAmountExcludingTax);
                     com.Parameters.AddWithValue("@Travel", formData.TravelAmountIncludingTax);
                     com.Parameters.AddWithValue("@AccomodationExcludingTax", formData.AccomodationAmountExcludingTax);
+                    com.Parameters.AddWithValue("@TravelAccommodationAmount", formData.TravelandAccomodationspendincludingcurrentevent);
                     com.Parameters.AddWithValue("@Accomodation", formData.AccomodationAmountIncludingTax);
                     com.Parameters.AddWithValue("@LocalConveyanceExcludingTax", formData.LocalConveyanceAmountexcludingTax);
                     com.Parameters.AddWithValue("@LocalConveyance", formData.LocalConveyanceAmountincludingTax);
@@ -7194,12 +7219,16 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.Parameters.AddWithValue("@AgreementAmount", formData.AgreementAmount);
                     com.Parameters.AddWithValue("@EventTopic", formDataList.HandsOnTraining.EventName);
                     com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventType);
+                    com.Parameters.AddWithValue("@StartTime", formDataList.HandsOnTraining.EventStartTime);
+                    com.Parameters.AddWithValue("@EndTime", formDataList.HandsOnTraining.EventEndTime);
+                    //com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventType);
                     com.Parameters.AddWithValue("@Venuename", formDataList.HandsOnTraining.VenueName);
-                    com.Parameters.AddWithValue("@EventDate Start", formDataList.HandsOnTraining.EventDate);
-                    com.Parameters.AddWithValue("@Even End Date", formDataList.HandsOnTraining.EventDate);
+                    com.Parameters.AddWithValue("@EventDateStart", formDataList.HandsOnTraining.EventDate);
+                    com.Parameters.AddWithValue("@EventEndDate", formDataList.HandsOnTraining.EventDate);
                     com.Parameters.AddWithValue("@TotalSpend", formData.FinalAmount);
                     com.Parameters.AddWithValue("@EventIdEventRequestId", val);
                     com.Parameters.AddWithValue("@AttachmentPaths", Trainerattachments);
+                    
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
@@ -7287,7 +7316,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.Parameters.Clear();
                 }
 
-                MyConn.Open();
+                await MyConn.CloseAsync();
+
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("SPEventRequestExpensesSheet", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formdata in formDataList.ExpenseData)
@@ -7370,7 +7401,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     return BadRequest(ex.Message);
                 }
 
-                MyConn.OpenAsync();
+                await MyConn.OpenAsync();
                 com = new MySqlCommand("HO_ProductBrandList", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
                 foreach (var formdata in formDataList.ProductSelections)
@@ -7385,8 +7416,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
-                MyConn.CloseAsync();
-
+                await MyConn.CloseAsync();
+                return Ok(new
+                {
+                    Message = $"Thank you. Your event creation request has been received." +
+                "You should receive a confirmation email with the details of your event after a few minutes."
+                });
                 return Ok(new { Message = " Success!" });
             }
             catch (Exception ex)

@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\eventscontroller\\getandupdateforalleventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\eventscontroller\\getandupdateforalleventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\eventscontroller\\allpreeventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\eventscontroller\\allpreeventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}|IndiaEvents.Models\\IndiaEvents.Models.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaevents.models\\models\\eventtypesheets\\hcpconsultant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}|IndiaEvents.Models\\IndiaEvents.Models.csproj|solutionrelative:indiaevents.models\\models\\eventtypesheets\\hcpconsultant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\logs\\logs20240704.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\logs\\logs20240704.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}|IndiaEvents.Models\\IndiaEvents.Models.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaevents.models\\models\\eventtypesheets\\handsontraining.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7AF31BD-B80F-4D84-BB44-8053CB1FFC5B}|IndiaEvents.Models\\IndiaEvents.Models.csproj|solutionrelative:indiaevents.models\\models\\eventtypesheets\\handsontraining.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|d:\\vsaasgit\\apivsaas\\indiaeventswebapi\\indiaeventswebapi\\controllers\\eventscontroller\\getandupdateforalleventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5454D24A-8E1A-4F2D-9994-1FFEBAEFFB44}|IndiaEventsWebApi\\IndiaEventsWebApi.csproj|solutionrelative:indiaeventswebapi\\controllers\\eventscontroller\\getandupdateforalleventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 1430,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,12 +38,51 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "HCPConsultant.cs",
+              "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\Models\\EventTypeSheets\\HCPConsultant.cs",
+              "RelativeDocumentMoniker": "IndiaEvents.Models\\Models\\EventTypeSheets\\HCPConsultant.cs",
+              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\Models\\EventTypeSheets\\HCPConsultant.cs",
+              "RelativeToolTip": "IndiaEvents.Models\\Models\\EventTypeSheets\\HCPConsultant.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAACsAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-04T10:16:13.587Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "logs20240704.txt",
+              "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Logs\\logs20240704.txt",
+              "RelativeDocumentMoniker": "IndiaEventsWebApi\\Logs\\logs20240704.txt",
+              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Logs\\logs20240704.txt",
+              "RelativeToolTip": "IndiaEventsWebApi\\Logs\\logs20240704.txt",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2024-07-04T10:11:11.922Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HandsOnTraining.cs",
+              "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\Models\\EventTypeSheets\\HandsOnTraining.cs",
+              "RelativeDocumentMoniker": "IndiaEvents.Models\\Models\\EventTypeSheets\\HandsOnTraining.cs",
+              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEvents.Models\\Models\\EventTypeSheets\\HandsOnTraining.cs",
+              "RelativeToolTip": "IndiaEvents.Models\\Models\\EventTypeSheets\\HandsOnTraining.cs",
+              "ViewState": "AQIAAKoAAAAAAAAAAADwv9gAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-04T07:54:36.701Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "GetAndUpdateForAllEventsController.cs",
               "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\EventsController\\GetAndUpdateForAllEventsController.cs",
               "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\EventsController\\GetAndUpdateForAllEventsController.cs",
-              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\EventsController\\GetAndUpdateForAllEventsController.cs*",
-              "RelativeToolTip": "IndiaEventsWebApi\\Controllers\\EventsController\\GetAndUpdateForAllEventsController.cs*",
+              "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\EventsController\\GetAndUpdateForAllEventsController.cs",
+              "RelativeToolTip": "IndiaEventsWebApi\\Controllers\\EventsController\\GetAndUpdateForAllEventsController.cs",
               "ViewState": "AQIAAGoDAAAAAAAAAAAswKwDAAA9AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-04T07:10:51.628Z",
@@ -39,13 +90,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AllPreEventsController.cs",
               "DocumentMoniker": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\EventsController\\AllPreEventsController.cs",
               "RelativeDocumentMoniker": "IndiaEventsWebApi\\Controllers\\EventsController\\AllPreEventsController.cs",
               "ToolTip": "D:\\vsaasGit\\APIVSAAS\\IndiaEventsWebApi\\IndiaEventsWebApi\\Controllers\\EventsController\\AllPreEventsController.cs",
               "RelativeToolTip": "IndiaEventsWebApi\\Controllers\\EventsController\\AllPreEventsController.cs",
-              "ViewState": "AQIAAJcZAAAAAAAAAAAAAMEZAAAQAAAA",
+              "ViewState": "AQIAAAwdAAAAAAAAAAAAAK0cAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-03T14:52:54.509Z",
               "EditorCaption": ""
