@@ -77,3 +77,8 @@
 2024-07-03 14:54:26.269 +05:30 [INF] end of api 03-07-2024 14:54:26
 2024-07-03 14:57:46.662 +05:30 [INF] starting of api 03-07-2024 14:57:46
 2024-07-03 14:58:08.809 +05:30 [INF] end of api 03-07-2024 14:58:08
+2024-07-03 16:11:39.085 +05:30 [ERR] Error occured on Medical Utility method Index was outside the bounds of the array. at 03-07-2024 16:11:39
+2024-07-03 16:11:39.450 +05:30 [ERR]    at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.MedicalUtilityPreEvent(MedicalUtilityPreEventPayload formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 6295
+2024-07-03 17:12:48.601 +05:30 [ERR] Error occured on Medical Utility method Cannot Open when State is Open. at 03-07-2024 17:12:48
+2024-07-03 17:12:49.058 +05:30 [ERR]    at MySqlConnector.MySqlConnection.OpenAsync(Nullable`1 ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlConnection.cs:line 529
+   at IndiaEventsWebApi.Controllers.EventsController.AllPreEventsController.MedicalUtilityPreEvent(MedicalUtilityPreEventPayload formDataList) in D:\vsaasGit\APIVSAAS\IndiaEventsWebApi\IndiaEventsWebApi\Controllers\EventsController\AllPreEventsController.cs:line 6506

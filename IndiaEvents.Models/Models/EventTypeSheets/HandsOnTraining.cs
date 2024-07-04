@@ -93,7 +93,7 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public List<string>? Files { get; set; }
         public string? IsDeviationUpload { get; set; }
         public int? EventOpen30dayscount { get; set; }
-        public List<string>? DeviationFiles { get; set; }
+        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }
 
 
     }

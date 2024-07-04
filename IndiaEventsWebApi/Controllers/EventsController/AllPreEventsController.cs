@@ -1149,6 +1149,39 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     {
                                         com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "");
                                     }
+                                    if (file.Contains("AgregateSpendDeviationFile"))
+                                    {
+                                        if (formDataList.class1.EventType == "Medical Utility")
+                                        {
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "Yes");
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile1L").Value);
+                                        }
+                                        else
+                                        {
+                                            //need to add
+
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                        }
+                                        if (formDataList.class1.EventType == "HCP Consultants")
+                                        {
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile5L").Value);
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "Yes");
+                                        }
+                                        else
+                                        {
+                                            //need to add
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //need to add
+                                        com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+                                        com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                    }
+
                                     com.Parameters.AddWithValue("@SalesHead", formDataList.class1.Sales_Head);
                                     com.Parameters.AddWithValue("@FinanceHead", formDataList.class1.FinanceHead);
                                     com.Parameters.AddWithValue("@InitiatorName", formDataList.class1.InitiatorName);
@@ -1156,6 +1189,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     com.Parameters.AddWithValue("@SalesCoordinator", formDataList.class1.SalesCoordinatorEmail);
                                     com.Parameters.AddWithValue("@AttachmentPaths", DeviationAttachmentpath);
                                     com.Parameters.AddWithValue("@EndDate", "");
+
                                     com.ExecuteNonQuery();
                                     com.Parameters.Clear();
                                 }
@@ -2843,6 +2877,38 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     {
                                         com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "");
                                     }
+                                    if (file.Contains("AgregateSpendDeviationFile"))
+                                    {
+                                        if (formDataList.Webinar.EventType == "Medical Utility")
+                                        {
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "Yes");
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile1L").Value);
+                                        }
+                                        else
+                                        {
+                                            //need to add
+
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                        }
+                                        if (formDataList.Webinar.EventType == "HCP Consultants")
+                                        {
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile5L").Value);
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "Yes");
+                                        }
+                                        else
+                                        {
+                                            //need to add
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //need to add
+                                        com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+                                        com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                    }
                                     com.Parameters.AddWithValue("@SalesHead", formDataList.Webinar.Sales_Head);
                                     com.Parameters.AddWithValue("@FinanceHead", formDataList.Webinar.FinanceHead);
                                     com.Parameters.AddWithValue("@InitiatorName", formDataList.Webinar.InitiatorName);
@@ -3522,87 +3588,87 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 #region Panel
 
-                //await MyConn.OpenAsync();
-                //com = new MySqlCommand("MU_SPEventRequestPanelDetails", MyConn);
-                //com.CommandType = CommandType.StoredProcedure;
-                //foreach (var formData in formDataList.HcpList)
-                //{
+                await MyConn.OpenAsync();
+                com = new MySqlCommand("MU_SPEventRequestPanelDetails", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+                foreach (var formData in formDataList.HcpList)
+                {
 
 
 
 
-                //    String PanelAttachmentpaths = "";
-                //    if (formData.IsUpload.ToLower() == "yes")
-                //    {
+                    String PanelAttachmentpaths = "";
+                    if (formData.IsUpload.ToLower() == "yes")
+                    {
 
-                //        int j = 1;
-                //        foreach (string p in formData.FilesToUpload)
-                //        {
-                //            //file format = name.ext:base64
-                //            string[] words = p.Split(':');
-                //            string r = words[0];
-                //            string q = words[1];
-                //            string name = r.Split(".")[0];
-                //            string filePath = SheetHelper.SQlFileinsertion(q, name);
-                //            PanelAttachmentpaths = PanelAttachmentpaths + "," + filePath;
-                //        }
+                        int j = 1;
+                        foreach (string p in formData.FilesToUpload)
+                        {
+                            //file format = name.ext:base64
+                            string[] words = p.Split(':');
+                            string r = words[0];
+                            string q = words[1];
+                            string name = r.Split(".")[0];
+                            string filePath = SheetHelper.SQlFileinsertion(q, name);
+                            PanelAttachmentpaths = PanelAttachmentpaths + "," + filePath;
+                        }
 
-                //    }
-
-
+                    }
 
 
 
 
-                //    // com.Parameters.AddWithValue("@HcpRole", formData.HcpRole);
-                //    com.Parameters.AddWithValue("@MISCode", SheetHelper.MisCodeCheck(formData.MisCode));
-                //    com.Parameters.AddWithValue("@Speciality", "");
-                //    com.Parameters.AddWithValue("@HCPName", formData.HcpName);
-                //    com.Parameters.AddWithValue("@Tier", "");
-                //    com.Parameters.AddWithValue("@TotalSpend", formData.BudgetAmount);
-                //    com.Parameters.AddWithValue("@RegistrationAmountIncludingTax", formData.RegistrationAmountIncludingTax);
-                //    com.Parameters.AddWithValue("@RegistrationAmountExcludingTax", formData.RegistrationAmountExcludingTax);
-                //    com.Parameters.AddWithValue("@RegistrationAmountBtcBte", formData.RegistrationAmountBtcBte);
-                //    com.Parameters.AddWithValue("@Accomodation", formData.AccomAmountIncludingTax);
-                //    com.Parameters.AddWithValue("@AccomodationBTCBTE", formData.AccomodationBtcorBte);
-                //    com.Parameters.AddWithValue("@AccomodationExcludingTax", formData.AccomAmountExcludingTax);
-                //    com.Parameters.AddWithValue("@LocalConveyance", formData.LcAmountIncludingTax);
-                //    com.Parameters.AddWithValue("@LocalConveyanceExcludingTax", formData.LcAmountExcludingTax);
-                //    com.Parameters.AddWithValue("@LCBTCBTE", formData.LcBtcorBte);
-                //    com.Parameters.AddWithValue("@VenueName", formDataList.HcpConsultant.VenueName);
-                //    com.Parameters.AddWithValue("@TravelAirBtcBte", formData.AirTravelBtcBte);
-                //    com.Parameters.AddWithValue("@TravelAirIncludingTax", formData.AirTravelAmountIncludingTax);
-                //    com.Parameters.AddWithValue("@TravelAirExcludingTax", formData.AirTravelAmountExcludingTax);
-                //    com.Parameters.AddWithValue("@TravelRoadBtcBte", formData.RoadTravelBtcBte);
-                //    com.Parameters.AddWithValue("@TravelRoadIncludingTax", formData.RoadTravelAmountIncludingTax);
-                //    com.Parameters.AddWithValue("@TravelRoadExcludingTax", formData.RoadTravelAmountExcludingTax);
-                //    com.Parameters.AddWithValue("@TravelTrainBtcBte", formData.TrainTravelBtcBte);
-                //    com.Parameters.AddWithValue("@TravelTrainIncludingTax", formData.TrainTravelAmountIncludingTax);
-                //    com.Parameters.AddWithValue("@TravelTrainExcludingTax", formData.TrainTravelAmountExcludingTax);
-                //    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
-                //    com.Parameters.AddWithValue("@Rationale", formData.Rationale);
-                //    com.Parameters.AddWithValue("@EventTopic", formDataList.HcpConsultant.EventTopic);
-                //    com.Parameters.AddWithValue("@EventType", formDataList.HcpConsultant.EventType);
-                //    com.Parameters.AddWithValue("@EventDateStart", formDataList.HcpConsultant.EventDate);
-                //    com.Parameters.AddWithValue("@EventEndDate", formDataList.HcpConsultant.EventEndDate);
-                //    com.Parameters.AddWithValue("@ExpenseType", formData.ExpenseType);
-                //    com.Parameters.AddWithValue("@FCPADate", formData.Fcpadate);
-                //    com.Parameters.AddWithValue("@HcpType", formData.HcpType);
-                //    com.Parameters.AddWithValue("@MedicalUtilityCost", "");
-                //    com.Parameters.AddWithValue("@MedicalUtilityType", "");
-                //    com.Parameters.AddWithValue("@MedicalUtilityDescription", "");
-                //    com.Parameters.AddWithValue("@LegitimateNeed", formData.Legitimate);
-                //    com.Parameters.AddWithValue("@ObjectiveCriteria", formData.Objective);
-                //    com.Parameters.AddWithValue("@RequestDate", "");
-                //    com.Parameters.AddWithValue("@ValidFrom", "");
-                //    com.Parameters.AddWithValue("@ValidTo", "");
+
+
+                    // com.Parameters.AddWithValue("@HcpRole", formData.HcpRole);
+                    com.Parameters.AddWithValue("@MISCode", SheetHelper.MisCodeCheck(formData.MisCode));
+                    com.Parameters.AddWithValue("@Speciality", "");
+                    com.Parameters.AddWithValue("@HCPName", formData.HcpName);
+                    com.Parameters.AddWithValue("@Tier", "");
+                    com.Parameters.AddWithValue("@TotalSpend", formData.BudgetAmount);
+                    com.Parameters.AddWithValue("@RegistrationAmountIncludingTax", formData.RegistrationAmountIncludingTax);
+                    com.Parameters.AddWithValue("@RegistrationAmountExcludingTax", formData.RegistrationAmountExcludingTax);
+                    com.Parameters.AddWithValue("@RegistrationAmountBtcBte", formData.RegistrationAmountBtcBte);
+                    com.Parameters.AddWithValue("@Accomodation", formData.AccomAmountIncludingTax);
+                    com.Parameters.AddWithValue("@AccomodationBTCBTE", formData.AccomodationBtcorBte);
+                    com.Parameters.AddWithValue("@AccomodationExcludingTax", formData.AccomAmountExcludingTax);
+                    com.Parameters.AddWithValue("@LocalConveyance", formData.LcAmountIncludingTax);
+                    com.Parameters.AddWithValue("@LocalConveyanceExcludingTax", formData.LcAmountExcludingTax);
+                    com.Parameters.AddWithValue("@LCBTCBTE", formData.LcBtcorBte);
+                    com.Parameters.AddWithValue("@VenueName", formDataList.HcpConsultant.VenueName);
+                    com.Parameters.AddWithValue("@TravelAirBtcBte", formData.AirTravelBtcBte);
+                    com.Parameters.AddWithValue("@TravelAirIncludingTax", formData.AirTravelAmountIncludingTax);
+                    com.Parameters.AddWithValue("@TravelAirExcludingTax", formData.AirTravelAmountExcludingTax);
+                    com.Parameters.AddWithValue("@TravelRoadBtcBte", formData.RoadTravelBtcBte);
+                    com.Parameters.AddWithValue("@TravelRoadIncludingTax", formData.RoadTravelAmountIncludingTax);
+                    com.Parameters.AddWithValue("@TravelRoadExcludingTax", formData.RoadTravelAmountExcludingTax);
+                    com.Parameters.AddWithValue("@TravelTrainBtcBte", formData.TrainTravelBtcBte);
+                    com.Parameters.AddWithValue("@TravelTrainIncludingTax", formData.TrainTravelAmountIncludingTax);
+                    com.Parameters.AddWithValue("@TravelTrainExcludingTax", formData.TrainTravelAmountExcludingTax);
+                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                    com.Parameters.AddWithValue("@Rationale", formData.Rationale);
+                    com.Parameters.AddWithValue("@EventTopic", formDataList.HcpConsultant.EventTopic);
+                    com.Parameters.AddWithValue("@EventType", formDataList.HcpConsultant.EventType);
+                    com.Parameters.AddWithValue("@EventDateStart", formDataList.HcpConsultant.EventDate);
+                    com.Parameters.AddWithValue("@EventEndDate", formDataList.HcpConsultant.EventEndDate);
+                    com.Parameters.AddWithValue("@ExpenseType", formData.ExpenseType);
+                    com.Parameters.AddWithValue("@FCPADate", formData.Fcpadate);
+                    com.Parameters.AddWithValue("@HcpType", formData.HcpType);
+                    com.Parameters.AddWithValue("@MedicalUtilityCost", "");
+                    com.Parameters.AddWithValue("@MedicalUtilityType", "");
+                    com.Parameters.AddWithValue("@MedicalUtilityDescription", "");
+                    com.Parameters.AddWithValue("@LegitimateNeed", formData.Legitimate);
+                    com.Parameters.AddWithValue("@ObjectiveCriteria", formData.Objective);
+                    com.Parameters.AddWithValue("@RequestDate", "");
+                    com.Parameters.AddWithValue("@ValidFrom", "");
+                    com.Parameters.AddWithValue("@ValidTo", "");
 
 
 
-                //    com.Parameters.AddWithValue("@AttachmentPaths", PanelAttachmentpaths);
-                //    com.ExecuteNonQuery();
-                //    com.Parameters.Clear();
-                //}
+                    com.Parameters.AddWithValue("@AttachmentPaths", PanelAttachmentpaths);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
                 #endregion
 
 
@@ -3716,6 +3782,38 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     else
                                     {
                                         com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "");
+                                    }
+                                    if (file.Contains("AgregateSpendDeviationFile"))
+                                    {
+                                        if (formDataList.HcpConsultant.EventType == "Medical Utility")
+                                        {
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "Yes");
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile1L").Value);
+                                        }
+                                        else
+                                        {
+                                            //need to add
+
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                        }
+                                        if (formDataList.HcpConsultant.EventType == "HCP Consultants")
+                                        {
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile5L").Value);
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "Yes");
+                                        }
+                                        else
+                                        {
+                                            //need to add
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //need to add
+                                        com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+                                        com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
                                     }
                                     com.Parameters.AddWithValue("@SalesHead", formDataList.HcpConsultant.Sales_Head);
                                     com.Parameters.AddWithValue("@FinanceHead", formDataList.HcpConsultant.FinanceHead);
@@ -4435,6 +4533,38 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     {
                                         com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "");
                                     }
+                                    if (file.Contains("AgregateSpendDeviationFile"))
+                                    {
+                                        if (formDataList.StallFabrication.EventType == "Medical Utility")
+                                        {
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "Yes");
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile1L").Value);
+                                        }
+                                        else
+                                        {
+                                            //need to add
+
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                        }
+                                        if (formDataList.StallFabrication.EventType == "HCP Consultants")
+                                        {
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile5L").Value);
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "Yes");
+                                        }
+                                        else
+                                        {
+                                            //need to add
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //need to add
+                                        com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+                                        com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                    }
                                     com.Parameters.AddWithValue("@SalesHead", formDataList.StallFabrication.Sales_Head);
                                     com.Parameters.AddWithValue("@FinanceHead", formDataList.StallFabrication.FinanceHead);
                                     com.Parameters.AddWithValue("@InitiatorName", formDataList.StallFabrication.InitiatorName);
@@ -5110,652 +5240,652 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             }
         }
 
-        [HttpPost("HandsOnPreEvent"), DisableRequestSizeLimit]
-        public IActionResult HandsOnPreEvent(HandsOnTrainingPreEvet formDataList)
-        {
-            SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
-            Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
-            Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
-            Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
-            Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
-            Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
-            Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
-            Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
-            Sheet sheet8 = SheetHelper.GetSheetById(smartsheet, sheetId8);
-            Sheet sheet9 = SheetHelper.GetSheetById(smartsheet, sheetId9);
-
-            StringBuilder addedBrandsData = new();
-            StringBuilder addedInviteesData = new();
-            StringBuilder addedHcpData = new();
-            StringBuilder addedSlideKitData = new();
-            StringBuilder addedExpences = new();
-            StringBuilder SelectedProduct = new();
-            StringBuilder addedMEnariniInviteesData = new();
-            StringBuilder addedBEneficirydata = new();
-            int addedSlideKitDataNo = 1;
-            int addedHcpDataNo = 1;
-            int addedInviteesDataNo = 1;
-            int addedBrandsDataNo = 1;
-            int addedExpencesNo = 1;
-            int SelectedProductNo = 1;
-            int addedInviteesDataNoforMenarini = 1;
-            int addedBEneficirydataNo = 1;
-
-            foreach (var formdata in formDataList.AttenderSelections)
-            {
-                if (formdata.InviteedFrom == "Menarini Employees")
-                {
-                    string row = $"{addedInviteesDataNoforMenarini}. {formdata.AttenderName}";
-                    addedMEnariniInviteesData.AppendLine(row);
-                    addedInviteesDataNoforMenarini++;
-                }
-                else
-                {
-                    string rowData = $"{addedInviteesDataNo}. {formdata.AttenderName}";
-                    addedInviteesData.AppendLine(rowData);
-                    addedInviteesDataNo++;
-                }
-            }
-            string Invitees = addedInviteesData.ToString();
-            string MenariniInvitees = addedMEnariniInviteesData.ToString();
-            foreach (var formdata in formDataList.ExpenseData)
-            {
-                string rowData = $"{addedExpencesNo}. {formdata.ExpenseType} | AmountExcludingTax: {formdata.ExpenseAmountExcludingTax}| Amount: {formdata.ExpenseAmountIncludingTax} | {formdata.IsBtcorBte}";
-                addedExpences.AppendLine(rowData);
-                addedExpencesNo++;
-            }
-            string Expense = addedExpences.ToString();
-            foreach (var formdata in formDataList.ProductSelections)
-            {
-                string rowData = $"{SelectedProductNo}. Product Selection Type {formdata.ProductSelectionType} | Product Name: {formdata.ProductName}| Samples Requires: {formdata.SamplesRequires} ";
-                SelectedProduct.AppendLine(rowData);
-                SelectedProductNo++;
-            }
-            string SelectedProductData = SelectedProduct.ToString();
-            foreach (var formdata in formDataList.SlideKitSelectionData)
-            {
-                string rowData = $"{addedSlideKitDataNo}. {formdata.MISCode} | {formdata.SlideKitSelection} | Id :{formdata.SlideKitDocument}";
-                addedSlideKitData.AppendLine(rowData);
-                addedSlideKitDataNo++;
-            }
-            string slideKit = addedSlideKitData.ToString();
-            foreach (var formdata in formDataList.EventBrandsList)
-            {
-                string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
-                addedBrandsData.AppendLine(rowData);
-                addedBrandsDataNo++;
-            }
-            string brand = addedBrandsData.ToString();
-            foreach (var formdata in formDataList.TrainerDetails)
-            {
-
-                string rowData = $"{addedHcpDataNo}. {formdata.TrainerType} |{formdata.TrainerName} | Honr.Amt: {formdata.HonorariumAmountincludingTax} |Trav.&Acc.Amt: {formdata.TravelAmountIncludingTax + formdata.AccomodationAmountIncludingTax} ";
-                addedHcpData.AppendLine(rowData);
-                addedHcpDataNo++;
-
-            }
-            string HCP = addedHcpData.ToString();
-            if (formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData != null)
-            {
-                string beneficiaryDetails = $"Currency : {formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.Currency} | BenificiaryName :  {formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BenificiaryName} | BankAccountNumber : {formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BenificiaryName}";
-                addedBEneficirydata.AppendLine(beneficiaryDetails);
-                addedBEneficirydataNo++;
-            }
-            if (formDataList.HandsOnTraining.VenueBenificiaryDetailsData != null)
-            {
-                string beneficiaryDetails = $"Currency : {formDataList.HandsOnTraining.VenueBenificiaryDetailsData.Currency} | BenificiaryName :  {formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BenificiaryName} | BankAccountNumber : {formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BenificiaryName}";
-                addedBEneficirydata.AppendLine(beneficiaryDetails);
-                addedBEneficirydataNo++;
-            }
-            string BeneficiaryData = addedBEneficirydata.ToString();
-
-
-
+        //[HttpPost("HandsOnPreEvent"), DisableRequestSizeLimit]
+        //public IActionResult HandsOnPreEvent(HandsOnTrainingPreEvet formDataList)
+        //{
+        //    SmartsheetClient smartsheet = new SmartsheetBuilder().SetAccessToken(accessToken).Build();
+        //    Sheet sheet1 = SheetHelper.GetSheetById(smartsheet, sheetId1);
+        //    Sheet sheet2 = SheetHelper.GetSheetById(smartsheet, sheetId2);
+        //    Sheet sheet3 = SheetHelper.GetSheetById(smartsheet, sheetId3);
+        //    Sheet sheet4 = SheetHelper.GetSheetById(smartsheet, sheetId4);
+        //    Sheet sheet5 = SheetHelper.GetSheetById(smartsheet, sheetId5);
+        //    Sheet sheet6 = SheetHelper.GetSheetById(smartsheet, sheetId6);
+        //    Sheet sheet7 = SheetHelper.GetSheetById(smartsheet, sheetId7);
+        //    Sheet sheet8 = SheetHelper.GetSheetById(smartsheet, sheetId8);
+        //    Sheet sheet9 = SheetHelper.GetSheetById(smartsheet, sheetId9);
+
+        //    StringBuilder addedBrandsData = new();
+        //    StringBuilder addedInviteesData = new();
+        //    StringBuilder addedHcpData = new();
+        //    StringBuilder addedSlideKitData = new();
+        //    StringBuilder addedExpences = new();
+        //    StringBuilder SelectedProduct = new();
+        //    StringBuilder addedMEnariniInviteesData = new();
+        //    StringBuilder addedBEneficirydata = new();
+        //    int addedSlideKitDataNo = 1;
+        //    int addedHcpDataNo = 1;
+        //    int addedInviteesDataNo = 1;
+        //    int addedBrandsDataNo = 1;
+        //    int addedExpencesNo = 1;
+        //    int SelectedProductNo = 1;
+        //    int addedInviteesDataNoforMenarini = 1;
+        //    int addedBEneficirydataNo = 1;
+
+        //    foreach (var formdata in formDataList.AttenderSelections)
+        //    {
+        //        if (formdata.InviteedFrom == "Menarini Employees")
+        //        {
+        //            string row = $"{addedInviteesDataNoforMenarini}. {formdata.AttenderName}";
+        //            addedMEnariniInviteesData.AppendLine(row);
+        //            addedInviteesDataNoforMenarini++;
+        //        }
+        //        else
+        //        {
+        //            string rowData = $"{addedInviteesDataNo}. {formdata.AttenderName}";
+        //            addedInviteesData.AppendLine(rowData);
+        //            addedInviteesDataNo++;
+        //        }
+        //    }
+        //    string Invitees = addedInviteesData.ToString();
+        //    string MenariniInvitees = addedMEnariniInviteesData.ToString();
+        //    foreach (var formdata in formDataList.ExpenseData)
+        //    {
+        //        string rowData = $"{addedExpencesNo}. {formdata.ExpenseType} | AmountExcludingTax: {formdata.ExpenseAmountExcludingTax}| Amount: {formdata.ExpenseAmountIncludingTax} | {formdata.IsBtcorBte}";
+        //        addedExpences.AppendLine(rowData);
+        //        addedExpencesNo++;
+        //    }
+        //    string Expense = addedExpences.ToString();
+        //    foreach (var formdata in formDataList.ProductSelections)
+        //    {
+        //        string rowData = $"{SelectedProductNo}. Product Selection Type {formdata.ProductSelectionType} | Product Name: {formdata.ProductName}| Samples Requires: {formdata.SamplesRequires} ";
+        //        SelectedProduct.AppendLine(rowData);
+        //        SelectedProductNo++;
+        //    }
+        //    string SelectedProductData = SelectedProduct.ToString();
+        //    foreach (var formdata in formDataList.SlideKitSelectionData)
+        //    {
+        //        string rowData = $"{addedSlideKitDataNo}. {formdata.MISCode} | {formdata.SlideKitSelection} | Id :{formdata.SlideKitDocument}";
+        //        addedSlideKitData.AppendLine(rowData);
+        //        addedSlideKitDataNo++;
+        //    }
+        //    string slideKit = addedSlideKitData.ToString();
+        //    foreach (var formdata in formDataList.EventBrandsList)
+        //    {
+        //        string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
+        //        addedBrandsData.AppendLine(rowData);
+        //        addedBrandsDataNo++;
+        //    }
+        //    string brand = addedBrandsData.ToString();
+        //    foreach (var formdata in formDataList.TrainerDetails)
+        //    {
+
+        //        string rowData = $"{addedHcpDataNo}. {formdata.TrainerType} |{formdata.TrainerName} | Honr.Amt: {formdata.HonorariumAmountincludingTax} |Trav.&Acc.Amt: {formdata.TravelAmountIncludingTax + formdata.AccomodationAmountIncludingTax} ";
+        //        addedHcpData.AppendLine(rowData);
+        //        addedHcpDataNo++;
+
+        //    }
+        //    string HCP = addedHcpData.ToString();
+        //    if (formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData != null)
+        //    {
+        //        string beneficiaryDetails = $"Currency : {formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.Currency} | BenificiaryName :  {formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BenificiaryName} | BankAccountNumber : {formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BenificiaryName}";
+        //        addedBEneficirydata.AppendLine(beneficiaryDetails);
+        //        addedBEneficirydataNo++;
+        //    }
+        //    if (formDataList.HandsOnTraining.VenueBenificiaryDetailsData != null)
+        //    {
+        //        string beneficiaryDetails = $"Currency : {formDataList.HandsOnTraining.VenueBenificiaryDetailsData.Currency} | BenificiaryName :  {formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BenificiaryName} | BankAccountNumber : {formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BenificiaryName}";
+        //        addedBEneficirydata.AppendLine(beneficiaryDetails);
+        //        addedBEneficirydataNo++;
+        //    }
+        //    string BeneficiaryData = addedBEneficirydata.ToString();
+
+
+
 
-            StringBuilder addedExpencesBTE = new();
-            int addedExpencesNoBTE = 1;
-            foreach (var formdata in formDataList.ExpenseData)
-            {
-                if (formdata.IsBtcorBte.ToLower() == "bte")
-                {
-                    string rowData = $"{addedExpencesNoBTE}. {formdata.ExpenseType} | Amount: {formdata.ExpenseAmountIncludingTax}";
-                    addedExpencesBTE.AppendLine(rowData);
-                    addedExpencesNoBTE++;
-                }
-            }
-            string BTEExpense = addedExpencesBTE.ToString();
-            try
-            {
-
-                Row newRow = new()
-                {
-                    Cells = new List<Cell>()
-                };
-
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Date"), Value = formDataList.HandsOnTraining.EventDate });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Type"), Value = formDataList.HandsOnTraining.EventType });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Start Time"), Value = formDataList.HandsOnTraining.EventStartTime });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "End Time"), Value = formDataList.HandsOnTraining.EventEndTime });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Product Brand"), Value = formDataList.HandsOnTraining.ProductBrandSelection });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Mode of Training"), Value = formDataList.HandsOnTraining.ModeOfTraining });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Venue Name"), Value = formDataList.HandsOnTraining.VenueName });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "City"), Value = formDataList.HandsOnTraining.City });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "State"), Value = formDataList.HandsOnTraining.State });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "HOT Webinar Vendor Name"), Value = formDataList.HandsOnTraining.VendorName });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "HOT Webinar Type"), Value = formDataList.HandsOnTraining.WebinarType });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Venue Selection Checklist"), Value = formDataList.HandsOnTraining.VenueSelectionCheckList });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Emergency Support"), Value = formDataList.HandsOnTraining.IsVenueHasAnyEmergancySupport });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Emergency Contact No"), Value = formDataList.HandsOnTraining.EmerganctContact });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Facility Charges"), Value = formDataList.HandsOnTraining.IsVenueFacilityCharges });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Facility Charges BTC/BTE"), Value = formDataList.HandsOnTraining.VenueFacilityChargesBtc_Bte });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Facility Charges Excluding Tax"), Value = formDataList.HandsOnTraining.FacilityChargesExcludingTax });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Facility Charges Including Tax"), Value = formDataList.HandsOnTraining.FacilityChargesIncludingTax });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist Required?"), Value = formDataList.HandsOnTraining.IsAnesthetistRequired });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist BTC/BTE"), Value = formDataList.HandsOnTraining.AnesthetistRequiredBtc_Bte });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist Excluding Tax"), Value = formDataList.HandsOnTraining.AnesthetistChargesExcludingTax });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist Including Tax"), Value = formDataList.HandsOnTraining.AnesthetistChargesIncludingTax });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Initiator Name"), Value = formDataList.HandsOnTraining.InitiatorName });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = formDataList.HandsOnTraining.AdvanceAmount });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.HandsOnTraining.TotalExpenseBTC });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.HandsOnTraining.TotalExpenseBTE });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Honorarium Amount"), Value = formDataList.HandsOnTraining.TotalHonorariumAmount });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel Amount"), Value = formDataList.HandsOnTraining.TotalTravelAmount });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel & Accommodation Amount"), Value = formDataList.HandsOnTraining.TotalTravelAccommodationAmount });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Accommodation Amount"), Value = formDataList.HandsOnTraining.TotalAccomodationAmount });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Budget Amount"), Value = formDataList.HandsOnTraining.TotalBudget });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Local Conveyance"), Value = formDataList.HandsOnTraining.TotalLocalConveyance });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense"), Value = formDataList.HandsOnTraining.TotalExpense });
-
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Initiator Email"), Value = formDataList.HandsOnTraining.InitiatorEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "RBM/BM"), Value = formDataList.HandsOnTraining.RBMorBMEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Sales Head"), Value = formDataList.HandsOnTraining.SalesHeadEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Sales Coordinator"), Value = formDataList.HandsOnTraining.SalesCoordinatorEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Marketing Coordinator"), Value = formDataList.HandsOnTraining.MarketingCoordinatorEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Marketing Head"), Value = formDataList.HandsOnTraining.MarketingHeadEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Finance Treasury"), Value = formDataList.HandsOnTraining.FinanceEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Compliance"), Value = formDataList.HandsOnTraining.ComplianceEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Finance Accounts"), Value = formDataList.HandsOnTraining.FinanceAccountsEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.HandsOnTraining.ReportingManagerEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.HandsOnTraining.FirstLevelEmail });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.HandsOnTraining.MedicalAffairsEmail });
-
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Panelists"), Value = HCP });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Invitees"), Value = Invitees });
-
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "MIPL Invitees"), Value = MenariniInvitees });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Brands"), Value = brand });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Expenses"), Value = Expense });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "SlideKits"), Value = slideKit });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Beneficiary Details"), Value = BeneficiaryData });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Selected Products"), Value = SelectedProductData });
-                newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTE Expense Details"), Value = BTEExpense });
-
-                IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet1.Id.Value, new Row[] { newRow });
-
-                long eventIdColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
-                Cell? eventIdCell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == eventIdColumnId);
-                string val = eventIdCell.DisplayValue;
-
-                int x = 1;
-                foreach (string p in formDataList.HandsOnTraining.Files)
-                {
-                    string[] words = p.Split(':');
-                    string r = words[0];
-                    string q = words[1];
-                    string name = r.Split(".")[0];
-                    string filePath = SheetHelper.testingFile(q, name);
-                    Row addedRow = addedRows[0];
-                    Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                           sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                    x++;
-
-
-                    if (System.IO.File.Exists(filePath))
-                    {
-                        SheetHelper.DeleteFile(filePath);
-                    }
-                }
-
-                if (formDataList.HandsOnTraining.IsDeviationUpload == "Yes")
-                {
-                    List<string> DeviationNames = new();
-                    foreach (string p in formDataList.HandsOnTraining.DeviationFiles)
-                    {
-                        string[] words = p.Split(':');
-                        string r = words[0];
-
-                        DeviationNames.Add(r);
-                    }
-                    foreach (string deviationname in DeviationNames)
-                    {
-                        string file = deviationname.Split(".")[0];
-                        string eventId = val;
-                        try
-                        {
-                            Row newRow7 = new()
-                            {
-                                Cells = new List<Cell>()
-                            };
-
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Type"), Value = formDataList.HandsOnTraining.EventType });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Even tDate"), Value = formDataList.HandsOnTraining.EventDate });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Start Time"), Value = formDataList.HandsOnTraining.EventStartTime });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "End Time"), Value = formDataList.HandsOnTraining.EventEndTime });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Venue Name"), Value = formDataList.HandsOnTraining.VenueName });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "City"), Value = formDataList.HandsOnTraining.City });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "State"), Value = formDataList.HandsOnTraining.State });
-
-
-                            if (file == "30DaysDeviationFile")
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value /*"Outstanding with initiator for more than 45 days"*/ });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = "Yes" });//formDataList.HandsOnTraining.EventOpen30days });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = formDataList.HandsOnTraining.EventOpen30dayscount });
-                            }
-                            else if (file == "7DaysDeviationFile")
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value /*"5 days from the Event Date"*/ });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin5days"), Value = "Yes" });//formDataList.HandsOnTraining.EventWithin7days });
-
-                            }
-                            else if (file == "ExpenseExcludingTax")
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value /* "Food and Beverages expense exceeds 1500" */});
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"), Value = "Yes" });
-                            }
-                            else if (file.Contains("Travel_Accomodation3LExceededFile"))
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value /*"Travel/AccomodationAggregate Limit of 3,00,000 is Exceeded"*/ });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel/Accomodation 3,00,000 Exceeded Trigger"), Value = "Yes" });//formDataList.class1.FB_Expense_Excluding_Tax });
-                            }
-                            else if (file.Contains("TrainerHonorarium12LExceededFile"))
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value  /*"Honorarium Aggregate Limit of 12,00,000 is Exceeded" */});
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Trainer Honorarium 12,00,000 Exceeded Trigger"), Value = "Yes" }); //formDataList.class1.FB_Expense_Excluding_Tax });
-                            }
-                            else if (file.Contains("HCPHonorarium6LExceededFile"))
-                            {
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value /* "Honorarium Aggregate Limit of 6,00,000 is Exceeded"*/ });
-                                newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Honorarium 6,00,000 Exceeded Trigger"), Value = "Yes" });
-                            }
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formDataList.HandsOnTraining.SalesHeadEmail });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.HandsOnTraining.FinanceEmail });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formDataList.HandsOnTraining.InitiatorName });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.HandsOnTraining.InitiatorEmail });
-                            newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formDataList.HandsOnTraining.SalesCoordinatorEmail });
-
-                            IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
-
-                            int j = 1;
-                            foreach (var p in formDataList.HandsOnTraining.DeviationFiles)
-                            {
-
-                                string[] words = p.Split(':');
-                                string r = words[0];
-                                string q = words[1];
-                                if (deviationname == r)
-                                {
-                                    string name = r.Split(".")[0];
-                                    string filePath = SheetHelper.testingFile(q, name);
-                                    Row addedRow = addeddeviationrow[0];
-                                    Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                                            sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                                    j++;
-                                    if (System.IO.File.Exists(filePath))
-                                    {
-                                        SheetHelper.DeleteFile(filePath);
-                                    }
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            //return BadRequest(ex.Message);
-                            Log.Error($"Error occured on AllPreEventsController method {ex.Message} at {DateTime.Now}");
-                            Log.Error(ex.StackTrace);
-                            return BadRequest(ex.Message);
-                        }
-                    }
-                }
-
-                foreach (var formData in formDataList.TrainerDetails)
-                {
-                    Row newRow1 = new()
-                    {
-                        Cells = new List<Cell>()
-                    };
-
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "MISCode"), Value = SheetHelper.MisCodeCheck(formData.MISCode) });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HcpRole"), Value = formData.HCPRole });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HCPName"), Value = formData.TrainerName });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TrainerCode"), Value = formData.TrainerCode });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Qualification"), Value = formData.TrainerQualification });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Country"), Value = formData.TrainerCountry });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Speciality"), Value = formData.Speciality });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Tier"), Value = formData.TrainerCategory });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HCP Type"), Value = formData.TrainerType });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Rationale"), Value = formData.Rationale });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "FCPA Date"), Value = formData.FCPAIssueDate });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HonorariumRequired"), Value = formData.IsHonorariumApplicable });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Annual Trainer Agreement Valid?"), Value = formData.IsAnnualTrainerAgreementValid });
-
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PresentationDuration"), Value = formData.Presentation_Speaking_WorkshopDuration });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PanelSessionPreparationDuration"), Value = formData.DevelopmentofPresentationPanelSessionPreparation });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PanelDiscussionDuration"), Value = formData.PaneldiscussionSessionduration });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "QASessionDuration"), Value = formData.QASession });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "BriefingSession"), Value = formData.Speaker_TrainerBriefing });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TotalSessionHours"), Value = formData.TotalNoOfHours });
-
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "LC BTC/BTE"), Value = formData.IsLCBTC_BTE });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation BTC/BTE"), Value = formData.IsAccomodationBTC_BTE });
-
-
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Honorarium Amount Excluding Tax"), Value = formData.HonorariumAmountexcludingTax });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HonorariumAmount"), Value = formData.HonorariumAmountincludingTax });
-                    //newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "AgreementAmount"), Value = formData.AgreementAmount });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "YTD Spend Including Current Event"), Value = formData.YTDspendIncludingCurrentEvent });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Global FMV"), Value = formData.IsGlobalFMVCheck });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "ExpenseType"), Value = formData.ExpenseType });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Mode of Travel"), Value = formData.TravelSelection });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel BTC/BTE"), Value = formData.IsExpenseBTC_BTE });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel Excluding Tax"), Value = formData.TravelAmountExcludingTax });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel"), Value = formData.TravelAmountIncludingTax });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation Excluding Tax"), Value = formData.AccomodationAmountExcludingTax });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation"), Value = formData.AccomodationAmountIncludingTax });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Local Conveyance Excluding Tax"), Value = formData.LocalConveyanceAmountexcludingTax });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "LocalConveyance"), Value = formData.LocalConveyanceAmountincludingTax });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel/Accomodation Spend Including Current Event"), Value = formData.TravelandAccomodationspendincludingcurrentevent });
-
-
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Currency"), Value = formData.BenificiaryDetailsData.Currency });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Other Currency"), Value = formData.BenificiaryDetailsData.EnterCurrencyType });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Beneficiary Name"), Value = formData.BenificiaryDetailsData.BenificiaryName });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Bank Account Number"), Value = formData.BenificiaryDetailsData.BankAccountNumber });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Bank Name"), Value = formData.BenificiaryDetailsData.BankName });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PAN card name"), Value = formData.BenificiaryDetailsData.NameasPerPAN });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Pan Number"), Value = formData.BenificiaryDetailsData.PANCardNumber });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "IFSC Code"), Value = formData.BenificiaryDetailsData.IFSCCode });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Email Id"), Value = formData.BenificiaryDetailsData.EmailID });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "IBN Number"), Value = formData.BenificiaryDetailsData.IbnNumber });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Swift Code"), Value = formData.BenificiaryDetailsData.SwiftCode });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Tax Residence Certificate"), Value = formData.BenificiaryDetailsData.TaxResidenceCertificateDate });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "AgreementAmount"), Value = formData.AgreementAmount });
-                    //newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Speciality"), Value = formData.Speciality });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.HandsOnTraining.EventType });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Venue name"), Value = formDataList.HandsOnTraining.VenueName });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.HandsOnTraining.EventDate });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.HandsOnTraining.EventDate });
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TotalSpend"), Value = formData.FinalAmount });
-
-                    newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "EventId/EventRequestId"), Value = val });
-
-                    IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet4.Id.Value, new Row[] { newRow1 });
-
-                    foreach (string p in formData.TrainerFiles)
-                    {
-                        string[] words = p.Split(':');
-                        string r = words[0];
-                        string q = words[1];
-                        string name = r.Split(".")[0];
-                        string filePath = SheetHelper.testingFile(q, name);
-                        Row addedRow = row[0];
-                        Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                               sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                        x++;
-
-
-                        if (System.IO.File.Exists(filePath))
-                        {
-                            SheetHelper.DeleteFile(filePath);
-                        }
-                    }
-                }
-
-                List<Row> newRows2 = new();
-                foreach (var formdata in formDataList.EventBrandsList)
-                {
-                    Row newRow2 = new()
-                    {
-                        Cells = new List<Cell>()
-                        {
-                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "% Allocation"), Value = formdata.PercentAllocation },
-                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Brands"), Value = formdata.BrandName },
-                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Project ID"), Value = formdata.ProjectId },
-                            new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "EventId/EventRequestId"), Value = val }
-                        }
-                    };
-
-                    newRows2.Add(newRow2);
-                }
-
-                smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray());
-
-
-                foreach (var formdata in formDataList.AttenderSelections)
-                {
-                    Row newRow3 = new()
-                    {
-                        Cells = new List<Cell>()
-                    };
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "MISCode"), Value = SheetHelper.MisCodeCheck(formdata.MisCode) });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "HCPName"), Value = formdata.AttenderName });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "HCP Type"), Value = formdata.AttenderType });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Designation"), Value = formdata.Designation });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Employee Code"), Value = formdata.EmployeeCode });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "LocalConveyance"), Value = formdata.IsLocalConveyance });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "BTC/BTE"), Value = formdata.IsBtcorBte });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "LcAmount"), Value = formdata.LocalConveyanceAmountIncludingTax });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Lc Amount Excluding Tax"), Value = formdata.LocalConveyanceAmountExcludingTax });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "EventId/EventRequestId"), Value = val });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Invitee Source"), Value = formdata.InviteedFrom });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Qualification"), Value = formdata.Qualification });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Experience"), Value = formdata.Experiance });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event Type"), Value = formDataList.HandsOnTraining.EventType });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Venue name"), Value = formDataList.HandsOnTraining.VenueName });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event Date Start"), Value = formDataList.HandsOnTraining.EventDate });
-                    newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event End Date"), Value = formDataList.HandsOnTraining.EventDate });
-
-                    IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet3.Id.Value, new Row[] { newRow3 });
-
-                    foreach (string p in formdata.AttenderFiles)
-                    {
-                        string[] words = p.Split(':');
-                        string r = words[0];
-                        string q = words[1];
-                        string name = r.Split(".")[0];
-                        string filePath = SheetHelper.testingFile(q, name);
-                        Row addedRow = row[0];
-                        Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                               sheet3.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-                        x++;
-
-
-                        if (System.IO.File.Exists(filePath))
-                        {
-                            SheetHelper.DeleteFile(filePath);
-                        }
-                    }
-                }
-
-                foreach (var formdata in formDataList.SlideKitSelectionData)
-                {
-                    Row newRow5 = new()
-                    {
-                        Cells = new List<Cell>()
-                    };
-                    newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "MIS"), Value = SheetHelper.MisCodeCheck(formdata.MISCode) });
-                    newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "HCP Name"), Value = formdata.TrainerName });
-                    newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "Slide Kit Type"), Value = formdata.SlideKitSelection });
-                    newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "SlideKit Document"), Value = formdata.SlideKitDocument });
-                    newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "EventId/EventRequestId"), Value = val });
-                    newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "Fillers Indication"), Value = formdata.IndicatorsForFillers });
-                    newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "Threads Indication"), Value = formdata.IndicatorsForThreads });
-
-                    IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet5.Id.Value, new Row[] { newRow5 });
-                    if (formdata.IsUpload == "Yes")
-                    {
-                        string[] words = formdata.DocToUpload.Split(':');
-                        string r = words[0];
-                        string q = words[1];
-                        string name = r.Split(".")[0];
-                        string filePath = SheetHelper.testingFile(q, name);
-                        Row addedRow = row[0];
-                        Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
-                               sheet5.Id.Value, addedRow.Id.Value, filePath, "application/msword");
-
-
-
-                        if (System.IO.File.Exists(filePath))
-                        {
-                            SheetHelper.DeleteFile(filePath);
-                        }
-                    }
-                }
-
-                foreach (var formdata in formDataList.ExpenseData)
-                {
-                    Row newRow6 = new()
-                    {
-                        Cells = new List<Cell>()
-                    };
-                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Expense"), Value = formdata.ExpenseType });
-                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "EventId/EventRequestID"), Value = val });
-                    //newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "AmountExcludingTax?"), Value = formdata.ExpenseAmountExcludingTax });
-
-
-                    //newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "AmountExcludingTax?"), Value = formdata.AmountExcludingTax });
-                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Amount Excluding Tax"), Value = formdata.ExpenseAmountExcludingTax });
-
-                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Amount"), Value = formdata.ExpenseAmountIncludingTax });
-                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formdata.IsBtcorBte });
-                    //newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BudgetAmount"), Value = formdata.BudgetAmount });
-                    //newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTCAmount"), Value = formdata.BtcAmount });
-                    //newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTEAmount"), Value = formdata.BteAmount });
-                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
-                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Type"), Value = formDataList.HandsOnTraining.EventType });
-                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Venue name"), Value = formDataList.HandsOnTraining.VenueName });
-                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.HandsOnTraining.EventDate });
-                    newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event End Date"), Value = formDataList.HandsOnTraining.EventDate });
-
-                    smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, new Row[] { newRow6 });
-                }
-
-                try
-                {
-                    if (formDataList.HandsOnTraining.VenueBenificiaryDetailsData != null)
-                    {
-                        Row newRow8 = new()
-                        {
-                            Cells = new List<Cell>()
-                        };
-
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventId/EventRequestId"), Value = val });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventType"), Value = formDataList.HandsOnTraining.EventType });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventDate"), Value = formDataList.HandsOnTraining.EventDate });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "VenueName"), Value = formDataList.HandsOnTraining.VenueName });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "City"), Value = formDataList.HandsOnTraining.City });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "State"), Value = formDataList.HandsOnTraining.State });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Other Currency"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.EnterCurrencyType });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Beneficiary Name"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BenificiaryName });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Bank Account Number"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BankAccountNumber });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Facility Charges"), Value = formDataList.HandsOnTraining.IsVenueFacilityCharges });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Anesthetist Required?"), Value = formDataList.HandsOnTraining.IsAnesthetistRequired });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Currency"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.Currency });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Bank Name"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BankName });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "PAN card name"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.NameasPerPAN });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Pan Number"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.PANCardNumber });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "IFSC Code"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.IFSCCode });
-                        //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, ""), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.IbnNumber });
-                        //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.SwiftCode });
-                        //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.TaxResidenceCertificateDate });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Email Id"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.EmailID });
-
-                        smartsheet.SheetResources.RowResources.AddRows(sheet8.Id.Value, new Row[] { newRow8 });
-                    }
-
-                    if (formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData != null)
-                    {
-                        Row newRow8 = new()
-                        {
-                            Cells = new List<Cell>()
-                        };
-
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventId/EventRequestId"), Value = val });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventType"), Value = formDataList.HandsOnTraining.EventType });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventDate"), Value = formDataList.HandsOnTraining.EventDate });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "VenueName"), Value = formDataList.HandsOnTraining.VenueName });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "City"), Value = formDataList.HandsOnTraining.City });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "State"), Value = formDataList.HandsOnTraining.State });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Other Currency"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.EnterCurrencyType });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Beneficiary Name"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BenificiaryName });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Bank Account Number"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BankAccountNumber });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Facility Charges"), Value = formDataList.HandsOnTraining.IsVenueFacilityCharges });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Anesthetist Required?"), Value = formDataList.HandsOnTraining.IsAnesthetistRequired });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Currency"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.Currency });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Bank Name"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BankName });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "PAN card name"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.NameasPerPAN });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Pan Number"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.PANCardNumber });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "IFSC Code"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.IFSCCode });
-                        //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, ""), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.IbnNumber });
-                        //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.SwiftCode });
-                        //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.TaxResidenceCertificateDate });
-                        newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Email Id"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.EmailID });
-
-                        smartsheet.SheetResources.RowResources.AddRows(sheet8.Id.Value, new Row[] { newRow8 });
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    //return BadRequest($"Could not find {ex.Message}");
-                    Log.Error($"Error occured on AllPreEventsController Attachementfile method {ex.Message} at {DateTime.Now}");
-                    Log.Error(ex.StackTrace);
-                    return BadRequest(ex.Message);
-                }
-                foreach (var formdata in formDataList.ProductSelections)
-                {
-                    Row newRow9 = new()
-                    {
-                        Cells = new List<Cell>()
-                    };
-                    newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "EventId/EventRequestId"), Value = val });
-                    newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "EventType"), Value = formDataList.HandsOnTraining.EventType });
-                    newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "EventDate"), Value = formDataList.HandsOnTraining.EventDate });
-                    newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
-                    newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "Product Brand"), Value = formdata.ProductSelectionType });
-                    newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "Product Name"), Value = formdata.ProductName });
-                    newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "No of Samples Required"), Value = formdata.SamplesRequires });
-
-                    IList<Row> n = smartsheet.SheetResources.RowResources.AddRows(sheet9.Id.Value, new Row[] { newRow9 });
-                }
-
-
-
-                Row targetRow = addedRows[0];
-                long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
-                Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = formDataList.HandsOnTraining.Role };
-                Row updateRow = new() { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
-                Cell? cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
-                if (cellToUpdate != null) { cellToUpdate.Value = formDataList.HandsOnTraining.Role; }
-
-                smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
-
-                return Ok(new
-                { Message = " Success!" });
-            }
-            catch (Exception ex)
-            {
-                //return BadRequest($"Could not find {ex.Message}");
-                Log.Error($"Error occured on AllPreEventsController Attachementfile method {ex.Message} at {DateTime.Now}");
-                Log.Error(ex.StackTrace);
-                return BadRequest(ex.Message);
-            }
-        }
+        //    StringBuilder addedExpencesBTE = new();
+        //    int addedExpencesNoBTE = 1;
+        //    foreach (var formdata in formDataList.ExpenseData)
+        //    {
+        //        if (formdata.IsBtcorBte.ToLower() == "bte")
+        //        {
+        //            string rowData = $"{addedExpencesNoBTE}. {formdata.ExpenseType} | Amount: {formdata.ExpenseAmountIncludingTax}";
+        //            addedExpencesBTE.AppendLine(rowData);
+        //            addedExpencesNoBTE++;
+        //        }
+        //    }
+        //    string BTEExpense = addedExpencesBTE.ToString();
+        //    try
+        //    {
+
+        //        Row newRow = new()
+        //        {
+        //            Cells = new List<Cell>()
+        //        };
+
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Date"), Value = formDataList.HandsOnTraining.EventDate });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Type"), Value = formDataList.HandsOnTraining.EventType });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Start Time"), Value = formDataList.HandsOnTraining.EventStartTime });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "End Time"), Value = formDataList.HandsOnTraining.EventEndTime });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Product Brand"), Value = formDataList.HandsOnTraining.ProductBrandSelection });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Mode of Training"), Value = formDataList.HandsOnTraining.ModeOfTraining });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Venue Name"), Value = formDataList.HandsOnTraining.VenueName });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "City"), Value = formDataList.HandsOnTraining.City });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "State"), Value = formDataList.HandsOnTraining.State });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "HOT Webinar Vendor Name"), Value = formDataList.HandsOnTraining.VendorName });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "HOT Webinar Type"), Value = formDataList.HandsOnTraining.WebinarType });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Venue Selection Checklist"), Value = formDataList.HandsOnTraining.VenueSelectionCheckList });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Emergency Support"), Value = formDataList.HandsOnTraining.IsVenueHasAnyEmergancySupport });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Emergency Contact No"), Value = formDataList.HandsOnTraining.EmerganctContact });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Facility Charges"), Value = formDataList.HandsOnTraining.IsVenueFacilityCharges });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Facility Charges BTC/BTE"), Value = formDataList.HandsOnTraining.VenueFacilityChargesBtc_Bte });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Facility Charges Excluding Tax"), Value = formDataList.HandsOnTraining.FacilityChargesExcludingTax });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Facility Charges Including Tax"), Value = formDataList.HandsOnTraining.FacilityChargesIncludingTax });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist Required?"), Value = formDataList.HandsOnTraining.IsAnesthetistRequired });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist BTC/BTE"), Value = formDataList.HandsOnTraining.AnesthetistRequiredBtc_Bte });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist Excluding Tax"), Value = formDataList.HandsOnTraining.AnesthetistChargesExcludingTax });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Anesthetist Including Tax"), Value = formDataList.HandsOnTraining.AnesthetistChargesIncludingTax });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Initiator Name"), Value = formDataList.HandsOnTraining.InitiatorName });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Advance Amount"), Value = formDataList.HandsOnTraining.AdvanceAmount });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, " Total Expense BTC"), Value = formDataList.HandsOnTraining.TotalExpenseBTC });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense BTE"), Value = formDataList.HandsOnTraining.TotalExpenseBTE });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Honorarium Amount"), Value = formDataList.HandsOnTraining.TotalHonorariumAmount });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel Amount"), Value = formDataList.HandsOnTraining.TotalTravelAmount });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Travel & Accommodation Amount"), Value = formDataList.HandsOnTraining.TotalTravelAccommodationAmount });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Accommodation Amount"), Value = formDataList.HandsOnTraining.TotalAccomodationAmount });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Budget Amount"), Value = formDataList.HandsOnTraining.TotalBudget });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Local Conveyance"), Value = formDataList.HandsOnTraining.TotalLocalConveyance });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Total Expense"), Value = formDataList.HandsOnTraining.TotalExpense });
+
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Initiator Email"), Value = formDataList.HandsOnTraining.InitiatorEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "RBM/BM"), Value = formDataList.HandsOnTraining.RBMorBMEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Sales Head"), Value = formDataList.HandsOnTraining.SalesHeadEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Sales Coordinator"), Value = formDataList.HandsOnTraining.SalesCoordinatorEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Marketing Coordinator"), Value = formDataList.HandsOnTraining.MarketingCoordinatorEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Marketing Head"), Value = formDataList.HandsOnTraining.MarketingHeadEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Finance Treasury"), Value = formDataList.HandsOnTraining.FinanceEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Compliance"), Value = formDataList.HandsOnTraining.ComplianceEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Finance Accounts"), Value = formDataList.HandsOnTraining.FinanceAccountsEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Reporting Manager"), Value = formDataList.HandsOnTraining.ReportingManagerEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "1 Up Manager"), Value = formDataList.HandsOnTraining.FirstLevelEmail });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Medical Affairs Head"), Value = formDataList.HandsOnTraining.MedicalAffairsEmail });
+
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Panelists"), Value = HCP });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Invitees"), Value = Invitees });
+
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "MIPL Invitees"), Value = MenariniInvitees });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Brands"), Value = brand });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Expenses"), Value = Expense });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "SlideKits"), Value = slideKit });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Beneficiary Details"), Value = BeneficiaryData });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "Selected Products"), Value = SelectedProductData });
+        //        newRow.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet1, "BTE Expense Details"), Value = BTEExpense });
+
+        //        IList<Row> addedRows = smartsheet.SheetResources.RowResources.AddRows(sheet1.Id.Value, new Row[] { newRow });
+
+        //        long eventIdColumnId = SheetHelper.GetColumnIdByName(sheet1, "EventId/EventRequestId");
+        //        Cell? eventIdCell = addedRows[0].Cells.FirstOrDefault(cell => cell.ColumnId == eventIdColumnId);
+        //        string val = eventIdCell.DisplayValue;
+
+        //        int x = 1;
+        //        foreach (string p in formDataList.HandsOnTraining.Files)
+        //        {
+        //            string[] words = p.Split(':');
+        //            string r = words[0];
+        //            string q = words[1];
+        //            string name = r.Split(".")[0];
+        //            string filePath = SheetHelper.testingFile(q, name);
+        //            Row addedRow = addedRows[0];
+        //            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+        //                   sheet1.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+        //            x++;
+
+
+        //            if (System.IO.File.Exists(filePath))
+        //            {
+        //                SheetHelper.DeleteFile(filePath);
+        //            }
+        //        }
+
+        //        if (formDataList.HandsOnTraining.IsDeviationUpload == "Yes")
+        //        {
+        //            List<string> DeviationNames = new();
+        //            foreach (string p in formDataList.HandsOnTraining.DeviationFiles)
+        //            {
+        //                string[] words = p.Split(':');
+        //                string r = words[0];
+
+        //                DeviationNames.Add(r);
+        //            }
+        //            foreach (string deviationname in DeviationNames)
+        //            {
+        //                string file = deviationname.Split(".")[0];
+        //                string eventId = val;
+        //                try
+        //                {
+        //                    Row newRow7 = new()
+        //                    {
+        //                        Cells = new List<Cell>()
+        //                    };
+
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventId/EventRequestId"), Value = eventId });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Event Type"), Value = formDataList.HandsOnTraining.EventType });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Even tDate"), Value = formDataList.HandsOnTraining.EventDate });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Start Time"), Value = formDataList.HandsOnTraining.EventStartTime });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "End Time"), Value = formDataList.HandsOnTraining.EventEndTime });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Venue Name"), Value = formDataList.HandsOnTraining.VenueName });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "City"), Value = formDataList.HandsOnTraining.City });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "State"), Value = formDataList.HandsOnTraining.State });
+
+
+        //                    if (file == "30DaysDeviationFile")
+        //                    {
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value /*"Outstanding with initiator for more than 45 days"*/ });
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventOpen45days"), Value = "Yes" });//formDataList.HandsOnTraining.EventOpen30days });
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Outstanding Events"), Value = formDataList.HandsOnTraining.EventOpen30dayscount });
+        //                    }
+        //                    else if (file == "7DaysDeviationFile")
+        //                    {
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value /*"5 days from the Event Date"*/ });
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "EventWithin5days"), Value = "Yes" });//formDataList.HandsOnTraining.EventWithin7days });
+
+        //                    }
+        //                    else if (file == "ExpenseExcludingTax")
+        //                    {
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value /* "Food and Beverages expense exceeds 1500" */});
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "PRE-F&B Expense Excluding Tax"), Value = "Yes" });
+        //                    }
+        //                    else if (file.Contains("Travel_Accomodation3LExceededFile"))
+        //                    {
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value /*"Travel/AccomodationAggregate Limit of 3,00,000 is Exceeded"*/ });
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Travel/Accomodation 3,00,000 Exceeded Trigger"), Value = "Yes" });//formDataList.class1.FB_Expense_Excluding_Tax });
+        //                    }
+        //                    else if (file.Contains("TrainerHonorarium12LExceededFile"))
+        //                    {
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value  /*"Honorarium Aggregate Limit of 12,00,000 is Exceeded" */});
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Trainer Honorarium 12,00,000 Exceeded Trigger"), Value = "Yes" }); //formDataList.class1.FB_Expense_Excluding_Tax });
+        //                    }
+        //                    else if (file.Contains("HCPHonorarium6LExceededFile"))
+        //                    {
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Deviation Type"), Value = configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value /* "Honorarium Aggregate Limit of 6,00,000 is Exceeded"*/ });
+        //                        newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "HCP Honorarium 6,00,000 Exceeded Trigger"), Value = "Yes" });
+        //                    }
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Head"), Value = formDataList.HandsOnTraining.SalesHeadEmail });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Finance Head"), Value = formDataList.HandsOnTraining.FinanceEmail });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Name"), Value = formDataList.HandsOnTraining.InitiatorName });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Initiator Email"), Value = formDataList.HandsOnTraining.InitiatorEmail });
+        //                    newRow7.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet7, "Sales Coordinator"), Value = formDataList.HandsOnTraining.SalesCoordinatorEmail });
+
+        //                    IList<Row> addeddeviationrow = smartsheet.SheetResources.RowResources.AddRows(sheet7.Id.Value, new Row[] { newRow7 });
+
+        //                    int j = 1;
+        //                    foreach (var p in formDataList.HandsOnTraining.DeviationFiles)
+        //                    {
+
+        //                        string[] words = p.Split(':');
+        //                        string r = words[0];
+        //                        string q = words[1];
+        //                        if (deviationname == r)
+        //                        {
+        //                            string name = r.Split(".")[0];
+        //                            string filePath = SheetHelper.testingFile(q, name);
+        //                            Row addedRow = addeddeviationrow[0];
+        //                            Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+        //                                    sheet7.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+        //                            j++;
+        //                            if (System.IO.File.Exists(filePath))
+        //                            {
+        //                                SheetHelper.DeleteFile(filePath);
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    //return BadRequest(ex.Message);
+        //                    Log.Error($"Error occured on AllPreEventsController method {ex.Message} at {DateTime.Now}");
+        //                    Log.Error(ex.StackTrace);
+        //                    return BadRequest(ex.Message);
+        //                }
+        //            }
+        //        }
+
+        //        foreach (var formData in formDataList.TrainerDetails)
+        //        {
+        //            Row newRow1 = new()
+        //            {
+        //                Cells = new List<Cell>()
+        //            };
+
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "MISCode"), Value = SheetHelper.MisCodeCheck(formData.MISCode) });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HcpRole"), Value = formData.HCPRole });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HCPName"), Value = formData.TrainerName });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TrainerCode"), Value = formData.TrainerCode });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Qualification"), Value = formData.TrainerQualification });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Country"), Value = formData.TrainerCountry });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Speciality"), Value = formData.Speciality });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Tier"), Value = formData.TrainerCategory });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HCP Type"), Value = formData.TrainerType });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Rationale"), Value = formData.Rationale });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "FCPA Date"), Value = formData.FCPAIssueDate });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HonorariumRequired"), Value = formData.IsHonorariumApplicable });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Annual Trainer Agreement Valid?"), Value = formData.IsAnnualTrainerAgreementValid });
+
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PresentationDuration"), Value = formData.Presentation_Speaking_WorkshopDuration });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PanelSessionPreparationDuration"), Value = formData.DevelopmentofPresentationPanelSessionPreparation });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PanelDiscussionDuration"), Value = formData.PaneldiscussionSessionduration });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "QASessionDuration"), Value = formData.QASession });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "BriefingSession"), Value = formData.Speaker_TrainerBriefing });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TotalSessionHours"), Value = formData.TotalNoOfHours });
+
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "LC BTC/BTE"), Value = formData.IsLCBTC_BTE });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation BTC/BTE"), Value = formData.IsAccomodationBTC_BTE });
+
+
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Honorarium Amount Excluding Tax"), Value = formData.HonorariumAmountexcludingTax });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "HonorariumAmount"), Value = formData.HonorariumAmountincludingTax });
+        //            //newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "AgreementAmount"), Value = formData.AgreementAmount });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "YTD Spend Including Current Event"), Value = formData.YTDspendIncludingCurrentEvent });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Global FMV"), Value = formData.IsGlobalFMVCheck });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "ExpenseType"), Value = formData.ExpenseType });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Mode of Travel"), Value = formData.TravelSelection });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel BTC/BTE"), Value = formData.IsExpenseBTC_BTE });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel Excluding Tax"), Value = formData.TravelAmountExcludingTax });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel"), Value = formData.TravelAmountIncludingTax });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation Excluding Tax"), Value = formData.AccomodationAmountExcludingTax });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Accomodation"), Value = formData.AccomodationAmountIncludingTax });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Local Conveyance Excluding Tax"), Value = formData.LocalConveyanceAmountexcludingTax });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "LocalConveyance"), Value = formData.LocalConveyanceAmountincludingTax });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Travel/Accomodation Spend Including Current Event"), Value = formData.TravelandAccomodationspendincludingcurrentevent });
+
+
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Currency"), Value = formData.BenificiaryDetailsData.Currency });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Other Currency"), Value = formData.BenificiaryDetailsData.EnterCurrencyType });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Beneficiary Name"), Value = formData.BenificiaryDetailsData.BenificiaryName });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Bank Account Number"), Value = formData.BenificiaryDetailsData.BankAccountNumber });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Bank Name"), Value = formData.BenificiaryDetailsData.BankName });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "PAN card name"), Value = formData.BenificiaryDetailsData.NameasPerPAN });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Pan Number"), Value = formData.BenificiaryDetailsData.PANCardNumber });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "IFSC Code"), Value = formData.BenificiaryDetailsData.IFSCCode });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Email Id"), Value = formData.BenificiaryDetailsData.EmailID });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "IBN Number"), Value = formData.BenificiaryDetailsData.IbnNumber });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Swift Code"), Value = formData.BenificiaryDetailsData.SwiftCode });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Tax Residence Certificate"), Value = formData.BenificiaryDetailsData.TaxResidenceCertificateDate });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "AgreementAmount"), Value = formData.AgreementAmount });
+        //            //newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Speciality"), Value = formData.Speciality });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Type"), Value = formDataList.HandsOnTraining.EventType });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Venue name"), Value = formDataList.HandsOnTraining.VenueName });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event Date Start"), Value = formDataList.HandsOnTraining.EventDate });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "Event End Date"), Value = formDataList.HandsOnTraining.EventDate });
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "TotalSpend"), Value = formData.FinalAmount });
+
+        //            newRow1.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet4, "EventId/EventRequestId"), Value = val });
+
+        //            IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet4.Id.Value, new Row[] { newRow1 });
+
+        //            foreach (string p in formData.TrainerFiles)
+        //            {
+        //                string[] words = p.Split(':');
+        //                string r = words[0];
+        //                string q = words[1];
+        //                string name = r.Split(".")[0];
+        //                string filePath = SheetHelper.testingFile(q, name);
+        //                Row addedRow = row[0];
+        //                Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+        //                       sheet4.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+        //                x++;
+
+
+        //                if (System.IO.File.Exists(filePath))
+        //                {
+        //                    SheetHelper.DeleteFile(filePath);
+        //                }
+        //            }
+        //        }
+
+        //        List<Row> newRows2 = new();
+        //        foreach (var formdata in formDataList.EventBrandsList)
+        //        {
+        //            Row newRow2 = new()
+        //            {
+        //                Cells = new List<Cell>()
+        //                {
+        //                    new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "% Allocation"), Value = formdata.PercentAllocation },
+        //                    new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Brands"), Value = formdata.BrandName },
+        //                    new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "Project ID"), Value = formdata.ProjectId },
+        //                    new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet2, "EventId/EventRequestId"), Value = val }
+        //                }
+        //            };
+
+        //            newRows2.Add(newRow2);
+        //        }
+
+        //        smartsheet.SheetResources.RowResources.AddRows(sheet2.Id.Value, newRows2.ToArray());
+
+
+        //        foreach (var formdata in formDataList.AttenderSelections)
+        //        {
+        //            Row newRow3 = new()
+        //            {
+        //                Cells = new List<Cell>()
+        //            };
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "MISCode"), Value = SheetHelper.MisCodeCheck(formdata.MisCode) });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "HCPName"), Value = formdata.AttenderName });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "HCP Type"), Value = formdata.AttenderType });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Designation"), Value = formdata.Designation });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Employee Code"), Value = formdata.EmployeeCode });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "LocalConveyance"), Value = formdata.IsLocalConveyance });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "BTC/BTE"), Value = formdata.IsBtcorBte });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "LcAmount"), Value = formdata.LocalConveyanceAmountIncludingTax });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Lc Amount Excluding Tax"), Value = formdata.LocalConveyanceAmountExcludingTax });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "EventId/EventRequestId"), Value = val });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Invitee Source"), Value = formdata.InviteedFrom });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Qualification"), Value = formdata.Qualification });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Experience"), Value = formdata.Experiance });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event Type"), Value = formDataList.HandsOnTraining.EventType });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Venue name"), Value = formDataList.HandsOnTraining.VenueName });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event Date Start"), Value = formDataList.HandsOnTraining.EventDate });
+        //            newRow3.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet3, "Event End Date"), Value = formDataList.HandsOnTraining.EventDate });
+
+        //            IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet3.Id.Value, new Row[] { newRow3 });
+
+        //            foreach (string p in formdata.AttenderFiles)
+        //            {
+        //                string[] words = p.Split(':');
+        //                string r = words[0];
+        //                string q = words[1];
+        //                string name = r.Split(".")[0];
+        //                string filePath = SheetHelper.testingFile(q, name);
+        //                Row addedRow = row[0];
+        //                Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+        //                       sheet3.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+        //                x++;
+
+
+        //                if (System.IO.File.Exists(filePath))
+        //                {
+        //                    SheetHelper.DeleteFile(filePath);
+        //                }
+        //            }
+        //        }
+
+        //        foreach (var formdata in formDataList.SlideKitSelectionData)
+        //        {
+        //            Row newRow5 = new()
+        //            {
+        //                Cells = new List<Cell>()
+        //            };
+        //            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "MIS"), Value = SheetHelper.MisCodeCheck(formdata.MISCode) });
+        //            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "HCP Name"), Value = formdata.TrainerName });
+        //            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "Slide Kit Type"), Value = formdata.SlideKitSelection });
+        //            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "SlideKit Document"), Value = formdata.SlideKitDocument });
+        //            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "EventId/EventRequestId"), Value = val });
+        //            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "Fillers Indication"), Value = formdata.IndicatorsForFillers });
+        //            newRow5.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet5, "Threads Indication"), Value = formdata.IndicatorsForThreads });
+
+        //            IList<Row> row = smartsheet.SheetResources.RowResources.AddRows(sheet5.Id.Value, new Row[] { newRow5 });
+        //            if (formdata.IsUpload == "Yes")
+        //            {
+        //                string[] words = formdata.DocToUpload.Split(':');
+        //                string r = words[0];
+        //                string q = words[1];
+        //                string name = r.Split(".")[0];
+        //                string filePath = SheetHelper.testingFile(q, name);
+        //                Row addedRow = row[0];
+        //                Attachment attachment = smartsheet.SheetResources.RowResources.AttachmentResources.AttachFile(
+        //                       sheet5.Id.Value, addedRow.Id.Value, filePath, "application/msword");
+
+
+
+        //                if (System.IO.File.Exists(filePath))
+        //                {
+        //                    SheetHelper.DeleteFile(filePath);
+        //                }
+        //            }
+        //        }
+
+        //        foreach (var formdata in formDataList.ExpenseData)
+        //        {
+        //            Row newRow6 = new()
+        //            {
+        //                Cells = new List<Cell>()
+        //            };
+        //            newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Expense"), Value = formdata.ExpenseType });
+        //            newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "EventId/EventRequestID"), Value = val });
+        //            //newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "AmountExcludingTax?"), Value = formdata.ExpenseAmountExcludingTax });
+
+
+        //            //newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "AmountExcludingTax?"), Value = formdata.AmountExcludingTax });
+        //            newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Amount Excluding Tax"), Value = formdata.ExpenseAmountExcludingTax });
+
+        //            newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Amount"), Value = formdata.ExpenseAmountIncludingTax });
+        //            newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formdata.IsBtcorBte });
+        //            //newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BudgetAmount"), Value = formdata.BudgetAmount });
+        //            //newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTCAmount"), Value = formdata.BtcAmount });
+        //            //newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTEAmount"), Value = formdata.BteAmount });
+        //            newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
+        //            newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Type"), Value = formDataList.HandsOnTraining.EventType });
+        //            newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Venue name"), Value = formDataList.HandsOnTraining.VenueName });
+        //            newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event Date Start"), Value = formDataList.HandsOnTraining.EventDate });
+        //            newRow6.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "Event End Date"), Value = formDataList.HandsOnTraining.EventDate });
+
+        //            smartsheet.SheetResources.RowResources.AddRows(sheet6.Id.Value, new Row[] { newRow6 });
+        //        }
+
+        //        try
+        //        {
+        //            if (formDataList.HandsOnTraining.VenueBenificiaryDetailsData != null)
+        //            {
+        //                Row newRow8 = new()
+        //                {
+        //                    Cells = new List<Cell>()
+        //                };
+
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventId/EventRequestId"), Value = val });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventType"), Value = formDataList.HandsOnTraining.EventType });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventDate"), Value = formDataList.HandsOnTraining.EventDate });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "VenueName"), Value = formDataList.HandsOnTraining.VenueName });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "City"), Value = formDataList.HandsOnTraining.City });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "State"), Value = formDataList.HandsOnTraining.State });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Other Currency"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.EnterCurrencyType });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Beneficiary Name"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BenificiaryName });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Bank Account Number"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BankAccountNumber });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Facility Charges"), Value = formDataList.HandsOnTraining.IsVenueFacilityCharges });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Anesthetist Required?"), Value = formDataList.HandsOnTraining.IsAnesthetistRequired });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Currency"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.Currency });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Bank Name"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BankName });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "PAN card name"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.NameasPerPAN });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Pan Number"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.PANCardNumber });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "IFSC Code"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.IFSCCode });
+        //                //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, ""), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.IbnNumber });
+        //                //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.SwiftCode });
+        //                //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.TaxResidenceCertificateDate });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Email Id"), Value = formDataList.HandsOnTraining.VenueBenificiaryDetailsData.EmailID });
+
+        //                smartsheet.SheetResources.RowResources.AddRows(sheet8.Id.Value, new Row[] { newRow8 });
+        //            }
+
+        //            if (formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData != null)
+        //            {
+        //                Row newRow8 = new()
+        //                {
+        //                    Cells = new List<Cell>()
+        //                };
+
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventId/EventRequestId"), Value = val });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventType"), Value = formDataList.HandsOnTraining.EventType });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "EventDate"), Value = formDataList.HandsOnTraining.EventDate });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "VenueName"), Value = formDataList.HandsOnTraining.VenueName });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "City"), Value = formDataList.HandsOnTraining.City });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "State"), Value = formDataList.HandsOnTraining.State });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Other Currency"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.EnterCurrencyType });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Beneficiary Name"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BenificiaryName });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Bank Account Number"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BankAccountNumber });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Facility Charges"), Value = formDataList.HandsOnTraining.IsVenueFacilityCharges });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Anesthetist Required?"), Value = formDataList.HandsOnTraining.IsAnesthetistRequired });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Currency"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.Currency });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Bank Name"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BankName });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "PAN card name"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.NameasPerPAN });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Pan Number"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.PANCardNumber });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "IFSC Code"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.IFSCCode });
+        //                //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, ""), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.IbnNumber });
+        //                //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.SwiftCode });
+        //                //newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet6, "BTC/BTE"), Value = formDataList.HandsOnTraining.BenificiaryDetailsData.TaxResidenceCertificateDate });
+        //                newRow8.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet8, "Email Id"), Value = formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.EmailID });
+
+        //                smartsheet.SheetResources.RowResources.AddRows(sheet8.Id.Value, new Row[] { newRow8 });
+        //            }
+
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            //return BadRequest($"Could not find {ex.Message}");
+        //            Log.Error($"Error occured on AllPreEventsController Attachementfile method {ex.Message} at {DateTime.Now}");
+        //            Log.Error(ex.StackTrace);
+        //            return BadRequest(ex.Message);
+        //        }
+        //        foreach (var formdata in formDataList.ProductSelections)
+        //        {
+        //            Row newRow9 = new()
+        //            {
+        //                Cells = new List<Cell>()
+        //            };
+        //            newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "EventId/EventRequestId"), Value = val });
+        //            newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "EventType"), Value = formDataList.HandsOnTraining.EventType });
+        //            newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "EventDate"), Value = formDataList.HandsOnTraining.EventDate });
+        //            newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "Event Topic"), Value = formDataList.HandsOnTraining.EventName });
+        //            newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "Product Brand"), Value = formdata.ProductSelectionType });
+        //            newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "Product Name"), Value = formdata.ProductName });
+        //            newRow9.Cells.Add(new Cell { ColumnId = SheetHelper.GetColumnIdByName(sheet9, "No of Samples Required"), Value = formdata.SamplesRequires });
+
+        //            IList<Row> n = smartsheet.SheetResources.RowResources.AddRows(sheet9.Id.Value, new Row[] { newRow9 });
+        //        }
+
+
+
+        //        Row targetRow = addedRows[0];
+        //        long honorariumSubmittedColumnId = SheetHelper.GetColumnIdByName(sheet1, "Role");
+        //        Cell cellToUpdateB = new() { ColumnId = honorariumSubmittedColumnId, Value = formDataList.HandsOnTraining.Role };
+        //        Row updateRow = new() { Id = targetRow.Id, Cells = new Cell[] { cellToUpdateB } };
+        //        Cell? cellToUpdate = targetRow.Cells.FirstOrDefault(c => c.ColumnId == honorariumSubmittedColumnId);
+        //        if (cellToUpdate != null) { cellToUpdate.Value = formDataList.HandsOnTraining.Role; }
+
+        //        smartsheet.SheetResources.RowResources.UpdateRows(sheet1.Id.Value, new Row[] { updateRow });
+
+        //        return Ok(new
+        //        { Message = " Success!" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //return BadRequest($"Could not find {ex.Message}");
+        //        Log.Error($"Error occured on AllPreEventsController Attachementfile method {ex.Message} at {DateTime.Now}");
+        //        Log.Error(ex.StackTrace);
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         [HttpPost("DemoMeetingsPreEvent"), DisableRequestSizeLimit]
         public IActionResult DemoMeetingsPreEvent(DemoMeetingsPreEvent formDataList)
@@ -6216,41 +6346,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 double TotalExpenseAmount = 0;
 
-                string EventOpen30Days = !string.IsNullOrEmpty(formDataList.MedicalUtilityData.EventOpen30daysFile) ? "Yes" : "No";
-                string EventWithin7Days = !string.IsNullOrEmpty(formDataList.MedicalUtilityData.EventWithin7daysFile) ? "Yes" : "No";
-                string UploadDeviationFile = !string.IsNullOrEmpty(formDataList.MedicalUtilityData.UploadDeviationFile) ? "Yes" : "No";
-                string FCPA = "";
 
 
-                List<string> DeviationFiles = new List<string>();
 
-                if (EventOpen30Days == "Yes")
-                {
-                    string[] deviationFile = formDataList.MedicalUtilityData.EventOpen30daysFile.Split(":");
-                    string name = deviationFile[0].Split(".")[0];
-                    string ext = deviationFile[0].Split(".")[1];
-                    string base64 = deviationFile[1];
-                    string concatFile = name + "*" + "30DaysDeviationFile" + "." + ext + ":" + base64;
-                    DeviationFiles.Add(concatFile);
-                }
-                if (EventWithin7Days == "Yes")
-                {
-                    string[] deviationFile = formDataList.MedicalUtilityData.EventWithin7daysFile.Split(":");
-                    string name = deviationFile[0].Split(".")[0];
-                    string ext = deviationFile[0].Split(".")[1];
-                    string base64 = deviationFile[1];
-                    string concatFile = name + "*" + "7DaysDeviationFile" + "." + ext + ":" + base64;
-                    DeviationFiles.Add(concatFile);
-                }
-                if (UploadDeviationFile == "Yes")
-                {
-                    string[] deviationFile = formDataList.MedicalUtilityData.UploadDeviationFile.Split(":");
-                    string name = deviationFile[0].Split(".")[0];
-                    string ext = deviationFile[0].Split(".")[1];
-                    string base64 = deviationFile[1];
-                    string concatFile = name + "*" + "AgregateSpendDeviationFile" + "." + ext + ":" + base64;
-                    DeviationFiles.Add(concatFile);
-                }
                 foreach (var formdata in formDataList.ExpenseSheet)
                 {
                     string rowData = $"{addedExpencesNo}. {formdata.Expense} | TotalAmount: {formdata.TotalExpenseAmount}| {formdata.BTC_BTE}";
@@ -6314,12 +6412,12 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 com.Parameters.AddWithValue("@EventType", formDataList.MedicalUtilityData.EventType);
                 com.Parameters.AddWithValue("@EventDate", formDataList.MedicalUtilityData.EventDate);
                 com.Parameters.AddWithValue("@ValidFrom", formDataList.MedicalUtilityData.ValidFrom);
-                com.Parameters.AddWithValue("@ValidTill", formDataList.MedicalUtilityData.ValidTill);
+                com.Parameters.AddWithValue("@ValidTo", formDataList.MedicalUtilityData.ValidTill);
                 com.Parameters.AddWithValue("@MedicalUtilityType", formDataList.MedicalUtilityData.MedicalUtilityType);
                 com.Parameters.AddWithValue("@MedicalUtilityDescription", formDataList.MedicalUtilityData.MedicalUtilityDescription);
                 com.Parameters.AddWithValue("@Brands", brand);
                 com.Parameters.AddWithValue("@Expenses", Expense);
-                com.Parameters.AddWithValue("@Panelist", HCP);
+                com.Parameters.AddWithValue("@Panelists", HCP);
                 com.Parameters.AddWithValue("@IsAdvanceRequired", formDataList.MedicalUtilityData.IsAdvanceRequired);
                 com.Parameters.AddWithValue("@InitiatorName", formDataList.MedicalUtilityData.InitiatorName);
                 com.Parameters.AddWithValue("@AdvanceAmount", SheetHelper.NumCheck(formDataList.MedicalUtilityData.AdvanceAmount));
@@ -6372,23 +6470,30 @@ namespace IndiaEventsWebApi.Controllers.EventsController
 
                 #region ExpenseSheets
                 MyConn.Open();
-                com = new MySqlCommand("SPEventRequestExpensesSheet", MyConn);
+                com = new MySqlCommand("HcpConsultantEventRequestExpensesSheet", MyConn);
                 com.CommandType = CommandType.StoredProcedure;
 
                 foreach (var formdata in formDataList.ExpenseSheet)
                 {
                     com.Parameters.AddWithValue("@Expense", formdata.Expense);
                     com.Parameters.AddWithValue("@EventIdEventRequestID", RefID);
-                    // com.Parameters.AddWithValue("@MisCode", SheetHelper.MisCodeCheck(formdata.MisCode));
+                    com.Parameters.AddWithValue("@RegistrationAmount", "");
+                    com.Parameters.AddWithValue("@RegistrationAmountBtcBte", SheetHelper.NumCheck(formdata.BTC_BTE));
+                    com.Parameters.AddWithValue("@RegistrationAmountExcludingTax", "");
+                    com.Parameters.AddWithValue("@VenueName", "");
+                    com.Parameters.AddWithValue("@MisCode", formdata.MisCode);
                     com.Parameters.AddWithValue("@AmountExcludingTax", formdata.TotalExpenseAmountExcludingTax);
                     com.Parameters.AddWithValue("@Amount", SheetHelper.NumCheck(formdata.TotalExpenseAmount));
                     com.Parameters.AddWithValue("@BTCBTE", formdata.BTC_BTE);
                     com.Parameters.AddWithValue("@BTCAmount", SheetHelper.NumCheck(formdata.BtcAmount));
                     com.Parameters.AddWithValue("@BTEAmount", SheetHelper.NumCheck(formdata.BteAmount));
+                    com.Parameters.AddWithValue("@BudgetAmount", "");
                     com.Parameters.AddWithValue("@EventTopic", formDataList.MedicalUtilityData.EventTopic);
                     com.Parameters.AddWithValue("@EventType", formDataList.MedicalUtilityData.EventType);
                     com.Parameters.AddWithValue("@EventDateStart", formDataList.MedicalUtilityData.ValidFrom);
                     com.Parameters.AddWithValue("@EventEndDate", formDataList.MedicalUtilityData.ValidTill);
+
+
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
@@ -6466,42 +6571,52 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     com.Parameters.AddWithValue("@LocalConveyance", "");
                     com.Parameters.AddWithValue("@VenueName", "");
                     com.Parameters.AddWithValue("@Travel", "");
+                    com.Parameters.AddWithValue("@RegistrationAmountExcludingTax", "");
+                    com.Parameters.AddWithValue("@RegistrationAmountBTCBTE", "");
+                    com.Parameters.AddWithValue("@TravelAirBtcBte", "");
+                    com.Parameters.AddWithValue("@TravelAirIncludingTax", "");
+                    com.Parameters.AddWithValue("@TravelAirExcludingTax", "");
+                    com.Parameters.AddWithValue("@TravelRoadBtcBte", "");
+                    com.Parameters.AddWithValue("@TravelRoadIncludingTax", "");
+                    com.Parameters.AddWithValue("@TravelRoadExcludingTax", "");
+                    com.Parameters.AddWithValue("@TravelTrainBtcBte", "");
+                    com.Parameters.AddWithValue("@TravelTrainIncludingTax", "");
+                    com.Parameters.AddWithValue("@TravelTrainExcludingTax", "");
 
 
                     com.Parameters.AddWithValue("@AttachmentPaths", PanelAttachmentpaths);
                     com.ExecuteNonQuery();
                     com.Parameters.Clear();
                 }
+                MyConn.CloseAsync();
                 #region devtation
 
                 if (formDataList.MedicalUtilityData.IsDeviationUpload == "Yes")
                 {
-
                     List<string> DeviationNames = new List<string>();
-                    foreach (var p in DeviationFiles)
+                    foreach (var p in formDataList.MedicalUtilityData.DeviationDetails)
                     {
-                        string[] words = p.Split(':')[0].Split("*");
-                        // string[] words = p.DeviationFile.Split(':')[0].Split("*");
+                        string[] words = p.DeviationFile.Split(':')[0].Split("*");
                         string r = words[1];
                         DeviationNames.Add(r);
                     }
-                    MyConn.Open();
+                    await MyConn.OpenAsync();
                     com = new MySqlCommand("SPDeviation_Process", MyConn);
                     com.CommandType = CommandType.StoredProcedure;
 
-                    foreach (var pp in DeviationFiles)
+                    foreach (var pp in formDataList.MedicalUtilityData.DeviationDetails)
                     {
                         foreach (var deviationname in DeviationNames)
                         {
                             string file = deviationname.Split(".")[0];
                             string DeviationAttachmentpath = "";
-                            if (pp.Split(':')[0].Split("*")[1] == deviationname)
+                            if (pp.DeviationFile.Split(':')[0].Split("*")[1] == deviationname)
                             {
                                 try
                                 {
-                                    foreach (var p in DeviationFiles)
+                                    foreach (var p in formDataList.MedicalUtilityData.DeviationDetails)
                                     {
-                                        string[] nameSplit = p.Split("*");
+                                        string[] nameSplit = p.DeviationFile.Split("*");
                                         string[] words = nameSplit[1].Split(':');
                                         string r = words[0];
                                         string q = words[1];
@@ -6517,21 +6632,20 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
                                     com.Parameters.AddWithValue("@EventTopic", formDataList.MedicalUtilityData.EventTopic);
                                     com.Parameters.AddWithValue("@EventType", formDataList.MedicalUtilityData.EventType);
-                                    com.Parameters.AddWithValue("@EventDate", formDataList.MedicalUtilityData.ValidFrom);
-                                    com.Parameters.AddWithValue("@EndDate", formDataList.MedicalUtilityData.ValidTill);
+                                    com.Parameters.AddWithValue("@EventDate", formDataList.MedicalUtilityData.EventDate);
                                     com.Parameters.AddWithValue("@StartTime", "");
                                     com.Parameters.AddWithValue("@EndTime", "");
-                                    com.Parameters.AddWithValue("@MISCode", "");
-                                    com.Parameters.AddWithValue("@HCPName", "");
-                                    com.Parameters.AddWithValue("@HonorariumAmount", "");
-                                    com.Parameters.AddWithValue("@TravelAccommodationAmount", "");
-                                    com.Parameters.AddWithValue("@OtherExpenses", "");
+                                    com.Parameters.AddWithValue("@MISCode", SheetHelper.MisCodeCheck(pp.MisCode));
+                                    com.Parameters.AddWithValue("@HCPName", pp.HcpName);
+                                    com.Parameters.AddWithValue("@HonorariumAmount", pp.HonorariumAmountExcludingTax);
+                                    com.Parameters.AddWithValue("@TravelAccommodationAmount", pp.TravelorAccomodationAmountExcludingTax);
+                                    com.Parameters.AddWithValue("@OtherExpenses", pp.OtherExpenseAmountExcludingTax);
 
 
                                     if (file == "30DaysDeviationFile")
                                     {
                                         com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value);
-                                        com.Parameters.AddWithValue("@EventOpen45days", "Yes");
+                                        com.Parameters.AddWithValue("@EventOpen45days", formDataList.MedicalUtilityData.EventOpen30dayscount);
                                         com.Parameters.AddWithValue("@OutstandingEvents", SheetHelper.NumCheck(formDataList.MedicalUtilityData.EventOpen30dayscount));
                                     }
                                     else
@@ -6586,19 +6700,44 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                                     }
                                     if (file.Contains("AgregateSpendDeviationFile"))
                                     {
-                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile1L").Value);
-                                        com.Parameters.AddWithValue("@HCP exceeds 1,00,000 Trigger", "Yes");
+                                        if (formDataList.MedicalUtilityData.EventType == "Medical Utility")
+                                        {
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "Yes");
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile1L").Value);
+                                        }
+                                        else
+                                        {
+                                            //need to add
+
+                                            com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                        }
+                                        if (formDataList.MedicalUtilityData.EventType == "HCP Consultants")
+                                        {
+                                            com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile5L").Value);
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "Yes");
+                                        }
+                                        else
+                                        {
+                                            //need to add
+                                            com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+
+                                        }
+
                                     }
                                     else
                                     {
-                                        com.Parameters.AddWithValue("@HCP exceeds 1,00,000 Trigger", "");
+                                        //need to add
+                                        com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+                                        com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
                                     }
+
                                     com.Parameters.AddWithValue("@SalesHead", formDataList.MedicalUtilityData.Sales_Head);
                                     com.Parameters.AddWithValue("@FinanceHead", formDataList.MedicalUtilityData.FinanceHead);
                                     com.Parameters.AddWithValue("@InitiatorName", formDataList.MedicalUtilityData.InitiatorName);
                                     com.Parameters.AddWithValue("@InitiatorEmail", formDataList.MedicalUtilityData.Initiator_Email);
                                     com.Parameters.AddWithValue("@SalesCoordinator", formDataList.MedicalUtilityData.SalesCoordinatorEmail);
                                     com.Parameters.AddWithValue("@AttachmentPaths", DeviationAttachmentpath);
+                                    com.Parameters.AddWithValue("@EndDate", "");
                                     com.ExecuteNonQuery();
                                     com.Parameters.Clear();
                                 }
@@ -6618,6 +6757,14 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                     }
                 }
 
+
+
+
+
+
+
+
+
                 #endregion
 
 
@@ -6632,13 +6779,623 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                 return BadRequest(new
                 { Message = ex.Message + "------" + ex.StackTrace });
             }
-
+            return Ok(new
+            {
+                Message = $"Thank you. Your event creation request has been received." +
+                "You should receive a confirmation email with the details of your event after a few minutes."
+            });
 
 
             return Ok();
         }
 
+        [HttpPost("HandsOnPreEvent"), DisableRequestSizeLimit]
+        public async Task<IActionResult> HandsOnPreEvent(HandsOnTrainingPreEvet formDataList)
+        {
+            StringBuilder addedBrandsData = new();
+            StringBuilder addedInviteesData = new();
+            StringBuilder addedHcpData = new();
+            StringBuilder addedSlideKitData = new();
+            StringBuilder addedExpences = new();
+            StringBuilder SelectedProduct = new();
+            StringBuilder addedMEnariniInviteesData = new();
+            StringBuilder addedBEneficirydata = new();
+            int addedSlideKitDataNo = 1;
+            int addedHcpDataNo = 1;
+            int addedInviteesDataNo = 1;
+            int addedBrandsDataNo = 1;
+            int addedExpencesNo = 1;
+            int SelectedProductNo = 1;
+            int addedInviteesDataNoforMenarini = 1;
+            int addedBEneficirydataNo = 1;
+            try
+            {
+                foreach (var formdata in formDataList.AttenderSelections)
+                {
+                    if (formdata.InviteedFrom == "Menarini Employees")
+                    {
+                        string row = $"{addedInviteesDataNoforMenarini}. {formdata.AttenderName}";
+                        addedMEnariniInviteesData.AppendLine(row);
+                        addedInviteesDataNoforMenarini++;
+                    }
+                    else
+                    {
+                        string rowData = $"{addedInviteesDataNo}. {formdata.AttenderName}";
+                        addedInviteesData.AppendLine(rowData);
+                        addedInviteesDataNo++;
+                    }
+                }
+                string Invitees = addedInviteesData.ToString();
+                string MenariniInvitees = addedMEnariniInviteesData.ToString();
+                foreach (var formdata in formDataList.ExpenseData)
+                {
+                    string rowData = $"{addedExpencesNo}. {formdata.ExpenseType} | AmountExcludingTax: {formdata.ExpenseAmountExcludingTax}| Amount: {formdata.ExpenseAmountIncludingTax} | {formdata.IsBtcorBte}";
+                    addedExpences.AppendLine(rowData);
+                    addedExpencesNo++;
+                }
+                string Expense = addedExpences.ToString();
+                foreach (var formdata in formDataList.ProductSelections)
+                {
+                    string rowData = $"{SelectedProductNo}. Product Selection Type {formdata.ProductSelectionType} | Product Name: {formdata.ProductName}| Samples Requires: {formdata.SamplesRequires} ";
+                    SelectedProduct.AppendLine(rowData);
+                    SelectedProductNo++;
+                }
+                string SelectedProductData = SelectedProduct.ToString();
+                foreach (var formdata in formDataList.SlideKitSelectionData)
+                {
+                    string rowData = $"{addedSlideKitDataNo}. {formdata.MISCode} | {formdata.SlideKitSelection} | Id :{formdata.SlideKitDocument}";
+                    addedSlideKitData.AppendLine(rowData);
+                    addedSlideKitDataNo++;
+                }
+                string slideKit = addedSlideKitData.ToString();
+                foreach (var formdata in formDataList.EventBrandsList)
+                {
+                    string rowData = $"{addedBrandsDataNo}. {formdata.BrandName} | {formdata.ProjectId} | {formdata.PercentAllocation}";
+                    addedBrandsData.AppendLine(rowData);
+                    addedBrandsDataNo++;
+                }
+                string brand = addedBrandsData.ToString();
+                foreach (var formdata in formDataList.TrainerDetails)
+                {
 
+                    string rowData = $"{addedHcpDataNo}. {formdata.TrainerType} |{formdata.TrainerName} | Honr.Amt: {formdata.HonorariumAmountincludingTax} |Trav.&Acc.Amt: {formdata.TravelAmountIncludingTax + formdata.AccomodationAmountIncludingTax} ";
+                    addedHcpData.AppendLine(rowData);
+                    addedHcpDataNo++;
+
+                }
+                string HCP = addedHcpData.ToString();
+                if (formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData != null)
+                {
+                    string beneficiaryDetails = $"Currency : {formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.Currency} | BenificiaryName :  {formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BenificiaryName} | BankAccountNumber : {formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BenificiaryName}";
+                    addedBEneficirydata.AppendLine(beneficiaryDetails);
+                    addedBEneficirydataNo++;
+                }
+                if (formDataList.HandsOnTraining.VenueBenificiaryDetailsData != null)
+                {
+                    string beneficiaryDetails = $"Currency : {formDataList.HandsOnTraining.VenueBenificiaryDetailsData.Currency} | BenificiaryName :  {formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BenificiaryName} | BankAccountNumber : {formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BenificiaryName}";
+                    addedBEneficirydata.AppendLine(beneficiaryDetails);
+                    addedBEneficirydataNo++;
+                }
+                string BeneficiaryData = addedBEneficirydata.ToString();
+
+
+                StringBuilder addedExpencesBTE = new();
+                int addedExpencesNoBTE = 1;
+                foreach (var formdata in formDataList.ExpenseData)
+                {
+                    if (formdata.IsBtcorBte.ToLower() == "bte")
+                    {
+                        string rowData = $"{addedExpencesNoBTE}. {formdata.ExpenseType} | Amount: {formdata.ExpenseAmountIncludingTax}";
+                        addedExpencesBTE.AppendLine(rowData);
+                        addedExpencesNoBTE++;
+                    }
+                }
+                string BTEExpense = addedExpencesBTE.ToString();
+
+                string AttachmentPath = "";
+                foreach (string p in formDataList.HandsOnTraining.Files)
+                {
+                    string[] words = p.Split(':');
+                    string r = words[0];
+                    string q = words[1];
+                    string name = r.Split(".")[0];
+                    string filePath = SheetHelper.SQlFileinsertion(q, name);
+                    AttachmentPath = AttachmentPath + "," + filePath;
+                }
+
+                string MyConnection = configuration.GetSection("ConnectionStrings:mysql").Value;
+                MySqlConnection MyConn = new MySqlConnection(MyConnection);
+                MySqlCommand com = new MySqlCommand("HandsonPreevent", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@EventDate", formDataList.HandsOnTraining.EventDate);
+                com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventType);
+                com.Parameters.AddWithValue("@EventTopic", formDataList.HandsOnTraining.EventName);
+                com.Parameters.AddWithValue("@StartTime", formDataList.HandsOnTraining.EventStartTime);
+                com.Parameters.AddWithValue("@EndTime", formDataList.HandsOnTraining.EventEndTime);
+                com.Parameters.AddWithValue("@ProductBrand", formDataList.HandsOnTraining.ProductBrandSelection);
+                com.Parameters.AddWithValue("@ModeofTraining", formDataList.HandsOnTraining.ModeOfTraining);
+                com.Parameters.AddWithValue("@VenueName", formDataList.HandsOnTraining.VenueName);
+                com.Parameters.AddWithValue("@City", formDataList.HandsOnTraining.City);
+                com.Parameters.AddWithValue("@State", formDataList.HandsOnTraining.State);
+                com.Parameters.AddWithValue("@HOTWebinarVendorName", formDataList.HandsOnTraining.VendorName);
+                com.Parameters.AddWithValue("@HOTWebinarType", formDataList.HandsOnTraining.WebinarType);
+                com.Parameters.AddWithValue("@VenueSelectionChecklist", formDataList.HandsOnTraining.VenueSelectionCheckList);
+                com.Parameters.AddWithValue("@EmergencySupport", formDataList.HandsOnTraining.IsVenueHasAnyEmergancySupport);
+                com.Parameters.AddWithValue("@EmergencyContactNo", formDataList.HandsOnTraining.EmerganctContact);
+                com.Parameters.AddWithValue("@FacilityCharges", formDataList.HandsOnTraining.IsVenueFacilityCharges);
+                com.Parameters.AddWithValue("@FacilityChargesBTCBTE", formDataList.HandsOnTraining.VenueFacilityChargesBtc_Bte);
+                com.Parameters.AddWithValue("@FacilityChargesExcludingTax", formDataList.HandsOnTraining.FacilityChargesExcludingTax);
+                com.Parameters.AddWithValue("@TotalFacilityChargesIncludingTax", formDataList.HandsOnTraining.FacilityChargesIncludingTax);
+                com.Parameters.AddWithValue("@AnesthetistRequired?", formDataList.HandsOnTraining.IsAnesthetistRequired);
+                com.Parameters.AddWithValue("@AnesthetistBTCBTE", formDataList.HandsOnTraining.AnesthetistRequiredBtc_Bte);
+                com.Parameters.AddWithValue("@AnesthetistExcludingTax", formDataList.HandsOnTraining.AnesthetistChargesExcludingTax);
+                com.Parameters.AddWithValue("@AnesthetistIncluding Tax", formDataList.HandsOnTraining.AnesthetistChargesIncludingTax);
+                com.Parameters.AddWithValue("@InitiatorName", formDataList.HandsOnTraining.InitiatorName);
+                com.Parameters.AddWithValue("@AdvanceAmount", formDataList.HandsOnTraining.AdvanceAmount);
+                com.Parameters.AddWithValue("@TotalExpenseBTC", formDataList.HandsOnTraining.TotalExpenseBTC);
+                com.Parameters.AddWithValue("@TotalExpenseBTE", formDataList.HandsOnTraining.TotalExpenseBTE);
+                com.Parameters.AddWithValue("@TotalHonorariumAmount", formDataList.HandsOnTraining.TotalHonorariumAmount);
+                com.Parameters.AddWithValue("@TotalTravelAmount", formDataList.HandsOnTraining.TotalTravelAmount);
+                com.Parameters.AddWithValue("@TotalTravelAccommodationAmount", formDataList.HandsOnTraining.TotalTravelAccommodationAmount);
+                com.Parameters.AddWithValue("@TotalAccommodationAmount", formDataList.HandsOnTraining.TotalAccomodationAmount);
+                com.Parameters.AddWithValue("@BudgetAmount", formDataList.HandsOnTraining.TotalBudget);
+                com.Parameters.AddWithValue("@TotalLocalConveyance", formDataList.HandsOnTraining.TotalLocalConveyance);
+                com.Parameters.AddWithValue("@TotalExpense", formDataList.HandsOnTraining.TotalExpense);
+                com.Parameters.AddWithValue("@InitiatorEmail", formDataList.HandsOnTraining.InitiatorEmail);
+                com.Parameters.AddWithValue("@RBMBM", formDataList.HandsOnTraining.RBMorBMEmail);
+                com.Parameters.AddWithValue("@SalesHead", formDataList.HandsOnTraining.SalesHeadEmail);
+                com.Parameters.AddWithValue("@SalesCoordinator", formDataList.HandsOnTraining.SalesCoordinatorEmail);
+                com.Parameters.AddWithValue("@MarketingCoordinator", formDataList.HandsOnTraining.MarketingCoordinatorEmail);
+                com.Parameters.AddWithValue("@MarketingHead", formDataList.HandsOnTraining.MarketingHeadEmail);
+                com.Parameters.AddWithValue("@FinanceTreasury", formDataList.HandsOnTraining.FinanceEmail);
+                com.Parameters.AddWithValue("@Compliance", formDataList.HandsOnTraining.ComplianceEmail);
+                com.Parameters.AddWithValue("@FinanceAccounts", formDataList.HandsOnTraining.FinanceAccountsEmail);
+                com.Parameters.AddWithValue("@ReportingManager", formDataList.HandsOnTraining.ReportingManagerEmail);
+                com.Parameters.AddWithValue("@1UpManager", formDataList.HandsOnTraining.FirstLevelEmail);
+                com.Parameters.AddWithValue("@MedicalAffairsHead", formDataList.HandsOnTraining.MedicalAffairsEmail);
+                com.Parameters.AddWithValue("@Panelists", HCP);
+                com.Parameters.AddWithValue("@Invitees", Invitees);
+                com.Parameters.AddWithValue("@MIPLInvitees", MenariniInvitees);
+                com.Parameters.AddWithValue("@Brands", brand);
+                com.Parameters.AddWithValue("@Expenses", Expense);
+                com.Parameters.AddWithValue("@SlideKits", slideKit);
+                com.Parameters.AddWithValue("@BeneficiaryDetails", BeneficiaryData);
+                com.Parameters.AddWithValue("@SelectedProducts", SelectedProductData);
+                com.Parameters.AddWithValue("@BTEExpenseDetails", BTEExpense);
+                com.Parameters.AddWithValue("@BTEExpenseDetails", BTEExpense);
+                com.Parameters.AddWithValue("@AttachmentPaths", AttachmentPath);
+                com.Parameters.AddWithValue("@webinarRole", formDataList.HandsOnTraining.Role);
+
+                await MyConn.OpenAsync();
+                MySqlDataReader reader = com.ExecuteReader();
+                String RefID = "";
+                while (reader.Read())
+                {
+                    RefID = reader["ID"].ToString();
+                }
+                await MyConn.CloseAsync();
+                string val = RefID;
+
+                if (formDataList.HandsOnTraining.IsDeviationUpload == "Yes")
+                {
+
+                    await MyConn.OpenAsync();
+                    com = new MySqlCommand("SPDeviation_Process", MyConn);
+                    com.CommandType = CommandType.StoredProcedure;
+                    List<string> DeviationNames = new();
+
+                    foreach (var p in formDataList.HandsOnTraining.DeviationDetails)
+                    {
+                        string[] words = p.DeviationFile.Split(':')[0].Split("*");
+                        string r = words[1];
+                        DeviationNames.Add(r);
+                    }
+                    foreach (var pp in formDataList.HandsOnTraining.DeviationDetails)
+                    {
+                        foreach (string deviationname in DeviationNames)
+                        {
+                            string file = deviationname.Split(".")[0];
+                            try
+                            {
+                                String DeviationAttachmentpath = "";
+                                foreach (var p in formDataList.HandsOnTraining.DeviationDetails)
+                                {
+
+                                    string[] words = p.DeviationFile.Split(':');
+                                    string r = words[0];
+                                    string q = words[1];
+                                    if (deviationname == r)
+                                    {
+                                        string name = r.Split(".")[0];
+                                        string filePath = SheetHelper.SQlFileinsertion(q, name);
+                                        DeviationAttachmentpath = DeviationAttachmentpath + "," + filePath;
+                                    }
+                                }
+                                com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                                com.Parameters.AddWithValue("@EventTopic", formDataList.HandsOnTraining.EventName);
+                                com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventName);
+                                com.Parameters.AddWithValue("@EventDate", formDataList.HandsOnTraining.EventDate);
+                                com.Parameters.AddWithValue("@StartTime", formDataList.HandsOnTraining.EventStartTime);
+                                com.Parameters.AddWithValue("@EndTime", formDataList.HandsOnTraining.EventEndTime);
+                                com.Parameters.AddWithValue("@MISCode", pp.MisCode);
+                                com.Parameters.AddWithValue("@HCPName", pp.HcpName);
+                                com.Parameters.AddWithValue("@HonorariumAmount", pp.HonorariumAmountExcludingTax);
+                                com.Parameters.AddWithValue("@TravelAccommodationAmount", pp.TravelorAccomodationAmountExcludingTax);
+                                com.Parameters.AddWithValue("@OtherExpenses", pp.OtherExpenseAmountExcludingTax);
+
+                                if (file == "30DaysDeviationFile")
+                                {
+                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:30DaysDeviationFile").Value);
+                                    com.Parameters.AddWithValue("@EventOpen45days", "Yes");
+                                    com.Parameters.AddWithValue("@OutstandingEvents", formDataList.HandsOnTraining.EventOpen30dayscount);
+                                }
+                                else
+                                {
+                                    com.Parameters.AddWithValue("@EventOpen45days", "");
+                                    com.Parameters.AddWithValue("@OutstandingEvents", "");
+                                }
+                                if (file == "7DaysDeviationFile")
+                                {
+                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:5DaysDeviationFile").Value);
+                                    com.Parameters.AddWithValue("@EventWithin5days", "Yes");
+                                }
+                                else
+                                {
+                                    com.Parameters.AddWithValue("@EventWithin5days", "");
+                                }
+                                if (file == "ExpenseExcludingTax")
+                                {
+                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:ExpenseExcludingTax").Value);
+                                    com.Parameters.AddWithValue("@PREExpenseExcludingTax", "Yes");
+                                }
+                                else
+                                {
+                                    com.Parameters.AddWithValue("@PREExpenseExcludingTax", "");
+                                }
+                                if (file.Contains("Travel_Accomodation3LExceededFile"))
+                                {
+                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:Travel_Accomodation3LExceededFile").Value);
+                                    com.Parameters.AddWithValue("@TravelAccomodationExceededTrigger", "Yes");
+                                }
+                                else
+                                {
+                                    com.Parameters.AddWithValue("@TravelAccomodationExceededTrigger", "");
+                                }
+                                if (file.Contains("TrainerHonorarium12LExceededFile"))
+                                {
+                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:TrainerHonorarium12LExceededFile").Value);
+                                    com.Parameters.AddWithValue("@TrainerHonorariumExceededTrigger", "Yes");
+                                }
+                                else
+                                {
+                                    com.Parameters.AddWithValue("@TrainerHonorariumExceededTrigger", "");
+                                }
+                                if (file.Contains("HCPHonorarium6LExceededFile"))
+                                {
+                                    com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:HCPHonorarium6LExceededFile").Value);
+                                    com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "Yes");
+                                }
+                                else
+                                {
+                                    com.Parameters.AddWithValue("@HCPHonorariumExceededTrigger", "");
+                                }
+                                if (file.Contains("AgregateSpendDeviationFile"))
+                                {
+                                    if (formDataList.HandsOnTraining.EventType == "Medical Utility")
+                                    {
+                                        com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "Yes");
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile1L").Value);
+                                    }
+                                    else
+                                    {
+                                        //need to add
+
+                                        com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                    }
+                                    if (formDataList.HandsOnTraining.EventType == "HCP Consultants")
+                                    {
+                                        com.Parameters.AddWithValue("@DeviationType", configuration.GetSection("DeviationNamesInPreEvent:AgregateSpendDeviationFile5L").Value);
+                                        com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "Yes");
+                                    }
+                                    else
+                                    {
+                                        //need to add
+                                        com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    //need to add
+                                    com.Parameters.AddWithValue("@HCPExceeds5,00,000Trigger", "");
+                                    com.Parameters.AddWithValue("@HCPExceeds1,00,000Trigger", "");
+                                }
+                                com.Parameters.AddWithValue("@SalesHead", formDataList.HandsOnTraining.SalesHeadEmail);
+                                com.Parameters.AddWithValue("@FinanceHead", formDataList.HandsOnTraining.FinanceEmail);
+                                com.Parameters.AddWithValue("@InitiatorName", formDataList.HandsOnTraining.InitiatorName);
+                                com.Parameters.AddWithValue("@InitiatorEmail", formDataList.HandsOnTraining.InitiatorEmail);
+                                com.Parameters.AddWithValue("@SalesCoordinator", formDataList.HandsOnTraining.SalesCoordinatorEmail);
+                                com.Parameters.AddWithValue("@AttachmentPaths", DeviationAttachmentpath);
+                                com.Parameters.AddWithValue("@EndDate", "");
+                                com.ExecuteNonQuery();
+                                com.Parameters.Clear();
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Error($"Error occured on HandsonPreevent method {ex.Message} at {DateTime.Now}");
+                                Log.Error(ex.StackTrace);
+                                return BadRequest(ex.Message);
+                            }
+                        }
+                    }
+                }
+
+                foreach (var formData in formDataList.TrainerDetails)
+                {
+                    string Trainerattachments = "";
+                    foreach (string p in formData.TrainerFiles)
+                    {
+                        string[] words = p.Split(':');
+                        string r = words[0];
+                        string q = words[1];
+                        string name = r.Split(".")[0];
+                        string filePath = SheetHelper.SQlFileinsertion(q, name);
+                        Trainerattachments = Trainerattachments + "," + filePath;
+                    }
+
+                    com.Parameters.AddWithValue("@MISCode", SheetHelper.MisCodeCheck(formData.MISCode));
+                    com.Parameters.AddWithValue("@HcpRole", formData.HCPRole);
+                    com.Parameters.AddWithValue("@HCPName", formData.TrainerName);
+                    com.Parameters.AddWithValue("@TrainerCode", formData.TrainerCode);
+                    com.Parameters.AddWithValue("@Qualification", formData.TrainerQualification);
+                    com.Parameters.AddWithValue("@Country", formData.TrainerCountry);
+                    com.Parameters.AddWithValue("@Speciality", formData.Speciality);
+                    com.Parameters.AddWithValue("@Tier", formData.TrainerCategory);
+                    com.Parameters.AddWithValue("@HCPType", formData.TrainerType);
+                    com.Parameters.AddWithValue("@Rationale", formData.Rationale);
+                    com.Parameters.AddWithValue("@FCPADate", formData.FCPAIssueDate);
+                    com.Parameters.AddWithValue("@HonorariumRequired", formData.IsHonorariumApplicable);
+                    com.Parameters.AddWithValue("@AnnualTrainerAgreementValidq", formData.IsAnnualTrainerAgreementValid);
+                    com.Parameters.AddWithValue("@PresentationDuration", formData.Presentation_Speaking_WorkshopDuration);
+                    com.Parameters.AddWithValue("@PanelSessionPreparationDuration", formData.DevelopmentofPresentationPanelSessionPreparation);
+                    com.Parameters.AddWithValue("@PanelDiscussionDuration", formData.PaneldiscussionSessionduration);
+                    com.Parameters.AddWithValue("@QASessionDuration", formData.QASession);
+                    com.Parameters.AddWithValue("@BriefingSession", formData.Speaker_TrainerBriefing);
+                    com.Parameters.AddWithValue("@TotalSessionHours", formData.TotalNoOfHours);
+                    com.Parameters.AddWithValue("@LCBTCBTE", formData.IsLCBTC_BTE);
+                    com.Parameters.AddWithValue("@AccomodationBTCBTE", formData.IsAccomodationBTC_BTE);
+                    com.Parameters.AddWithValue("@HonorariumAmountExcludingTax", formData.HonorariumAmountexcludingTax);
+                    com.Parameters.AddWithValue("@HonorariumAmount", formData.HonorariumAmountincludingTax);
+                    com.Parameters.AddWithValue("@YTDSpendIncludingCurrentEvent", formData.YTDspendIncludingCurrentEvent);
+                    com.Parameters.AddWithValue("@GlobalFMV", formData.IsGlobalFMVCheck);
+                    com.Parameters.AddWithValue("@ExpenseType", formData.ExpenseType);
+                    com.Parameters.AddWithValue("@ModeofTravel", formData.TravelSelection);
+                    com.Parameters.AddWithValue("@TravelBTCBTE", formData.IsExpenseBTC_BTE);
+                    com.Parameters.AddWithValue("@TravelExcludingTax", formData.TravelAmountExcludingTax);
+                    com.Parameters.AddWithValue("@Travel", formData.TravelAmountIncludingTax);
+                    com.Parameters.AddWithValue("@AccomodationExcludingTax", formData.AccomodationAmountExcludingTax);
+                    com.Parameters.AddWithValue("@Accomodation", formData.AccomodationAmountIncludingTax);
+                    com.Parameters.AddWithValue("@LocalConveyanceExcludingTax", formData.LocalConveyanceAmountexcludingTax);
+                    com.Parameters.AddWithValue("@LocalConveyance", formData.LocalConveyanceAmountincludingTax);
+                    com.Parameters.AddWithValue("@TravelAccomodationSpendIncludingCurrentEvent", formData.TravelandAccomodationspendincludingcurrentevent);
+                    com.Parameters.AddWithValue("@Currency", formData.BenificiaryDetailsData.Currency);
+                    com.Parameters.AddWithValue("@OtherCurrency", formData.BenificiaryDetailsData.EnterCurrencyType);
+                    com.Parameters.AddWithValue("@BeneficiaryName", formData.BenificiaryDetailsData.BenificiaryName);
+                    com.Parameters.AddWithValue("@BankAccountNumber", formData.BenificiaryDetailsData.BankAccountNumber);
+                    com.Parameters.AddWithValue("@BankName", formData.BenificiaryDetailsData.BankName);
+                    com.Parameters.AddWithValue("@PANcardname", formData.BenificiaryDetailsData.NameasPerPAN);
+                    com.Parameters.AddWithValue("@PanNumber", formData.BenificiaryDetailsData.PANCardNumber);
+                    com.Parameters.AddWithValue("@IFSCCode", formData.BenificiaryDetailsData.IFSCCode);
+                    com.Parameters.AddWithValue("@EmailId", formData.BenificiaryDetailsData.EmailID);
+                    com.Parameters.AddWithValue("@IBNNumber", formData.BenificiaryDetailsData.IbnNumber);
+                    com.Parameters.AddWithValue("@SwiftCode", formData.BenificiaryDetailsData.SwiftCode);
+                    com.Parameters.AddWithValue("@TaxResidenceCertificate", formData.BenificiaryDetailsData.TaxResidenceCertificateDate);
+                    com.Parameters.AddWithValue("@AgreementAmount", formData.AgreementAmount);
+                    com.Parameters.AddWithValue("@EventTopic", formDataList.HandsOnTraining.EventName);
+                    com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventType);
+                    com.Parameters.AddWithValue("@Venuename", formDataList.HandsOnTraining.VenueName);
+                    com.Parameters.AddWithValue("@EventDate Start", formDataList.HandsOnTraining.EventDate);
+                    com.Parameters.AddWithValue("@Even End Date", formDataList.HandsOnTraining.EventDate);
+                    com.Parameters.AddWithValue("@TotalSpend", formData.FinalAmount);
+                    com.Parameters.AddWithValue("@EventIdEventRequestId", val);
+                    com.Parameters.AddWithValue("@AttachmentPaths", Trainerattachments);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+                await MyConn.CloseAsync();
+
+
+                await MyConn.OpenAsync();
+                com = new MySqlCommand("SPEventRequestsBrandsList", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+                foreach (var formdata in formDataList.EventBrandsList)
+                {
+                    com.Parameters.AddWithValue("@Allocation", formdata.PercentAllocation);
+                    com.Parameters.AddWithValue("@Brands", formdata.BrandName);
+                    com.Parameters.AddWithValue("@ProjectID", formdata.ProjectId);
+                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+                await MyConn.CloseAsync();
+
+
+                await MyConn.OpenAsync();
+                com = new MySqlCommand("HO_EventRequestInvitees", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+
+                foreach (var formdata in formDataList.AttenderSelections)
+                {
+                    string InviteesAttachments = "";
+                    foreach (string p in formdata.AttenderFiles)
+                    {
+                        string[] words = p.Split(':');
+                        string r = words[0];
+                        string q = words[1];
+                        string name = r.Split(".")[0];
+                        string filePath = SheetHelper.SQlFileinsertion(q, name);
+                        InviteesAttachments = InviteesAttachments + "," + filePath;
+                    }
+                    com.Parameters.AddWithValue("@HCPName", formdata.AttenderName);
+                    com.Parameters.AddWithValue("@Designation", formdata.Designation);
+                    com.Parameters.AddWithValue("@EmployeeCode", formdata.EmployeeCode);
+                    com.Parameters.AddWithValue("@LocalConveyance", formdata.IsLocalConveyance);
+                    com.Parameters.AddWithValue("@BTCBTE", formdata.IsBtcorBte);
+                    com.Parameters.AddWithValue("@LcAmount", formdata.LocalConveyanceAmountExcludingTax);
+                    com.Parameters.AddWithValue("@LcAmountExcludingTax", formdata.LocalConveyanceAmountExcludingTax);
+                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                    com.Parameters.AddWithValue("@InviteeSource", formdata.InviteedFrom);
+                    com.Parameters.AddWithValue("@HCPType", formdata.AttenderType);
+                    com.Parameters.AddWithValue("@MISCode", SheetHelper.MisCodeCheck(formdata.MisCode));
+                    com.Parameters.AddWithValue("@EventTopic", formDataList.HandsOnTraining.EventName);
+                    com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventType);
+                    com.Parameters.AddWithValue("@EventDateStart", formDataList.HandsOnTraining.EventDate);
+                    com.Parameters.AddWithValue("@EventEndDate", formDataList.HandsOnTraining.EventDate);
+                    com.Parameters.AddWithValue("@Qualification", formdata.Qualification);
+                    com.Parameters.AddWithValue("@Experience", formdata.Experiance);
+                    com.Parameters.AddWithValue("@AttachmentPaths", InviteesAttachments);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+                await MyConn.CloseAsync();
+
+                await MyConn.OpenAsync();
+                com = new MySqlCommand("HO_EventRequestHCPSlideKitDetails", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+                foreach (var formdata in formDataList.SlideKitSelectionData)
+                {
+                    String SlidekitsAttachent = "";
+                    if (formdata.IsUpload == "Yes")
+                    {
+                        string[] words = formdata.DocToUpload.Split(':');
+                        string r = words[0];
+                        string q = words[1];
+                        string name = r.Split(".")[0];
+                        string filePath = SheetHelper.SQlFileinsertion(q, name);
+                        SlidekitsAttachent = SlidekitsAttachent + "," + filePath;
+                    }
+                    com.Parameters.AddWithValue("@MIS", SheetHelper.MisCodeCheck(formdata.MISCode));
+                    com.Parameters.AddWithValue("@SlideKitType", formdata.SlideKitSelection);
+                    com.Parameters.AddWithValue("@SlideKitDocument", formdata.SlideKitDocument);
+                    com.Parameters.AddWithValue("@EventIdEventRequestId", RefID);
+                    com.Parameters.AddWithValue("@FillersIndication", formdata.IndicatorsForFillers);
+                    com.Parameters.AddWithValue("@ThreadsIndication", formdata.IndicatorsForThreads);
+                    com.Parameters.AddWithValue("@HCPName", formdata.TrainerName);
+                    com.Parameters.AddWithValue("@AttachmentPaths", SlidekitsAttachent);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+
+                MyConn.Open();
+                com = new MySqlCommand("SPEventRequestExpensesSheet", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+                foreach (var formdata in formDataList.ExpenseData)
+                {
+                    com.Parameters.AddWithValue("@Expense", formdata.ExpenseType);
+                    com.Parameters.AddWithValue("@EventIdEventRequestID", RefID);
+                    com.Parameters.AddWithValue("@AmountExcludingTaxq", "");
+                    com.Parameters.AddWithValue("@AmountExcludingTax", formdata.ExpenseAmountExcludingTax);
+                    com.Parameters.AddWithValue("@Amount", formdata.ExpenseAmountIncludingTax);
+                    com.Parameters.AddWithValue("@BTCBTE", formdata.IsBtcorBte);
+                    com.Parameters.AddWithValue("@BudgetAmount", "");
+                    com.Parameters.AddWithValue("@BTCAmount", "");
+                    com.Parameters.AddWithValue("@BTEAmount", "");
+                    com.Parameters.AddWithValue("@EventTopic", formDataList.HandsOnTraining.EventName);
+                    com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventType);
+                    com.Parameters.AddWithValue("@EventDateStart", formDataList.HandsOnTraining.EventDate);
+                    com.Parameters.AddWithValue("@EventEndDate", formDataList.HandsOnTraining.EventDate);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+                await MyConn.CloseAsync();
+
+
+                try
+                {
+                    await MyConn.OpenAsync();
+                    com = new MySqlCommand("HO_EventRequestBeneficiary", MyConn);
+                    com.CommandType = CommandType.StoredProcedure;
+                    if (formDataList.HandsOnTraining.VenueBenificiaryDetailsData != null)
+                    {
+                        com.Parameters.AddWithValue("@EventIdEventRequestId", val);
+                        com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventType);
+                        com.Parameters.AddWithValue("@EventDate", formDataList.HandsOnTraining.EventDate);
+                        com.Parameters.AddWithValue("@VenueName", formDataList.HandsOnTraining.VenueName);
+                        com.Parameters.AddWithValue("@City", formDataList.HandsOnTraining.City);
+                        com.Parameters.AddWithValue("@State", formDataList.HandsOnTraining.State);
+                        com.Parameters.AddWithValue("@OtherCurrency", formDataList.HandsOnTraining.VenueBenificiaryDetailsData.EnterCurrencyType);
+                        com.Parameters.AddWithValue("@BeneficiaryName", formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BenificiaryName);
+                        com.Parameters.AddWithValue("@BankAccountNumber", formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BankAccountNumber);
+                        com.Parameters.AddWithValue("@FacilityCharges", formDataList.HandsOnTraining.IsVenueFacilityCharges);
+                        com.Parameters.AddWithValue("@AnesthetistRequired?", formDataList.HandsOnTraining.IsAnesthetistRequired);
+                        com.Parameters.AddWithValue("@Currency", formDataList.HandsOnTraining.VenueBenificiaryDetailsData.Currency);
+                        com.Parameters.AddWithValue("@BankName", formDataList.HandsOnTraining.VenueBenificiaryDetailsData.BankName);
+                        com.Parameters.AddWithValue("@PANcardname", formDataList.HandsOnTraining.VenueBenificiaryDetailsData.NameasPerPAN);
+                        com.Parameters.AddWithValue("@PanNumber", formDataList.HandsOnTraining.VenueBenificiaryDetailsData.PANCardNumber);
+                        com.Parameters.AddWithValue("@IFSCCode", formDataList.HandsOnTraining.VenueBenificiaryDetailsData.IFSCCode); ;
+                        com.Parameters.AddWithValue("@EmailId", formDataList.HandsOnTraining.VenueBenificiaryDetailsData.EmailID);
+                        com.ExecuteNonQuery();
+                        com.Parameters.Clear();
+                    }
+
+                    if (formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData != null)
+                    {
+                        com.Parameters.AddWithValue("@EventIdEventRequestId", val);
+                        com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventType);
+                        com.Parameters.AddWithValue("@EventDate", formDataList.HandsOnTraining.EventDate);
+                        com.Parameters.AddWithValue("@VenueName", formDataList.HandsOnTraining.VenueName);
+                        com.Parameters.AddWithValue("@City", formDataList.HandsOnTraining.City);
+                        com.Parameters.AddWithValue("@State", formDataList.HandsOnTraining.State);
+                        com.Parameters.AddWithValue("@OtherCurrency", formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.EnterCurrencyType);
+                        com.Parameters.AddWithValue("@BeneficiaryName", formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BenificiaryName);
+                        com.Parameters.AddWithValue("@BankAccountNumber", formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BankAccountNumber);
+                        com.Parameters.AddWithValue("@FacilityCharges", formDataList.HandsOnTraining.IsVenueFacilityCharges);
+                        com.Parameters.AddWithValue("@AnesthetistRequiredq", formDataList.HandsOnTraining.IsAnesthetistRequired);
+                        com.Parameters.AddWithValue("@Currency", formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.Currency);
+                        com.Parameters.AddWithValue("@BankName", formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.BankName);
+                        com.Parameters.AddWithValue("@PANcardname", formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.NameasPerPAN);
+                        com.Parameters.AddWithValue("@PanNumber", formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.PANCardNumber);
+                        com.Parameters.AddWithValue("@IFSCCode", formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.IFSCCode);
+                        com.Parameters.AddWithValue("@EmailId", formDataList.HandsOnTraining.AnaestheticBenificiaryDetailsData.EmailID);
+                        com.ExecuteNonQuery();
+                        com.Parameters.Clear();
+                    }
+                    await MyConn.CloseAsync();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error($"Error occured on AllPreEventsController Attachementfile method {ex.Message} at {DateTime.Now}");
+                    Log.Error(ex.StackTrace);
+                    return BadRequest(ex.Message);
+                }
+
+                MyConn.OpenAsync();
+                com = new MySqlCommand("HO_ProductBrandList", MyConn);
+                com.CommandType = CommandType.StoredProcedure;
+                foreach (var formdata in formDataList.ProductSelections)
+                {
+                    com.Parameters.AddWithValue("@EventIdEventRequestId", val);
+                    com.Parameters.AddWithValue("@EventType", formDataList.HandsOnTraining.EventType);
+                    com.Parameters.AddWithValue("@EventDate", formDataList.HandsOnTraining.EventDate);
+                    com.Parameters.AddWithValue("@EventTopic", formDataList.HandsOnTraining.EventName);
+                    com.Parameters.AddWithValue("@ProductBrand", formdata.ProductSelectionType);
+                    com.Parameters.AddWithValue("@ProductName", formdata.ProductName);
+                    com.Parameters.AddWithValue("@NoofSamplesRequired", formdata.SamplesRequires);
+                    com.ExecuteNonQuery();
+                    com.Parameters.Clear();
+                }
+                MyConn.CloseAsync();
+
+                return Ok(new { Message = " Success!" });
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occured on Handson Pre Event method {ex.Message} at {DateTime.Now}");
+                Log.Error(ex.StackTrace);
+                return BadRequest(ex.Message);
+            }
+        }
 
 
     }

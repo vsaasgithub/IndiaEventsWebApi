@@ -489,31 +489,6 @@ namespace IndiaEventsWebApi.Controllers.EventsController
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         [HttpGet("GetUrlFromSheet")]
         public async Task<IActionResult> GetUrlFromSheet(long SheetId, long AttachmentId)
         {
@@ -705,7 +680,7 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             { "Anesthetist Required?", GetValueOrDefault(row, "Anesthetist Required?") },
                             { "Anesthetist BTC/BTE", GetValueOrDefault(row, "Anesthetist BTC/BTE") },
                             { "Anesthetist Excluding Tax", GetValueOrDefault(row, "Anesthetist Excluding Tax") },
-                            { "Anesthetist including Tax", GetValueOrDefault(row, "Anesthetist including Tax") },
+                            { "Anesthetist Including Tax", GetValueOrDefault(row, "Anesthetist including Tax") },
                             { "Sponsorship Society Name", GetValueOrDefault(row, "Sponsorship Society Name") },
                             { "Venue Country", GetValueOrDefault(row, "Venue Country") }
                         };
@@ -837,7 +812,9 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         {
                             strMessage += "==Before getting row data from Invitees sheet" + j.ToString() + "==" + DateTime.Now.ToString() + "==";
 
-                            List<string> InviteescolumnsToInclude = new List<string> { "INV", "Invitee Source", "HCPName", "MISCode", "Employee Code", "LocalConveyance", "BTC/BTE", "LocalConveyance", "Speciality", "Lc Amount Excluding Tax", "LcAmount" };
+                            List<string> InviteescolumnsToInclude = new List<string> { "INV", "Invitee Source", "HCPName", "MISCode",
+                                "Employee Code", "LocalConveyance","BTC/BTE", "LocalConveyance", "Speciality",
+                                "Lc Amount Excluding Tax", "LcAmount","Experience","Qualification","Designation" };
                             Dictionary<string, object> InviteesrowData = new Dictionary<string, object>();
                             for (int i = 0; i < InviteesColumnNames.Count; i++)
                             {
@@ -851,6 +828,40 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                             InviteesrowData["RowId"] = row.Id.Value;
 
                             strMessage += "==After getting row data from Invitees sheet" + j.ToString() + "==" + DateTime.Now.ToString() + "==";
+
+
+                            PaginatedResult<Attachment> attachments = await Task.Run(() => ApiCalls.GetAttachmantsFromSheet(smartsheet, sheet3, row));
+
+
+
+                            List<Dictionary<string, object>> InviteesattachmentsList = new();
+                            if (attachments.Data != null || attachments.Data.Count > 0)
+                            {
+                                foreach (var attachment in attachments.Data)
+                                {
+                                    long AID = (long)attachment.Id;
+                                    string Name = attachment.Name;
+                                    Dictionary<string, object> attachmentInfo = new()
+                            {
+                                { "Name", Name },
+                                { "Id", AID },
+                                {"SheetId",sheet3.Id }
+
+                            };
+                                    InviteesattachmentsList.Add(attachmentInfo);
+                                }
+                                InviteesrowData["Attachments"] = InviteesattachmentsList;
+                            }
+
+
+
+
+
+
+
+
+
+
 
                             InviteeseventDetails.Add(InviteesrowData);
 
@@ -940,7 +951,8 @@ namespace IndiaEventsWebApi.Controllers.EventsController
                         {
                             strMessage += "==Before getting row data from slideKit sheet" + j.ToString() + "==" + DateTime.Now.ToString() + "==";
 
-                            List<string> SlideKitcolumnsToInclude = new List<string> { "SlideKit ID", "HCP Name", "MIS", "HcpType", "Slide Kit Type", "SlideKit Document" };
+                            List<string> SlideKitcolumnsToInclude = new List<string> { "SlideKit ID", "HCP Name", 
+                                "MIS", "HcpType", "Slide Kit Type", "SlideKit Document" ,"Fillers Indication","Threads Indication"};
 
                             Dictionary<string, object> SlideKitrowData = new Dictionary<string, object>();
                             for (int i = 0; i < SlideKitColumnNames.Count; i++)
