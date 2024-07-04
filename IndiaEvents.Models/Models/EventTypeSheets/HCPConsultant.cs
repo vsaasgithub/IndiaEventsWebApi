@@ -1,4 +1,5 @@
-﻿using IndiaEventsWebApi.Models.RequestSheets;
+﻿using IndiaEvents.Models.Models.RequestSheets;
+using IndiaEventsWebApi.Models.RequestSheets;
 
 namespace IndiaEventsWebApi.Models.EventTypeSheets
 {
@@ -40,6 +41,9 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? Role { get; set; }
 
         public string? Finance { get; set; }
+        public string? IsFilesUpload { get; set; }
+        public List<string>? Files { get; set; }
+
         public string? InitiatorName { get; set; }
         //public string? Role { get; set; }
         public string? Initiator_Email { get; set; }
@@ -76,6 +80,41 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
 
 
     }
+    public class HCPListForHcpConsuktant
+    {
+        public string? HcpName { get; set; }
+        public string? MisCode { get; set; }
+        public string? HcpType { get; set; }
+        public double TrainTravelAmountIncludingTax { get; set; }
+        public string? TrainTravelBtcBte { get; set; }
+        public double TrainTravelAmountExcludingTax { get; set; }
+        public double AirTravelAmountIncludingTax { get; set; }
+        public double AirTravelAmountExcludingTax { get; set; }
+        public string? AirTravelBtcBte { get; set; }
+        public double RoadTravelAmountIncludingTax { get; set; }
+        public double RoadTravelAmountExcludingTax { get; set; }
+        public string? RoadTravelBtcBte { get; set; }
+        public double AccomAmountIncludingTax { get; set; }
+        public double AccomAmountExcludingTax { get; set; }
+        public string? AccomodationBtcorBte { get; set; }
+        public double LcAmountIncludingTax { get; set; }
+        public double LcAmountExcludingTax { get; set; }
+        public string? LcBtcorBte { get; set; }
+        public double RegistrationAmountIncludingTax { get; set; }
+        public double RegistrationAmountExcludingTax { get; set; }
+        public string? RegistrationAmountBtcBte { get; set; }
+        public double BudgetAmount { get; set; }
+        public string Legitimate { get; set; }
+        public string Objective { get; set; }
+        public string Rationale { get; set; }
+        public DateTime? Fcpadate { get; set; }
+        public string? ExpenseType { get; set; }
+        public string? IsUpload { get; set; }
+        public List<string>? FilesToUpload { get; set; }
+
+
+
+    }
     public class ExpenseList
     {
 
@@ -83,9 +122,9 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? BTC_BTE { get; set; }
 
         public string? RegstAmount { get; set; }
-        public int? RegstAmountExcludingTax { get; set; }
+        public double? RegstAmountExcludingTax { get; set; }
         public string? ExpenseAmount { get; set; }
-        public int? ExpenseAmountExcludingTax { get; set; }
+        public double? ExpenseAmountExcludingTax { get; set; }
         public string? BtcAmount { get; set; }
         public string? BteAmount { get; set; }
 
@@ -94,17 +133,35 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
 
     }
 
+    public class ExpenseListForHcpConsultant
+    {
 
+        public string? Expense { get; set; }
+        public string? BTC_BTE { get; set; }
+        public string? MisCode { get; set; }
+
+        public string? RegstAmount { get; set; }
+        public double? RegstAmountExcludingTax { get; set; }
+        public string? ExpenseAmount { get; set; }
+        public double? ExpenseAmountExcludingTax { get; set; }
+        public string? BtcAmount { get; set; }
+        public string? BteAmount { get; set; }
+        public string? BudgetAmount { get; set; }
+
+
+
+
+    }
     public class HCPConsultantPayload
     {
         public HCPConsultant HcpConsultant { get; set; }
         public List<EventRequestBrandsList>? BrandsList { get; set; }
-        public List<ExpenseList>? ExpenseSheet { get; set; }
-        public List<HCPList>? HcpList { get; set; }
+        public List<ExpenseListForHcpConsultant>? ExpenseSheet { get; set; }
+        public List<HCPListForHcpConsuktant>? HcpList { get; set; }
+        public string? IsDeviationUpload { get; set; }
+        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }
     }
 
-
-    
     public class HCPfollow_upsheet
     {
         public string? HCPName { get; set; }

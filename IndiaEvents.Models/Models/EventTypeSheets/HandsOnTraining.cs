@@ -43,24 +43,24 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? EmerganctContact { get; set; }
         public string? IsVenueFacilityCharges { get; set; }
         public string? VenueFacilityChargesBtc_Bte { get; set; }
-        public int? FacilityChargesExcludingTax { get; set; }
-        public int? FacilityChargesIncludingTax { get; set; }
+        public double? FacilityChargesExcludingTax { get; set; }
+        public double? FacilityChargesIncludingTax { get; set; }
         public string? IsAnesthetistRequired { get; set; }
         public string? AnesthetistRequiredBtc_Bte { get; set; }
-        public int? AnesthetistChargesExcludingTax { get; set; }
-        public int? AnesthetistChargesIncludingTax { get; set; }
+        public double? AnesthetistChargesExcludingTax { get; set; }
+        public double? AnesthetistChargesIncludingTax { get; set; }
 
         public string? InitiatorName { get; set; }
-        public int? AdvanceAmount { get; set; }
-        public int? TotalExpenseBTC { get; set; }
-        public int? TotalExpenseBTE { get; set; }
-        public int? TotalHonorariumAmount { get; set; }
-        public int? TotalTravelAccommodationAmount { get; set; }
-        public int? TotalAccomodationAmount { get; set; }
-        public int? TotalBudget { get; set; }
-        public int? TotalLocalConveyance { get; set; }
-        public int? TotalTravelAmount { get; set; }
-        public int? TotalExpense { get; set; }
+        public double? AdvanceAmount { get; set; }
+        public double? TotalExpenseBTC { get; set; }
+        public double? TotalExpenseBTE { get; set; }
+        public double? TotalHonorariumAmount { get; set; }
+        public double? TotalTravelAccommodationAmount { get; set; }
+        public double? TotalAccomodationAmount { get; set; }
+        public double? TotalBudget { get; set; }
+        public double? TotalLocalConveyance { get; set; }
+        public double? TotalTravelAmount { get; set; }
+        public double? TotalExpense { get; set; }
 
         public string? InitiatorEmail { get; set; }
         public string? RBMorBMEmail { get; set; }
@@ -92,8 +92,8 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public EventRequestBenificiaryDetails? AnaestheticBenificiaryDetailsData { get; set; }
         public List<string>? Files { get; set; }
         public string? IsDeviationUpload { get; set; }
-        public int? EventOpen30dayscount { get; set; }
-        public List<string>? DeviationFiles { get; set; }
+        public double? EventOpen30dayscount { get; set; }
+        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }
 
 
     }
@@ -116,16 +116,16 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public DateTime? FCPAIssueDate { get; set; }
         // public string? UploadTrainerConsent { get; set; }
         public string? IsHonorariumApplicable { get; set; }
-        public int? Presentation_Speaking_WorkshopDuration { get; set; }
-        public int? DevelopmentofPresentationPanelSessionPreparation { get; set; }
-        public int? PaneldiscussionSessionduration { get; set; }
-        public int? QASession { get; set; }
-        public int? Speaker_TrainerBriefing { get; set; }
-        public int? TotalNoOfHours { get; set; }
-        public int? HonorariumAmountexcludingTax { get; set; }
-        public int? HonorariumAmountincludingTax { get; set; }
+        public double? Presentation_Speaking_WorkshopDuration { get; set; }
+        public double? DevelopmentofPresentationPanelSessionPreparation { get; set; }
+        public double? PaneldiscussionSessionduration { get; set; }
+        public double? QASession { get; set; }
+        public double? Speaker_TrainerBriefing { get; set; }
+        public double? TotalNoOfHours { get; set; }
+        public double? HonorariumAmountexcludingTax { get; set; }
+        public double? HonorariumAmountincludingTax { get; set; }
         // public string? UploadDeviation { get; set; }
-        public int? YTDspendIncludingCurrentEvent { get; set; }
+        public double? YTDspendIncludingCurrentEvent { get; set; }
         public string? IsGlobalFMVCheck { get; set; }
         //public string? UploadDocument { get; set; }
 
@@ -134,16 +134,16 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? IsAccomodationBTC_BTE { get; set; }
         public string? IsLCBTC_BTE { get; set; }
         public string? TravelSelection { get; set; }
-        public int? TravelAmountExcludingTax { get; set; }
-        public int? TravelAmountIncludingTax { get; set; }
-        public int? AccomodationAmountExcludingTax { get; set; }
-        public int? AccomodationAmountIncludingTax { get; set; }
-        public int? LocalConveyanceAmountexcludingTax { get; set; }
-        public int? LocalConveyanceAmountincludingTax { get; set; }
-        public int? AgreementAmount { get; set; }
+        public double? TravelAmountExcludingTax { get; set; }
+        public double? TravelAmountIncludingTax { get; set; }
+        public double? AccomodationAmountExcludingTax { get; set; }
+        public double? AccomodationAmountIncludingTax { get; set; }
+        public double? LocalConveyanceAmountexcludingTax { get; set; }
+        public double? LocalConveyanceAmountincludingTax { get; set; }
+        public double? AgreementAmount { get; set; }
         //public string? UploadDeviation { get; set; }
-        public int? TravelandAccomodationspendincludingcurrentevent { get; set; }
-        public int? FinalAmount { get; set; }
+        public double? TravelandAccomodationspendincludingcurrentevent { get; set; }
+        public double? FinalAmount { get; set; }
 
         public EventRequestBenificiaryDetails? BenificiaryDetailsData { get; set; }
         public List<string>? TrainerFiles { get; set; }
@@ -178,7 +178,7 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
     {
         public string? ProductSelectionType { get; set; }
         public string? ProductName { get; set; }
-        public int? SamplesRequires { get; set; }
+        public double? SamplesRequires { get; set; }
     }
 
     public class AttenderSelection
@@ -192,8 +192,8 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         public string? Qualification { get; set; }
         public string? IsLocalConveyance { get; set; }
         public string? IsBtcorBte { get; set; }
-        public int? LocalConveyanceAmountExcludingTax { get; set; }
-        public int? LocalConveyanceAmountIncludingTax { get; set; }
+        public double? LocalConveyanceAmountExcludingTax { get; set; }
+        public double? LocalConveyanceAmountIncludingTax { get; set; }
        
        
         public string? EmployeeCode { get; set; }
@@ -213,7 +213,7 @@ namespace IndiaEvents.Models.Models.EventTypeSheets
         //public string? Expense { get; set; }
         public string? ExpenseType { get; set; }
         public string? IsBtcorBte { get; set; }
-        public int? ExpenseAmountExcludingTax { get; set; }
-        public int? ExpenseAmountIncludingTax { get; set; }
+        public double? ExpenseAmountExcludingTax { get; set; }
+        public double? ExpenseAmountIncludingTax { get; set; }
     }
 }

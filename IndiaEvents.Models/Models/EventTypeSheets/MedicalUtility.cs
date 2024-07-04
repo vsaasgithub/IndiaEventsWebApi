@@ -1,4 +1,5 @@
-﻿using IndiaEventsWebApi.Models.RequestSheets;
+﻿using IndiaEvents.Models.Models.RequestSheets;
+using IndiaEventsWebApi.Models.RequestSheets;
 
 namespace IndiaEventsWebApi.Models.EventTypeSheets
 {
@@ -42,6 +43,8 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? Initiator_Email { get; set; }
         // public List<string>? AggregateDeviationFiles { get; set; }
         public string? UploadDeviationFile { get; set; }
+       
+        public List<EventRequestDeviationsData>? DeviationDetails { get; set; }
     }
 
     public class HCPListData
@@ -74,7 +77,7 @@ namespace IndiaEventsWebApi.Models.EventTypeSheets
         public string? BtcAmount { get; set; }
         public string? BteAmount { get; set; }
         public string? TotalExpenseAmount { get; set; }
-        public int? TotalExpenseAmountExcludingTax { get; set; }
+        public double? TotalExpenseAmountExcludingTax { get; set; }
 
     }
 
