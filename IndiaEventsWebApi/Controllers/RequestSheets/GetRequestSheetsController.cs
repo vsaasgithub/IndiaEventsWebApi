@@ -68,8 +68,8 @@ namespace IndiaEventsWebApi.Controllers.RequestSheets
                 {
 
                     var cn = column.Title;
-                    var id = column.Id;
-                    var str = $"{cn} : {id}";
+                    //var id = column.Id;
+                    var str = $"{cn}";
                     columnNames.Add(str);
 
                 }

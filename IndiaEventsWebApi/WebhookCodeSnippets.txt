@@ -1,0 +1,34 @@
+﻿// Post: it creates webhook
+curl --location 'https://api.smartsheet.com/2.0/webhooks/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer jQ7rAWlaTgbtMPVvlc7RGOqeNqDWwheJRNV83' \
+--data '{
+  "callbackUrl": "https://menariniindiaeventsapi.azurewebsites.net/api/WebHooks/WebHookData",
+
+  "events": [
+    "*.*"
+  ],
+  "name": "Webhook for India Events",
+  "version": 1,
+  "scopeObjectId": 2789422625935236,
+  "scope": "sheet",
+  "subscope": {
+    "columnIds": [
+      "3648756279889796"
+    ]
+  }
+}'
+
+// to enable the webhook we use Update method , and url containg the webhook Id which is created in post method
+curl --location --request PUT 'https://api.smartsheet.com/2.0/webhooks/8193386369836932' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer jQ7rAWlaTgbtMPVvlc7RGOqeNqDWwheJRNV83' \
+--data '{
+  "callbackUrl": "https://menariniindiaeventsapi.azurewebsites.net/api/WebHooks/WebHookData",
+  "enabled": true,
+  "events": [
+    "*.*"
+  ],
+  "name": "Webhook for India Events",
+  "version": 1
+}'
